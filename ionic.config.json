@@ -1,0 +1,8 @@
+{
+  "name": "Tribe",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "ea969af5"
+}
