@@ -10,7 +10,7 @@ import { MemberBadge } from "./MemberBadge";
 import { useTitle } from "../hooks/useTitle";
 import { flameOutline } from "ionicons/icons";
 
-export const TribeHeader: React.FC = () => {
+export const TribeHeader: React.FC<{title:string}> = ({title}) => {
     const { pathname } = useLocation();
     const { authenticated, linkTwitter, user, login } = usePrivy()
     const { wallets } = useWallets();
@@ -27,7 +27,6 @@ export const TribeHeader: React.FC = () => {
     useEffect(() => {
         activeWallet && activeWallet.switchChain(baseGoerli.id);
     }, [activeWallet])
-    const { title } = useTitle()
     if (user && user.wallet && typeof user.wallet.address === 'undefined') {
         return <IonHeader>
             {user?.twitter?.name}

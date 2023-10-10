@@ -18,13 +18,16 @@ export function timeAgo(input: Date) {
         days: 3600 * 24,
         hours: 3600,
         minutes: 60,
-        seconds: 1
+        seconds: 1,
     };
     const secondsElapsed = (date.getTime() - Date.now()) / 1000;
+    if (secondsElapsed > -1) {
+        return "now"
+    }
     for (let key in ranges) {
         if ((ranges[key]) < Math.abs(secondsElapsed)) {
             const delta = secondsElapsed / ranges[key];
-            return formatter.format(Math.round(delta), key as any)?.toString().replaceAll("ago", "").replaceAll("hours", "h").replaceAll("seconds", "s").replaceAll("minutes", "m");
+            return formatter.format(Math.round(delta), key as any)?.toString().replaceAll("ago", "").replaceAll("hours", "h").replaceAll("seconds", "s").replaceAll("minute", "m");
         }
     }
 }

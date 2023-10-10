@@ -1,6 +1,5 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import { useChat } from '../hooks/useChat';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
 import { useClient, useConversations, useStartConversation, useCanMessage } from '@xmtp/react-sdk';
@@ -19,11 +18,11 @@ import { MemberGraph } from '../components/MemberGraph';
 import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
+import { formatEth } from '../lib/sugar';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
     const loading = useMember(x => x.isLoading(address));
-    const roomInfo = useChat(x => x.room(address))
     const { user, sendTransaction, logout } = usePrivy()
     const chainId = useChainId();
     const balance: bigint | undefined = usePassBalance((user?.wallet?.address || "0x0000000000000000000000000000000000000000") as Address, (address || "0x0000000000000000000000000000000000000000") as Address) as any;
@@ -39,28 +38,13 @@ const Member: React.FC = () => {
 
     return (
         <IonPage>
-            <TribeHeader />
+            <TribeHeader title={member?.twitterName || address} />
             <TribeContent fullscreen>
                 <IonList>
-                    <IonListHeader>
-                        {member?.twitterName || address}
-                    </IonListHeader>
-                    <MemberGraph address={address} />
-                    <IonItem>
-                        <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
-                            sellPass && sellPass();
-                        }}>
-                            Sell
-                            <IonIcon icon={ticketOutline} />                        {typeof sellPrice !== 'undefined' && formatEther(sellPrice as bigint)}
-                        </IonButton>
-                        <IonButton disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
-                            // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
-                            buyPass && buyPass();
-                            console.log(buyPass);
-                        }} color='success'>
-                            Buy                         <IonIcon icon={ticketOutline} />
-                            {typeof buyPrice !== 'undefined' && formatEther(buyPrice as bigint)}
-                        </IonButton>
+                    <IonToolbar>
+                        <IonListHeader>
+                            {member?.twitterName || address}
+                        </IonListHeader>
                         {user && <IonChip>
                             <IonIcon icon={ticketOutline} />
                             <IonText>
@@ -68,22 +52,54 @@ const Member: React.FC = () => {
                                 {typeof balance != 'undefined' && formatUnits(balance, 0)}/{typeof supply != 'undefined' && formatUnits(supply, 0)}) Passes
                             </IonText>
                         </IonChip>}
+
+                    </IonToolbar>
+                    <MemberGraph address={address} />
+                    <IonItem lines='none'>
+                        <IonButtons slot='start'>
+
+                            <IonButton fill='solid' disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
+                                sellPass && sellPass();
+                            }}>
+
+                                <IonIcon icon={ticketOutline} />
+                                <IonText>
+
+                                    Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
+                                </IonText>
+                            </IonButton>
+                        </IonButtons>
+                        <IonButtons slot='end'>
+
+                            <IonButton fill='solid' disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
+                                // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
+                                buyPass && buyPass();
+                                console.log(buyPass);
+                            }} color='success'>
+                                <IonIcon icon={ticketOutline} />                                Buy
+                                {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
+                            </IonButton>
+                        </IonButtons>
                     </IonItem>
-                    {balance && balance > 0n ? <IonButton expand='full' routerLink={'/chat/' + address}>
+
+                    {balance && balance > 0n ? <IonButton color='light' expand='full' routerLink={'/room/' + address}>
                         <IonText>
                             Chat
                         </IonText>
                         <IonIcon icon={chatboxEllipsesOutline} />
                     </IonButton> : <></>}
-
-                    {!user && loading === false && <IonText color='warning'>user not found</IonText>}
-                    {user?.wallet?.address === address && <IonButton onClick={() => {
-                        logout()
-                    }}>
-                        Logout
-                    </IonButton>}
                 </IonList>
+
+                {!user && loading === false && <IonText color='warning'>user not found</IonText>}
             </TribeContent >
+            <IonFooter>
+                {user?.wallet?.address === address && <IonButton onClick={() => {
+                    logout()
+                }}>
+                    Logout
+                </IonButton>}
+
+            </IonFooter>
         </IonPage>
 
     );

@@ -58,7 +58,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
             {/* <Tooltip cursor={false} content={CustomTooltip as any} /> */}
 
             <YAxis dataKey={'price'} scale={'auto'} domain={[0, 'auto']} />
-            <Line type="monotone" dataKey="price" stroke="#8884d8" dot={undefined} />
+            <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
 
         </LineChart>
     </IonGrid >

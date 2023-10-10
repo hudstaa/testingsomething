@@ -19,6 +19,7 @@ interface FriendStore {
     fetchFriendData: (address: string) => void;
     getFriend: (address: string) => UserData | undefined;
     getError: (address: string) => string | null | undefined;
+    loadCache: () => void
 }
 
 export const useMember = create<FriendStore>((set, store) => ({
@@ -36,7 +37,21 @@ export const useMember = create<FriendStore>((set, store) => ({
         });
         set({ friendCache: { ...store().friendCache, ...cache }, loading: { ...store().loading, ...loadingCache }, error: { ...store().error, ...errorCache } })
     },
+    loadCache: () => {
+        // fetch("https://bapgekqmbczrdgeafeck.supabase.co/functions/v1/privvyUsers").then((users) => {
 
+        //     users.json().then((res: { data: [{ linked_accounts: [{ type: string, address: string, subject: string, name: string, username: string, connector_type: string }] }] }) => {
+        //         const cache = res.data.map(user => {
+        //             const wallet = user.linked_accounts.find(x => typeof x.address !== 'undefined' && x.connector_type === 'embedded');
+        //             const twitter = user.linked_accounts.find(x => x.type == 'twitter_oauth');
+        //             if (!twitter || !wallet) {
+        //                 return false
+        //             }
+        //             return { [wallet.address]: { twitterUsername: twitter.username, twitterName: twitter.name, address: wallet.address } }
+        //         })
+        //     })
+        // })
+    },
     setFriendData: (address, data) =>
         set(state => ({
             friendCache: { ...state.friendCache, [address]: data },

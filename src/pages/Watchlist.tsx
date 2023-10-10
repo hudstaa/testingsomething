@@ -1,6 +1,5 @@
 import { IonAvatar, IonBadge, IonCard, IonCardContent, IonCardHeader, IonHeader, IonImg, IonItem, IonList, IonListHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import { useChat } from '../hooks/useChat';
 import { useMember } from '../hooks/useMember';
 import { useWatchlist } from '../hooks/useWatchlist';
 import { TradeItem } from '../components/TradeItem';

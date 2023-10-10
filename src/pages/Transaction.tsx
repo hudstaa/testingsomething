@@ -35,7 +35,7 @@ const Transaction: React.FC = () => {
   console.log(data, hash);
   return (
     <IonPage>
-      <TribeHeader />
+      <TribeHeader title='tx' />
       <TribeContent fullscreen>
         {loading && <IonSpinner />}
         {data?.trade && <TradeItem trade={data?.trade} />}
