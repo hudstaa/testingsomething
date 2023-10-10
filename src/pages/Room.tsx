@@ -68,12 +68,14 @@ const Room: React.FC = () => {
     const messages = useGroupMessages(x => x.groupMessages[address.toLowerCase()] || [])
     const { pushMessages, modMessage } = useGroupMessages()
     const channel = address.toLowerCase();
+    const [scroll, setScroll] = useState(0)
 
     const sendMessage = useCallback(async (content: string) => {
         console.log("Sending", wallet?.address, content, address);
         const author = wallet!.address;
         const newMessage = ({ id: uuid(), content, author, channel: address.toLowerCase(), sent: serverTimestamp() });
         const db = getFirestore(app);
+
         const messagesCol = collection(db, "channels", channel, "messages");
 
         try {
@@ -83,6 +85,7 @@ const Room: React.FC = () => {
             console.error("Error sending message: ", error);
         }
     }, [wallet?.address, wallet, address])
+
     useEffect(() => {
         if (!channel) {
             return;
@@ -91,9 +94,9 @@ const Room: React.FC = () => {
         console.log("NICE");
         const messagesCol = collection(db, "channels", channel, "messages");
         async function fetchMessages(afterDoc?: number) {
-            let q = query(messagesCol, orderBy("sentAt", "desc"), limit(10));
+            let q = query(messagesCol, orderBy("sent", "desc"), limit(10));
             if (afterDoc) {
-                q = query(messagesCol, orderBy("sentAt", "desc"), startAfter(afterDoc), limit(10));
+                q = query(messagesCol, orderBy("sent", "desc"), startAfter(afterDoc), limit(10));
             }
 
             const snapshot = await getDocs(q);
@@ -114,7 +117,6 @@ const Room: React.FC = () => {
         fetchMessages();
 
     }, [channel])
-    const [scroll, setScroll] = useState(0)
     console.log(messages);
     const messageList = useMemo(() => messages.map((msg: any) =>
         <IonItem lines='none' color='light'>
@@ -122,7 +124,7 @@ const Room: React.FC = () => {
             <MemberBadge address={msg.author} />
             <IonText>{msg.content}</IonText>
             <IonButtons slot='end'>
-                {timeAgo(msg.sent.seconds * 1000)}
+                {timeAgo(new Date(msg.sent.seconds * 1000))}
             </IonButtons>
         </IonItem>
     ), [messages])
