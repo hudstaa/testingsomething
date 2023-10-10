@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonProgressBar, IonRow, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonProgressBar, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -9,7 +9,7 @@ import { useQuery } from '@apollo/client';
 import { TribeContent } from '../components/TribeContent';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { paperPlane, pushOutline } from 'ionicons/icons';
-import { MemberBadge } from '../components/MemberBadge';
+import { MemberBadge, MemberChip } from '../components/MemberBadge';
 import { Client, Conversation, ConversationV2, DecodedMessage, MessageV2 } from '@xmtp/xmtp-js';
 import { useTitle } from '../hooks/useTitle';
 import { CachedConversation, CachedMessage, Signer, useClient, useConversations, useMessages, useStreamAllMessages, useStreamMessages } from '@xmtp/react-sdk';
@@ -26,17 +26,15 @@ import { app } from '../App';
 import { setCode } from 'viem/_types/actions/test/setCode';
 
 export const WriteMessage: React.FC<{ address: string, sendMessage: (content: string) => void }> = ({ address, sendMessage }) => {
-    const [newNote, setNewNote] = useState<string>("")
-    useEffect(() => {
-    }, [address])
+    const [newNote, setNewNote] = useState<string | undefined>(undefined)
     const makeComment = () => {
-        sendMessage(newNote);
-        setNewNote("");
+        newNote && sendMessage(newNote);
+        setNewNote(undefined);
     }
-    return <IonToolbar>
 
-        <IonInput value={newNote} type='text' placeholder="   send a message" onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+    return <IonToolbar>
+        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={newNote} placeholder="send a message" onKeyUp={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 makeComment();
             }
         }} onIonInput={(e) => {
@@ -46,7 +44,7 @@ export const WriteMessage: React.FC<{ address: string, sendMessage: (content: st
             <IonButton onClick={async () => {
                 makeComment();
             }}>
-                <IonIcon color={newNote.length > 0 ? 'primary' : 'light'} icon={paperPlane} />
+                <IonIcon color={typeof newNote !== 'undefined' && newNote.length > 0 ? 'primary' : 'light'} icon={paperPlane} />
             </IonButton>
         </IonButtons>
     </IonToolbar>
@@ -54,7 +52,6 @@ export const WriteMessage: React.FC<{ address: string, sendMessage: (content: st
 
 const Test: React.FC = () => {
     const { client } = useClient();
-    console.log(client);
     return <>
 
     </>
@@ -71,9 +68,8 @@ const Room: React.FC = () => {
     const [scroll, setScroll] = useState(0)
 
     const sendMessage = useCallback(async (content: string) => {
-        console.log("Sending", wallet?.address, content, address);
-        const author = wallet!.address;
-        const newMessage = ({ id: uuid(), content, author, channel: address.toLowerCase(), sent: serverTimestamp() });
+        const author = wallet!.address.toLowerCase();
+        const newMessage = ({ id: uuid(), content, author, channel, sent: serverTimestamp() });
         const db = getFirestore(app);
 
         const messagesCol = collection(db, "channel", channel, "messages");
@@ -91,7 +87,6 @@ const Room: React.FC = () => {
             return;
         }
         const db = getFirestore(app);
-        console.log("NICE");
         const messagesCol = collection(db, "channel", channel, "messages");
         async function fetchMessages(afterDoc?: number) {
             let q = query(messagesCol, orderBy("sent", "desc"), limit(10));
@@ -99,11 +94,12 @@ const Room: React.FC = () => {
                 q = query(messagesCol, orderBy("sent", "desc"), startAfter(afterDoc), limit(10));
             }
 
-            const snapshot = await getDocs(q);
-            const messages = snapshot.docs.map(doc => doc.data());
-            pushMessages(channel, messages as any)
-            return messages;
+            getDocs(q).then((snapshot) => {
+                const messages = snapshot.docs.map(doc => doc.data());
+                pushMessages(channel, messages as any)
+            });
         }
+        fetchMessages();
 
         onSnapshot(messagesCol
             , (channelDocs) => {
@@ -114,15 +110,14 @@ const Room: React.FC = () => {
                 })
                 setScroll(x => x + 1);
             })
-        fetchMessages();
 
     }, [channel])
-    console.log(messages);
     const messageList = useMemo(() => messages.map((msg: any) =>
-        <IonItem lines='none' color='light'>
-
-            <MemberBadge address={msg.author} />
-            <IonText>{msg.content}</IonText>
+        <IonItem lines='none' color='light' key={msg.id}>
+            <IonButtons slot='start'>
+                <MemberBadge address={msg.author} />
+            </IonButtons>
+            <IonText style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</IonText>
             <IonButtons slot='end'>
                 {timeAgo(new Date(msg.sent.seconds * 1000))}
             </IonButtons>
@@ -130,7 +125,6 @@ const Room: React.FC = () => {
     ), [messages])
     const contentRef = useRef<HTMLIonContentElement>(null);
     useEffect(() => {
-        console.log("SCROLLING");
         contentRef.current!.scrollToBottom(300); // 300ms scroll duration
     }, [scroll, messages]); // this will trigger every time the messages array changes
 
@@ -144,13 +138,13 @@ const Room: React.FC = () => {
 
     return <IonPage>
         <IonContent ref={contentRef}>
-            <TribeHeader title={(channelOwner?.twitterName || address) + " Tribe"} />
+            <TribeHeader title={(channelOwner?.twitterName || address) + " Tribe"} sticky={false} />
             <IonList style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
                 {messageList}
             </IonList>
         </IonContent>
         <IonFooter >
-            < WriteMessage address={''} sendMessage={sendMessage} />
+            < WriteMessage address={user?.wallet?.address || ""} sendMessage={sendMessage} />
         </IonFooter>
     </IonPage>
 }
