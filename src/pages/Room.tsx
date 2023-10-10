@@ -76,7 +76,7 @@ const Room: React.FC = () => {
         const newMessage = ({ id: uuid(), content, author, channel: address.toLowerCase(), sent: serverTimestamp() });
         const db = getFirestore(app);
 
-        const messagesCol = collection(db, "channels", channel, "messages");
+        const messagesCol = collection(db, "channel", channel, "messages");
 
         try {
             const docRef = await addDoc(messagesCol, newMessage);
@@ -92,7 +92,7 @@ const Room: React.FC = () => {
         }
         const db = getFirestore(app);
         console.log("NICE");
-        const messagesCol = collection(db, "channels", channel, "messages");
+        const messagesCol = collection(db, "channel", channel, "messages");
         async function fetchMessages(afterDoc?: number) {
             let q = query(messagesCol, orderBy("sent", "desc"), limit(10));
             if (afterDoc) {
