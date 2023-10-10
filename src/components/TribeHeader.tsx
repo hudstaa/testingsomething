@@ -4,7 +4,7 @@ import { useLocation } from "react-router"
 import { BalanceChip } from "./BalanceBadge";
 import { Address } from "viem";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { baseGoerli } from "viem/chains";
 import { MemberBadge } from "./MemberBadge";
 import { useTitle } from "../hooks/useTitle";
@@ -19,6 +19,7 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
     const { wallets } = useWallets();
 
     const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
+    const [fireAuth, setFireAuth] = useState<boolean>(false);
     const modalRef = useRef<HTMLIonModalElement>(null)
     useEffect(() => {
         wallets.forEach((wallet) => {
@@ -36,17 +37,27 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
         </IonHeader>
     }
     const auth = getAuth();
-    const toolbar = <IonToolbar>
+    const fireUser = auth.currentUser;
+    useEffect(() => {
+        auth.onAuthStateChanged(function (user) {
+            if (user) {
+                setFireAuth(true);
+            } else {
+                setFireAuth(false);
+            }
+        });
+    }, [auth])
+    const toolbar = useMemo(() => <IonToolbar>
         <IonModal ref={modalRef}>
         </IonModal>
-        <IonTitle>{title}</IonTitle>
+        <IonTitle color={title.includes('Activity') ? "danger" : title.includes('Discover') ? "success" : 'tertiary'}>{title}</IonTitle>
         <IonButtons slot='start'>
             <IonButton routerLink={'/'}>
                 <IonIcon icon={flameOutline} />
             </IonButton>
         </IonButtons>
         <IonButtons slot='end'>
-            {authenticated && user ? !auth.currentUser!.uid ? <IonButton onClick={() => {
+            {authenticated && user ? typeof fireUser === null ?
                 <IonButton onClick={() => {
                     const auth = getAuth();
                     signInWithPopup(auth, provider)
@@ -54,7 +65,6 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
                             // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
                             // You can use these server side with your app's credentials to access the Twitter API.
                             const credential = TwitterAuthProvider.credentialFromResult(result);
-                            console.log(credential);
                             if (credential === null) {
                                 return;
                             }
@@ -77,9 +87,8 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
                         });
 
                 }}>
-                    Link
-                </IonButton>
-            }}></IonButton> :
+                    Connect Twitter
+                </IonButton> :
                 <IonButton routerLink={'/member/' + user.wallet!.address}>
                     {user.wallet ? <MemberBadge address={user.wallet!.address} /> : user.twitter?.name}
                 </IonButton> : <IonButton onClick={() => {
@@ -88,7 +97,7 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
                 Login
             </IonButton>}
         </IonButtons>
-    </IonToolbar>
+    </IonToolbar>, [user, fireUser, fireAuth])
     if (!sticky) {
         return toolbar;
     }

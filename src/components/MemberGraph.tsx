@@ -1,9 +1,10 @@
 import { gql, useQuery } from "@apollo/client"
-import { IonGrid } from "@ionic/react"
+import { IonChip, IonGrid, IonProgressBar, IonSpinner, IonText } from "@ionic/react"
 import { push } from "ionicons/icons"
 import { LineChart, XAxis, Tooltip, YAxis, Line } from "recharts"
 import { formatEther, size } from "viem"
 import { timeAgo } from "./TradeItem"
+import { useMemo } from "react"
 
 export const accountTradesOfQuery = gql`
 query MyQuery($address: String!) {
@@ -40,26 +41,29 @@ export const dateFormatter = (date: any) => {
 };
 
 export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
-    const { data } = useQuery<{ trades: any[] }>(accountTradesOfQuery, { variables: { address: address.toLowerCase() } })
+    const { data, loading, error } = useQuery<{ trades: any[] }>(accountTradesOfQuery, { variables: { address: address.toLowerCase() } })
     const trades = parseTrades(data?.trades);
-    return <IonGrid>
-        <LineChart onClick={({ activePayload }) => {
-            if (activePayload && activePayload[0]) {
+    const graph = useMemo(() => {
+        return <IonGrid>
+            {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
+            {error && <IonChip color='danger'>{error.message}</IonChip>}
+            <LineChart onClick={({ activePayload }) => {
+                if (activePayload && activePayload[0]) {
+                    const address = activePayload[0].payload.address
+                }
+            }}
+                width={window.innerWidth}
+                height={window.innerHeight / 3}
+                data={trades}
+            >
+                <XAxis dataKey="blockTimestamp" tickFormatter={dateFormatter} tick />
+                {/* <Tooltip cursor={false} content={CustomTooltip as any} /> */}
 
-                const address = activePayload[0].payload.address
+                <YAxis dataKey={'price'} scale={'auto'} domain={[0, 'auto']} />
+                <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
 
-            }
-        }}
-            width={window.innerWidth}
-            height={window.innerHeight / 3}
-            data={trades}
-        >
-            <XAxis dataKey="blockTimestamp" tickFormatter={dateFormatter} tick />
-            {/* <Tooltip cursor={false} content={CustomTooltip as any} /> */}
-
-            <YAxis dataKey={'price'} scale={'auto'} domain={[0, 'auto']} />
-            <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
-
-        </LineChart>
-    </IonGrid >
+            </LineChart>
+        </IonGrid >
+    }, [address, trades, data])
+    return graph;
 }

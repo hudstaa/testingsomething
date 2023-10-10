@@ -15,7 +15,7 @@ const Splash: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol>
-                            <IonButton expand='full' color='light' routerLink='/activity'>
+                            <IonButton size='large' expand='full' color='light' routerLink='/activity'>
                                 <IonText color='danger'>
                                     Activity <IonIcon icon={pulseOutline} />
                                 </IonText>
@@ -23,7 +23,7 @@ const Splash: React.FC = () => {
                         </IonCol>
                         <IonCol>
 
-                            <IonButton expand='full' color='light' routerLink='/discover'>
+                            <IonButton size='large' expand='full' color='light' routerLink='/discover'>
                                 <IonText color='success'>
                                     Discover <IonIcon icon={leafSharp} />
                                 </IonText>
@@ -31,7 +31,7 @@ const Splash: React.FC = () => {
                         </IonCol>
                         <IonCol>
 
-                            <IonButton expand='full' color='light' routerLink='/chat'>
+                            <IonButton size='large' expand='full' color='light' routerLink='/chat'>
                                 <IonText color='primary'>
 
                                     Chat <IonIcon icon={chatboxEllipsesOutline} />

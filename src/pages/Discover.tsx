@@ -32,7 +32,7 @@ const Discover: React.FC = () => {
 
   return (
     <IonPage>
-      <TribeHeader title='discover' />
+      <TribeHeader title='Discover' />
       <TribeContent >
         <IonList>
           {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>

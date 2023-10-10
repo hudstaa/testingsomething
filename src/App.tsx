@@ -79,6 +79,7 @@ export const graphQLclient = new ApolloClient({
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { OnBoarding } from './pages/OnBoarding';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -124,6 +125,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/" exact>
                 <Splash />
+              </Route>
+              <Route path="/onboarding" exact>
+                <OnBoarding />
               </Route>
               <Route path="/member/:address" exact>
                 <Member />

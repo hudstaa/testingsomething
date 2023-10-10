@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFooter, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
 import { formatEth } from '../lib/sugar';
+import { MemberChip } from '../components/MemberBadge';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -31,29 +32,37 @@ const Member: React.FC = () => {
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
     const { ready, wallet } = usePrivyWagmi()
-    const { setTitle } = useTitle();
-    useEffect(() => {
-        member ? setTitle(member.twitterName) : setTitle(address.slice(0, 5) + '...' + address.slice(38, 42))
-    }, [member, address])
 
     return (
         <IonPage>
             <TribeHeader title={member?.twitterName || address} />
             <TribeContent fullscreen>
-                <IonList>
-                    <IonToolbar>
-                        <IonListHeader>
-                            {member?.twitterName || address}
-                        </IonListHeader>
-                        {user && <IonChip>
-                            <IonIcon icon={ticketOutline} />
-                            <IonText>
-                                You Own (
-                                {typeof balance != 'undefined' && formatUnits(balance, 0)}/{typeof supply != 'undefined' && formatUnits(supply, 0)}) Passes
-                            </IonText>
-                        </IonChip>}
+                <IonCard>
+                    <IonRow>
+                        <IonCol size='4'>
+                            <IonImg src={member?.twitterPfpUrl} style={{ borderRadius: '200px!important' }} />
+                        </IonCol>
+                        <IonCol>
+                            {balance && balance > 0n ? <IonButton fill='solid' color='light' expand='full' routerLink={'/room/' + address}>
+                                <IonText>
+                                    Chat
+                                </IonText>
+                                <IonIcon icon={chatboxEllipsesOutline} />
+                            </IonButton> : <></>}
 
-                    </IonToolbar>
+                            {user && typeof balance != 'undefined' && <IonChip color='tertiary'>
+                                <IonIcon icon={ticketOutline} />
+                                <IonText>
+                                    You Own (
+                                    {formatUnits(balance, 0)}/{typeof supply != 'undefined' && formatUnits(supply, 0)}) Passes
+                                </IonText>
+                            </IonChip>}
+
+                        </IonCol>
+                    </IonRow>
+                </IonCard>
+
+                <IonList>
                     <MemberGraph address={address} />
                     <IonItem lines='none'>
                         <IonButtons slot='start'>
@@ -82,18 +91,12 @@ const Member: React.FC = () => {
                         </IonButtons>
                     </IonItem>
 
-                    {balance && balance > 0n ? <IonButton color='light' expand='full' routerLink={'/room/' + address}>
-                        <IonText>
-                            Chat
-                        </IonText>
-                        <IonIcon icon={chatboxEllipsesOutline} />
-                    </IonButton> : <></>}
                 </IonList>
 
                 {!user && loading === false && <IonText color='warning'>user not found</IonText>}
             </TribeContent >
             <IonFooter>
-                {user?.wallet?.address === address && <IonButton onClick={() => {
+                {user?.wallet?.address === address && <IonButton expand='full' onClick={() => {
                     logout()
                 }}>
                     Logout
