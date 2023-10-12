@@ -8,7 +8,7 @@ export const StatItem: React.FC<{ stats: MemberStats }> = ({ stats }) => {
     const member = useMember(x => x.getFriend(stats.address))
     return <IonItem lines={'none'} detail key={stats.address} routerLink={'/member/' + stats.address}>
         <IonAvatar>
-            <IonImg src={member?.twitterPfpUrl} />
+            <IonImg src={member?.twitterPfp} />
         </IonAvatar>
         <IonGrid>
             <IonRow>

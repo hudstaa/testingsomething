@@ -31,7 +31,7 @@ export default function useSellPass(subject: Address, shares: bigint) {
 
     const { config } = usePrepareContractWrite({
         ...tribePassesContract,
-        functionName: 'sellPasses',
+        functionName: 'sellBoosts',
         chainId: baseGoerli.id,
         args: [subject, shares, '0xCc879Ab4DE63FC7Be6aAca522285D6F5d816278e'],
         value: sellPrice as bigint

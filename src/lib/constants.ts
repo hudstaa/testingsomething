@@ -2,7 +2,7 @@ import { Address } from "viem";
 import tribePassAbi from "./abi/tribePassAbi";
 
 
-export const TRIBE_PASS_CONTRACT: Address = '0xFEfb18f20C7548b72FDdBe4b70d07ee2ab63F60E'
+export const TRIBE_PASS_CONTRACT: Address = '0xcb74873cb302b99f128ceadabf737625c22d0149'
 
 export const tribePassesContract = {
     address: TRIBE_PASS_CONTRACT,

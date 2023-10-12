@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client"
 import { IonChip, IonGrid, IonProgressBar, IonSpinner, IonText } from "@ionic/react"
 import { push } from "ionicons/icons"
-import { LineChart, XAxis, Tooltip, YAxis, Line } from "recharts"
+import { LineChart, XAxis, Tooltip, YAxis, Line, ResponsiveContainer } from "recharts"
 import { formatEther, size } from "viem"
 import { timeAgo } from "./TradeItem"
 import { useMemo } from "react"
@@ -47,22 +47,21 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
         return <IonGrid>
             {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
-            <LineChart onClick={({ activePayload }) => {
-                if (activePayload && activePayload[0]) {
-                    const address = activePayload[0].payload.address
-                }
-            }}
-                width={window.innerWidth}
-                height={window.innerHeight / 3}
-                data={trades}
-            >
-                <XAxis dataKey="blockTimestamp" tickFormatter={dateFormatter} tick />
-                {/* <Tooltip cursor={false} content={CustomTooltip as any} /> */}
+            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
+                <LineChart onClick={({ activePayload }) => {
+                    if (activePayload && activePayload[0]) {
+                        const address = activePayload[0].payload.address
+                    }
+                }}
+                    data={trades}
+                >
+                    <XAxis dataKey="blockTimestamp" tickFormatter={dateFormatter} tick />
+                    {/* <Tooltip cursor={false} content={CustomTooltip as any} /> */}
 
-                <YAxis dataKey={'price'} scale={'auto'} domain={[0, 'auto']} />
-                <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
+                    <YAxis dataKey={'price'} scale={'auto'} domain={[0, 'auto']} />
+                    <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
 
-            </LineChart>
+                </LineChart></ResponsiveContainer>}
         </IonGrid >
     }, [address, trades, data])
     return graph;

@@ -1,6 +1,6 @@
 import { IonAvatar, IonBadge, IonButtons, IonCol, IonGrid, IonImg, IonItem, IonRow } from '@ionic/react';
 import { Trade } from '../models/Trade';
-import { formatUnits, formatEther } from 'viem'
+import { formatUnits, formatEther, getAddress } from 'viem'
 import { useMember } from '../hooks/useMember';
 import { MemberBadge } from './MemberBadge';
 import { formatEth } from '../lib/sugar';
@@ -33,9 +33,9 @@ export function timeAgo(input: Date) {
 }
 export const TradeItem: React.FC<{ trade: Trade }> = ({ trade }) => {
     return <IonItem lines={'none'} detail key={trade.transactionHash} >
-        <MemberBadge address={trade.trader} />
+        <MemberBadge address={getAddress(trade.trader)} />
         {trade.isBuy ? "BUY" : "SELL"}
-        <MemberBadge color={trade.isBuy ? "success" : "danger"} address={trade.subject} />
+        <MemberBadge color={trade.isBuy ? "success" : "danger"} address={getAddress(trade.subject)} />
         <IonBadge color='primary'>
             {formatEth(trade.ethAmount)}
         </IonBadge>

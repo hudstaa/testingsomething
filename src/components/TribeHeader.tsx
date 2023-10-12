@@ -1,4 +1,4 @@
-import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar } from "@ionic/react"
+import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink } from "@ionic/react"
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useLocation } from "react-router"
 import { BalanceChip } from "./BalanceBadge";
@@ -10,8 +10,9 @@ import { MemberBadge } from "./MemberBadge";
 import { useTitle } from "../hooks/useTitle";
 import { flameOutline } from "ionicons/icons";
 import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
-const provider = new TwitterAuthProvider();
+import { getMessaging } from "firebase/messaging";
 import { getAuth } from "firebase/auth";
+export const provider = new TwitterAuthProvider();
 
 export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ title, sticky = true }) => {
     const { pathname } = useLocation();
@@ -38,6 +39,10 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
     }
     const auth = getAuth();
     const fireUser = auth.currentUser;
+
+    useEffect(() => {
+
+    }, [])
     useEffect(() => {
         auth.onAuthStateChanged(function (user) {
             if (user) {
@@ -50,7 +55,9 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
     const toolbar = useMemo(() => <IonToolbar>
         <IonModal ref={modalRef}>
         </IonModal>
-        <IonTitle color={title.includes('Activity') ? "danger" : title.includes('Discover') ? "success" : 'tertiary'}>{title}</IonTitle>
+        <IonRouterLink routerLink="/" routerDirection="root">
+            <IonTitle color={title.includes('Activity') ? "danger" : title.includes('Discover') ? "success" : 'tertiary'}>{title}</IonTitle>
+        </IonRouterLink>
         <IonButtons slot='start'>
             <IonButton routerLink={'/'}>
                 <IonIcon icon={flameOutline} />
@@ -85,7 +92,6 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
                             const credential = TwitterAuthProvider.credentialFromError(error);
                             // ...
                         });
-
                 }}>
                     Connect Twitter
                 </IonButton> :

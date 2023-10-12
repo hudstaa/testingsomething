@@ -8,7 +8,7 @@ import { getEnv, loadKeys, storeKeys } from '../lib/xmtp';
 import { useQuery } from '@apollo/client';
 import { TribeContent } from '../components/TribeContent';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { paperPlane, pushOutline } from 'ionicons/icons';
+import { alertOutline, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
 import { MemberBadge, MemberChip } from '../components/MemberBadge';
 import { Client, Conversation, ConversationV2, DecodedMessage, MessageV2 } from '@xmtp/xmtp-js';
 import { useTitle } from '../hooks/useTitle';
@@ -22,8 +22,9 @@ import { uuid } from 'uuidv4';
 
 
 import { Firestore, addDoc, arrayUnion, collection, doc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, updateDoc } from "firebase/firestore";
-import { app } from '../App';
+import { app, messaging } from '../App';
 import { setCode } from 'viem/_types/actions/test/setCode';
+import { getMessaging } from 'firebase/messaging';
 
 export const WriteMessage: React.FC<{ address: string, sendMessage: (content: string) => void }> = ({ address, sendMessage }) => {
     const [newNote, setNewNote] = useState<string | undefined>(undefined)
@@ -100,7 +101,7 @@ const Room: React.FC = () => {
             });
         }
         fetchMessages();
-
+        console.log("CHANNEL", channel);
         onSnapshot(messagesCol
             , (channelDocs) => {
                 const changes = channelDocs.docChanges()
@@ -138,7 +139,15 @@ const Room: React.FC = () => {
 
     return <IonPage>
         <IonContent ref={contentRef}>
-            <TribeHeader title={(channelOwner?.twitterName || address) + " Tribe"} sticky={false} />
+            {useMemo(() => <TribeHeader sticky={false} title={channelOwner?.twitterName + ' tribe' || address} />, [channelOwner, address])}
+            <IonItem color='light' >
+                <IonButtons slot='end'>
+                    <IonButton onClick={() => {
+                    }}>
+                        <IonIcon icon={notificationsOff} />
+                    </IonButton>
+                </IonButtons>
+            </IonItem>
             <IonList style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
                 {messageList}
             </IonList>

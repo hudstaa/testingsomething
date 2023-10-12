@@ -16,7 +16,6 @@ import { useTitle } from '../hooks/useTitle';
 
 const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  console.log(buyPrice);
   return <IonBadge>
     {formatEther(buyPrice)}
   </IonBadge>
@@ -29,7 +28,6 @@ const Discover: React.FC = () => {
   useEffect(() => {
     setTitle('discover')
   }, [])
-
   return (
     <IonPage>
       <TribeHeader title='Discover' />
@@ -37,10 +35,10 @@ const Discover: React.FC = () => {
         <IonList>
           {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>
             <IonAvatar>
-              <IonImg src={member?.twitterPfpUrl} />
+              <IonImg src={member?.twitterPfp} />
             </IonAvatar>
             <IonText>
-              {member!.twitterName}
+              {member?.twitterName}
             </IonText>
             <IonButtons slot='end'><BuyPriceBadge address={member?.address} /></IonButtons>
           </IonItem>)}

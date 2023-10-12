@@ -31,7 +31,7 @@ export default function useBuyPass(subject: Address, shares: bigint) {
 
     const { config } = usePrepareContractWrite({
         ...tribePassesContract,
-        functionName: 'buyPasses',
+        functionName: 'buyBoosts',
         chainId: baseGoerli.id,
         args: [subject, shares, '0xCc879Ab4DE63FC7Be6aAca522285D6F5d816278e'],
         value: buyPrice as bigint
