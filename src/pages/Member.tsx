@@ -1,10 +1,10 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
 import { useClient, useConversations, useStartConversation, useCanMessage } from '@xmtp/react-sdk';
 import { usePrivy } from '@privy-io/react-auth';
-import { chatboxEllipsesOutline, logoTwitter, ticketOutline } from 'ionicons/icons';
+import { chatboxEllipsesOutline, logoTwitter, personOutline, ticketOutline } from 'ionicons/icons';
 import { baseGoerli } from 'viem/chains';
 import useBuyPass from '../hooks/useBuyPass';
 import { Address, formatEther, formatUnits } from 'viem';
@@ -20,6 +20,8 @@ import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
 import { formatEth } from '../lib/sugar';
 import { MemberChip } from '../components/MemberBadge';
+import { FriendPortfolioChip } from '../components/FriendPortfolioChip';
+import useBoosters from '../hooks/useBoosters';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -32,28 +34,35 @@ const Member: React.FC = () => {
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
     const { ready, wallet } = usePrivyWagmi()
-
+    const boosters: any = useBoosters(address)
     return (
         <IonPage>
-            {useMemo(() => <TribeHeader title={member?.twitterName || address} />, [member, address])}
+            {useMemo(() => <TribeHeader color='tertiary' title={
+                member?.twitterName} />, [member, address])}
             <TribeContent fullscreen>
                 <IonCard>
-                    <IonRow>
-                        <IonCol size='4'>
-                            <IonImg src={member?.twitterPfp} style={{ borderRadius: '200px!important' }} />
-                        </IonCol>
-                        <IonCol size='8'>
+                    <IonCardHeader className='ion-image-center'>
+                        <IonCardTitle>
 
-                            {user && typeof balance != 'undefined' && <IonChip color='tertiary'>
-                                <IonIcon icon={ticketOutline} />
-                                <IonText>
-                                    You Own (
-                                    {formatUnits(balance, 0)}/{typeof supply != 'undefined' && formatUnits(supply, 0)}) Passes
-                                </IonText>
-                            </IonChip>}
-                            {/* <MemberGraph address={address} /> */}
-                        </IonCol>
-                    </IonRow>
+                            <IonAvatar>
+                                <IonImg src={member?.twitterPfp || personOutline} style={{ width: 50, height: 50 }} />
+                            </IonAvatar>
+                        </IonCardTitle>
+                    </IonCardHeader>
+                    <IonCardHeader className='ion-image-center'>
+                        <IonCardSubtitle>
+                            <FriendPortfolioChip address={member?.address} />
+                        </IonCardSubtitle>
+                    </IonCardHeader>
+                    <IonCardContent>
+                        <IonListHeader>Holders</IonListHeader>
+                        {typeof boosters !== 'undefined' && (boosters[0]).map((holder: any, i: number) => <IonItem lines='none'>
+                            <MemberChip address={holder} />
+                            <IonButtons slot='end'>
+                                {formatUnits(boosters[1][i], 0)}
+                            </IonButtons>
+                        </IonItem>)}
+                    </IonCardContent>
                 </IonCard>
 
                 <IonList>

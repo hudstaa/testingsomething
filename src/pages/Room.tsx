@@ -138,16 +138,8 @@ const Room: React.FC = () => {
     }, [address])
 
     return <IonPage>
+        {useMemo(() => <TribeHeader image={channelOwner?.twitterPfp} sticky={true} title={channelOwner?.twitterName + ' tribe' || address} />, [channelOwner, address])}
         <IonContent ref={contentRef}>
-            {useMemo(() => <TribeHeader sticky={false} title={channelOwner?.twitterName + ' tribe' || address} />, [channelOwner, address])}
-            <IonItem color='light' >
-                <IonButtons slot='end'>
-                    <IonButton onClick={() => {
-                    }}>
-                        <IonIcon icon={notificationsOff} />
-                    </IonButton>
-                </IonButtons>
-            </IonItem>
             <IonList style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
                 {messageList}
             </IonList>

@@ -5,6 +5,8 @@ import { useMember } from "../hooks/useMember"
 import { useEffect } from "react"
 import { TribeHeader, provider } from "../components/TribeHeader"
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { doc, getFirestore, onSnapshot } from "firebase/firestore"
+import { app } from "../App"
 
 export const OnBoarding: React.FC = () => {
 
@@ -12,12 +14,11 @@ export const OnBoarding: React.FC = () => {
     const auth = getAuth()
     const { user } = usePrivy()
     const walletAddress = user?.wallet?.address;
-    const member = useMember(x => x.getFriend(walletAddress))
+    const member = useMember(x => x.getFriend(walletAddress, true))
     const loading = useMember(x => x.isLoading(walletAddress));
     useEffect(() => {
         if (user && auth && !loading) {
-            console.log(user);
-            typeof member === null && fetch('https://privvysync-5vxicp27ma-uc.a.run.app?userDid=' + user.id.replaceAll('did:privy:', '')).then(res => {
+            member === null && fetch('https://privvysync-5vxicp27ma-uc.a.run.app?userDid=' + user.id.replaceAll('did:privy:', '')).then(res => {
                 console.log(res);
             })
         }
@@ -67,7 +68,7 @@ export const OnBoarding: React.FC = () => {
                 </IonButton> : <IonButton color='light'>✅Connected to Tribe</IonButton>}
                 <br />
 
-                {typeof member !== null && auth.currentUser && <IonButton onClick={() => {
+                {typeof member !== null && auth.currentUser && typeof member?.twitterPfp === 'undefined' && <IonButton onClick={() => {
                     const savePFPFunction = httpsCallable(getFunctions(), 'saveTwitterPFP');
                     savePFPFunction()
                         .then(result => {

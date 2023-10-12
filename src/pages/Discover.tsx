@@ -12,6 +12,7 @@ import useBuyPass from '../hooks/useBuyPass';
 import { Address, formatEther } from 'viem';
 import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
+import { personOutline } from 'ionicons/icons';
 
 
 const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
@@ -35,7 +36,7 @@ const Discover: React.FC = () => {
         <IonList>
           {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>
             <IonAvatar>
-              <IonImg src={member?.twitterPfp} />
+              <IonImg src={member?.twitterPfp || personOutline} />
             </IonAvatar>
             <IonText>
               {member?.twitterName}

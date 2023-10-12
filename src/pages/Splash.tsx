@@ -1,16 +1,14 @@
 import { IonButton, IonCol, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { TribeContent } from '../components/TribeContent';
-import { chatboxEllipsesOutline, journalOutline, leafSharp, manOutline, pulseOutline } from 'ionicons/icons';
+import { chatboxEllipsesOutline, flagOutline, homeOutline, journalOutline, leafSharp, manOutline, pulseOutline } from 'ionicons/icons';
+import { TribeHeader } from '../components/TribeHeader';
 
 const Splash: React.FC = () => {
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>TRIBE</IonTitle>
-                </IonToolbar>
-            </IonHeader>
+
+            <TribeHeader color='success' title={'TRIBE'} />
             <TribeContent fullscreen>
                 <IonGrid>
                     <IonRow>
@@ -29,7 +27,7 @@ const Splash: React.FC = () => {
                                 </IonText>
                             </IonButton>
                         </IonCol>
-                        <IonCol>
+                        {/* <IonCol>
 
                             <IonButton style={{ height: 200 }} size='large' expand='full' color='light' routerLink='/chat'>
                                 <IonText color='primary'>
@@ -37,17 +35,17 @@ const Splash: React.FC = () => {
                                     Chat <IonIcon icon={chatboxEllipsesOutline} />
                                 </IonText>
                             </IonButton>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
+                        </IonCol> */}
                         <IonCol>
                             <IonButton style={{ height: 200 }} size='large' expand='full' color='light' routerLink='/onboarding'>
-                                <IonText color='tertiary'>
+                                <IonText color='primary'>
 
                                     Join <IonIcon icon={manOutline} />
                                 </IonText>
                             </IonButton>
                         </IonCol>
+                    </IonRow>
+                    <IonRow>
                     </IonRow>
 
                 </IonGrid>

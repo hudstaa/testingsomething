@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { Trade } from '../models/Trade'
-import { Member } from '../models/Member'
 
 
 

@@ -8,12 +8,12 @@ import {
 import { useCallback, useState } from 'react'
 import { tribePassesContract } from '../lib/constants'
 
-export default function usePassBalance(wallet: Address, subjects: Address[]) {
+export default function useBoosters(channel: Address|string) {
 
     const { data: balance } = useContractRead({
         ...tribePassesContract,
-        functionName: 'balanceOfBatch',
-        args: [Array(subjects.length).fill(wallet), subjects],
+        functionName: 'ownerOf',
+        args: [channel],
         watch: true
     })
 

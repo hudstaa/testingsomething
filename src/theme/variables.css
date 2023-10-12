@@ -3,11 +3,30 @@ http://ionicframework.com/docs/theming/ */
 
 @font-face {
   font-family: 'SF-Pro';
-  src: url("/fonts/SF-Pro-Rounded-Medium.otf") format("opentype");
+  src: url("/fonts/SF-Pro-Rounded-Light.otf") format("opentype");
 }
+
 
 * {
   font-family: 'SF-Pro' !important;
+}
+
+.ion-image-center {
+  display: flex;
+  justify-content: center !important;
+  /* Align horizontally */
+  align-items: center !important;
+  /* Align vertically */
+  height: 100%;
+  /* Take full height of the toolbar */
+}
+
+.ion-image-center img {
+  /* Adjust the height or width as needed */
+  height: auto;
+  /* Adjust this based on your needs */
+  width: auto;
+  /* Maintain the image's aspect ratio */
 }
 
 /** Ionic CSS Variables **/

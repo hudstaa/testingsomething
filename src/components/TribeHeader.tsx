@@ -1,10 +1,10 @@
-import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink } from "@ionic/react"
+import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink, IonNav, IonBackButton, IonRow, IonGrid, IonAvatar, IonCol, IonCard, IonChip, IonText, IonCardTitle } from "@ionic/react"
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useLocation } from "react-router"
 import { BalanceChip } from "./BalanceBadge";
 import { Address } from "viem";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useEffect, useMemo, useRef, useState } from "react";
 import { baseGoerli } from "viem/chains";
 import { MemberBadge } from "./MemberBadge";
 import { useTitle } from "../hooks/useTitle";
@@ -12,9 +12,10 @@ import { flameOutline } from "ionicons/icons";
 import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
 import { getMessaging } from "firebase/messaging";
 import { getAuth } from "firebase/auth";
+import { FriendPortfolioChip } from "./FriendPortfolioChip";
 export const provider = new TwitterAuthProvider();
 
-export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ title, sticky = true }) => {
+export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string }> = ({ title, sticky = true, color, image }) => {
     const { pathname } = useLocation();
     const { authenticated, linkTwitter, user, login } = usePrivy()
     const { wallets } = useWallets();
@@ -53,16 +54,24 @@ export const TribeHeader: React.FC<{ title: string, sticky?: boolean }> = ({ tit
         });
     }, [auth])
     const toolbar = useMemo(() => <IonToolbar>
+        <IonButtons slot='start'>
+            <IonBackButton />
+        </IonButtons>
         <IonModal ref={modalRef}>
         </IonModal>
-        <IonRouterLink routerLink="/" routerDirection="root">
-            <IonTitle color={title.includes('Activity') ? "danger" : title.includes('Discover') ? "success" : 'tertiary'}>{title}</IonTitle>
+        <IonRouterLink routerLink="/" routerDirection="back">
+            <IonGrid className="ion-image-center">
+                {image ?
+                    <>
+                        <IonAvatar>
+                            <IonImg src={image} />
+                        </IonAvatar>                 </>
+                    : <IonTitle color={color}>
+                        {title}
+                    </IonTitle>
+                }
+            </IonGrid>
         </IonRouterLink>
-        <IonButtons slot='start'>
-            <IonButton routerLink={'/'}>
-                <IonIcon icon={flameOutline} />
-            </IonButton>
-        </IonButtons>
         <IonButtons slot='end'>
             {authenticated && user ? typeof fireUser === null ?
                 <IonButton onClick={() => {
