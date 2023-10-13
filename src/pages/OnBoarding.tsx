@@ -1,8 +1,8 @@
-import { IonButton, IonContent, IonItem, IonPage, IonTitle } from "@ionic/react"
+import { IonButton, IonContent, IonItem, IonLoading, IonModal, IonPage, IonTitle } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
 import { TwitterAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
 import { useMember } from "../hooks/useMember"
-import { useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { TribeHeader, provider } from "../components/TribeHeader"
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { doc, getFirestore, onSnapshot } from "firebase/firestore"
@@ -12,77 +12,76 @@ export const OnBoarding: React.FC = () => {
 
 
     const auth = getAuth()
-    const { user } = usePrivy()
+    const { user, linkTwitter, logout } = usePrivy()
     const walletAddress = user?.wallet?.address;
     const member = useMember(x => x.getFriend(walletAddress, true))
     const loading = useMember(x => x.isLoading(walletAddress));
+    const [refresh, setRefresh] = useState<number>(0)
+    const [tribeLoading, setLoading] = useState<boolean>(false)
     useEffect(() => {
-        if (user && auth && !loading) {
-            member === null && fetch('https://privvysync-5vxicp27ma-uc.a.run.app?userDid=' + user.id.replaceAll('did:privy:', '')).then(res => {
-                console.log(res);
-            })
-        }
-    }, [member, user, auth])
-    console.log(member, "member")
-    return <IonPage>
-        <IonContent>
-            <TribeHeader title={"Onboarding"} />
-            <IonTitle className="ion-text-center">
+        auth.onAuthStateChanged(() => {
+            setRefresh(x => x + 1);
+            console.log("AUTH STATE CHANGED");
+        })
+    }, [])
+    return <IonContent>
+        {useMemo(() => <IonTitle className="ion-text-center">
+            {(auth.currentUser === null) ? <IonButton onClick={() => {
+                signInWithPopup(auth, provider)
+                    .then((result) => {
+                        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+                        // You can use these server side with your app's credentials to access the Twitter API.
+                        const credential = TwitterAuthProvider.credentialFromResult(result);
+                        if (credential === null) {
+                            return;
+                        }
+                        const token = credential.accessToken;
+                        const secret = credential.secret;
 
-                {auth.currentUser === null ? <IonButton onClick={() => {
-                    signInWithPopup(auth, provider)
-                        .then((result) => {
-                            // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-                            // You can use these server side with your app's credentials to access the Twitter API.
-                            const credential = TwitterAuthProvider.credentialFromResult(result);
-                            if (credential === null) {
-                                return;
-                            }
-                            const token = credential.accessToken;
-                            const secret = credential.secret;
-
-                            // The signed-in user info.
-                            const user = result.user;
-                            // IdP data available using getAdditionalUserInfo(result)
-                            // ...
-                        }).catch((error) => {
-                            // Handle Errors here.
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-                            // The email of the user's account used.
-                            const email = error.customData.email;
-                            // The AuthCredential type that was used.
-                            const credential = TwitterAuthProvider.credentialFromError(error);
-                            // ...
-                        });
+                        // The signed-in user info.
+                        const user = result.user;
+                        // IdP data available using getAdditionalUserInfo(result)
+                        // ...
+                        setRefresh(x => x + 1);
+                    })
+            }}>
+                Connect to firebase
+            </IonButton> : <IonButton onClick={() => {
+                auth.signOut();
+                console.log(auth);
+            }} color='light'>✅Connected to Firestore with {auth.currentUser.displayName}</IonButton>}
+            <br />
+            {<>
+                {user === null ? <IonButton onClick={() => {
+                    linkTwitter();
                 }}>
-                    Connect to firebase
-                </IonButton> : <IonButton color='light'>✅Connected to Firestore</IonButton>}
-                <br />
-                {user === null ? <IonButton>
                     Connect to Privvy
-                </IonButton> : <IonButton color={'light'}>✅Connected to Privvy</IonButton>}
-                <br />
-                {member == null ? <IonButton>
-                    Member not found
-                </IonButton> : <IonButton color='light'>✅Connected to Tribe</IonButton>}
-                <br />
 
-                {typeof member !== null && auth.currentUser && typeof member?.twitterPfp === 'undefined' && <IonButton onClick={() => {
-                    const savePFPFunction = httpsCallable(getFunctions(), 'saveTwitterPFP');
-                    savePFPFunction()
-                        .then(result => {
-                            console.log(result.data);
-                        })
-                        .catch(error => {
-                            console.error('Error saving PFP:', error);
-                        });
+                </IonButton> : <IonButton onClick={() => {
+                    logout();
+                }} color={'light'}>✅Connected to Privvy with {user.twitter?.name}</IonButton>}
+            </>}
+            <br />
 
-                }}>
-                    Sync Twitter PFP
-                </IonButton>}
-            </IonTitle>
+            {member === null && user !== null && auth.currentUser !== null && auth.currentUser?.providerData[0]?.uid === user.twitter?.subject && < IonButton onClick={() => {
+                const syncPrivvy = httpsCallable(getFunctions(app), 'syncPrivvy',);
+                setLoading(true);
+                syncPrivvy({ userDid: user!.id.replaceAll('did:privy:', '') })
+                    .then(result => {
+                        console.log(result.data);
+                        setLoading(false);
 
-        </IonContent>
-    </IonPage >
+                    })
+                    .catch(error => {
+                        setLoading(false);
+                        console.log(error);
+                    });
+
+            }}>
+                Join Tribe
+            </IonButton>}
+            {user !== null && auth.currentUser !== null && auth.currentUser?.providerData[0]?.uid === user.twitter?.subject ? <></> : <>{user !== null && auth.currentUser !== null && "Connected with different accounts!"}</>}
+        </IonTitle>, [refresh, member, loading, walletAddress, user])}
+        <IonLoading isOpen={tribeLoading} />
+    </IonContent >
 }

@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 import {
   IonApp,
+  IonPage,
   IonRouterOutlet,
   setupIonicReact
 } from '@ionic/react';
@@ -129,6 +130,7 @@ const App: React.FC = () => {
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: "dark" }, additionalChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
+
           <IonReactHashRouter>
             <IonRouterOutlet>
               <Route exact path="/discover">
@@ -153,7 +155,9 @@ const App: React.FC = () => {
                 <Splash />
               </Route>
               <Route path="/onboarding" exact>
-                <OnBoarding />
+                <IonPage>
+                  <OnBoarding />
+                </IonPage>
               </Route>
               <Route path="/member/:address" exact>
                 <Member />

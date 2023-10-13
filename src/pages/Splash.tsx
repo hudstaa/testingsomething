@@ -27,7 +27,7 @@ const Splash: React.FC = () => {
                                 </IonText>
                             </IonButton>
                         </IonCol>
-                        {/* <IonCol>
+                        <IonCol>
 
                             <IonButton style={{ height: 200 }} size='large' expand='full' color='light' routerLink='/chat'>
                                 <IonText color='primary'>
@@ -35,15 +35,15 @@ const Splash: React.FC = () => {
                                     Chat <IonIcon icon={chatboxEllipsesOutline} />
                                 </IonText>
                             </IonButton>
-                        </IonCol> */}
-                        <IonCol>
+                        </IonCol>
+                        {/* <IonCol>
                             <IonButton style={{ height: 200 }} size='large' expand='full' color='light' routerLink='/onboarding'>
                                 <IonText color='primary'>
 
                                     Join <IonIcon icon={manOutline} />
                                 </IonText>
                             </IonButton>
-                        </IonCol>
+                        </IonCol> */}
                     </IonRow>
                     <IonRow>
                     </IonRow>

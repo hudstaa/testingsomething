@@ -27,25 +27,24 @@ query MyQuery($hash:String!) {
 const Chat: React.FC = () => {
     const get = useMember(x => x.getFriend);
     const cache = useMember(x => x.friendCache);
+    const loadCache = useMember(x => x.loadCache);
     const { user } = usePrivy()
     const address = user?.wallet?.address;
     const { data } = useQuery(myPassesQuery, { variables: { address } });
     const accounts = Object.keys(cache);
-    const holders = useBoosters(address as Address) as bigint[]
-    console.log(holders);
+    useEffect(() => {
+        loadCache();
+    }, [])
     return (
         <IonPage>
             <TribeHeader title='Tribes' />
             <IonContent>
                 <IonList>
-                    {/* {accounts.map((account, i) => balances && balances[i] > 0n ? <IonItem lines='none' routerLink={'/room/' + account}>
+                    {accounts.map((account, i) => <IonItem lines='none' routerLink={'/room/' + account}>
                         <MemberChip address={account} />
                         <IonButtons slot='end'>
-                            <IonChip>
-                                {balances && formatUnits(balances[i], 0)} <IonIcon icon={ticketOutline} />
-                            </IonChip>
                         </IonButtons>
-                    </IonItem> : <></>)} */}
+                    </IonItem>)}
                 </IonList>
             </IonContent>
         </IonPage >

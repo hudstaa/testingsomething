@@ -9,10 +9,15 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
     const [points, setPoints] = useState<any>(undefined)
     useEffect(() => {
         member && member.friendTech && getPoints(member?.friendTech).then((res) => {
-            console.log(res);
+            console.log(res, "POINTS");
             setPoints(res);
+        }).catch(() => {
+            setPoints(null)
         })
     }, [member])
+    if (member && typeof member.friendTech === 'undefined' || points === null) {
+        return <></>
+    }
     return typeof points !== 'undefined' ? <IonButton fill="clear">
         {points.totalPoints} Points
         <IonBadge color='light'>

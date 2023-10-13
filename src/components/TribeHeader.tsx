@@ -13,16 +13,19 @@ import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
 import { getMessaging } from "firebase/messaging";
 import { getAuth } from "firebase/auth";
 import { FriendPortfolioChip } from "./FriendPortfolioChip";
+import { useMember } from "../hooks/useMember";
+import { OnBoarding } from "../pages/OnBoarding";
 export const provider = new TwitterAuthProvider();
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string }> = ({ title, sticky = true, color, image }) => {
     const { pathname } = useLocation();
-    const { authenticated, linkTwitter, user, login } = usePrivy()
+    const { authenticated, linkTwitter, user } = usePrivy()
     const { wallets } = useWallets();
 
     const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
-    const [fireAuth, setFireAuth] = useState<boolean>(false);
     const modalRef = useRef<HTMLIonModalElement>(null)
+    const [walletAddress, setWalletAddress] = useState<string>(user?.wallet?.address || "")
+    const loading = useMember(x => x.isLoading(user?.wallet?.address))
     useEffect(() => {
         wallets.forEach((wallet) => {
             if (wallet.connectorType === 'embedded') {
@@ -32,46 +35,26 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [wallets, activeWallet]);
     useEffect(() => {
         activeWallet && activeWallet.switchChain(baseGoerli.id);
+        activeWallet && setWalletAddress(activeWallet.address)
     }, [activeWallet])
-    if (user && user.wallet && typeof user.wallet.address === 'undefined') {
-        return <IonHeader>
-            {user?.twitter?.name}
-        </IonHeader>
-    }
     const auth = getAuth();
     const fireUser = auth.currentUser;
-
+    const member = useMember(x => x.getFriend(walletAddress, true))
     useEffect(() => {
 
     }, [])
-    useEffect(() => {
-        auth.onAuthStateChanged(function (user) {
-            if (user) {
-                setFireAuth(true);
-            } else {
-                setFireAuth(false);
-            }
-        });
-    }, [auth])
+
     const toolbar = useMemo(() => <IonToolbar>
         <IonButtons slot='start'>
             <IonBackButton />
         </IonButtons>
-        <IonModal ref={modalRef}>
-        </IonModal>
-        <IonRouterLink routerLink="/" routerDirection="back">
-            <IonGrid className="ion-image-center">
-                {image ?
-                    <>
-                        <IonAvatar>
-                            <IonImg src={image} />
-                        </IonAvatar>                 </>
-                    : <IonTitle color={color}>
-                        {title}
-                    </IonTitle>
-                }
-            </IonGrid>
+        <IonRouterLink routerLink={'/'} routerDirection="none">
+
+            <IonTitle color={color}>
+                {title}
+            </IonTitle>
         </IonRouterLink>
+
         <IonButtons slot='end'>
             {authenticated && user ? typeof fireUser === null ?
                 <IonButton onClick={() => {
@@ -104,21 +87,29 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                 }}>
                     Connect Twitter
                 </IonButton> :
-                <IonButton routerLink={'/member/' + user.wallet!.address}>
-                    {user.wallet ? <MemberBadge address={user.wallet!.address} /> : user.twitter?.name}
+                <IonButton routerLink={'/member/' + walletAddress}>
+                    {user.wallet ? <MemberBadge address={user.wallet.address} /> : user.twitter?.name}
                 </IonButton> : <IonButton onClick={() => {
                     linkTwitter()
                 }}>
                 Login
             </IonButton>}
         </IonButtons>
-    </IonToolbar>, [user, fireUser, fireAuth])
+    </IonToolbar >, [user, fireUser, title, member])
     if (!sticky) {
         return toolbar;
     }
+    if (user && user.wallet && typeof user.wallet.address === 'undefined') {
+        return <IonHeader>
+            {user?.twitter?.name}
+        </IonHeader>
+    }
+
     return <IonHeader>
         {toolbar}
-
+        <IonModal isOpen={member === null} ref={modalRef}>
+            <OnBoarding />
+        </IonModal>
     </IonHeader>
 
 }

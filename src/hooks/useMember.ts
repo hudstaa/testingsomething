@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { getFirestore } from '@firebase/firestore';
 import { app } from '../App';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, onSnapshot, query, where } from 'firebase/firestore';
 import { getAddress } from 'viem';
 
 
@@ -10,18 +10,20 @@ export interface Member {
     twitterUsername: string;
     twitterPfp: string;
     address: string;
-    friendTech?:string
+    friendTech?: string
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;
     loading: Record<string, boolean>;
+    watching: Record<string, boolean>;
     error: Record<string, string | null>;
     setFriendData: (address: string, data: Member) => void;
     setFriendsData: (data: Member[]) => void;
-    isLoading: (address: string|undefined) => boolean;
+    isLoading: (address: string | undefined) => boolean;
+    isWatching: (address: string | undefined) => boolean;
     setError: (address: string, error: string | null) => void;
-    fetchFriendData: (address: string,watch?:boolean) => void;
-    getFriend: (address: string|undefined,watch?:boolean) => Member | null;
+    fetchFriendData: (address: string, watch?: boolean) => void;
+    getFriend: (address: string | undefined, watch?: boolean) => Member | null;
     getError: (address: string) => string | null | undefined;
     loadCache: () => void
 }
@@ -29,6 +31,7 @@ interface FriendStore {
 export const useMember = create<FriendStore>((set, store) => ({
     friendCache: {},
     loading: {},
+    watching: {},
     error: {},
     setFriendsData: (data) => {
         const cache: Record<string, Member> = {};
@@ -42,6 +45,13 @@ export const useMember = create<FriendStore>((set, store) => ({
         set({ friendCache: { ...store().friendCache, ...cache }, loading: { ...store().loading, ...loadingCache }, error: { ...store().error, ...errorCache } })
     },
     loadCache: () => {
+        const db = getFirestore(app);
+        const q = query(collection(db, "member"), limit(10));
+
+        getDocs(q).then((memberDocs) => {
+            store().setFriendsData(memberDocs.docs.map(x => x.data()) as any);
+        })
+
         // fetch("https://bapgekqmbczrdgeafeck.supabase.co/functions/v1/privvyUsers").then((users) => {
 
         //     users.json().then((res: { data: [{ linked_accounts: [{ type: string, address: string, subject: string, name: string, username: string, connector_type: string }] }] }) => {
@@ -62,63 +72,113 @@ export const useMember = create<FriendStore>((set, store) => ({
             loading: { ...state.loading, [address]: false },
             error: { ...state.error, [address]: null },
         })),
-    isLoading: (address) => store().loading[address||''],
+    isLoading: (address) => store().loading[address || ''],
+    isWatching: (address) => store().loading[address || ''],
     setError: (address, error) =>
         set(state => ({ error: { ...state.error, [address]: error } })),
-    getFriend: (address,watch=false) => {
-        if(typeof address==='undefined'||typeof address == 'undefined' || address.length === 0 ){
+    getFriend: (address, watch = false) => {
+        if (typeof address === 'undefined' || typeof address == 'undefined' || address.length === 0) {
             return null;
         }
-        const addy=getAddress(address) as string;
-        
-        if(store().loading[addy]){
+        const addy = getAddress(address) as string;
+
+        if (store().loading[addy]) {
             return null;
         }
         if (store().error[addy]) {
-            console.log("Error",store().error[addy])
             return null;
         }
         if (store().friendCache[addy]) {
             return store().friendCache[addy]!;
         }
-        addy&&setTimeout(() => {
-            store().fetchFriendData(addy,watch);
-        }, 0);
+        if (store().watching[addy] || store().error[addy]) {
+            return null;
+        }
+
+        console.log("trigger fetch")
+        store().fetchFriendData(addy, watch);
         return null;
     },
     getError: (address) => store().error[address],
-    fetchFriendData: async (address,watch=false) => {
-        if (store().isLoading(address)) {
+    fetchFriendData: async (address, watch = false) => {
+        if (store().isLoading(address) || store().isWatching(address) || store().error[address]) {
             return;
         }
         try {
-            console.log("FETCHING",address);
+            console.log("FETCHING", address);
             set(state => ({ loading: { ...state.loading, [address]: true } }));
             const db = getFirestore(app);
-            if(watch){
-                onSnapshot(doc(db, "member", address),(friend)=>{
-                    set({friendCache:{...store().friendCache,[address]:friend.data()} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:null}})
-                    console.log("GOT DOC");                    
-                },(e)=>{
-                    console.log("CUGHT");
-                    set({friendCache:{...store().friendCache,[address]:null} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:e.message}})
+
+            const memberQuery = query(collection(db, "member"), where("address", "==", address));
+
+            if (watch) {
+                console.log("WATCHING", address);
+                onSnapshot(memberQuery, (snapshot) => {
+                    if (!snapshot.empty) {
+                        const friend = snapshot.docs[0]; // Assuming only one match, otherwise you'd loop through snapshot.docs
+                        set({
+                            friendCache: { ...store().friendCache, [address]: friend.data() as Member },
+                            loading: { ...store().loading, [address]: false },
+                            error: { ...store().error, [address]: null }
+                        });
+                    } else {
+                        set({
+                            loading: { ...store().loading, [address]: false },
+                            error: { ...store().error, [address]: "doesn't exist" }
+                        });
+                    }
+                }, (e) => {
+                    set({
+                        loading: { ...store().loading, [address]: false },
+                        error: { ...store().error, [address]: e.message }
+                    });
                 });
-            }else{
-                await getDoc(doc(db, "member", address)).then((friend)=>{
-                    set({friendCache:{...store().friendCache,[address]:friend.data()} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:null}})
-                    console.log("GOT DOC");
-                }).catch((e)=>{
-                    console.log("CUGHT");
-                    set({friendCache:{...store().friendCache,[address]:null} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:e.message}})
+            } else {
+                await getDocs(memberQuery).then((snapshot) => {
+                    console.log("got docs", snapshot.docs);
+                    if (snapshot.empty) {
+                        set({
+                            loading: { ...store().loading, [address]: false },
+                            error: { ...store().error, [address]: "doesn't exist" }
+                        });
+                    } else {
+                        const friend = snapshot.docs[0]; // Assuming only one match, otherwise you'd loop through snapshot.docs
+                        set({
+                            friendCache: { ...store().friendCache, [address]: friend.data() as Member },
+                            loading: { ...store().loading, [address]: false },
+                            error: { ...store().error, [address]: null }
+                        });
+                    }
                 });
-    
             }
+            // if(watch){
+            //     set({watching:{...store().watching,[address]:true}})
+            //     console.log("WATCHINGSDASDASD",address)
+            //     onSnapshot(doc(db, "member", address),(friend)=>{
+            //         set({friendCache:{...store().friendCache,[address]:friend.data()} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:null}})
+            //     },(e)=>{
+            //         set({friendCache:{...store().friendCache,[address]:null} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:e.message}})
+            //     });
+            // }else{
+            //     await getDoc(doc(db, "member", address)).then((friend)=>{
+            //         console.log("got doc",friend.data());;
+            //         if(typeof friend.data()==='undefined'){
+            //             set({friendCache:{...store().friendCache,[address]:friend.data()} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:"doesn't exist"}})
+            //         }else{
+            //             set({friendCache:{...store().friendCache,[address]:friend.data()} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:null}})
+            //         }
+            //     }).catch((e)=>{
+            //         console.log("err")
+            //         set({friendCache:{...store().friendCache,[address]:null} as any,loading:{...store().loading,[address]:false},error:{...store().error,[address]:e.message}})
+            //     });
+
+            // }
         } catch (err: any) {
-            console.log("CUGHT");
+            console.log("CUGHT", err);
             set(state => ({ error: { ...state.error, [address]: err.message } }));
         } finally {
-            console.log("FINALLY");
-            !watch && set(state => ({ loading: { ...state.loading, [address]: false } }));
+            console.log("FINALLY", address);
+            // !watch &&store().isLoading(address)&& set(state => ({ loading: { ...state.loading, [address]: false } }));
         }
     },
 }));

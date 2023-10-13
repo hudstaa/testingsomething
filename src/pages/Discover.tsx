@@ -25,9 +25,11 @@ const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) =
 const Discover: React.FC = () => {
   const discoverStats = useDiscover(x => x.stats());
   const members = useMember(x => x.friendCache)
+  const { loadCache } = useMember()
   const { setTitle } = useTitle();
   useEffect(() => {
     setTitle('discover')
+    loadCache();
   }, [])
   return (
     <IonPage>

@@ -14,7 +14,7 @@ export default function useSellPass(subject: Address, shares: bigint) {
     const [error, setError] = useState<any>();
     const [status, setStatus] = useState<string>("init");
     const onError = useCallback((e: unknown) => {
-        console.log("ERROR", e);
+        setStatus('error')
         setError(e);
     }, [])
 

@@ -38,10 +38,11 @@ export const useGroupMessages = create<groupMessageHook>((set, store) => ({
        console.log("MODIFY",message);
     }, 
     pushMessages: (address, messages) => {
+        console.log("pushing",address,messages.length)
         const latestMessages: Message[] = [...store().getMessages(address), ...messages.map(x=>({...x,sent:x.sent===null?new Timestamp(Date.now()/1000,0):x.sent}))];
-        set({ groupMessages: { ...store().groupMessages, [address.toLowerCase()]: uniq(latestMessages).sort((a, b) => a.sent.seconds- b.sent.seconds) } })
+        set({ groupMessages: { ...store().groupMessages, [address]: uniq(latestMessages).sort((a, b) => a.sent.seconds- b.sent.seconds) } })
     }, getMessages: (address) => {
-        return store().groupMessages[address.toLowerCase()] || []
+        return store().groupMessages[address] || []
     },
     groupMessages: {}
 }))

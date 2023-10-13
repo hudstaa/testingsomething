@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -19,7 +19,7 @@ import { useEffect, useMemo } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
 import { formatEth } from '../lib/sugar';
-import { MemberChip } from '../components/MemberBadge';
+import { MemberBadge, MemberChip } from '../components/MemberBadge';
 import { FriendPortfolioChip } from '../components/FriendPortfolioChip';
 import useBoosters from '../hooks/useBoosters';
 
@@ -34,11 +34,11 @@ const Member: React.FC = () => {
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
     const { ready, wallet } = usePrivyWagmi()
-    const boosters: any = useBoosters(address)
+    const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
     return (
         <IonPage>
-            {useMemo(() => <TribeHeader color='tertiary' title={
-                member?.twitterName} />, [member, address])}
+            <TribeHeader color='tertiary' title={
+                member !== null ? member.twitterName : ""} />
             <TribeContent fullscreen>
                 <IonCard>
                     <IonCardHeader className='ion-image-center'>
@@ -56,10 +56,10 @@ const Member: React.FC = () => {
                     </IonCardHeader>
                     <IonCardContent>
                         <IonListHeader>Holders</IonListHeader>
-                        {typeof boosters !== 'undefined' && (boosters[0]).map((holder: any, i: number) => <IonItem lines='none'>
-                            <MemberChip address={holder} />
+                        {typeof boosters !== 'undefined' && boosters !== null && (boosters as any)[0]?.map((holder: any, i: number) => <IonItem lines='none'>
+                            <MemberBadge address={holder} />
                             <IonButtons slot='end'>
-                                {formatUnits(boosters[1][i], 0)}
+                                {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
                             </IonButtons>
                         </IonItem>)}
                     </IonCardContent>
@@ -98,6 +98,7 @@ const Member: React.FC = () => {
                 </IonList>
 
                 {!user && loading === false && <IonText color='warning'>user not found</IonText>}
+                <IonLoading isOpen={syncing || loading} />
             </TribeContent >
             <IonFooter>
                 {balance && balance > 0n ? <IonButton fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>

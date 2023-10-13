@@ -36,7 +36,7 @@ query MyQuery {
 
 const Activity: React.FC = () => {
     const activity = useActivity(x => x.activity())
-    const { data, loading } = useQuery<{ trades: Trade[] }>(activityQuery, { pollInterval: 1000 })
+    const { data, loading } = useQuery<{ trades: Trade[] }>(activityQuery, { pollInterval: 2000 })
     const { setTitle } = useTitle();
     useEffect(() => {
         setTitle('activity')

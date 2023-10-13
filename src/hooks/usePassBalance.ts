@@ -24,5 +24,5 @@ export default function usePassBalance(wallet: Address, subject: Address) {
         watch: true
     })
 
-    return balance
+    return balance as bigint|undefined
 }

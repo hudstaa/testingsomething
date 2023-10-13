@@ -17,6 +17,7 @@ export default function useBuyPass(subject: Address, shares: bigint) {
     const [transactionHash, setTransactionHash] = useState<any>();
     const onError = useCallback((e: unknown) => {
         setError(e);
+        setStatus('error');
     }, [])
 
     const { wallet } = usePrivyWagmi()

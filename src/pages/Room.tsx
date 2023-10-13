@@ -1,14 +1,14 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonPage, IonProgressBar, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonList, IonListHeader, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
 import { usePrivy } from '@privy-io/react-auth';
-import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef, useLayoutEffect } from 'react';
 import { getEnv, loadKeys, storeKeys } from '../lib/xmtp';
 import { useQuery } from '@apollo/client';
 import { TribeContent } from '../components/TribeContent';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { alertOutline, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
+import { alertOutline, lockClosed, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
 import { MemberBadge, MemberChip } from '../components/MemberBadge';
 import { Client, Conversation, ConversationV2, DecodedMessage, MessageV2 } from '@xmtp/xmtp-js';
 import { useTitle } from '../hooks/useTitle';
@@ -21,10 +21,13 @@ import { Message } from '../models/Message';
 import { uuid } from 'uuidv4';
 
 
-import { Firestore, addDoc, arrayUnion, collection, doc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, updateDoc } from "firebase/firestore";
+import { Firestore, Timestamp, addDoc, arrayUnion, collection, doc, getDocs, getFirestore, limit, limitToLast, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, startAt, updateDoc } from "firebase/firestore";
 import { app, messaging } from '../App';
 import { setCode } from 'viem/_types/actions/test/setCode';
 import { getMessaging } from 'firebase/messaging';
+import usePassBalance from '../hooks/usePassBalance';
+import { Address } from 'viem';
+import useBoosters from '../hooks/useBoosters';
 
 export const WriteMessage: React.FC<{ address: string, sendMessage: (content: string) => void }> = ({ address, sendMessage }) => {
     const [newNote, setNewNote] = useState<string | undefined>(undefined)
@@ -62,22 +65,24 @@ const Room: React.FC = () => {
     const { address } = useParams<{ address: string }>()
     const { wallet, ready } = usePrivyWagmi();
     const { user } = usePrivy();
+    const channelOwner = useMember(x => x.getFriend(address, true))
+
     const [signer, setSigner] = useState<any>();
-    const messages = useGroupMessages(x => x.groupMessages[address.toLowerCase()] || [])
+    const [lastMessageLoaded, setLastMessageLoaded] = useState<boolean>(false);
+    const a = useGroupMessages(x => x.groupMessages);
+    const messages = useGroupMessages(x => x.groupMessages[address] || [])
     const { pushMessages, modMessage } = useGroupMessages()
-    const channel = address.toLowerCase();
-    const [scroll, setScroll] = useState(0)
-
+    const channel = address;
+    const balance: bigint | undefined = usePassBalance(wallet?.address || "" as any, channel as Address);
+    const [latestMessageSent, setLatestMessageSent] = useState<Timestamp | null>()
     const sendMessage = useCallback(async (content: string) => {
-        const author = wallet!.address.toLowerCase();
-        const newMessage = ({ id: uuid(), content, author, channel, sent: serverTimestamp() });
+        const author = wallet!.address;
+        const newMessage = ({ id: uuid(), channel, content, author, sent: serverTimestamp(), type: 'string' });
         const db = getFirestore(app);
-
         const messagesCol = collection(db, "channel", channel, "messages");
 
         try {
-            const docRef = await addDoc(messagesCol, newMessage);
-            console.log("Message sent with ID: ", docRef.id);
+            await addDoc(messagesCol, newMessage);
         } catch (error) {
             console.error("Error sending message: ", error);
         }
@@ -87,30 +92,54 @@ const Room: React.FC = () => {
         if (!channel) {
             return;
         }
-        const db = getFirestore(app);
-        const messagesCol = collection(db, "channel", channel, "messages");
-        async function fetchMessages(afterDoc?: number) {
-            let q = query(messagesCol, orderBy("sent", "desc"), limit(10));
-            if (afterDoc) {
-                q = query(messagesCol, orderBy("sent", "desc"), startAfter(afterDoc), limit(10));
-            }
+        (async () => {
 
-            getDocs(q).then((snapshot) => {
-                const messages = snapshot.docs.map(doc => doc.data());
-                pushMessages(channel, messages as any)
-            });
-        }
-        fetchMessages();
-        console.log("CHANNEL", channel);
-        onSnapshot(messagesCol
-            , (channelDocs) => {
-                const changes = channelDocs.docChanges()
-                changes.forEach((change) => {
-                    change.type == 'added' && pushMessages(channel, [change.doc.data()] as Message[])
-                    change.type == 'modified' && modMessage(channel, change.doc.data() as Message)
-                })
-                setScroll(x => x + 1);
-            })
+            const db = getFirestore(app);
+            const messagesCol = collection(db, "channel", channel, "messages");
+            // async function fetchMessages() {
+            //     const q = query(messagesCol, orderBy("sent", "desc"), limit(10));
+
+            //     const snapshot = await getDocs(q);
+            //     const messages = snapshot.docs.map(doc => doc.data());
+            //     // Save the timestamp of the last message fetched
+            //     let lastFetchedTimestamp = 0;
+            //     if (messages.length > 0) {
+            //         lastFetchedTimestamp = messages[messages.length - 1].sent;
+            //     }
+            //     pushMessages(channel, messages as any);
+            //     return lastFetchedTimestamp;
+            // }
+
+            // // Fetch the initial 10 messages on load
+            // console.log("FETCHING")
+            // const lastFetchedTimestamp = await fetchMessages();
+            // console.log("FECTHED", lastFetchedTimestamp)
+
+            // Listen for real-time changes
+            onSnapshot(
+                query(
+                    messagesCol,
+                    orderBy("sent", "desc"),
+                    limit(20)
+                ),
+                (channelDocs) => {
+                    console.log("GOT SNAP")
+                    const changes = channelDocs.docChanges();
+                    changes.forEach((change) => {
+                        if (change.type == 'added') {
+                            const newMessage = change.doc.data() as Message;
+                            pushMessages(channel, [newMessage]);
+                            console.log("new")
+                        } else if (change.type == 'modified') {
+                            const newMessageTimestamped = change.doc.data() as Message;
+                            newMessageTimestamped.sent !== null && setLatestMessageSent(newMessageTimestamped.sent)
+                            modMessage(channel, change.doc.data() as Message);
+                            console.log("mod")
+                        }
+                    });
+                }
+            );
+        })();
 
     }, [channel])
     const messageList = useMemo(() => messages.map((msg: any) =>
@@ -126,27 +155,69 @@ const Room: React.FC = () => {
     ), [messages])
     const contentRef = useRef<HTMLIonContentElement>(null);
     useEffect(() => {
-        contentRef.current!.scrollToBottom(300); // 300ms scroll duration
-    }, [scroll, messages]); // this will trigger every time the messages array changes
+        console.log("scroll to bottom");
+        contentRef.current?.scrollToBottom(300); // 300ms scroll duration
+    }, [latestMessageSent]); // this will trigger every time the messages array changes
+    useLayoutEffect(() => {
+        if (messages.length <= 20) {
+            contentRef.current?.scrollToBottom(50); // 300ms scroll duration
+        }
+    }, [messages]); // this will trigger every time the messages array changes
 
 
-    const channelOwner = useMember(x => x.getFriend(address.toLowerCase()))
 
 
-    const { subscribed, subcribing } = useGroupMessages();
-    useEffect(() => {
-    }, [address])
+    const fetchMore = useCallback(async (complete: () => void) => {
+        const db = getFirestore(app);
+        const messagesCol = collection(db, "channel", channel, "messages");
+        console.log("fetch older")
+        const lastFetchedTimestamp = messages[0].sent;
+        const q = query(messagesCol, orderBy("sent", "desc"), startAt(lastFetchedTimestamp), limit(10));
+        getDocs(q).then((snapshot) => {
+            const olderMessages = snapshot.docs.map(doc => doc.data());
+            // Save the timestamp of the last message fetched
+            console.log(olderMessages, "GOT OLDER");
+            if (olderMessages.length < 10) {
+                setLastMessageLoaded(true);
+            }
 
+            pushMessages(channel, olderMessages as any);
+            infiniteRef.current?.complete();
+        }).catch((e) => {
+            setLastMessageLoaded(true);
+            infiniteRef.current?.complete();
+            console.log(e);
+        });
+
+    }, [messages])
+    const infiniteRef = useRef<HTMLIonInfiniteScrollElement>(null)
+    const boosters = useBoosters(wallet?.address, channel);
     return <IonPage>
-        {useMemo(() => <TribeHeader image={channelOwner?.twitterPfp} sticky={true} title={channelOwner?.twitterName + ' tribe' || address} />, [channelOwner, address])}
-        <IonContent ref={contentRef}>
+        {useMemo(() => <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />, [channelOwner, address])}
+
+        <IonContent style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
+            {(lastMessageLoaded || messages.length < 20) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
+                fetchMore(ev.target.complete);
+            }}>
+                <IonInfiniteScrollContent loadingSpinner={'crescent'} >
+                </IonInfiniteScrollContent>
+            </IonInfiniteScroll>}
+
             <IonList style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
+
                 {messageList}
             </IonList>
+            {balance && balance > 0n ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
+                <IonButton color='danger'>
+                    No Access <IonIcon icon={lockClosed} />
+                </IonButton>
+            </IonTitle></IonRouterLink>}
+
         </IonContent>
-        <IonFooter >
+        {balance && balance > 0n ? <IonFooter >
             < WriteMessage address={user?.wallet?.address || ""} sendMessage={sendMessage} />
-        </IonFooter>
+        </IonFooter> : <>
+        </>}
     </IonPage>
 }
 
