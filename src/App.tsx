@@ -41,8 +41,13 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import Member from './pages/Member';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
-setupIonicReact();
-
+setupIonicReact({
+  rippleEffect: true,
+  mode: 'ios',
+  swipeBackEnabled: false,
+  navAnimation: undefined,
+  animated: false
+});
 const { chains, publicClient } = configureChains(
   [baseGoerli],
   [
@@ -83,6 +88,7 @@ import { getAnalytics } from "firebase/analytics";
 import { OnBoarding } from './pages/OnBoarding';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { useEffect } from 'react';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -98,27 +104,28 @@ const firebaseConfig = {
   measurementId: "G-CZQ06R7KZ2"
 };
 
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
-getToken(messaging, { vapidKey: 'BBRZkbpicNkmzSp3m0eSVw2mavWY47hDhEFnq7A0H2xCU7oLxBFcVTV0Ratuwq7MBJEZbA_FdeaVh0SnX_Mdtq0' }).then((currentToken) => {
-  if (currentToken) {
-    // Send the token to your server and update the UI if necessary
-    // ...
-  } else {
-    // Show permission request UI
-    Notification.requestPermission().then(() => {
+// getToken(messaging, { vapidKey: 'BBRZkbpicNkmzSp3m0eSVw2mavWY47hDhEFnq7A0H2xCU7oLxBFcVTV0Ratuwq7MBJEZbA_FdeaVh0SnX_Mdtq0' }).then((currentToken) => {
+//   if (currentToken) {
+//     // Send the token to your server and update the UI if necessary
+//     // ...
+//   } else {
+//     // Show permission request UI
+//     Notification.requestPermission().then(() => {
 
-    })
+//     })
 
-    console.log('No registration token available. Request permission to generate one.');
-    // ...
-  }
-}).catch((err) => {
-  console.log('An error occurred while retrieving token. ', err);
-  // ...
-});
+//     console.log('No registration token available. Request permission to generate one.');
+//     // ...
+//   }
+// }).catch((err) => {
+//   console.log('An error occurred while retrieving token. ', err);
+//   // ...
+// });
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -126,12 +133,12 @@ const App: React.FC = () => {
       new Notification(payload.notification?.title || payload.from, payload.notification)
     });
   }, [])
-  return <IonApp>
+  return <IonApp >
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: "dark" }, additionalChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
 
-          <IonReactHashRouter>
+          <IonReactHashRouter >
             <IonRouterOutlet>
               <Route exact path="/discover">
                 <Discover />
@@ -153,11 +160,6 @@ const App: React.FC = () => {
               </Route>
               <Route path="/" exact>
                 <Splash />
-              </Route>
-              <Route path="/onboarding" exact>
-                <IonPage>
-                  <OnBoarding />
-                </IonPage>
               </Route>
               <Route path="/member/:address" exact>
                 <Member />

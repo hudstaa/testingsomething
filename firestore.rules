@@ -1,0 +1,39 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function authed() {
+      return debug(request.auth != null, 'Auth Check');
+    }
+    
+    function userId() {
+      return debug(request.auth.uid, 'User ID');  // Gets the UID from the custom signed token
+    }
+    
+    function member() {
+      return debug(get(/databases/$(database)/documents/member/$(userId())).data, 'Member Data');
+    }
+    
+    function holders(address) {
+      return debug(get(/databases/$(database)/documents/channel/$(address)).data.holders, 'Holders Data');
+    }
+
+    match /channel/{channelAddress}/messages/{messageId} {
+      allow read,create: if debug(true, 'Read/Create Messages Check');
+      // Explicitly deny update, delete
+      allow update, delete: if debug(false, 'Update/Delete Messages Check');
+    }
+    
+    match /channel/{channelAddress} {
+      allow read: if debug(authed(), 'Channel Read Check');
+      // Explicitly deny update, delete
+      allow update, delete: if debug(false, 'Update/Delete Channel Check');
+    }
+
+    // Matches a member by their Twitter subject
+    match /member/{uid} {
+      allow read: if debug(true, 'Member Read Check');
+      // Explicitly deny update, delete, create
+      allow update, delete, create: if debug(false, 'Update/Delete/Create Member Check');
+    }
+  }
+}

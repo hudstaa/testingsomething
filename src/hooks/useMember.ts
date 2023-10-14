@@ -10,15 +10,18 @@ export interface Member {
     twitterUsername: string;
     twitterPfp: string;
     address: string;
-    friendTech?: string
+    privyAddress: string;
+    friendTechAddress?: string
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;
     loading: Record<string, boolean>;
     watching: Record<string, boolean>;
     error: Record<string, string | null>;
+    me: Member | null
     setFriendData: (address: string, data: Member) => void;
     setFriendsData: (data: Member[]) => void;
+    getCurrentUser: (uid: string | undefined) => Member | null
     isLoading: (address: string | undefined) => boolean;
     isWatching: (address: string | undefined) => boolean;
     setError: (address: string, error: string | null) => void;
@@ -33,6 +36,33 @@ export const useMember = create<FriendStore>((set, store) => ({
     loading: {},
     watching: {},
     error: {},
+    me: null,
+    getCurrentUser: (uid) => {
+        if (typeof uid === 'undefined' || typeof uid == 'undefined' || uid.length === 0) {
+            return null;
+        }
+        if (store().me != null) {
+            return store().me;
+        }
+
+        if (store().loading[uid]) {
+            return null;
+        }
+        if (store().watching[uid] || store().error[uid]) {
+            console.log("watchinggf")
+            return null;
+        }
+        const database = getFirestore(app);
+
+        const docRef = doc(database, 'member', uid);
+        onSnapshot(docRef, (docSnap) => {
+            console.log('got snap', docSnap.data());
+            const me = docSnap.data() as Member;
+            set({ me, friendCache: { ...store().friendCache, [me.address]: me } })
+        });
+        set({ watching: { ...store().watching, [uid]: true } })
+        return null;
+    },
     setFriendsData: (data) => {
         const cache: Record<string, Member> = {};
         const errorCache: Record<string, string | null> = {};
@@ -96,12 +126,13 @@ export const useMember = create<FriendStore>((set, store) => ({
         }
 
         console.log("trigger fetch")
+
         store().fetchFriendData(addy, watch);
         return null;
     },
     getError: (address) => store().error[address],
     fetchFriendData: async (address, watch = false) => {
-        if (store().isLoading(address) || store().isWatching(address) || store().error[address]) {
+        if (store().isLoading(address) || store().isWatching(address) || store().error[address] || store().friendCache[address]) {
             return;
         }
         try {
@@ -112,7 +143,6 @@ export const useMember = create<FriendStore>((set, store) => ({
             const memberQuery = query(collection(db, "member"), where("address", "==", address));
 
             if (watch) {
-                console.log("WATCHING", address);
                 onSnapshot(memberQuery, (snapshot) => {
                     if (!snapshot.empty) {
                         const friend = snapshot.docs[0]; // Assuming only one match, otherwise you'd loop through snapshot.docs

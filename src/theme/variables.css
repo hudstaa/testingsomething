@@ -11,6 +11,11 @@ http://ionicframework.com/docs/theming/ */
   font-family: 'SF-Pro' !important;
 }
 
+.chat-item ion-item {
+  margin: 100
+}
+
+
 .ion-image-center {
   display: flex;
   justify-content: center !important;
@@ -27,6 +32,41 @@ http://ionicframework.com/docs/theming/ */
   /* Adjust this based on your needs */
   width: auto;
   /* Maintain the image's aspect ratio */
+}
+
+.from-me {
+  float: right;
+}
+
+.message-card {
+  word-wrap: break-word;
+  /* This will break the long text into multiple lines */
+  overflow-wrap: break-word;
+  /* For better cross-browser support */
+  max-width: 100%;
+  display: inline-block;
+  /* Card will shrink based on content */
+  width: auto;
+  /* Overrides any full-width default */
+  white-space: pre-wrap;
+  /* Prevents text from wrapping */
+
+}
+
+.message-card ion-card {
+  margin: 100px;
+  --ion-margin: 100px;
+  --ion-padding: 100px;
+}
+
+.message-card ion-card-content {
+  display: inline-block;
+  /* Card will shrink based on content */
+  width: auto;
+  /* Overrides any full-width default */
+  white-space: pre-wrap;
+  /* Prevents text from wrapping */
+  /* adjust this value as needed */
 }
 
 /** Ionic CSS Variables **/

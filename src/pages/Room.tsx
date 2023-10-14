@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonList, IonListHeader, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -9,7 +9,7 @@ import { useQuery } from '@apollo/client';
 import { TribeContent } from '../components/TribeContent';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { alertOutline, lockClosed, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
-import { MemberBadge, MemberChip } from '../components/MemberBadge';
+import { ChatBubble, MemberBadge, MemberChip } from '../components/MemberBadge';
 import { Client, Conversation, ConversationV2, DecodedMessage, MessageV2 } from '@xmtp/xmtp-js';
 import { useTitle } from '../hooks/useTitle';
 import { CachedConversation, CachedMessage, Signer, useClient, useConversations, useMessages, useStreamAllMessages, useStreamMessages } from '@xmtp/react-sdk';
@@ -87,7 +87,7 @@ const Room: React.FC = () => {
             console.error("Error sending message: ", error);
         }
     }, [wallet?.address, wallet, address])
-
+    const { syncing } = useBoosters(wallet?.address, address)
     useEffect(() => {
         if (!channel) {
             return;
@@ -143,26 +143,21 @@ const Room: React.FC = () => {
 
     }, [channel])
     const messageList = useMemo(() => messages.map((msg: any) =>
-        <IonItem lines='none' color='light' key={msg.id}>
-            <IonButtons slot='start'>
-                <MemberBadge address={msg.author} />
-            </IonButtons>
-            <IonText style={{ whiteSpace: 'pre-wrap' }}>{msg.content}</IonText>
-            <IonButtons slot='end'>
-                {timeAgo(new Date(msg.sent.seconds * 1000))}
-            </IonButtons>
-        </IonItem>
+        <ChatBubble sent={msg.sent} isMe={msg.author === user?.wallet?.address} address={msg.author} message={msg.content}></ChatBubble>
     ), [messages])
     const contentRef = useRef<HTMLIonContentElement>(null);
-    useEffect(() => {
-        console.log("scroll to bottom");
-        contentRef.current?.scrollToBottom(300); // 300ms scroll duration
+    useLayoutEffect(() => {
+        contentRef.current && contentRef.current.scrollToBottom(420);
     }, [latestMessageSent]); // this will trigger every time the messages array changes
     useLayoutEffect(() => {
         if (messages.length <= 20) {
-            contentRef.current?.scrollToBottom(50); // 300ms scroll duration
+            setTimeout(() => {
+                if (contentRef.current !== null) {
+                    contentRef.current!.scrollToBottom(1000);
+                }
+            }, 1000)
         }
-    }, [messages]); // this will trigger every time the messages array changes
+    }, [messages, contentRef.current]); // this will trigger every time the messages array changes
 
 
 
@@ -195,7 +190,7 @@ const Room: React.FC = () => {
     return <IonPage>
         {useMemo(() => <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />, [channelOwner, address])}
 
-        <IonContent style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
+        <IonContent fullscreen color='light' style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
             {(lastMessageLoaded || messages.length < 20) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
                 fetchMore(ev.target.complete);
             }}>
@@ -203,9 +198,9 @@ const Room: React.FC = () => {
                 </IonInfiniteScrollContent>
             </IonInfiniteScroll>}
 
-            <IonList style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
+            <IonList color='light' style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
 
-                {messageList}
+                {balance !== null && typeof balance !== 'undefined' && balance > 0n ? messageList : <></>}
             </IonList>
             {balance && balance > 0n ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
                 <IonButton color='danger'>
@@ -214,6 +209,7 @@ const Room: React.FC = () => {
             </IonTitle></IonRouterLink>}
 
         </IonContent>
+        {syncing !== null && balance && balance == 0n ? <IonLoading isOpen={syncing} /> : <></>}
         {balance && balance > 0n ? <IonFooter >
             < WriteMessage address={user?.wallet?.address || ""} sendMessage={sendMessage} />
         </IonFooter> : <>

@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonList, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useDiscover } from '../hooks/useDiscover';
 import { Trade } from '../models/Trade';
@@ -40,9 +40,12 @@ const Discover: React.FC = () => {
             <IonAvatar>
               <IonImg src={member?.twitterPfp || personOutline} />
             </IonAvatar>
-            <IonText>
-              {member?.twitterName}
-            </IonText>
+            <IonTitle>
+
+              <IonText>
+                {member?.twitterName}
+              </IonText>
+            </IonTitle>
             <IonButtons slot='end'><BuyPriceBadge address={member?.address} /></IonButtons>
           </IonItem>)}
         </IonList>

@@ -8,7 +8,6 @@ export default defineConfig({
     react(),
     nodePolyfills()
   ],
-  
   test: {
     globals: true,
     environment: 'jsdom',

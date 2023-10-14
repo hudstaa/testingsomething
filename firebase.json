@@ -41,6 +41,10 @@
     ],
     "rewrites": [
       {
+        "source": "/authenticateUser",
+        "function": "authenticateUser"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
@@ -60,5 +64,9 @@
         "npm --prefix \"$RESOURCE_DIR\" run lint"
       ]
     }
-  ]
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
 }

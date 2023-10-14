@@ -32,6 +32,7 @@ export default function useBoosters(wallet: Address | string | undefined, channe
             console.log(wallet, channel);
             return;
         }
+        console.log(channel, wallet)
         const docRef = doc(database, 'channel', channel);
         getDoc(docRef).then((data) => {
             console.log("GOT CHANNEL DOC")

@@ -2,20 +2,21 @@ import { Address } from "viem"
 import { useMember } from "../hooks/useMember"
 import { useEffect, useState } from "react"
 import { getPoints } from "../lib/friendTech"
-import { IonChip, IonBadge, IonSpinner, IonButton } from "@ionic/react"
+import { IonChip, IonBadge, IonSpinner, IonButton, IonImg, IonAvatar, IonIcon, IonText, IonItem, IonButtons } from "@ionic/react"
+import { checkmark } from "ionicons/icons"
 
 export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address }) => {
     const member = useMember(x => x.getFriend(address))
     const [points, setPoints] = useState<any>(undefined)
     useEffect(() => {
-        member && member.friendTech && getPoints(member?.friendTech).then((res) => {
+        member && member.friendTechAddress && getPoints(member?.friendTechAddress).then((res) => {
             console.log(res, "POINTS");
             setPoints(res);
         }).catch(() => {
             setPoints(null)
         })
     }, [member])
-    if (member && typeof member.friendTech === 'undefined' || points === null) {
+    if (member && typeof member.friendTechAddress === 'undefined' || points === null) {
         return <></>
     }
     return typeof points !== 'undefined' ? <IonButton fill="clear">
@@ -28,4 +29,33 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
             {points.tier}
         </IonBadge>
     </IonButton> : <IonChip><IonSpinner /></IonChip>
+}
+export const FriendTechPortfolioChip: React.FC<{ address?: string, name: string, pfp: string }> = ({ address, name, pfp }) => {
+    const [points, setPoints] = useState<any>(undefined)
+    useEffect(() => {
+        address && getPoints(address).then((res) => {
+            console.log(res, "POINTS");
+            setPoints(res);
+        }).catch(() => {
+            setPoints(null)
+        })
+    }, [address])
+    if (address && typeof address === 'undefined' || points === null) {
+        return <></>
+    }
+    const color = points ? points.tier === 'GOLD' ? "warning" : points.tier === 'DIAMOND' ? "secondary" : points.tier === 'SILVER' ? "medium" : points.tier === 'BRONZE' ? "light" : "danger" : "";
+    return typeof points !== 'undefined' ? <IonItem lines="none">
+        <IonAvatar>
+            <IonImg src={pfp} />
+        </IonAvatar>
+        <IonText>
+            {name}
+        </IonText>
+        <IonButtons slot='end'>
+
+            <IonBadge color={color}>
+                {points.leaderboard}
+            </IonBadge>
+        </IonButtons>
+    </IonItem> : <IonChip><IonSpinner /></IonChip>
 }

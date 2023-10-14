@@ -6,3 +6,13 @@ export const formatEth = (info: bigint | undefined) => {
     }
     return parseFloat(formatEther(info)).toFixed(4) + "Ξ"
 }
+
+export const uniq = (array: Record<string, any>[]) => {
+
+    return array.filter((person, index, self) =>
+        !self.some((otherPerson, otherIndex) =>
+            otherIndex < index &&
+            person.address.toLowerCase() === otherPerson.address.toLowerCase()
+        )
+    );
+}
