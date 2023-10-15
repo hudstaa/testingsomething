@@ -16,3 +16,12 @@ export const uniq = (array: Record<string, any>[]) => {
         )
     );
 }
+export const uniqId = (array: Record<string, any>[]) => {
+
+    return array.filter((person, index, self) =>
+        !self.some((otherPerson, otherIndex) =>
+            otherIndex < index &&
+            person.id.toLowerCase() === otherPerson.id.toLowerCase()
+        )
+    );
+}

@@ -1,10 +1,11 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { TribeContent } from '../components/TribeContent';
+import { TribePage } from './TribePage';
 
 const Home: React.FC = () => {
   return (
-    <IonPage>
+    <TribePage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
@@ -13,7 +14,7 @@ const Home: React.FC = () => {
       <TribeContent fullscreen>
         <ExploreContainer name="Home" />
       </TribeContent>
-    </IonPage>
+    </TribePage>
   );
 };
 

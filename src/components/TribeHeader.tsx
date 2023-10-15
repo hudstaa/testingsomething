@@ -1,4 +1,4 @@
-import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink, IonNav, IonBackButton, IonRow, IonGrid, IonAvatar, IonCol, IonCard, IonChip, IonText, IonCardTitle } from "@ionic/react"
+import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink, IonNav, IonBackButton, IonRow, IonGrid, IonAvatar, IonCol, IonCard, IonChip, IonText, IonCardTitle, IonContent, IonMenu, IonMenuButton, IonMenuToggle, IonItem } from "@ionic/react"
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { useLocation } from "react-router"
 import { BalanceChip } from "./BalanceBadge";
@@ -43,14 +43,21 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     console.log(me, "MEE", fireUser?.uid);
     const toolbar = useMemo(() => <IonToolbar>
         <IonButtons slot='start'>
-            <IonBackButton />
-        </IonButtons>
-        <IonRouterLink routerLink={'/'} routerDirection="none">
+            <IonMenuButton >
+                <IonAvatar>
+                    <IonImg src='/icon.png' />
+                </IonAvatar>
+            </IonMenuButton>
+            {/* <IonButton onClick={() => {
 
-            <IonTitle color={color}>
-                {title}
-            </IonTitle>
-        </IonRouterLink>
+            }}>
+                <IonImg src='/icon.png' />
+            </IonButton> */}
+        </IonButtons>
+
+        <IonTitle color={color}>
+            {title}
+        </IonTitle>
 
         <IonButtons slot='end'>
             {authenticated && user ? typeof fireUser === null ?
@@ -66,8 +73,8 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                 }}>
                     Connect Twitter
                 </IonButton> :
-                <IonButton routerLink={me === null ? undefined : '/member/' + user.wallet?.address}>
-                    @{user.twitter?.username}
+                <IonButton routerLink={'/account/'}> {!me?.twitterPfp ? <IonText>@{user.twitter?.username}</IonText> :
+                    <IonAvatar><IonImg src={me?.twitterPfp} /></IonAvatar>}
                 </IonButton> : <IonButton onClick={() => {
                     linkTwitter()
                 }}>
@@ -86,7 +93,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
 
     return <IonHeader>
         {toolbar}
-        <IonModal isOpen={me === null} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
+        <IonModal isOpen={me === null || showLogOut} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
             <OnBoarding me={me} />
         </IonModal>
     </IonHeader>

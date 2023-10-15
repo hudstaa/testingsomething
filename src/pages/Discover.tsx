@@ -13,6 +13,7 @@ import { Address, formatEther } from 'viem';
 import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { personOutline } from 'ionicons/icons';
+import { TribePage } from './TribePage';
 
 
 const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
@@ -32,25 +33,35 @@ const Discover: React.FC = () => {
     loadCache();
   }, [])
   return (
-    <IonPage>
+    <TribePage>
       <TribeHeader title='Discover' />
       <TribeContent >
-        <IonList>
-          {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>
-            <IonAvatar>
-              <IonImg src={member?.twitterPfp || personOutline} />
-            </IonAvatar>
-            <IonTitle>
+        <IonGrid>
+          <IonRow>
 
-              <IonText>
-                {member?.twitterName}
-              </IonText>
-            </IonTitle>
-            <IonButtons slot='end'><BuyPriceBadge address={member?.address} /></IonButtons>
-          </IonItem>)}
-        </IonList>
+            <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
+              <IonList>
+                <IonListHeader></IonListHeader>
+                {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>
+                  <IonAvatar>
+                    <IonImg src={member?.twitterPfp || personOutline} />
+                  </IonAvatar>
+                  <IonText>
+                    {member?.twitterName}
+                  </IonText>
+                  <IonButtons slot='end'><BuyPriceBadge address={member?.address} /></IonButtons>
+                </IonItem>)}
+              </IonList>
+            </IonCol>
+            <IonCol>
+
+            </IonCol>
+          </IonRow>
+
+        </IonGrid>
+
       </TribeContent>
-    </IonPage>
+    </TribePage>
 
   );
 };

@@ -1,10 +1,11 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { TribeContent } from '../components/TribeContent';
+import { TribePage } from './TribePage';
 
 const Token: React.FC = () => {
     return (
-        <IonPage>
+        <TribePage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Discover</IonTitle>
@@ -18,7 +19,7 @@ const Token: React.FC = () => {
                 </IonHeader>
                 <ExploreContainer name="Discover" />
             </TribeContent>
-        </IonPage>
+        </TribePage>
     );
 };
 

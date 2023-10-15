@@ -1,8 +1,18 @@
 import { Route } from 'react-router-dom';
 import {
   IonApp,
+  IonAvatar,
+  IonCard,
+  IonContent,
+  IonHeader,
+  IonImg,
+  IonItem,
+  IonMenu,
+  IonMenuToggle,
   IonPage,
   IonRouterOutlet,
+  IonTitle,
+  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactHashRouter } from '@ionic/react-router';
@@ -44,8 +54,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 setupIonicReact({
   rippleEffect: true,
   mode: 'ios',
-  swipeBackEnabled: false,
-  navAnimation: undefined,
   animated: false
 });
 const { chains, publicClient } = configureChains(
@@ -89,6 +97,7 @@ import { OnBoarding } from './pages/OnBoarding';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { useEffect } from 'react';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
+import Account from './pages/Account';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -127,6 +136,8 @@ export const messaging = getMessaging(app);
 //   // ...
 // });
 
+const routes = ['discover', 'activity', 'account']
+
 const App: React.FC = () => {
   useEffect(() => {
     onMessage(messaging, (payload) => {
@@ -134,11 +145,35 @@ const App: React.FC = () => {
     });
   }, [])
   return <IonApp >
-    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: "dark" }, additionalChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
+    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
 
+
           <IonReactHashRouter >
+            <IonMenu side='start' color='tertiary' contentId="main-content">
+              <IonHeader>
+                <IonToolbar color='light'>
+                  <IonAvatar>
+                    <IonImg src='/icon.png' />
+                  </IonAvatar>
+                </IonToolbar>
+              </IonHeader>
+              <IonContent>
+                {routes.map((route, i) =>
+                  <IonMenuToggle key={i} >
+                    <IonItem routerLink={'/' + route}>
+                      {route}
+                    </IonItem>
+                  </IonMenuToggle>
+                )}
+                <IonMenuToggle key={'home'} >
+                  <IonItem routerLink={'/'}>
+                    Posts
+                  </IonItem>
+                </IonMenuToggle>
+              </IonContent>
+            </IonMenu>
             <IonRouterOutlet>
               <Route exact path="/discover">
                 <Discover />
@@ -157,6 +192,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/activity">
                 <Activity />
+              </Route>
+              <Route path="/account">
+                <Account />
               </Route>
               <Route path="/" exact>
                 <Splash />

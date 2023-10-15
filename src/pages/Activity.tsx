@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonCard, IonCardContent, IonCardHeader, IonHeader, IonImg, IonItem, IonPage, IonProgressBar, IonSegment, IonSegmentButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useWatchlist } from '../hooks/useWatchlist';
@@ -10,6 +10,7 @@ import { TribeContent } from '../components/TribeContent';
 import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
+import { TribePage } from './TribePage';
 
 
 const activityQuery = gql`
@@ -43,12 +44,20 @@ const Activity: React.FC = () => {
     }, [])
 
     return (
-        <IonPage>
+        <TribePage>
             <TribeHeader title={'Activity'} />
             <TribeContent fullscreen>
-                {!loading ? data?.trades?.map((trade, i) => <TradeItem trade={trade} key={trade.transactionHash} />) : <IonProgressBar type='indeterminate' />}
+                <IonGrid>
+                    <IonRow>
+                        <IonCol sizeMd='8' offsetMd='2' sizeXs='12' offsetSm='1' sizeSm='10' >
+
+                            {!loading ? data?.trades?.map((trade, i) => <TradeItem trade={trade} key={trade.transactionHash} />) : <IonProgressBar type='indeterminate' />}
+
+                        </IonCol>
+                    </IonRow>
+                </IonGrid>
             </TribeContent >
-        </IonPage>
+        </TribePage>
     );
 };
 

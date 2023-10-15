@@ -43,7 +43,7 @@ const Member: React.FC = () => {
             <TribeHeader color='tertiary' title={
                 member !== null ? member.twitterName : ""} />
             <TribeContent fullscreen>
-                <IonCard>
+                <IonCard color={'light'}>
                     <IonCardHeader className='ion-image-center'>
                         <IonCardTitle>
 

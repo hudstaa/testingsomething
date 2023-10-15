@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -28,8 +28,9 @@ import { getMessaging } from 'firebase/messaging';
 import usePassBalance from '../hooks/usePassBalance';
 import { Address } from 'viem';
 import useBoosters from '../hooks/useBoosters';
+import { TribePage } from './TribePage';
 
-export const WriteMessage: React.FC<{ address: string, sendMessage: (content: string) => void }> = ({ address, sendMessage }) => {
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (content: string) => void }> = ({ address, placeHolder, sendMessage }) => {
     const [newNote, setNewNote] = useState<string | undefined>(undefined)
     const makeComment = () => {
         newNote && sendMessage(newNote);
@@ -37,7 +38,7 @@ export const WriteMessage: React.FC<{ address: string, sendMessage: (content: st
     }
 
     return <IonToolbar>
-        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={newNote} placeholder="send a message" onKeyUp={(e) => {
+        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={newNote} placeholder={placeHolder} onKeyUp={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 makeComment();
             }
@@ -96,26 +97,7 @@ const Room: React.FC = () => {
 
             const db = getFirestore(app);
             const messagesCol = collection(db, "channel", channel, "messages");
-            // async function fetchMessages() {
-            //     const q = query(messagesCol, orderBy("sent", "desc"), limit(10));
 
-            //     const snapshot = await getDocs(q);
-            //     const messages = snapshot.docs.map(doc => doc.data());
-            //     // Save the timestamp of the last message fetched
-            //     let lastFetchedTimestamp = 0;
-            //     if (messages.length > 0) {
-            //         lastFetchedTimestamp = messages[messages.length - 1].sent;
-            //     }
-            //     pushMessages(channel, messages as any);
-            //     return lastFetchedTimestamp;
-            // }
-
-            // // Fetch the initial 10 messages on load
-            // console.log("FETCHING")
-            // const lastFetchedTimestamp = await fetchMessages();
-            // console.log("FECTHED", lastFetchedTimestamp)
-
-            // Listen for real-time changes
             onSnapshot(
                 query(
                     messagesCol,
@@ -187,10 +169,10 @@ const Room: React.FC = () => {
     }, [messages])
     const infiniteRef = useRef<HTMLIonInfiniteScrollElement>(null)
     const boosters = useBoosters(wallet?.address, channel);
-    return <IonPage>
-        {useMemo(() => <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />, [channelOwner, address])}
+    return <TribePage>
+        <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />
 
-        <IonContent fullscreen color='light' style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
+        <IonContent style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
             {(lastMessageLoaded || messages.length < 20) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
                 fetchMore(ev.target.complete);
             }}>
@@ -201,6 +183,7 @@ const Room: React.FC = () => {
             <IonList color='light' style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
 
                 {balance !== null && typeof balance !== 'undefined' && balance > 0n ? messageList : <></>}
+                <div style={{ height: 10 }} />
             </IonList>
             {balance && balance > 0n ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
                 <IonButton color='danger'>
@@ -211,10 +194,10 @@ const Room: React.FC = () => {
         </IonContent>
         {syncing !== null && balance && balance == 0n ? <IonLoading isOpen={syncing} /> : <></>}
         {balance && balance > 0n ? <IonFooter >
-            < WriteMessage address={user?.wallet?.address || ""} sendMessage={sendMessage} />
+            < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
         </IonFooter> : <>
         </>}
-    </IonPage>
+    </TribePage>
 }
 
 export default Room;
