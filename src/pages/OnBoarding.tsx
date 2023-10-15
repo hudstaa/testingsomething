@@ -22,8 +22,6 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
     useEffect(() => {
         auth.onAuthStateChanged(async () => {
             setRefresh(x => x + 1);
-
-            const db = getFirestore(app);
             const database = getFirestore(app);
             const privyUid = auth.currentUser?.uid as any;
             if (typeof privyUid === 'undefined') {
@@ -36,7 +34,6 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
                 if (!snap.exists()) {
                     const joinTribe = httpsCallable(getFunctions(app), 'syncPrivy');
                     joinTribe().then(() => {
-                        window.location.reload
                     }).catch((e) => {
                     })
                 }
@@ -55,7 +52,7 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
             });
 
         });
-    }, [user])
+    }, [user, ready])
     return <IonContent>
         {useMemo(() => <IonTitle className="ion-text-center">
             <br />
@@ -66,16 +63,14 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
                     Connect to Privvy
 
                 </IonButton> : <>
-                    <IonButton onClick={() => {
-                        logout();
-                    }} color={'tertiary'}>
+                    <IonButton color={'tertiary'}>
                         {user.twitter?.name}
                         <IonIcon color="success" icon={checkmark} />
                     </IonButton>
                 </>}
             </> : <IonSpinner />}
 
-        </IonTitle>, [refresh, me, walletAddress, user])}
+        </IonTitle>, [refresh, me, walletAddress, user, ready])}
         <IonLoading isOpen={tribeLoading} />
     </IonContent >
 }

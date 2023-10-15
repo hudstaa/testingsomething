@@ -1,39 +1,68 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    
     function authed() {
-      return debug(request.auth != null, 'Auth Check');
+      return request.auth != null;
     }
-    
     function userId() {
-      return debug(request.auth.uid, 'User ID');  // Gets the UID from the custom signed token
+      return request.auth.uid;  // Gets the UID from the custom signed token
     }
-    
     function member() {
-      return debug(get(/databases/$(database)/documents/member/$(userId())).data, 'Member Data');
+      return get(/databases/$(database)/documents/member/$(userId())).data;
     }
-    
     function holders(address) {
-      return debug(get(/databases/$(database)/documents/channel/$(address)).data.holders, 'Holders Data');
+      return get(/databases/$(database)/documents/channel/$(address)).data.holders;
+    }
+    function hasValidBalance(address) {
+      return holders(address)[userId()] != null && holders(address)[userId()] > 0;
+    }
+function memberAddress() {
+  return get(/databases/$(database)/documents/member/$(userId())).data.address;
+}
+    function isValidEthAddress(address) {
+      return address.size() == 42 && address.matches("^0x[0-9a-fA-F]{40}$");
     }
 
     match /channel/{channelAddress}/messages/{messageId} {
-      allow read,create: if debug(true, 'Read/Create Messages Check');
+      allow read, create: if authed() && hasValidBalance(channelAddress);
       // Explicitly deny update, delete
-      allow update, delete: if debug(false, 'Update/Delete Messages Check');
+      allow update, delete: if false;
     }
-    
-    match /channel/{channelAddress} {
-      allow read: if debug(authed(), 'Channel Read Check');
+
+    match /post/{postId}/comments/{commentId} {
+			allow read, create: if authed() && hasValidBalance(postId);
       // Explicitly deny update, delete
-      allow update, delete: if debug(false, 'Update/Delete Channel Check');
+      allow update, delete: if false;
+    }
+    match /post/{postId} {
+      allow read: if true;      
+      allow create: if request.resource.data.sent is timestamp 
+                && request.resource.data.content is string 
+                && isValidEthAddress(request.resource.data.author)
+                && request.resource.data.author == memberAddress();
+      // Explicitly deny update, delete
+      allow  update, delete: if true;
+}
+
+    match /post/{postId} {
+  allow read: if true;
+  allow create: if request.resource.data.sent is timestamp 
+                && request.resource.data.content is string 
+                && isValidEthAddress(request.resource.data.author);
+  // Explicitly deny update, delete
+  allow update, delete: if true;
+}
+
+    match /channel/{channelAddress} {
+      allow read: if authed();
+      // Explicitly deny update, delete
+      allow update, delete: if false;
     }
 
     // Matches a member by their Twitter subject
     match /member/{uid} {
-      allow read: if debug(true, 'Member Read Check');
+      allow read: if true;
       // Explicitly deny update, delete, create
-      allow update, delete, create: if debug(false, 'Update/Delete/Create Member Check');
+      allow update, delete, create: if false;
     }
   }
 }

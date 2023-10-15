@@ -11,6 +11,8 @@ import {
   IonMenuToggle,
   IonPage,
   IonRouterOutlet,
+  IonTabBar,
+  IonTabButton,
   IonTitle,
   IonToolbar,
   setupIonicReact
@@ -54,7 +56,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 setupIonicReact({
   rippleEffect: true,
   mode: 'ios',
-  animated: false
 });
 const { chains, publicClient } = configureChains(
   [baseGoerli],
@@ -160,6 +161,11 @@ const App: React.FC = () => {
                 </IonToolbar>
               </IonHeader>
               <IonContent>
+                <IonMenuToggle key={'home'} >
+                  <IonItem routerLink={'/'}>
+                    posts
+                  </IonItem>
+                </IonMenuToggle>
                 {routes.map((route, i) =>
                   <IonMenuToggle key={i} >
                     <IonItem routerLink={'/' + route}>
@@ -167,11 +173,6 @@ const App: React.FC = () => {
                     </IonItem>
                   </IonMenuToggle>
                 )}
-                <IonMenuToggle key={'home'} >
-                  <IonItem routerLink={'/'}>
-                    Posts
-                  </IonItem>
-                </IonMenuToggle>
               </IonContent>
             </IonMenu>
             <IonRouterOutlet>

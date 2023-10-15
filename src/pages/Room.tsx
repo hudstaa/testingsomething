@@ -29,6 +29,8 @@ import usePassBalance from '../hooks/usePassBalance';
 import { Address } from 'viem';
 import useBoosters from '../hooks/useBoosters';
 import { TribePage } from './TribePage';
+import { getAuth } from 'firebase/auth';
+import { formatEth } from '../lib/sugar';
 
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (content: string) => void }> = ({ address, placeHolder, sendMessage }) => {
     const [newNote, setNewNote] = useState<string | undefined>(undefined)
@@ -67,6 +69,7 @@ const Room: React.FC = () => {
     const { wallet, ready } = usePrivyWagmi();
     const { user } = usePrivy();
     const channelOwner = useMember(x => x.getFriend(address, true))
+    const me = useMember(x => x.getCurrentUser(getAuth().currentUser?.uid))
 
     const [signer, setSigner] = useState<any>();
     const [lastMessageLoaded, setLastMessageLoaded] = useState<boolean>(false);
@@ -126,7 +129,7 @@ const Room: React.FC = () => {
     }, [channel])
     const messageList = useMemo(() => messages.map((msg: any) =>
         <ChatBubble sent={msg.sent} isMe={msg.author === user?.wallet?.address} address={msg.author} message={msg.content}></ChatBubble>
-    ), [messages])
+    ), [messages, me])
     const contentRef = useRef<HTMLIonContentElement>(null);
     useLayoutEffect(() => {
         contentRef.current && contentRef.current.scrollToBottom(420);
@@ -182,19 +185,21 @@ const Room: React.FC = () => {
 
             <IonList color='light' style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
 
-                {balance !== null && typeof balance !== 'undefined' && balance > 0n ? messageList : <></>}
+                {balance !== null && typeof balance !== 'undefined' && balance > 0n && me !== null ? messageList : <></>}
                 <div style={{ height: 10 }} />
             </IonList>
             {balance && balance > 0n ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
-                <IonButton color='danger'>
+                {me === null || typeof balance === 'undefined' ? <IonSpinner /> : <IonButton color='danger'>
                     No Access <IonIcon icon={lockClosed} />
-                </IonButton>
+                </IonButton>}
             </IonTitle></IonRouterLink>}
 
+            {syncing !== null && balance && balance == 0n ? <IonLoading isOpen={syncing} /> : <></>}
         </IonContent>
-        {syncing !== null && balance && balance == 0n ? <IonLoading isOpen={syncing} /> : <></>}
-        {balance && balance > 0n ? <IonFooter >
-            < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
+        {balance && balance > 0n ? <IonFooter slot='fixed' >
+            <IonGrid fixed>
+                < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
+            </IonGrid>
         </IonFooter> : <>
         </>}
     </TribePage>

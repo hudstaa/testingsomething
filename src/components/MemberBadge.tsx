@@ -3,12 +3,11 @@ import { Trade } from '../models/Trade';
 import { formatUnits, formatEther } from 'viem'
 import { useMember } from '../hooks/useMember';
 import { useHistory } from 'react-router';
-import { personOutline } from 'ionicons/icons';
+import { person, personOutline } from 'ionicons/icons';
 import { Timestamp } from 'firebase/firestore';
 import { timeAgo } from './TradeItem';
 export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
-
     return <IonRouterLink routerLink={'/member/' + address}>
         {member && member !== null ? <IonChip color={color}>
             <IonAvatar>
@@ -24,10 +23,10 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
         </IonChip>}</IonRouterLink>
 }
 
-export const MemberPfp: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
+export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonAvatar >
+    return <IonAvatar style={size == 'smol' ? { width: 40, height: 40 } : undefined}>
         <IonImg src={member?.twitterPfp || personOutline} />
     </IonAvatar>
 }
@@ -35,21 +34,26 @@ export const MemberToolbar: React.FC<{ address: string, color?: string }> = ({ a
     const member = useMember(x => x.getFriend(address))
 
     return <IonRouterLink routerLink={'/member/' + address}>
-        <IonAvatar>
-            <IonImg src={member?.twitterPfp || personOutline} />
-        </IonAvatar>
-        <IonTitle>
-            <IonRow>
-                <IonText>
-                    {member?.twitterName}
-                </IonText>
-            </IonRow>
-            <IonRow>
-                <IonText color='medium'>
-                    @{member?.twitterUsername}
-                </IonText>
-            </IonRow>
-        </IonTitle>
+        <IonRow>
+            <IonCol size='3'>
+                <IonAvatar>
+                    <IonImg src={member?.twitterPfp || personOutline} />
+                </IonAvatar>
+            </IonCol>
+            <IonCol>
+                <IonRow>
+
+                    <IonText>
+                        {member?.twitterName}
+                    </IonText>
+                </IonRow>
+                <IonRow>
+                    <IonText color='medium'>
+                        @{member?.twitterUsername}
+                    </IonText>
+                </IonRow>
+            </IonCol>
+        </IonRow>
     </IonRouterLink>
 }
 
@@ -81,7 +85,7 @@ export const ChatBubble: React.FC<{ message: string, address: string, isMe: bool
                         >
                             <div style={{ position: 'absolute', bottom: 0, left: 5 }}>
                                 <IonAvatar >
-                                    <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp} />
+                                    <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
                                 </IonAvatar>
                             </div>
                         </IonCol>
@@ -96,7 +100,7 @@ export const ChatBubble: React.FC<{ message: string, address: string, isMe: bool
                         >
                             <div style={{ position: 'absolute', bottom: 0, right: -20 }}>
                                 <IonAvatar >
-                                    <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp} />
+                                    <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
                                 </IonAvatar>
                             </div>
                         </IonCol>

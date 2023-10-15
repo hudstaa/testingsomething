@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { personOutline } from 'ionicons/icons';
 import { TribePage } from './TribePage';
+import { TribeFooter } from '../components/TribeFooter';
 
 
 const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
@@ -61,6 +62,7 @@ const Discover: React.FC = () => {
         </IonGrid>
 
       </TribeContent>
+      <TribeFooter page='discover' />
     </TribePage>
 
   );

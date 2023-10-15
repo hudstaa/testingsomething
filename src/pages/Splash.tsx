@@ -1,21 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import {
     IonPage, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent,
-    IonText, IonToolbar, IonButton, IonBadge, IonIcon, IonItem, IonButtons, IonChip
+    IonText, IonToolbar, IonButton, IonBadge, IonIcon, IonItem, IonButtons, IonChip, IonRouterLink, IonTabBar, IonTabButton, IonTabs, IonFooter, IonSegment, IonSegmentButton, IonLabel, IonItemDivider
 } from '@ionic/react';
-import { chevronDown, chevronUp, heartSharp, wallet } from 'ionicons/icons';
+import { albums, albumsOutline, call, chevronDown, chevronUp, heartSharp, person, pulse, pulseOutline, settings, wallet } from 'ionicons/icons';
 import { MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import { WriteMessage } from './Room';
-import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp } from 'firebase/firestore';
 import { app } from '../App';
 import { useMember } from '../hooks/useMember';
 import { getAuth } from 'firebase/auth';
 import { uuid } from 'uuidv4';
 import { uniq, uniqId } from '../lib/sugar';
+import { TribeFooter } from '../components/TribeFooter';
+import { timeAgo } from '../components/TradeItem';
+
+
+const voteScore = (votes: any) => {
+    return Object.values(votes).reduce((acc: number, value) => value ? acc + 1 : acc - 1, 0)
+}
 
 const Splash: React.FC = () => {
     const [posts, setPosts] = useState<any>([]);
@@ -26,18 +33,18 @@ const Splash: React.FC = () => {
 
         const postsRef = collection(db, 'post');
         const unsubscribe = onSnapshot(postsRef, snapshot => {
-            setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+            setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, sent: doc.data().sent == null ? new Timestamp(new Date().getSeconds(), 0) : doc.data().sent })));
         });
         return unsubscribe;
     }, []);
 
-    const handleVote = async (postId: string, change: number) => {
+    const handleVote = async (postId: string, change: boolean) => {
         const db = getFirestore(app);
+        const uid = auth.currentUser?.uid;
         const postRef = doc(db, 'post', postId);
         await updateDoc(postRef, {
-            votes: change
-
-        });
+            ['votes.' + uid]: change,
+        },);
     };
 
     const addPost = async (content: string) => {
@@ -46,7 +53,8 @@ const Splash: React.FC = () => {
         await addDoc(collection(db, 'post'), {
             author: me?.address, // Replace with actual user's address or ID
             content,
-            votes: 0
+            sent: serverTimestamp(),
+            votes: { [auth.currentUser!.uid]: true }
         });
     };
 
@@ -62,7 +70,16 @@ const Splash: React.FC = () => {
             console.error("Error sending message: ", error);
         }
     }, [me])
+    const [postType, setPostType] = useState('top')
 
+    const getSort = useCallback((a: any, b: any) => {
+        if (postType === 'top') {
+            return voteScore(b.votes) - voteScore(a.votes);
+        } else if (postType == 'recent') {
+
+            return b.sent.seconds - a.sent.seconds;
+        }
+    }, [postType])
     return (
         <IonPage id='main-content'>
             <TribeHeader color='success' title={'TRIBE'} />
@@ -70,37 +87,58 @@ const Splash: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
+                            <IonSegment value={postType} onIonChange={(e) => {
+                                setPostType(e.detail.value?.toString() || "top")
+                            }}>
+                                <IonSegmentButton value={'top'}>
+                                    TOP
+                                </IonSegmentButton>
+                                <IonSegmentButton value={'recent'}>
+                                    RECENT
+                                </IonSegmentButton>
+                            </IonSegment>
                             <IonCard>
                                 <WriteMessage
                                     placeHolder='Whats happnin'
                                     address={''}
                                     sendMessage={addPost}
                                 />
-                                <IonToolbar></IonToolbar>
                             </IonCard>
-                            {posts.map(({ id, author, content, votes }: any) => (
+                            {useMemo(() => posts.sort(getSort).map(({ id, author, content, votes, sent }: any) => (
                                 <IonCard key={id}>
-                                    <IonCardHeader color='light'>
-                                        <MemberToolbar address={author} />
+                                    <IonCardHeader >
+                                        <IonGrid fixed>
+                                            <IonRow>
+                                                <IonCol size='10'>
+                                                    <MemberToolbar address={author} />
+                                                </IonCol>
+                                                <IonCol size='2'>
+                                                    <IonButton fill='clear' onClick={() => handleVote(id, true)} style={{ position: 'absolute', bottom: 25, right: 0 }}>
+                                                        <IonBadge color={votes[auth.currentUser?.uid || ""] ? 'success' : 'medium'}>
+                                                            <IonIcon icon={chevronUp} />
+                                                        </IonBadge>
+                                                    </IonButton>
+                                                    <IonLabel style={{ position: 'absolute', bottom: 22, right: 31 }}>
+                                                        <IonText>{voteScore(votes)}</IonText>
+                                                    </IonLabel>
+                                                    <IonButton fill='clear' onClick={() => handleVote(id, false)} style={{ position: 'absolute', bottom: -25, right: 0 }}>
+                                                        <IonBadge color={typeof votes[auth.currentUser?.uid || ''] !== 'undefined' && !votes[auth.currentUser!.uid] ? 'danger' : 'medium'}>
+                                                            <IonIcon icon={chevronDown} />
+                                                        </IonBadge>
+                                                    </IonButton>
+                                                </IonCol>
+
+                                            </IonRow>
+
+                                        </IonGrid>
+
                                     </IonCardHeader>
-                                    <IonCardContent>
+                                    <IonCardContent >
                                         <IonText>
                                             {content}
                                         </IonText>
                                     </IonCardContent>
-                                    <IonToolbar>
-                                        <IonButton fill='clear' onClick={() => handleVote(id, -1)}>
-                                            <IonBadge color={'danger'}>
-                                                <IonIcon icon={chevronDown} />
-                                            </IonBadge>
-                                        </IonButton>
-                                        <IonText>{votes}</IonText>
-                                        <IonButton fill='clear' onClick={() => handleVote(id, 1)}>
-                                            <IonBadge color={'success'}>
-                                                <IonIcon icon={chevronUp} />
-                                            </IonBadge>
-                                        </IonButton>
-                                    </IonToolbar>
+
                                     <CommentList postId={id} />
                                     <WriteMessage
                                         placeHolder='write a comment'
@@ -108,12 +146,13 @@ const Splash: React.FC = () => {
                                         sendMessage={(content) => { makeComment(id, content) }} // Modify this if you want to handle comments
                                     />
                                 </IonCard>
-                            ))}
+                            )), [postType, posts])}
                         </IonCol>
                     </IonRow>
                 </IonGrid>
             </TribeContent>
-        </IonPage>
+            <TribeFooter page='posts' />
+        </IonPage >
     );
 };
 
@@ -174,18 +213,17 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
     }, [postId]);
 
     return (
-        <div>
+        <IonGrid>
             {comments.map((comment, idx) => (
-                <IonItem color='light' key={idx} lines='none'>
-                    <IonChip>
-                        <MemberPfp address={comment.author} />
-                        <IonText>
-                            {comment.content}
-                        </IonText>
+                <IonRow >
+                    <MemberPfp size='smol' address={comment.author} />
+                    <IonChip style={{ fontSize: 10, whiteSpace: 'pre-wrap' }}>
+                        {comment.content}
                     </IonChip>
-                </IonItem>
-            ))}
-        </div>
+                </IonRow>))}
+
+        </IonGrid>
+
     );
 };
 

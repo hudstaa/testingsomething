@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
 import { TribePage } from './TribePage';
+import { TribeFooter } from '../components/TribeFooter';
 
 
 const activityQuery = gql`
@@ -50,13 +51,12 @@ const Activity: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeMd='8' offsetMd='2' sizeXs='12' offsetSm='1' sizeSm='10' >
-
                             {!loading ? data?.trades?.map((trade, i) => <TradeItem trade={trade} key={trade.transactionHash} />) : <IonProgressBar type='indeterminate' />}
-
                         </IonCol>
                     </IonRow>
                 </IonGrid>
             </TribeContent >
+            <TribeFooter page='activity' />
         </TribePage>
     );
 };

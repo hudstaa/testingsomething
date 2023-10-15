@@ -7,7 +7,7 @@ import { TradeItem } from '../components/TradeItem'
 import { StatItem } from '../components/StatItem';
 import { TribeHeader } from '../components/TribeHeader';
 import { TribeContent } from '../components/TribeContent';
-import { MemberBadge, MemberPfp } from '../components/MemberBadge';
+import { MemberBadge, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import useBuyPass from '../hooks/useBuyPass';
 import { Address, formatEther } from 'viem';
 import { useEffect, useState } from 'react';
@@ -16,6 +16,7 @@ import { personOutline } from 'ionicons/icons';
 import { getAuth, signOut } from 'firebase/auth';
 import { usePrivy } from '@privy-io/react-auth';
 import { TribePage } from './TribePage';
+import { TribeFooter } from '../components/TribeFooter';
 
 
 
@@ -30,16 +31,14 @@ const Account: React.FC = () => {
             <TribeContent >
                 <IonGrid>
                     <IonRow>
-                        <IonCol size='6' sizeXs='12'>
+                        <IonCol offsetMd='3' sizeMd='6' sizeXs='12'>
                             <IonCard>
-
                                 <IonCardHeader color='tertiary'>
                                     <IonTitle > {me?.twitterName}</IonTitle>
                                 </IonCardHeader>
                                 <IonCardContent>
-                                    <IonItem >
-                                    </IonItem>
-                                    <IonItem>
+                                    <MemberToolbar address={me?.address || ""} />
+                                    {/* <IonItem>
                                         <IonButtons slot='start'>
 
                                             <IonText color='tertiary'>
@@ -54,19 +53,31 @@ const Account: React.FC = () => {
                                                 Friend Tech
                                             </IonSegmentButton>
                                         </IonSegment>
-                                    </IonItem>
+                                    </IonItem> */}
+                                    <IonRow className='ion-text-center'>
+                                        <IonCol sizeXs='12' sizeMd='8' offsetMd='2'>
+                                            <IonButton fill='solid' routerLink={'/'} onClick={() => {
+                                            }} color='primary'>Post</IonButton>
+                                            <IonButton fill='solid' routerLink={'/room/' + me?.address} onClick={() => {
+                                            }} color='tertiary'>Chat</IonButton>
+                                            <IonButton fill='solid' routerLink={'/member/' + me?.address} onClick={() => {
+                                            }} color='success'>Profile</IonButton>
 
+
+                                            <IonButton fill='solid' onClick={() => {
+                                                signOut(auth); logout();
+                                            }} color='danger'>Logout</IonButton>
+
+                                        </IonCol>
+                                    </IonRow>
                                 </IonCardContent>
                             </IonCard>
                         </IonCol>
-                        <IonButton onClick={() => {
-                            signOut(auth); logout();
-                        }} expand='full' color='danger'>Logout</IonButton>
                     </IonRow>
 
                 </IonGrid>
-
             </TribeContent>
+            <TribeFooter page='account' />
         </TribePage>
 
     );

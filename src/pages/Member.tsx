@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -116,18 +116,13 @@ const Member: React.FC = () => {
                 {!user && loading === false && <IonTitle color='warning'>NOT AUTHENTICATED</IonTitle>}
             </TribeContent >
             <IonFooter>
-                {balance && balance > 0n ? <IonButton fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>
+
+                {balance && balance > 0n ? <IonButton size='large' fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>
                     <IonText>
                         Chat
                     </IonText>
                     <IonIcon icon={chatboxEllipsesOutline} />
                 </IonButton> : <></>}
-
-                {/* {user?.wallet?.address === address && <IonButton expand='full' onClick={() => {
-                    logout()
-                }}>
-                    Logout
-                </IonButton>} */}
 
             </IonFooter>
         </IonPage >
