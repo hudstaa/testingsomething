@@ -1,38 +1,59 @@
 service cloud.firestore {
   match /databases/{database}/documents {
+    
     function authed() {
       return request.auth != null;
     }
+    
     function userId() {
       return request.auth.uid;  // Gets the UID from the custom signed token
     }
-    function member() {
-      return get(/databases/$(database)/documents/member/$(userId())).data;
+    
+    function memberAddress() {
+      return get(/databases/$(database)/documents/member/$(userId())).data.address;
     }
+    
     function holders(address) {
       return get(/databases/$(database)/documents/channel/$(address)).data.holders;
     }
+    function friendTechHolders(address) {
+      return get(/databases/$(database)/documents/channel/$(address)).data.friendTechHolders;
+    }
+    
     function hasValidBalance(address) {
       return holders(address)[userId()] != null && holders(address)[userId()] > 0;
     }
-function memberAddress() {
-  return get(/databases/$(database)/documents/member/$(userId())).data.address;
-}
+    
     function isValidEthAddress(address) {
       return address.size() == 42 && address.matches("^0x[0-9a-fA-F]{40}$");
     }
-
+    
     match /channel/{channelAddress}/messages/{messageId} {
-      allow read, create: if authed() && hasValidBalance(channelAddress);
+      allow read: if true;
+      allow create: if authed() 
+                && hasValidBalance(channelAddress)
+                && isValidEthAddress(request.resource.data.author)
+                && request.resource.data.author == memberAddress();
       // Explicitly deny update, delete
       allow update, delete: if false;
     }
-
+    
     match /post/{postId}/comments/{commentId} {
-			allow read, create: if authed() && hasValidBalance(postId);
+      allow read: if true;
+      allow create: if authed() 
+                && isValidEthAddress(request.resource.data.author)
+                && request.resource.data.author == memberAddress();
       // Explicitly deny update, delete
       allow update, delete: if false;
     }
+    
+    match /post/{postId}/votes/{uid} {
+      // Allow users to modify their own votes (only boolean values) and read others' votes
+      allow read: if true;
+      allow update: if uid == userId() && request.resource.data[uid] is bool;
+      allow create, delete: if false;
+    }
+    
     match /post/{postId} {
       allow read: if true;      
       allow create: if request.resource.data.sent is timestamp 
@@ -40,17 +61,8 @@ function memberAddress() {
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress();
       // Explicitly deny update, delete
-      allow  update, delete: if true;
-}
-
-    match /post/{postId} {
-  allow read: if true;
-  allow create: if request.resource.data.sent is timestamp 
-                && request.resource.data.content is string 
-                && isValidEthAddress(request.resource.data.author);
-  // Explicitly deny update, delete
-  allow update, delete: if true;
-}
+      allow update, delete: if true;
+    }
 
     match /channel/{channelAddress} {
       allow read: if authed();

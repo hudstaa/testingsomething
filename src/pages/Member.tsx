@@ -1,11 +1,10 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
 import { useClient, useConversations, useStartConversation, useCanMessage } from '@xmtp/react-sdk';
 import { usePrivy } from '@privy-io/react-auth';
 import { chatboxEllipsesOutline, logoTwitter, personOutline, ticketOutline } from 'ionicons/icons';
-import { baseGoerli } from 'viem/chains';
 import useBuyPass from '../hooks/useBuyPass';
 import { Address, formatEther, formatUnits } from 'viem';
 import { useChainId } from 'wagmi';
@@ -23,6 +22,7 @@ import { MemberBadge, MemberChip } from '../components/MemberBadge';
 import { FriendPortfolioChip, FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
 import useBoosters from '../hooks/useBoosters';
 import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
+import useFriendTechBalance from '../hooks/useFriendTechBalance';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -34,10 +34,12 @@ const Member: React.FC = () => {
     const { buyPass, buyPrice, status: buyStatus } = useBuyPass(address as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
+    const me = useMember(x => x.getFriend(user?.wallet?.address));
     const { ready, wallet } = usePrivyWagmi()
-    const { balance: boosters } = useBoosters(wallet?.address, address)
+    const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
     const [selectedHolderType, setSelectedHolderType] = useState('tribe')
     const holding = useFriendTechHolders(x => x.getHolding(member?.friendTechAddress, member?.friendTechAddress || ""))
+    const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
     return (
         <IonPage>
             <TribeHeader color='tertiary' title={
@@ -54,7 +56,13 @@ const Member: React.FC = () => {
                     </IonCardHeader>
                     <IonCardHeader className='ion-image-center'>
                         <IonCardSubtitle>
-                            <FriendPortfolioChip address={member?.address} />
+                            <IonRow>
+
+                                {typeof ftBalance !== 'undefined' ? formatUnits(ftBalance as any, 0) : <IonSpinner />} FT
+                            </IonRow>
+                            <IonRow>
+                                {typeof balance !== 'undefined' ? formatUnits(balance, 0) : <IonSpinner />} TRIBE
+                            </IonRow>
                         </IonCardSubtitle>
                     </IonCardHeader>
                     <IonCardContent>
@@ -116,8 +124,8 @@ const Member: React.FC = () => {
                 {!user && loading === false && <IonTitle color='warning'>NOT AUTHENTICATED</IonTitle>}
             </TribeContent >
             <IonFooter>
-
-                {balance && balance > 0n ? <IonButton size='large' fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>
+                {ftSyncing || syncing && <IonProgressBar type='indeterminate' color='tertiary' />}
+                {((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) && !ftSyncing && !syncing ? <IonButton size='large' fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>
                     <IonText>
                         Chat
                     </IonText>

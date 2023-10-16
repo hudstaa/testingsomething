@@ -128,7 +128,7 @@ const Room: React.FC = () => {
 
     }, [channel])
     const messageList = useMemo(() => messages.map((msg: any) =>
-        <ChatBubble sent={msg.sent} isMe={msg.author === user?.wallet?.address} address={msg.author} message={msg.content}></ChatBubble>
+        <ChatBubble key={msg.id} sent={msg.sent} isMe={msg.author === me?.address} address={msg.author} message={msg.content}></ChatBubble>
     ), [messages, me])
     const contentRef = useRef<HTMLIonContentElement>(null);
     useLayoutEffect(() => {

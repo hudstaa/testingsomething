@@ -10,7 +10,7 @@ import { MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge'
 import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import { WriteMessage } from './Room';
-import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment } from 'firebase/firestore';
 import { app } from '../App';
 import { useMember } from '../hooks/useMember';
 import { getAuth } from 'firebase/auth';
@@ -37,29 +37,50 @@ const Splash: React.FC = () => {
         });
         return unsubscribe;
     }, []);
-
-    const handleVote = async (postId: string, change: boolean) => {
+    function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
-        const uid = auth.currentUser?.uid;
-        const postRef = doc(db, 'post', postId);
-        await updateDoc(postRef, {
-            ['votes.' + uid]: change,
-        },);
-    };
+        const postRef = doc(db, 'posts', postId);
+        const voteRef = doc(postRef, 'votes', uid);
+
+        return runTransaction(db, async (transaction) => {
+            const voteSnapshot = await getDoc(voteRef,);
+
+            if (voteSnapshot.exists()) {
+                const currentVote = voteSnapshot.data().vote;
+
+                if (currentVote === upvote) {
+                    return;
+                }
+
+                const adjustment = upvote ? 2 : -2;
+                transaction.update(postRef, {
+                    voteScore: increment(adjustment)
+                });
+            } else {
+                const adjustment = upvote ? 1 : -1;
+                transaction.update(postRef, {
+                    voteScore: increment(adjustment)
+                });
+            }
+
+            transaction.set(voteRef, { vote: upvote });
+        });
+    }
+
 
     const addPost = async (content: string) => {
         const db = getFirestore(app);
 
         await addDoc(collection(db, 'post'), {
-            author: me?.address, // Replace with actual user's address or ID
+            author: me!.address, // Replace with actual user's address or ID
             content,
             sent: serverTimestamp(),
-            votes: { [auth.currentUser!.uid]: true }
         });
+        setPostType('recent');
     };
 
     const makeComment = useCallback(async (postId: string, content: string) => {
-        const author = me?.address;
+        const author = me!.address;
         const newMessage = ({ id: uuid(), postId, content, author, sent: serverTimestamp(), type: 'string' });
         const db = getFirestore(app);
         const commentCol = collection(db, "post", postId, "comments");
@@ -73,12 +94,12 @@ const Splash: React.FC = () => {
     const [postType, setPostType] = useState('top')
 
     const getSort = useCallback((a: any, b: any) => {
-        if (postType === 'top') {
-            return voteScore(b.votes) - voteScore(a.votes);
-        } else if (postType == 'recent') {
+        // if (postType === 'top') {
+        //     return voteScore(b.votes) - voteScore(a.votes);
+        // } else if (postType == 'recent') {
 
-            return b.sent.seconds - a.sent.seconds;
-        }
+        return b.sent.seconds - a.sent.seconds;
+        // }
     }, [postType])
     return (
         <IonPage id='main-content'>
@@ -104,7 +125,7 @@ const Splash: React.FC = () => {
                                     sendMessage={addPost}
                                 />
                             </IonCard>
-                            {useMemo(() => posts.sort(getSort).map(({ id, author, content, votes, sent }: any) => (
+                            {useMemo(() => posts.sort(getSort).map(({ id, author, content, sent, voteScore }: any) => (
                                 <IonCard key={id}>
                                     <IonCardHeader >
                                         <IonGrid fixed>
@@ -113,16 +134,16 @@ const Splash: React.FC = () => {
                                                     <MemberToolbar address={author} />
                                                 </IonCol>
                                                 <IonCol size='2'>
-                                                    <IonButton fill='clear' onClick={() => handleVote(id, true)} style={{ position: 'absolute', bottom: 25, right: 0 }}>
-                                                        <IonBadge color={votes[auth.currentUser?.uid || ""] ? 'success' : 'medium'}>
+                                                    <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, true)} style={{ position: 'absolute', bottom: 25, right: 0 }}>
+                                                        <IonBadge color={true ? 'success' : 'medium'}>
                                                             <IonIcon icon={chevronUp} />
                                                         </IonBadge>
                                                     </IonButton>
                                                     <IonLabel style={{ position: 'absolute', bottom: 22, right: 31 }}>
-                                                        <IonText>{voteScore(votes)}</IonText>
+                                                        <IonText>{voteScore}</IonText>
                                                     </IonLabel>
-                                                    <IonButton fill='clear' onClick={() => handleVote(id, false)} style={{ position: 'absolute', bottom: -25, right: 0 }}>
-                                                        <IonBadge color={typeof votes[auth.currentUser?.uid || ''] !== 'undefined' && !votes[auth.currentUser!.uid] ? 'danger' : 'medium'}>
+                                                    <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, false)} style={{ position: 'absolute', bottom: -25, right: 0 }}>
+                                                        <IonBadge color={true ? 'danger' : 'medium'}>
                                                             <IonIcon icon={chevronDown} />
                                                         </IonBadge>
                                                     </IonButton>
@@ -196,7 +217,6 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
                         if (change.type === 'added') {
                             const newMessage = change.doc.data() as Message;
                             setComments(prevComments => uniqId([...prevComments, newMessage]) as any);
-                            console.log("new");
                         } else if (change.type === 'modified') {
                             const newMessageTimestamped = change.doc.data() as Message;
                             if (newMessageTimestamped.sent) {
@@ -214,10 +234,10 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
 
     return (
         <IonGrid>
-            {comments.map((comment, idx) => (
-                <IonRow >
+            {comments.map((comment, i) => (
+                <IonRow key={i}>
                     <MemberPfp size='smol' address={comment.author} />
-                    <IonChip style={{ fontSize: 10, whiteSpace: 'pre-wrap' }}>
+                    <IonChip style={{ whiteSpace: 'pre-wrap' }}>
                         {comment.content}
                     </IonChip>
                 </IonRow>))}

@@ -17,6 +17,7 @@ import { getAuth, signOut } from 'firebase/auth';
 import { usePrivy } from '@privy-io/react-auth';
 import { TribePage } from './TribePage';
 import { TribeFooter } from '../components/TribeFooter';
+import PfpUploader from '../components/UploadComponent';
 
 
 
@@ -54,6 +55,8 @@ const Account: React.FC = () => {
                                             </IonSegmentButton>
                                         </IonSegment>
                                     </IonItem> */}
+
+                                    {auth && auth.currentUser && <PfpUploader userId={auth.currentUser.uid} />}
                                     <IonRow className='ion-text-center'>
                                         <IonCol sizeXs='12' sizeMd='8' offsetMd='2'>
                                             <IonButton fill='solid' routerLink={'/'} onClick={() => {

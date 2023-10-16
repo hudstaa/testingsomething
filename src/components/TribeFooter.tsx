@@ -1,5 +1,5 @@
 import { IonFooter, IonButton, IonIcon } from "@ionic/react";
-import { person, albums, pulse, eye } from "ionicons/icons";
+import { person, albums, pulse, eye, chatbox } from "ionicons/icons";
 
 
 export const TribeFooter: React.FC<{ page: string }> = ({ page }) => <IonFooter className={'ion-text-center'}>
@@ -8,6 +8,9 @@ export const TribeFooter: React.FC<{ page: string }> = ({ page }) => <IonFooter 
     </IonButton>
     <IonButton color={page == 'activity' ? 'tertiary' : 'medium'} fill='clear' routerLink="/activity">
         <IonIcon icon={pulse} />
+    </IonButton>
+    <IonButton color={page == 'chat' ? 'tertiary' : 'medium'} fill='clear' routerLink="/chat">
+        <IonIcon icon={chatbox} />
     </IonButton>
     <IonButton color={page == 'discover' ? 'tertiary' : 'medium'} fill='clear' routerLink="/discover">
         <IonIcon icon={eye} />

@@ -12,7 +12,7 @@ import firebase from 'firebase/app';
 import 'firebase/functions';
 import 'firebase/database';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { Firestore, doc, getDoc, getFirestore, onSnapshot } from 'firebase/firestore';
+import { Firestore, doc, getDoc, getFirestore, limit, onSnapshot } from 'firebase/firestore';
 import { app } from '../App';
 import { getDatabase } from 'firebase/database';
 
@@ -24,7 +24,6 @@ export default function useBoosters(wallet: Address | string | undefined, channe
         args: [channel],
         watch: true
     });
-
     // Fetch data from Firebase on component mount
     useEffect(() => {
         const database = getFirestore(app);
@@ -35,8 +34,9 @@ export default function useBoosters(wallet: Address | string | undefined, channe
         console.log(channel, wallet)
         const docRef = doc(database, 'channel', channel);
         getDoc(docRef).then((data) => {
-            console.log("GOT CHANNEL DOC")
+            console.log("GOT CHANNEL DOC", channel, wallet)
             if (!data.exists()) {
+                console.log("DATA NOT FOUND SYNCIN")
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
                 syncHolders({ address: channel }).then(response => {
@@ -53,10 +53,11 @@ export default function useBoosters(wallet: Address | string | undefined, channe
             const holderMap: Record<string, number> = data.data()?.holders || {};
             const balanceInfo = balance as [string[], number[]];
             const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)]
-            if (holderMap[wallet] !== holderBalance) {
+            if (holderMap[wallet] !== Number(holderBalance)) {
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
                 syncHolders({ address: channel }).then(response => {
+                    console.log(holderMap, holderBalance, holderBalance.valueOf())
                     console.log(response.data);
                     setSyncing(false);
                 }).catch(error => {

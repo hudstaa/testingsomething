@@ -9,13 +9,6 @@ import { useCallback, useState } from 'react'
 import { tribePassesContract } from '../lib/constants'
 
 export default function usePassBalance(wallet: Address, subject: Address) {
-    const [error, setError] = useState<any>();
-    const [status, setStatus] = useState<any>();
-    const [transactionHash, setTransactionHash] = useState<any>();
-    const onError = useCallback((e: unknown) => {
-        setError(e);
-    }, [])
-
 
     const { data: balance } = useContractRead({
         ...tribePassesContract,
@@ -24,5 +17,5 @@ export default function usePassBalance(wallet: Address, subject: Address) {
         watch: true
     })
 
-    return balance as bigint|undefined
+    return balance as bigint | undefined
 }

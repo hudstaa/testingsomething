@@ -14,6 +14,7 @@ import { useTitle } from '../hooks/useTitle';
 import { useEffect } from 'react';
 import { WriteMessage } from './Room';
 import useBoosters from '../hooks/useBoosters';
+import { TribeFooter } from '../components/TribeFooter';
 
 
 const myPassesQuery = gql`
@@ -47,6 +48,7 @@ const Chat: React.FC = () => {
                     </IonItem>)}
                 </IonList>
             </IonContent>
+            <TribeFooter page='chat' />
         </IonPage >
     );
 };

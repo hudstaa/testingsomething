@@ -21,7 +21,7 @@ import { app } from "../App";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string }> = ({ title, sticky = true, color, image }) => {
     const { pathname } = useLocation();
-    const { authenticated, linkTwitter, user, getAccessToken } = usePrivy()
+    const { authenticated, linkTwitter, user, getAccessToken, ready } = usePrivy()
     const { wallets } = useWallets();
 
     const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
@@ -39,8 +39,14 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [activeWallet])
     const auth = getAuth();
     const fireUser = auth.currentUser;
-    const me = useMember(x => x.getCurrentUser(fireUser?.uid))
-    console.log(me, "MEE", fireUser?.uid);
+    const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
+
+    useEffect(() => {
+        console.log(fireUser, ready, me)
+        if (fireUser && ready && me?.address) {
+            modalRef.current?.dismiss();
+        }
+    }, [ready, fireUser, me])
     const toolbar = useMemo(() => <IonToolbar>
         <IonButtons slot='start'>
             <IonMenuButton >
@@ -93,7 +99,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
 
     return <IonHeader>
         {toolbar}
-        <IonModal isOpen={me === null || showLogOut} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
+        <IonModal canDismiss isOpen={me === null} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
             <OnBoarding me={me} />
         </IonModal>
     </IonHeader>

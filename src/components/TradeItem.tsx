@@ -38,11 +38,10 @@ export const TradeItem: React.FC<{ trade: Trade }> = ({ trade }) => {
             {trade.isBuy ? "BUY" : "SELL"}
         </IonText>
         <MemberBadge color={trade.isBuy ? "success" : "danger"} address={getAddress(trade.subject)} />
-        <IonBadge color='primary'>
-            {formatEth(trade.ethAmount)}
-        </IonBadge>
         <IonButtons slot='end'>
-            {timeAgo(new Date(parseInt(trade.blockTimestamp) * 1000))}
+            <IonBadge color='primary'>
+                {formatEth(trade.ethAmount)}
+            </IonBadge>
         </IonButtons>
     </IonItem>
 }

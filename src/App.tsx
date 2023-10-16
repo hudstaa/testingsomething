@@ -47,24 +47,22 @@ import { PrivyProvider } from '@privy-io/react-auth';
 import Room from './pages/Room';
 import Transaction from './pages/Transaction';
 import { configureChains, createConfig, createStorage } from 'wagmi';
-import { baseGoerli } from 'viem/chains';
+import { base, baseGoerli } from 'viem/chains';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import Member from './pages/Member';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { publicProvider } from 'wagmi/providers/public';
 
 setupIonicReact({
   rippleEffect: true,
   mode: 'ios',
+  animated: false,
 });
 const { chains, publicClient } = configureChains(
-  [baseGoerli],
+  [baseGoerli, base],
   [
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: 'https://base-goerli.publicnode.com',
-      }),
-    }),
+    publicProvider()
   ],
 )
 export const noopStorage = {
@@ -97,7 +95,7 @@ import { getAnalytics } from "firebase/analytics";
 import { OnBoarding } from './pages/OnBoarding';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { useEffect } from 'react';
-import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import Account from './pages/Account';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -144,9 +142,13 @@ const App: React.FC = () => {
     onMessage(messaging, (payload) => {
       new Notification(payload.notification?.title || payload.from, payload.notification)
     });
+    const db = getFirestore(app);
+
+    const postsRef = collection(db, 'post');
+    // addDoc(postsRef, { nice: "OK", content: 'nice' })
   }, [])
   return <IonApp >
-    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
+    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
 
