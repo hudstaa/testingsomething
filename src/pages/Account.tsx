@@ -25,7 +25,6 @@ const Account: React.FC = () => {
     const auth = getAuth()
     const { logout } = usePrivy();
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
-    const [messageType, setMessageType] = useState("friendTech");
     return (
         <TribePage>
             <TribeHeader title='Account' />
@@ -56,7 +55,6 @@ const Account: React.FC = () => {
                                         </IonSegment>
                                     </IonItem> */}
 
-                                    {auth && auth.currentUser && <PfpUploader userId={auth.currentUser.uid} />}
                                     <IonRow className='ion-text-center'>
                                         <IonCol sizeXs='12' sizeMd='8' offsetMd='2'>
                                             <IonButton fill='solid' routerLink={'/'} onClick={() => {

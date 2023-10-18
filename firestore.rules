@@ -1,3 +1,5 @@
+rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     
@@ -6,74 +8,71 @@ service cloud.firestore {
     }
     
     function userId() {
-      return request.auth.uid;  // Gets the UID from the custom signed token
+      return request.auth.uid;
     }
     
     function memberAddress() {
       return get(/databases/$(database)/documents/member/$(userId())).data.address;
     }
-    
-    function holders(address) {
-      return get(/databases/$(database)/documents/channel/$(address)).data.holders;
-    }
-    function friendTechHolders(address) {
-      return get(/databases/$(database)/documents/channel/$(address)).data.friendTechHolders;
+    function friendTechAddress() {
+      return get(/databases/$(database)/documents/member/$(userId())).data.friendTechAddress;
     }
     
-    function hasValidBalance(address) {
-      return holders(address)[userId()] != null && holders(address)[userId()] > 0;
+    function holders(channelAddress) {
+      return get(/databases/$(database)/documents/channel/$(channelAddress)).data.holders;
     }
-    
+    function friendTechProperty(walletAddress) {
+      return "friendTech:"+walletAddress;
+    }
+    function friendTechBalance(channelAddress, wallet) {
+      return get(/databases/$(database)/documents/channel/$(channelAddress)).data[friendTechProperty(wallet)];
+    }
     function isValidEthAddress(address) {
       return address.size() == 42 && address.matches("^0x[0-9a-fA-F]{40}$");
     }
     
     match /channel/{channelAddress}/messages/{messageId} {
-      allow read: if true;
+      allow read: if authed() 
+                && (holders(channelAddress)[memberAddress()]!=null||friendTechBalance(channelAddress,friendTechAddress())!=null)
       allow create: if authed() 
-                && hasValidBalance(channelAddress)
+                && (holders(channelAddress)[memberAddress()]!=null ||friendTechBalance(channelAddress,friendTechAddress())!=null)
+                && request.resource.data.sent is timestamp
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress();
-      // Explicitly deny update, delete
       allow update, delete: if false;
     }
     
     match /post/{postId}/comments/{commentId} {
       allow read: if true;
       allow create: if authed() 
+                && request.resource.data.sent is timestamp
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress();
-      // Explicitly deny update, delete
       allow update, delete: if false;
     }
-    
+
     match /post/{postId}/votes/{uid} {
-      // Allow users to modify their own votes (only boolean values) and read others' votes
-      allow read: if true;
-      allow update: if uid == userId() && request.resource.data[uid] is bool;
-      allow create, delete: if false;
+      allow read: if isAuthenticated();
+      allow create,update: if isAuthenticated() && uid == userId() && request.resource.data[uid].vote is bool;
+      allow delete: if false;
     }
     
     match /post/{postId} {
-      allow read: if true;      
+      allow read: if true;
       allow create: if request.resource.data.sent is timestamp 
                 && request.resource.data.content is string 
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress();
-      // Explicitly deny update, delete
-      allow update, delete: if true;
+      allow update, delete: if false;
     }
 
     match /channel/{channelAddress} {
       allow read: if authed();
-      // Explicitly deny update, delete
       allow update, delete: if false;
     }
 
-    // Matches a member by their Twitter subject
     match /member/{uid} {
       allow read: if true;
-      // Explicitly deny update, delete, create
       allow update, delete, create: if false;
     }
   }

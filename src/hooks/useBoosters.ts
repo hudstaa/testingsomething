@@ -37,6 +37,7 @@ export default function useBoosters(wallet: Address | string | undefined, channe
             console.log("GOT CHANNEL DOC", channel, wallet)
             if (!data.exists()) {
                 console.log("DATA NOT FOUND SYNCIN")
+                console.log("ASDASd")
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
                 syncHolders({ address: channel }).then(response => {
@@ -54,14 +55,18 @@ export default function useBoosters(wallet: Address | string | undefined, channe
             const balanceInfo = balance as [string[], number[]];
             const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)]
             if (holderMap[wallet] !== Number(holderBalance)) {
+                if (typeof holderMap[wallet] === 'undefined') {
+                    return;
+                }
+                console.log(holderMap, holderBalance, wallet, channel, "OOOOOo")
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
                 syncHolders({ address: channel }).then(response => {
-                    console.log(holderMap, holderBalance, holderBalance.valueOf())
-                    console.log(response.data);
+                    console.log(response.data, "Synced Boosters");
                     setSyncing(false);
                 }).catch(error => {
                     setSyncing(null);
+                    console.log(error, "Synced Boosters");
                     console.error("Error calling syncBoosters:", error);
                 });
             } else {

@@ -33,29 +33,44 @@ export default function useFriendTechBalance(friendTechWallet: Address | string 
     // Fetch data from Firebase on component mount
     useEffect(() => {
         (async () => {
-
+            console.log("CHECKING FRIEND TECH BALANCW")
             const client = createPublicClient({
                 chain: base,
                 transport: http()
             })
+            if (!friendTechWallet || !friendTechWallet) {
+                console.log(friendTechWallet, channel);
+                setBalance(0n)
+                console.log("zero Blockchain Balance");
+
+                return;
+            }
             const blockChainBalance = await client.readContract({
                 ...friendTechCcontract,
                 functionName: 'sharesBalance',
                 args: [friendTechChannel, friendTechWallet],
             })
+            console.log(blockChainBalance)
+
             const database = getFirestore(app);
             if (!friendTechWallet || !channel) {
                 console.log(friendTechWallet, channel);
+                setBalance(0n)
+                console.log("zero Blockchain Balance");
+
                 return;
             }
+            console.log(blockChainBalance, "Blockchain Balance");
             setBalance((blockChainBalance as any))
             const docRef = doc(database, 'channel', channel);
             getDoc(docRef).then((data) => {
                 const property = 'friendTech:' + friendTechWallet;
                 const docData = data.data();
+                console.log(property, blockChainBalance,)
                 const dbBalance = docData && docData[property]
-                console.log(dbBalance, blockChainBalance, "FT BALANCES")
-                if (!data.exists() || dbBalance !== Number(blockChainBalance)) {
+                if ((!data.exists() && Number(blockChainBalance) > 0) || dbBalance !== Number(blockChainBalance) && Number(blockChainBalance) > 0) {
+                    console.log(dbBalance, balance, "SyncFriendTec!!!!h")
+                    console.log(blockChainBalance, dbBalance);
                     setSyncing(true);
                     const syncHolders = httpsCallable(getFunctions(app), 'syncFriendTech');
                     syncHolders({ friendTechWallet, channel, friendTechChannel }).then(response => {
@@ -70,9 +85,11 @@ export default function useFriendTechBalance(friendTechWallet: Address | string 
             })
             onSnapshot(docRef, (data) => {
                 const property = "friendTech:" + friendTechWallet;
-                const docData = data.data() || { [property]: 0 };
-                const dbBalance = docData[property];
-                if (dbBalance !== Number(balance) || !data.exists()) {
+                const docData = data.data();
+                const dbBalance = docData ? docData[property] : undefined;
+                console.log(dbBalance);
+                if ((dbBalance !== Number(blockChainBalance)) || !data.exists()) {
+                    console.log(dbBalance, balance, "SyncFriendTechEXISTING")
                     setSyncing(true);
                     const syncHolders = httpsCallable(getFunctions(app), 'syncFriendTech');
                     syncHolders({ friendTechWallet, friendTechChannel, channel }).then(response => {

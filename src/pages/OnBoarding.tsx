@@ -12,7 +12,7 @@ import { getDatabase } from "firebase/database"
 import { MemberBadge } from "../components/MemberBadge"
 import { checkmark } from "ionicons/icons"
 
-export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
+export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
 
     const auth = getAuth()
     const { user, linkTwitter, logout, getAccessToken, ready } = usePrivy()
@@ -33,8 +33,10 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
             getDoc(docRef).then((snap) => {
                 if (!snap.exists()) {
                     const joinTribe = httpsCallable(getFunctions(app), 'syncPrivy');
-                    joinTribe().then(() => {
+                    joinTribe().then((res) => {
+                        console.log(res, "PRIVVY SYNX SUCCESS")
                     }).catch((e) => {
+                        console.log(e, "PRIVVY SYNC FAIL")
                     })
                 }
             }).catch(() => {
@@ -63,14 +65,16 @@ export const OnBoarding: React.FC<{ me: any }> = ({ me }) => {
                     Connect to Privvy
 
                 </IonButton> : <>
-                    <IonButton color={'tertiary'}>
+                    <IonButton onClick={dismiss} color={'tertiary'}>
                         {user.twitter?.name}
                         <IonIcon color="success" icon={checkmark} />
                     </IonButton>
+                    <br />
                 </>}
             </> : <IonSpinner />}
 
         </IonTitle>, [refresh, me, walletAddress, user, ready])}
         <IonLoading isOpen={tribeLoading} />
+
     </IonContent >
 }

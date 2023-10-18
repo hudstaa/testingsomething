@@ -3,29 +3,27 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import {
     IonPage, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardContent,
-    IonText, IonToolbar, IonButton, IonBadge, IonIcon, IonItem, IonButtons, IonChip, IonRouterLink, IonTabBar, IonTabButton, IonTabs, IonFooter, IonSegment, IonSegmentButton, IonLabel, IonItemDivider
+    IonText, IonToolbar, IonButton, IonBadge, IonIcon, IonItem, IonButtons, IonChip, IonRouterLink, IonTabBar, IonTabButton, IonTabs, IonFooter, IonSegment, IonSegmentButton, IonLabel, IonItemDivider, IonSpinner
 } from '@ionic/react';
 import { albums, albumsOutline, call, chevronDown, chevronUp, heartSharp, person, pulse, pulseOutline, settings, wallet } from 'ionicons/icons';
 import { MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import { WriteMessage } from './Room';
-import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment, where } from 'firebase/firestore';
 import { app } from '../App';
 import { useMember } from '../hooks/useMember';
 import { getAuth } from 'firebase/auth';
+import { getCountFromServer } from 'firebase/firestore'
 import { uuid } from 'uuidv4';
 import { uniq, uniqId } from '../lib/sugar';
 import { TribeFooter } from '../components/TribeFooter';
 import { timeAgo } from '../components/TradeItem';
 
 
-const voteScore = (votes: any) => {
-    return Object.values(votes).reduce((acc: number, value) => value ? acc + 1 : acc - 1, 0)
-}
 
 const Splash: React.FC = () => {
-    const [posts, setPosts] = useState<any>([]);
+    const [posts, setPosts] = useState<any[]>([]);
     const auth = getAuth();
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid));
     useEffect(() => {
@@ -39,32 +37,12 @@ const Splash: React.FC = () => {
     }, []);
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
-        const postRef = doc(db, 'posts', postId);
+        const postRef = doc(db, 'post', postId);
         const voteRef = doc(postRef, 'votes', uid);
-
-        return runTransaction(db, async (transaction) => {
-            const voteSnapshot = await getDoc(voteRef,);
-
-            if (voteSnapshot.exists()) {
-                const currentVote = voteSnapshot.data().vote;
-
-                if (currentVote === upvote) {
-                    return;
-                }
-
-                const adjustment = upvote ? 2 : -2;
-                transaction.update(postRef, {
-                    voteScore: increment(adjustment)
-                });
-            } else {
-                const adjustment = upvote ? 1 : -1;
-                transaction.update(postRef, {
-                    voteScore: increment(adjustment)
-                });
-            }
-
-            transaction.set(voteRef, { vote: upvote });
-        });
+        console.log(upvote, postId);
+        const vote = upvote ? 1 : -1;
+        setVoteCache((x) => ({ ...x, [postId]: vote }))
+        setDoc(voteRef, ({ vote }))
     }
 
 
@@ -81,7 +59,7 @@ const Splash: React.FC = () => {
 
     const makeComment = useCallback(async (postId: string, content: string) => {
         const author = me!.address;
-        const newMessage = ({ id: uuid(), postId, content, author, sent: serverTimestamp(), type: 'string' });
+        const newMessage = ({ content, author, sent: serverTimestamp(), type: 'string' });
         const db = getFirestore(app);
         const commentCol = collection(db, "post", postId, "comments");
 
@@ -97,10 +75,48 @@ const Splash: React.FC = () => {
         // if (postType === 'top') {
         //     return voteScore(b.votes) - voteScore(a.votes);
         // } else if (postType == 'recent') {
-
         return b.sent.seconds - a.sent.seconds;
         // }
     }, [postType])
+
+
+    const [voted, setVoteCache] = useState<Record<string, 1 | -1 | null>>({});
+    const [voteScore, setVoteScore] = useState<Record<string, { up: number, down: number, net: number }>>({});
+    useEffect(() => {
+        if (typeof auth.currentUser?.uid === 'undefined') {
+            return;
+        }
+        posts.forEach(({ id }) => {
+            if (typeof voted[id] === 'undefined') {
+                setVoteCache(x => ({ ...x, [id]: null }))
+                const db = getFirestore(app);
+                const postRef = doc(db, 'post', id);
+                const voteRef = doc(postRef, 'votes', auth.currentUser!.uid);
+                getDoc(voteRef).then((doc) => {
+                    console.log("GOT DOC", doc.data());
+                    const data = doc.data() || { vote: null }
+                    console.log("GOT DOC", data);
+                    setVoteCache(x => ({ ...x, [id]: data.vote }))
+                })
+            }
+        })
+    }, [posts])
+    useEffect(() => {
+        if (typeof auth.currentUser?.uid === 'undefined') {
+            return;
+        }
+        posts.forEach(async ({ id }) => {
+            if (typeof voted[id] === 'undefined') {
+                setVoteScore(x => ({ ...x, [id]: null }))
+                const db = getFirestore(app);
+                const postRef = doc(db, 'post', id);
+                const results = await Promise.all([getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', 1))), getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', -1)))]);
+                const [upDoc, downDoc] = results.map(x => x.data());
+                setVoteScore(x => ({ ...x, [id]: { up: upDoc.count, down: downDoc.count, net: upDoc.count - downDoc.count } }));
+            }
+        })
+    }, [posts])
+    console.log(voted)
     return (
         <IonPage id='main-content'>
             <TribeHeader color='success' title={'TRIBE'} />
@@ -125,30 +141,35 @@ const Splash: React.FC = () => {
                                     sendMessage={addPost}
                                 />
                             </IonCard>
-                            {useMemo(() => posts.sort(getSort).map(({ id, author, content, sent, voteScore }: any) => (
+                            {useMemo(() => posts.sort(getSort).map(({ id, author, content, sent }: any) => (
                                 <IonCard key={id}>
                                     <IonCardHeader >
                                         <IonGrid fixed>
+                                            <div style={{ position: 'absolute', right: 10, top: 10 }}>
+                                                {timeAgo(new Date(sent.seconds * 1000))}
+                                            </div>
                                             <IonRow>
                                                 <IonCol size='10'>
                                                     <MemberToolbar address={author} />
+
                                                 </IonCol>
                                                 <IonCol size='2'>
                                                     <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, true)} style={{ position: 'absolute', bottom: 25, right: 0 }}>
-                                                        <IonBadge color={true ? 'success' : 'medium'}>
+                                                        <IonBadge color={typeof voted[id] !== 'undefined' && voted[id] !== null && voted[id] === 1 ? 'success' : 'medium'}>
                                                             <IonIcon icon={chevronUp} />
+
                                                         </IonBadge>
                                                     </IonButton>
+
                                                     <IonLabel style={{ position: 'absolute', bottom: 22, right: 31 }}>
-                                                        <IonText>{voteScore}</IonText>
+                                                        <IonText>{voteScore[id] === null ? <IonSpinner name='dots' /> : voteScore[id]?.net}</IonText>
                                                     </IonLabel>
                                                     <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, false)} style={{ position: 'absolute', bottom: -25, right: 0 }}>
-                                                        <IonBadge color={true ? 'danger' : 'medium'}>
+                                                        <IonBadge color={typeof voted[id] !== 'undefined' && voted[id] !== null && voted[id] === -1 ? 'danger' : 'medium'}>
                                                             <IonIcon icon={chevronDown} />
                                                         </IonBadge>
                                                     </IonButton>
                                                 </IonCol>
-
                                             </IonRow>
 
                                         </IonGrid>
@@ -167,7 +188,7 @@ const Splash: React.FC = () => {
                                         sendMessage={(content) => { makeComment(id, content) }} // Modify this if you want to handle comments
                                     />
                                 </IonCard>
-                            )), [postType, posts])}
+                            )), [postType, posts, voted])}
                         </IonCol>
                     </IonRow>
                 </IonGrid>
@@ -215,7 +236,7 @@ const CommentList: React.FC<CommentListProps> = ({ postId }) => {
                     const changes = channelDocs.docChanges();
                     changes.forEach((change) => {
                         if (change.type === 'added') {
-                            const newMessage = change.doc.data() as Message;
+                            const newMessage = { ...change.doc.data() as Message, id: change.doc.id };
                             setComments(prevComments => uniqId([...prevComments, newMessage]) as any);
                         } else if (change.type === 'modified') {
                             const newMessageTimestamped = change.doc.data() as Message;

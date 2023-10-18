@@ -42,7 +42,6 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
 
     useEffect(() => {
-        console.log(fireUser, ready, me)
         if (fireUser && ready && me?.address) {
             modalRef.current?.dismiss();
         }
@@ -100,7 +99,9 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     return <IonHeader>
         {toolbar}
         <IonModal canDismiss isOpen={me === null} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
-            <OnBoarding me={me} />
+            <OnBoarding dismiss={() => {
+                modalRef.current?.dismiss();
+            }} me={me} />
         </IonModal>
     </IonHeader>
 

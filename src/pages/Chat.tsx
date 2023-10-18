@@ -1,6 +1,6 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import { useMember } from '../hooks/useMember';
+import { Member, useMember } from '../hooks/useMember';
 import { TribeHeader } from '../components/TribeHeader';
 import { TribeContent } from '../components/TribeContent';
 import { gql, useQuery } from '@apollo/client';
@@ -8,16 +8,15 @@ import { usePrivy } from '@privy-io/react-auth';
 import usePassBalance from '../hooks/usePassBalance';
 import usePassesBalance from '../hooks/useBoosters';
 import { Address, formatUnits } from 'viem';
-import { MemberBadge, MemberChip } from '../components/MemberBadge';
-import { ticketOutline } from 'ionicons/icons';
-import { useTitle } from '../hooks/useTitle';
-import { useEffect } from 'react';
-import { WriteMessage } from './Room';
-import useBoosters from '../hooks/useBoosters';
+import { MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import { TribeFooter } from '../components/TribeFooter';
+import { useEffect, useMemo, useState } from 'react';
+import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
+import db from '../lib/db';
+import { app } from '../App';
 
 
-const myPassesQuery = gql`
+const myChatsQuery = gql`
 query MyQuery($hash:String!) {
     transferSingles(to:$address) {
     from
@@ -26,26 +25,38 @@ query MyQuery($hash:String!) {
 }
 `
 const Chat: React.FC = () => {
-    const get = useMember(x => x.getFriend);
-    const cache = useMember(x => x.friendCache);
-    const loadCache = useMember(x => x.loadCache);
     const { user } = usePrivy()
-    const address = user?.wallet?.address;
-    const { data } = useQuery(myPassesQuery, { variables: { address } });
-    const accounts = Object.keys(cache);
+    const [members, setMembers] = useState<[{ address: string }]>()
     useEffect(() => {
-        loadCache();
-    }, [])
+        if (typeof user?.wallet?.address === 'undefined') {
+            return;
+        }
+        const address = user?.wallet?.address;
+        const channelsRef = collection(getFirestore(app), "channel");
+        const q = query(channelsRef, where(`holders.${address}`, '>', 0));
+        getDocs(q)
+            .then(querySnapshot => {
+                if (!querySnapshot.empty) {
+                    const result = querySnapshot.docs.map(doc => ({ ...doc.data(), address: doc.id }));
+                    console.log(result, "RESULT");
+                    setMembers(result as any);
+                }
+            })
+            .catch(error => {
+                setMembers([] as any)
+                console.log("HELLO")
+                console.log("Error getting documents: ", error);
+            });
+    }, [user])
     return (
         <IonPage>
-            <TribeHeader title='Tribes' />
+            <TribeHeader title='Chat' />
             <IonContent>
                 <IonList>
-                    {accounts.map((account, i) => <IonItem lines='none' routerLink={'/room/' + account}>
-                        <MemberChip address={account} />
-                        <IonButtons slot='end'>
-                        </IonButtons>
-                    </IonItem>)}
+                    {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
+                        <IonItem lines='none' routerLink={'/room/' + address}>
+                            <MemberToolbar address={address} />
+                        </IonItem>) : <IonSpinner />, [members])}
                 </IonList>
             </IonContent>
             <TribeFooter page='chat' />

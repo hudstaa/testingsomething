@@ -31,6 +31,7 @@ import useBoosters from '../hooks/useBoosters';
 import { TribePage } from './TribePage';
 import { getAuth } from 'firebase/auth';
 import { formatEth } from '../lib/sugar';
+import useFriendTechBalance from '../hooks/useFriendTechBalance';
 
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (content: string) => void }> = ({ address, placeHolder, sendMessage }) => {
     const [newNote, setNewNote] = useState<string | undefined>(undefined)
@@ -91,7 +92,6 @@ const Room: React.FC = () => {
             console.error("Error sending message: ", error);
         }
     }, [wallet?.address, wallet, address])
-    const { syncing } = useBoosters(wallet?.address, address)
     useEffect(() => {
         if (!channel) {
             return;
@@ -150,7 +150,6 @@ const Room: React.FC = () => {
     const fetchMore = useCallback(async (complete: () => void) => {
         const db = getFirestore(app);
         const messagesCol = collection(db, "channel", channel, "messages");
-        console.log("fetch older")
         const lastFetchedTimestamp = messages[0].sent;
         const q = query(messagesCol, orderBy("sent", "desc"), startAt(lastFetchedTimestamp), limit(10));
         getDocs(q).then((snapshot) => {
@@ -170,8 +169,12 @@ const Room: React.FC = () => {
         });
 
     }, [messages])
+    const member = useMember(x => x.getFriend(channel))
     const infiniteRef = useRef<HTMLIonInfiniteScrollElement>(null)
-    const boosters = useBoosters(wallet?.address, channel);
+    const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
+    const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
+    const hasAccess = (typeof ftBalance !== 'undefined' && ftBalance > 0n) || (typeof balance !== 'undefined' && balance > 0n) && !syncing && !ftSyncing;
+
     return <TribePage>
         <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />
 
@@ -185,18 +188,19 @@ const Room: React.FC = () => {
 
             <IonList color='light' style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
 
-                {balance !== null && typeof balance !== 'undefined' && balance > 0n && me !== null ? messageList : <></>}
+                {hasAccess ? messageList : <></>}
                 <div style={{ height: 10 }} />
             </IonList>
-            {balance && balance > 0n ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
-                {me === null || typeof balance === 'undefined' ? <IonSpinner /> : <IonButton color='danger'>
+            {hasAccess ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
+                {(syncing || typeof balance === 'undefined' || ftSyncing || typeof ftBalance === 'undefined') && <IonSpinner />}
+                {!hasAccess && me != null && typeof balance !== 'undefined' && typeof ftBalance !== 'undefined' && !syncing && !ftSyncing ? <IonButton color='danger'>
                     No Access <IonIcon icon={lockClosed} />
-                </IonButton>}
+                </IonButton> : <></>}
             </IonTitle></IonRouterLink>}
 
-            {syncing !== null && balance && balance == 0n ? <IonLoading isOpen={syncing} /> : <></>}
+            {hasAccess ? <IonLoading isOpen={syncing || ftSyncing || false} /> : <></>}
         </IonContent>
-        {balance && balance > 0n ? <IonFooter slot='fixed' >
+        {hasAccess ? <IonFooter slot='fixed' >
             <IonGrid fixed>
                 < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
             </IonGrid>

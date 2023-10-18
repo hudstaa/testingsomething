@@ -9,6 +9,8 @@ export interface Member {
     twitterName: string;
     twitterUsername: string;
     twitterPfp: string;
+    twitterBackground: string;
+    bio: string;
     address: string;
     privyAddress: string;
     friendTechAddress?: string
@@ -49,16 +51,14 @@ export const useMember = create<FriendStore>((set, store) => ({
             return null;
         }
         if (store().watching[uid] || store().error[uid]) {
-            console.log("watchinggf")
             return null;
         }
         const database = getFirestore(app);
 
         const docRef = doc(database, 'member', uid);
         onSnapshot(docRef, (docSnap) => {
-            console.log('got snap', docSnap.data());
             const me = docSnap.data() as Member;
-            set({ me, friendCache: { ...store().friendCache, [me.address]: me } })
+            set({ me, friendCache: { ...store().friendCache, [getAddress(me.address)]: me } })
         });
         set({ watching: { ...store().watching, [uid]: true } })
         return null;
@@ -125,7 +125,6 @@ export const useMember = create<FriendStore>((set, store) => ({
             return null;
         }
 
-        console.log("trigger fetch")
 
         store().fetchFriendData(addy, watch);
         return null;
@@ -136,7 +135,6 @@ export const useMember = create<FriendStore>((set, store) => ({
             return;
         }
         try {
-            console.log("FETCHING", address);
             set(state => ({ loading: { ...state.loading, [address]: true } }));
             const db = getFirestore(app);
 
@@ -165,7 +163,6 @@ export const useMember = create<FriendStore>((set, store) => ({
                 });
             } else {
                 await getDocs(memberQuery).then((snapshot) => {
-                    console.log("got docs", snapshot.docs);
                     if (snapshot.empty) {
                         set({
                             loading: { ...store().loading, [address]: false },
