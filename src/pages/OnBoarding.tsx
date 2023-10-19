@@ -74,8 +74,8 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             </> : <IonSpinner name="crescent" />}
             <br />
             <IonText color='tertiary'>
-                {!ready && "connecting to privy..."}
-                {me === null && ready && "loading member data..."}
+                {!ready && <>connecting to privy <br /><IonSpinner name='dots' /></>}
+                {me === null && ready && <>loading member data <br /><IonSpinner name='dots' /></>}
             </IonText>
 
         </IonTitle>, [refresh, me, walletAddress, user, ready])}

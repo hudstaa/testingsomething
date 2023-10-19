@@ -57,7 +57,7 @@ const Chat: React.FC = () => {
                             {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
                                 <IonItem color='light' lines='none' routerLink={'/room/' + address}>
                                     <MemberCardHeader address={address} />
-                                </IonItem>) : <IonSpinner />, [members])}
+                                </IonItem>) : <IonTitle><IonSpinner name='crescent' /></IonTitle>, [members])}
                         </IonCol></IonRow>
                 </IonGrid>
             </IonContent>
