@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonItemDivider, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRouterLink, IonRow, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar, useIonViewDidLeave, useIonViewWillLeave } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -28,6 +28,7 @@ import { getAuth } from 'firebase/auth';
 import { formatEth } from '../lib/sugar';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import { WriteMessage } from '../components/WriteMessage';
+import useTabvisibility from '../hooks/useTabVisibility';
 
 
 
@@ -148,8 +149,7 @@ const Room: React.FC = () => {
     const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
     const hasAccess = (typeof ftBalance !== 'undefined' && ftBalance > 0n) || (typeof balance !== 'undefined' && balance > 0n) && !syncing && !ftSyncing;
-
-    return <TribePage>
+    return <TribePage page='room'>
         <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />
 
         <IonContent ref={contentRef} >

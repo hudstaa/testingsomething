@@ -9,7 +9,7 @@ import { albums, albumsOutline, call, chevronDown, chevronUp, heartSharp, person
 import { MemberCardHeader, MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
-import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment, where } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment, where, getAggregateFromServer, sum } from 'firebase/firestore';
 import { app } from '../App';
 import { useMember } from '../hooks/useMember';
 import { getAuth } from 'firebase/auth';
@@ -18,7 +18,7 @@ import { uniq, uniqId } from '../lib/sugar';
 import { TribeFooter } from '../components/TribeFooter';
 import { timeAgo } from '../components/TradeItem';
 import { CommentList } from '../components/CommentList';
-import { WriteMessage } from './WriteMessage';
+import { WriteMessage } from '../components/WriteMessage';
 
 
 
@@ -42,7 +42,7 @@ const Posts: React.FC = () => {
         console.log(upvote, postId);
         const vote = upvote ? 1 : -1;
         if (voted[postId] != vote) {
-            setVoteScore(x => ({ ...x, [postId]: { net: (x[postId].net || 0) + vote, down: (x[postId].down || 0) - vote, up: (x[postId].up || 0) + vote } }))
+            setVoteScore(x => ({ ...x, [postId]: (x[postId] || 0) + vote }))
         }
         setVoteCache((x) => ({ ...x, [postId]: vote }))
         setDoc(voteRef, ({ vote }))
@@ -74,17 +74,18 @@ const Posts: React.FC = () => {
     }, [me])
     const [postType, setPostType] = useState('top')
 
-    const getSort = useCallback((a: any, b: any) => {
-        // if (postType === 'top') {
-        //     return voteScore(b.votes) - voteScore(a.votes);
-        // } else if (postType == 'recent') {
-        return b.sent.seconds - a.sent.seconds;
-        // }
-    }, [postType])
-
 
     const [voted, setVoteCache] = useState<Record<string, 1 | -1 | null>>({});
-    const [voteScore, setVoteScore] = useState<Record<string, { up: number, down: number, net: number }>>({});
+    const [voteScore, setVoteScore] = useState<Record<string, number>>({});
+
+    const getSort = useCallback((a: any, b: any) => {
+        if (postType === 'top') {
+            return voteScore[b.id] - voteScore[a.id];
+        }
+        return b.sent.seconds - a.sent.seconds;
+
+    }, [postType, voteScore])
+
     useEffect(() => {
         if (typeof auth.currentUser?.uid === 'undefined') {
             return;
@@ -113,30 +114,33 @@ const Posts: React.FC = () => {
                 setVoteScore(x => ({ ...x, [id]: null }))
                 const db = getFirestore(app);
                 const postRef = doc(db, 'post', id);
-                const results = await Promise.all([getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', 1))), getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', -1)))]);
-                const [upDoc, downDoc] = results.map(x => x.data());
-                setVoteScore(x => ({ ...x, [id]: { up: upDoc.count, down: downDoc.count, net: upDoc.count - downDoc.count } }));
+                collection(postRef, 'votes');
+                const sumData = await getAggregateFromServer(collection(postRef, 'votes'), {
+                    voteScore: sum('vote')
+                });
+
+                setVoteScore(x => ({ ...x, [id]: sumData.data().voteScore }));
             }
         })
     }, [posts])
     console.log(voted)
     return (
         <IonPage id='main-content'>
-            <TribeHeader color='success' title={'TRIBE'} />
+            <TribeHeader color='success' title={'TRIBE'} content={<IonSegment value={postType} onIonChange={(e) => {
+                setPostType(e.detail.value?.toString() || "top")
+            }}>
+                <IonSegmentButton value={'top'}>
+                    TOP
+                </IonSegmentButton>
+                <IonSegmentButton value={'recent'}>
+                    RECENT
+                </IonSegmentButton>
+            </IonSegment>
+            } />
             <TribeContent fullscreen>
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
-                            <IonSegment value={postType} onIonChange={(e) => {
-                                setPostType(e.detail.value?.toString() || "top")
-                            }}>
-                                <IonSegmentButton value={'top'}>
-                                    TOP
-                                </IonSegmentButton>
-                                <IonSegmentButton value={'recent'}>
-                                    RECENT
-                                </IonSegmentButton>
-                            </IonSegment>
                             <IonCard>
                                 <WriteMessage
                                     placeHolder='Whats happnin'
@@ -163,7 +167,7 @@ const Posts: React.FC = () => {
                                         </IonButton>
 
                                         <IonLabel style={{ position: 'absolute', bottom: '40%', right: 31 }}>
-                                            <IonText className='ion-text-center'>{voteScore[id] === null ? <></> : voteScore[id]?.net}</IonText>
+                                            <IonText className='ion-text-center'>{voteScore[id] === null ? <></> : voteScore[id]}</IonText>
                                         </IonLabel>
                                         <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, false)} style={{ position: 'absolute', bottom: -12, right: 0 }}>
                                             <IonBadge color={typeof voted[id] !== 'undefined' && voted[id] !== null && voted[id] === -1 ? 'danger' : 'medium'}>

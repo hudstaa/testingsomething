@@ -26,7 +26,7 @@ const Account: React.FC = () => {
     const { logout } = usePrivy();
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
     return (
-        <TribePage>
+        <TribePage page='account'>
             <TribeHeader title='Account' />
             <TribeContent >
                 <IonGrid>
@@ -42,12 +42,6 @@ const Account: React.FC = () => {
                                         <MemberToolbar address={me?.address || ""} />
 
                                         <IonItem color='light'>
-
-                                            <IonButton fill='solid' routerLink={'/'} onClick={() => {
-                                            }} color='primary'>Post
-                                                <IonIcon icon={albumsOutline} />
-
-                                            </IonButton>
                                             <IonButton fill='solid' routerLink={'/room/' + me?.address} onClick={() => {
                                             }} color='tertiary'>Chat
                                                 <IonIcon icon={chatboxOutline} />
@@ -56,7 +50,14 @@ const Account: React.FC = () => {
                                             }} color='success'>Profile
                                                 <IonIcon icon={personOutline} />
                                             </IonButton>
+                                            <IonButton fill='solid' routerLink={'/'} onClick={() => {
+                                            }} color='primary'>Post
+                                                <IonIcon icon={albumsOutline} />
 
+                                            </IonButton>
+                                        </IonItem>
+
+                                        <IonItem color='light'>
                                             <IonButtons slot='end'>
 
                                                 <IonButton fill='outline' onClick={() => {

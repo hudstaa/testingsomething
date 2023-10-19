@@ -13,6 +13,7 @@ import { TribeFooter } from '../components/TribeFooter';
 import { useEffect, useMemo, useState } from 'react';
 import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
 import { app } from '../App';
+import { TribePage } from './TribePage';
 
 
 const myChatsQuery = gql`
@@ -46,7 +47,7 @@ const Chat: React.FC = () => {
             });
     }, [user])
     return (
-        <IonPage>
+        <TribePage page='chat'>
             <TribeHeader title='Chat' />
             <IonContent >
                 <IonGrid>
@@ -61,7 +62,7 @@ const Chat: React.FC = () => {
                 </IonGrid>
             </IonContent>
             <TribeFooter page='chat' />
-        </IonPage >
+        </TribePage >
     );
 };
 

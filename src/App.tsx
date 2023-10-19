@@ -5,14 +5,17 @@ import {
   IonCard,
   IonContent,
   IonHeader,
+  IonIcon,
   IonImg,
   IonItem,
+  IonLabel,
   IonMenu,
   IonMenuToggle,
   IonPage,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
+  IonTabs,
   IonTitle,
   IonToolbar,
   setupIonicReact
@@ -71,7 +74,7 @@ export const noopStorage = {
   removeItem: (_key: any) => null,
 }
 
-import Splash from './pages/Splash';
+import Posts from './pages/Posts';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -97,6 +100,9 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { useEffect } from 'react';
 import { addDoc, collection, connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import Account from './pages/Account';
+import { triangle, ellipse, square, albumsOutline, chatbubble, personOutline, chatbubbleOutline } from 'ionicons/icons';
+import useTabvisibility from './hooks/useTabVisibility';
+import Splash from './pages/Splash';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -142,61 +148,58 @@ const App: React.FC = () => {
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
-
-
           <IonReactHashRouter >
-            <IonMenu side='start' color='tertiary' contentId="main-content">
-              <IonHeader>
-                <IonToolbar color='light'>
-                  <IonAvatar>
-                    <IonImg src='/icon.png' />
-                  </IonAvatar>
-                </IonToolbar>
-              </IonHeader>
-              <IonContent>
-                <IonMenuToggle key={'home'} >
-                  <IonItem routerLink={'/'}>
-                    posts
-                  </IonItem>
-                </IonMenuToggle>
-                {routes.map((route, i) =>
-                  <IonMenuToggle key={i} >
-                    <IonItem routerLink={'/' + route}>
-                      {route}
-                    </IonItem>
-                  </IonMenuToggle>
-                )}
-              </IonContent>
-            </IonMenu>
-            <IonRouterOutlet>
-              <Route exact path="/discover">
-                <Discover />
-              </Route>
-              <Route exact path="/trade/:hash">
-                <Transaction />
-              </Route>
-              <Route exact path="/chat">
-                <Chat />
-              </Route>
-              <Route exact path="/room/:address">
-                <Room />
-              </Route>
-              <Route path="/watchlist">
-                <Watchlist />
-              </Route>
-              <Route path="/activity">
-                <Activity />
-              </Route>
-              <Route path="/account">
-                <Account />
-              </Route>
-              <Route path="/" exact>
-                <Splash />
-              </Route>
-              <Route path="/member/:address" exact>
-                <Member />
-              </Route>
-            </IonRouterOutlet>
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/">
+                  <Splash />
+                </Route>
+                <Route exact path="/discover">
+                  <Discover />
+                </Route>
+                <Route exact path="/trade/:hash">
+                  <Transaction />
+                </Route>
+                <Route exact path="/chat">
+                  <Chat />
+                </Route>
+                <Route exact path="/room/:address">
+                  <Room />
+                </Route>
+                <Route path="/watchlist">
+                  <Watchlist />
+                </Route>
+                <Route path="/activity">
+                  <Activity />
+                </Route>
+                <Route path="/account">
+                  <Account />
+                </Route>
+                <Route path="/posts">
+                  <Posts />
+                </Route>
+                <Route path="/member/:address" >
+                  <Member />
+                </Route>
+              </IonRouterOutlet>
+
+              <IonTabBar slot="bottom">
+
+                <IonTabButton tab="posts" href="/posts" >
+                  <IonLabel>Post</IonLabel>
+                  <IonIcon icon={albumsOutline} />
+                </IonTabButton>
+                <IonTabButton tab="chat" href="/chat">
+                  <IonLabel>Chat</IonLabel>
+                  <IonIcon icon={chatbubbleOutline} />
+                </IonTabButton>
+                <IonTabButton tab="account" href="/Account">
+                  <IonLabel>Account</IonLabel>
+                  <IonIcon icon={personOutline} />
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+
           </IonReactHashRouter>
         </ApolloProvider>
       </PrivyWagmiConnector>

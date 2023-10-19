@@ -34,12 +34,11 @@ const Discover: React.FC = () => {
     loadCache();
   }, [])
   return (
-    <TribePage>
+    <TribePage page='discover'>
       <TribeHeader title='Discover' />
       <TribeContent >
         <IonGrid>
           <IonRow>
-
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               <IonList>
                 <IonListHeader></IonListHeader>
@@ -55,12 +54,9 @@ const Discover: React.FC = () => {
               </IonList>
             </IonCol>
             <IonCol>
-
             </IonCol>
           </IonRow>
-
         </IonGrid>
-
       </TribeContent>
       <TribeFooter page='discover' />
     </TribePage>

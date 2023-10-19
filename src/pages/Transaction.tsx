@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import { TribeContent } from '../components/TribeContent';
 import { MemberBadge } from '../components/MemberBadge';
 import { TribeHeader } from '../components/TribeHeader';
+import { TribePage } from './TribePage';
 
 
 const transactionQuery = gql`
@@ -34,14 +35,14 @@ const Transaction: React.FC = () => {
   const { data, loading, error } = useQuery<{ trade: Trade }>(transactionQuery, { variables: { hash: hash.toLowerCase() + "01000000" } });
   console.log(data, hash);
   return (
-    <IonPage>
+    <TribePage page='transaction'>
       <TribeHeader title='tx' />
       <TribeContent fullscreen>
         {loading && <IonSpinner />}
         {data?.trade && <TradeItem trade={data?.trade} />}
         {error && <IonText>{error.message}</IonText>}
       </TribeContent>
-    </IonPage>
+    </TribePage>
 
   );
 };

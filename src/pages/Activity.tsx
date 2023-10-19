@@ -45,7 +45,7 @@ const Activity: React.FC = () => {
     }, [])
 
     return (
-        <TribePage>
+        <TribePage page='activity'>
             <TribeHeader title={'Activity'} />
             <TribeContent fullscreen>
                 <IonGrid>

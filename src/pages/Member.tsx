@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonText, IonTitle, IonToolbar, useIonViewDidLeave, useIonViewWillLeave } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
@@ -21,6 +21,7 @@ import useBoosters from '../hooks/useBoosters';
 import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import { TribePage } from './TribePage';
+import useTabvisibility from '../hooks/useTabVisibility';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -38,9 +39,8 @@ const Member: React.FC = () => {
     const [selectedHolderType, setSelectedHolderType] = useState('tribe')
     const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
-
     return (
-        <TribePage>
+        <>
             <TribeHeader color='tertiary' title={
                 member !== null ? member.twitterName : ""} />
             <TribeContent fullscreen>
@@ -139,7 +139,7 @@ const Member: React.FC = () => {
                 { }
 
             </IonFooter>
-        </TribePage >
+        </ >
 
     );
 };

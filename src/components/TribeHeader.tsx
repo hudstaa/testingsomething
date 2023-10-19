@@ -19,7 +19,7 @@ import axios from "axios";
 import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { app } from "../App";
 
-export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string }> = ({ title, sticky = true, color, image }) => {
+export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement }> = ({ title, sticky = true, color, image, content }) => {
     const { pathname } = useLocation();
     const { authenticated, linkTwitter, user, getAccessToken, ready } = usePrivy()
     const { wallets } = useWallets();
@@ -48,11 +48,11 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [ready, fireUser, me])
     const toolbar = useMemo(() => <IonToolbar>
         <IonButtons slot='start'>
-            <IonMenuButton >
+            <IonButton routerLink="/">
                 <IonAvatar>
-                    <IonImg src='/icon.png' />
+                    <IonImg src='/icon.svg' />
                 </IonAvatar>
-            </IonMenuButton>
+            </IonButton>
             {/* <IonButton onClick={() => {
 
             }}>
@@ -103,6 +103,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                 modalRef.current?.dismiss();
             }} me={me} />
         </IonModal>
+        {content}
     </IonHeader>
 
 }

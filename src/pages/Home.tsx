@@ -5,7 +5,7 @@ import { TribePage } from './TribePage';
 
 const Home: React.FC = () => {
   return (
-    <TribePage>
+    <TribePage page='home'>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Home</IonTitle>

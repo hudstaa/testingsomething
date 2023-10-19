@@ -5,7 +5,7 @@ import { TribePage } from './TribePage';
 
 const Token: React.FC = () => {
     return (
-        <TribePage>
+        <TribePage page='token'>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Discover</IonTitle>
