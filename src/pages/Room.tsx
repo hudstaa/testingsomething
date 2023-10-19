@@ -8,18 +8,13 @@ import { getEnv, loadKeys, storeKeys } from '../lib/xmtp';
 import { useQuery } from '@apollo/client';
 import { TribeContent } from '../components/TribeContent';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { alertOutline, lockClosed, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
-import { ChatBubble, MemberBadge, MemberChip } from '../components/MemberBadge';
-import { Client, Conversation, ConversationV2, DecodedMessage, MessageV2 } from '@xmtp/xmtp-js';
+import { alertOutline, close, lockClosed, notificationsCircle, notificationsOff, notificationsOutline, paperPlane, pushOutline } from 'ionicons/icons';
+import { ChatBubble, ChatBubbleWithReply, MemberBadge, MemberChip, MemberPfp } from '../components/MemberBadge';
 import { useTitle } from '../hooks/useTitle';
-import { CachedConversation, CachedMessage, Signer, useClient, useConversations, useMessages, useStreamAllMessages, useStreamMessages } from '@xmtp/react-sdk';
 import { useGroupMessages } from '../hooks/useGroupMessages';
 import { timeAgo } from '../components/TradeItem';
 import { TribeHeader } from '../components/TribeHeader';
 import { Message } from '../models/Message';
-
-import { uuid } from 'uuidv4';
-
 
 import { Firestore, Timestamp, addDoc, arrayUnion, collection, doc, getDocs, getFirestore, limit, limitToLast, onSnapshot, orderBy, query, serverTimestamp, setDoc, startAfter, startAt, updateDoc } from "firebase/firestore";
 import { app, messaging } from '../App';
@@ -32,38 +27,10 @@ import { TribePage } from './TribePage';
 import { getAuth } from 'firebase/auth';
 import { formatEth } from '../lib/sugar';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
+import { WriteMessage } from '../components/WriteMessage';
 
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (content: string) => void }> = ({ address, placeHolder, sendMessage }) => {
-    const [newNote, setNewNote] = useState<string | undefined>(undefined)
-    const makeComment = () => {
-        newNote && sendMessage(newNote);
-        setNewNote(undefined);
-    }
 
-    return <IonToolbar>
-        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={newNote} placeholder={placeHolder} onKeyUp={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                makeComment();
-            }
-        }} onIonInput={(e) => {
-            setNewNote(e.detail.value!)
-        }} />
-        <IonButtons slot='end'>
-            <IonButton onClick={async () => {
-                makeComment();
-            }}>
-                <IonIcon color={typeof newNote !== 'undefined' && newNote.length > 0 ? 'primary' : 'light'} icon={paperPlane} />
-            </IonButton>
-        </IonButtons>
-    </IonToolbar>
-}
 
-const Test: React.FC = () => {
-    const { client } = useClient();
-    return <>
-
-    </>
-}
 
 const Room: React.FC = () => {
     const { address } = useParams<{ address: string }>()
@@ -72,7 +39,7 @@ const Room: React.FC = () => {
     const channelOwner = useMember(x => x.getFriend(address, true))
     const me = useMember(x => x.getCurrentUser(getAuth().currentUser?.uid))
 
-    const [signer, setSigner] = useState<any>();
+    const [replyingToMessage, setReplyingToMessage] = useState<Message | undefined>();
     const [lastMessageLoaded, setLastMessageLoaded] = useState<boolean>(false);
     const a = useGroupMessages(x => x.groupMessages);
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
@@ -82,16 +49,23 @@ const Room: React.FC = () => {
     const [latestMessageSent, setLatestMessageSent] = useState<Timestamp | null>()
     const sendMessage = useCallback(async (content: string) => {
         const author = wallet!.address;
-        const newMessage = ({ id: uuid(), channel, content, author, sent: serverTimestamp(), type: 'string' });
+        const newMessage: any = ({ content, author, sent: serverTimestamp(), type: 'string' });
         const db = getFirestore(app);
+        if (typeof replyingToMessage !== 'undefined') {
+            newMessage.reply = replyingToMessage.id;
+        }
         const messagesCol = collection(db, "channel", channel, "messages");
-
+        setReplyingToMessage(undefined);
         try {
             await addDoc(messagesCol, newMessage);
         } catch (error) {
             console.error("Error sending message: ", error);
         }
-    }, [wallet?.address, wallet, address])
+    }, [wallet?.address, wallet, address, replyingToMessage])
+
+    const reply = useCallback((id: string) => {
+        setReplyingToMessage(messages.find(x => x.id === id))
+    }, [messages]);
     useEffect(() => {
         if (!channel) {
             return;
@@ -112,13 +86,13 @@ const Room: React.FC = () => {
                     const changes = channelDocs.docChanges();
                     changes.forEach((change) => {
                         if (change.type == 'added') {
-                            const newMessage = change.doc.data() as Message;
+                            const newMessage = { ...change.doc.data(), id: change.doc.id } as Message;
                             pushMessages(channel, [newMessage]);
                             console.log("new")
                         } else if (change.type == 'modified') {
                             const newMessageTimestamped = change.doc.data() as Message;
                             newMessageTimestamped.sent !== null && setLatestMessageSent(newMessageTimestamped.sent)
-                            modMessage(channel, change.doc.data() as Message);
+                            modMessage(channel, { ...change.doc.data(), id: change.doc.id } as Message);
                             console.log("mod")
                         }
                     });
@@ -127,8 +101,8 @@ const Room: React.FC = () => {
         })();
 
     }, [channel])
-    const messageList = useMemo(() => messages.map((msg: any) =>
-        <ChatBubble key={msg.id} sent={msg.sent} isMe={msg.author === me?.address} address={msg.author} message={msg.content}></ChatBubble>
+    const messageList = useMemo(() => messages.map((msg: any) => msg.reply ? <ChatBubbleWithReply id={msg.id} message={msg.content} address={msg.author} isMe={msg.author === me?.address} repliedTo={messages.find(x => x.id === msg.reply) as any} sent={msg.sent} reply={reply} /> :
+        <ChatBubble id={msg.id} reply={reply} key={msg.id} sent={msg.sent} isMe={msg.author === me?.address} address={msg.author} message={msg.content}></ChatBubble>
     ), [messages, me])
     const contentRef = useRef<HTMLIonContentElement>(null);
     useLayoutEffect(() => {
@@ -178,7 +152,7 @@ const Room: React.FC = () => {
     return <TribePage>
         <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />
 
-        <IonContent style={{ flexDirection: 'column-reverse' }} ref={contentRef} >
+        <IonContent ref={contentRef} >
             {(lastMessageLoaded || messages.length < 20) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
                 fetchMore(ev.target.complete);
             }}>
@@ -202,6 +176,15 @@ const Room: React.FC = () => {
         </IonContent>
         {hasAccess ? <IonFooter slot='fixed' >
             <IonGrid fixed>
+                {replyingToMessage && <IonItem>
+                    <MemberPfp size='smol' address={replyingToMessage.author} />
+                    {replyingToMessage.content}
+                    <IonButtons slot='end'>
+                        <IonButton fill='clear' onClick={() => { setReplyingToMessage(undefined) }}>
+                            <IonIcon color='danger' icon={close} />
+                        </IonButton>
+                    </IonButtons>
+                </IonItem>}
                 < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
             </IonGrid>
         </IonFooter> : <>

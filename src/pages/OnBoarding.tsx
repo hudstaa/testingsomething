@@ -71,7 +71,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                     </IonButton>
                     <br />
                 </>}
-            </> : <IonSpinner />}
+            </> : <IonSpinner name="crescent" />}
 
         </IonTitle>, [refresh, me, walletAddress, user, ready])}
         <IonLoading isOpen={tribeLoading} />

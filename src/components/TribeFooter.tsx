@@ -12,9 +12,9 @@ export const TribeFooter: React.FC<{ page: string }> = ({ page }) => <IonFooter 
     <IonButton color={page == 'chat' ? 'tertiary' : 'medium'} fill='clear' routerLink="/chat">
         <IonIcon icon={chatbox} />
     </IonButton>
-    <IonButton color={page == 'discover' ? 'tertiary' : 'medium'} fill='clear' routerLink="/discover">
+    {/* <IonButton color={page == 'discover' ? 'tertiary' : 'medium'} fill='clear' routerLink="/discover">
         <IonIcon icon={eye} />
-    </IonButton>
+    </IonButton> */}
     <IonButton fill='clear' routerLink="/account">
         <IonIcon color={page == 'account' ? 'tertiary' : 'medium'} icon={person} />
     </IonButton>

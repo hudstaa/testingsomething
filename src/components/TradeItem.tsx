@@ -8,7 +8,7 @@ import { formatEth } from '../lib/sugar';
 
 
 
-export function timeAgo(input: Date) {
+export function timesAgo(input: Date) {
     const date = (input instanceof Date) ? input : new Date(input);
     const formatter = new Intl.RelativeTimeFormat('en');
     const ranges: Record<string, number> = {
@@ -31,6 +31,25 @@ export function timeAgo(input: Date) {
         }
     }
 }
+
+export function timeAgo(input: Date) {
+    const date = (input instanceof Date) ? input : new Date(input);
+    const now = new Date();
+
+    // Check if date is from the same day
+    if (date.toDateString() === now.toDateString()) {
+        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Check if date is from the same year
+    if (date.getFullYear() === now.getFullYear()) {
+        return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+    }
+
+    // If from a different year
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+}
+
 export const TradeItem: React.FC<{ trade: Trade }> = ({ trade }) => {
     return <IonItem lines={'none'} detail key={trade.transactionHash} >
         <MemberBadge address={getAddress(trade.trader)} />

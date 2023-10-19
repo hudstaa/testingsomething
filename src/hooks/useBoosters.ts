@@ -26,15 +26,20 @@ export default function useBoosters(wallet: Address | string | undefined, channe
     });
     // Fetch data from Firebase on component mount
     useEffect(() => {
+        console.log(balance);
+        if (typeof balance == 'undefined') {
+            return;
+        }
         const database = getFirestore(app);
         if (!wallet || !channel) {
+            console.log("no wallet or channel");
             console.log(wallet, channel);
             return;
         }
         console.log(channel, wallet)
         const docRef = doc(database, 'channel', channel);
         getDoc(docRef).then((data) => {
-            console.log("GOT CHANNEL DOC", channel, wallet)
+            console.log("GOT CHANNEL DOC", channel, wallet, "BOOST")
             if (!data.exists()) {
                 console.log("DATA NOT FOUND SYNCIN")
                 console.log("ASDASd")
@@ -51,11 +56,12 @@ export default function useBoosters(wallet: Address | string | undefined, channe
             console.log(e);
         })
         onSnapshot(docRef, (data) => {
+            console.log("SNAPSHOT")
             const holderMap: Record<string, number> = data.data()?.holders || {};
             const balanceInfo = balance as [string[], number[]];
             const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)]
             if (holderMap[wallet] !== Number(holderBalance)) {
-                if (typeof holderMap[wallet] === 'undefined') {
+                if (typeof holderMap[wallet] === 'undefined' && balance === 0n) {
                     return;
                 }
                 console.log(holderMap, holderBalance, wallet, channel, "OOOOOo")

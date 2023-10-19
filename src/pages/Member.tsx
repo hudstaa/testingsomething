@@ -2,7 +2,6 @@ import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, Io
 import ExploreContainer from '../components/ExploreContainer';
 import { useMember } from '../hooks/useMember';
 import { useParams } from 'react-router';
-import { useClient, useConversations, useStartConversation, useCanMessage } from '@xmtp/react-sdk';
 import { usePrivy } from '@privy-io/react-auth';
 import { chatboxEllipsesOutline, logoTwitter, personOutline, ticketOutline } from 'ionicons/icons';
 import useBuyPass from '../hooks/useBuyPass';
@@ -13,16 +12,15 @@ import { TribeContent } from '../components/TribeContent';
 import usePassBalance from '../hooks/usePassBalance';
 import usePassSupply from '../hooks/usePassSupply';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { MemberGraph } from '../components/MemberGraph';
 import { useEffect, useMemo, useState } from 'react';
-import { useTitle } from '../hooks/useTitle';
 import { TribeHeader } from '../components/TribeHeader';
 import { formatEth, uniq } from '../lib/sugar';
 import { MemberBadge, MemberChip } from '../components/MemberBadge';
-import { FriendPortfolioChip, FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
+import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
 import useBoosters from '../hooks/useBoosters';
 import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
+import { TribePage } from './TribePage';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -42,7 +40,7 @@ const Member: React.FC = () => {
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
 
     return (
-        <IonPage>
+        <TribePage>
             <TribeHeader color='tertiary' title={
                 member !== null ? member.twitterName : ""} />
             <TribeContent fullscreen>
@@ -87,6 +85,15 @@ const Member: React.FC = () => {
 
 
                 {!user && loading === false && <IonTitle color='warning'>NOT AUTHENTICATED</IonTitle>}
+                <IonChip color={'medium'}>
+                    FriendTech:
+                    {ftBalance?.toString()}
+                </IonChip>
+                <IonChip>
+                    Tribe:
+                    {balance?.toString()}
+                </IonChip>
+
             </TribeContent >
             <IonFooter>
 
@@ -132,7 +139,7 @@ const Member: React.FC = () => {
                 { }
 
             </IonFooter>
-        </IonPage >
+        </TribePage >
 
     );
 };

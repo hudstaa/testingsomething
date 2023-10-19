@@ -29,3 +29,122 @@ yarn-error.log*
 .eslintcache
 dist/
 dist/*
+ios/App/App.xcodeproj/project.pbxproj
+ios/App/App.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+ios/App/App.xcworkspace/contents.xcworkspacedata
+ios/App/App.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ios/App/App/AppDelegate.swift
+ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
+ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json
+ios/App/App/Assets.xcassets/Contents.json
+ios/App/App/Assets.xcassets/Splash.imageset/Contents.json
+ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png
+ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png
+ios/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png
+ios/App/App/Base.lproj/LaunchScreen.storyboard
+ios/App/App/Base.lproj/Main.storyboard
+ios/App/App/Info.plist
+ios/App/Podfile
+ios/App/Podfile.lock
+ios/App/App.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/xcschememanagement.plist
+ios/App/App.xcworkspace/xcuserdata/esper.xcuserdatad/UserInterfaceState.xcuserstate
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+ios/App/App/public/assets/ccip-0e95c5fe.js
+ios/App/App/public/assets/focus-visible-9c13edeb.js
+ios/App/App/public/assets/index-17f9a0a5.js
+ios/App/App/public/assets/index-33d0707a.js
+ios/App/App/public/assets/index-b2c34725.js
+ios/App/App/public/assets/index-f1731d25.css
+ios/App/App/public/assets/index9-ab482fbf.js
+ios/App/App/public/assets/input-shims-f6d11a83.js
+ios/App/App/public/assets/ios.transition-9f15aa40.js
+ios/App/App/public/assets/md.transition-e32fb81e.js
+ios/App/App/public/assets/status-tap-73e5be99.js
+ios/App/App/public/assets/swipe-back-b7a4f86c.js
+ios/App/App/public/cordova.js
+ios/App/App/public/cordova_plugins.js
+ios/App/App/public/favicon.png
+ios/App/App/public/fonts/SF-Pro-Rounded-Black.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Bold.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Heavy.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Light.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Medium.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Regular.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Semibold.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Thin.otf
+ios/App/App/public/fonts/SF-Pro-Rounded-Ultralight.otf
+ios/App/App/public/icon.png
+ios/App/App/public/icon.svg
+ios/App/App/public/index.html
+ios/App/App/public/manifest.json
+ios/App/Pods/Local Podspecs/Capacitor.podspec.json
+ios/App/Pods/Local Podspecs/CapacitorApp.podspec.json
+ios/App/Pods/Local Podspecs/CapacitorCordova.podspec.json
+ios/App/Pods/Local Podspecs/CapacitorHaptics.podspec.json
+ios/App/Pods/Local Podspecs/CapacitorKeyboard.podspec.json
+ios/App/Pods/Local Podspecs/CapacitorStatusBar.podspec.json
+ios/App/Pods/Manifest.lock
+ios/App/Pods/Pods.xcodeproj/project.pbxproj
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/Capacitor.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/CapacitorApp.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/CapacitorCordova.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/CapacitorHaptics.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/CapacitorKeyboard.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/CapacitorStatusBar.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/Pods-App.xcscheme
+ios/App/Pods/Pods.xcodeproj/xcuserdata/esper.xcuserdatad/xcschemes/xcschememanagement.plist
+ios/App/Pods/Target Support Files/Capacitor/Capacitor-dummy.m
+ios/App/Pods/Target Support Files/Capacitor/Capacitor-Info.plist
+ios/App/Pods/Target Support Files/Capacitor/Capacitor-prefix.pch
+ios/App/Pods/Target Support Files/Capacitor/Capacitor.debug.xcconfig
+ios/App/Pods/Target Support Files/Capacitor/Capacitor.modulemap
+ios/App/Pods/Target Support Files/Capacitor/Capacitor.release.xcconfig
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp-dummy.m
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp-Info.plist
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp-prefix.pch
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp-umbrella.h
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp.debug.xcconfig
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp.modulemap
+ios/App/Pods/Target Support Files/CapacitorApp/CapacitorApp.release.xcconfig
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova-dummy.m
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova-Info.plist
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova-prefix.pch
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova.debug.xcconfig
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova.modulemap
+ios/App/Pods/Target Support Files/CapacitorCordova/CapacitorCordova.release.xcconfig
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics-dummy.m
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics-Info.plist
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics-prefix.pch
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics-umbrella.h
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics.debug.xcconfig
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics.modulemap
+ios/App/Pods/Target Support Files/CapacitorHaptics/CapacitorHaptics.release.xcconfig
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard-dummy.m
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard-Info.plist
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard-prefix.pch
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard-umbrella.h
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard.debug.xcconfig
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard.modulemap
+ios/App/Pods/Target Support Files/CapacitorKeyboard/CapacitorKeyboard.release.xcconfig
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar-dummy.m
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar-Info.plist
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar-prefix.pch
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar-umbrella.h
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar.debug.xcconfig
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar.modulemap
+ios/App/Pods/Target Support Files/CapacitorStatusBar/CapacitorStatusBar.release.xcconfig
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-acknowledgements.markdown
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-acknowledgements.plist
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-dummy.m
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-frameworks.sh
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-Info.plist
+ios/App/Pods/Target Support Files/Pods-App/Pods-App-umbrella.h
+ios/App/Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig
+ios/App/Pods/Target Support Files/Pods-App/Pods-App.modulemap
+ios/App/Pods/Target Support Files/Pods-App/Pods-App.release.xcconfig
+ios/capacitor-cordova-ios-plugins/CordovaPlugins.podspec
+ios/capacitor-cordova-ios-plugins/CordovaPluginsResources.podspec
+ios/capacitor-cordova-ios-plugins/CordovaPluginsStatic.podspec
+ios/capacitor-cordova-ios-plugins/resources/.gitkeep
+ios/capacitor-cordova-ios-plugins/sources/.gitkeep

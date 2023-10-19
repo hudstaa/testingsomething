@@ -52,8 +52,8 @@ service cloud.firestore {
     }
 
     match /post/{postId}/votes/{uid} {
-      allow read: if isAuthenticated();
-      allow create,update: if isAuthenticated() && uid == userId() && request.resource.data[uid].vote is bool;
+      allow read: if authed();
+      allow create,update: if authed() && uid == userId() && (request.resource.data[uid].vote == 1||request.resource.data[uid].vote == -1);
       allow delete: if false;
     }
     

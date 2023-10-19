@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { useDiscover } from '../hooks/useDiscover';
 import { Trade } from '../models/Trade';
@@ -12,7 +12,7 @@ import useBuyPass from '../hooks/useBuyPass';
 import { Address, formatEther } from 'viem';
 import { useEffect, useState } from 'react';
 import { useTitle } from '../hooks/useTitle';
-import { personOutline } from 'ionicons/icons';
+import { albums, albumsOutline, chatbox, chatboxOutline, exit, personOutline } from 'ionicons/icons';
 import { getAuth, signOut } from 'firebase/auth';
 import { usePrivy } from '@privy-io/react-auth';
 import { TribePage } from './TribePage';
@@ -31,46 +31,43 @@ const Account: React.FC = () => {
             <TribeContent >
                 <IonGrid>
                     <IonRow>
-                        <IonCol offsetMd='3' sizeMd='6' sizeXs='12'>
-                            <IonCard>
+                        <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
+                            <IonCard color='light'>
                                 <IonCardHeader color='tertiary'>
                                     <IonTitle > {me?.twitterName}</IonTitle>
                                 </IonCardHeader>
-                                <IonCardContent>
-                                    <MemberToolbar address={me?.address || ""} />
-                                    {/* <IonItem>
-                                        <IonButtons slot='start'>
+                                <IonCardContent color='light'>
+                                    <IonList>
 
-                                            <IonText color='tertiary'>
-                                                Message Style
-                                            </IonText>
-                                        </IonButtons>
-                                        <IonSegment value={messageType}>
-                                            <IonSegmentButton color='tertiary' value={'tribe'} onClick={() => { setMessageType('friendTech') }} >
-                                                Twitter
-                                            </IonSegmentButton>
-                                            <IonSegmentButton value={'friendtech'} onClick={() => { setMessageType('twitter') }} >
-                                                Friend Tech
-                                            </IonSegmentButton>
-                                        </IonSegment>
-                                    </IonItem> */}
+                                        <MemberToolbar address={me?.address || ""} />
 
-                                    <IonRow className='ion-text-center'>
-                                        <IonCol sizeXs='12' sizeMd='8' offsetMd='2'>
+                                        <IonItem color='light'>
+
                                             <IonButton fill='solid' routerLink={'/'} onClick={() => {
-                                            }} color='primary'>Post</IonButton>
+                                            }} color='primary'>Post
+                                                <IonIcon icon={albumsOutline} />
+
+                                            </IonButton>
                                             <IonButton fill='solid' routerLink={'/room/' + me?.address} onClick={() => {
-                                            }} color='tertiary'>Chat</IonButton>
+                                            }} color='tertiary'>Chat
+                                                <IonIcon icon={chatboxOutline} />
+                                            </IonButton>
                                             <IonButton fill='solid' routerLink={'/member/' + me?.address} onClick={() => {
-                                            }} color='success'>Profile</IonButton>
+                                            }} color='success'>Profile
+                                                <IonIcon icon={personOutline} />
+                                            </IonButton>
 
+                                            <IonButtons slot='end'>
 
-                                            <IonButton fill='solid' onClick={() => {
-                                                signOut(auth); logout();
-                                            }} color='danger'>Logout</IonButton>
+                                                <IonButton fill='outline' onClick={() => {
+                                                    signOut(auth); logout();
+                                                }} color='danger'>Logout
+                                                    <IonIcon icon={exit} />
+                                                </IonButton>
+                                            </IonButtons>
+                                        </IonItem>
+                                    </IonList>
 
-                                        </IonCol>
-                                    </IonRow>
                                 </IonCardContent>
                             </IonCard>
                         </IonCol>

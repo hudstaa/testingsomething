@@ -9,20 +9,20 @@ import { albums, albumsOutline, call, chevronDown, chevronUp, heartSharp, person
 import { MemberCardHeader, MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
-import { WriteMessage } from '../components/WriteMessage';
-import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment, where, sum } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, addDoc, getFirestore, serverTimestamp, limit, orderBy, query, Timestamp, setDoc, runTransaction, getDoc, increment, where } from 'firebase/firestore';
 import { app } from '../App';
 import { useMember } from '../hooks/useMember';
 import { getAuth } from 'firebase/auth';
-import { getAggregateFromServer } from 'firebase/firestore'
+import { getCountFromServer } from 'firebase/firestore'
 import { uniq, uniqId } from '../lib/sugar';
 import { TribeFooter } from '../components/TribeFooter';
 import { timeAgo } from '../components/TradeItem';
 import { CommentList } from '../components/CommentList';
+import { WriteMessage } from './WriteMessage';
 
 
 
-const Splash: React.FC = () => {
+const Posts: React.FC = () => {
     const [posts, setPosts] = useState<any[]>([]);
     const auth = getAuth();
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid));
@@ -42,7 +42,7 @@ const Splash: React.FC = () => {
         console.log(upvote, postId);
         const vote = upvote ? 1 : -1;
         if (voted[postId] != vote) {
-            setVoteScore(x => ({ ...x, [postId]: (x[postId] || 0) + vote }));
+            setVoteScore(x => ({ ...x, [postId]: { net: (x[postId].net || 0) + vote, down: (x[postId].down || 0) - vote, up: (x[postId].up || 0) + vote } }))
         }
         setVoteCache((x) => ({ ...x, [postId]: vote }))
         setDoc(voteRef, ({ vote }))
@@ -84,7 +84,7 @@ const Splash: React.FC = () => {
 
 
     const [voted, setVoteCache] = useState<Record<string, 1 | -1 | null>>({});
-    const [voteScore, setVoteScore] = useState<Record<string, number>>({});
+    const [voteScore, setVoteScore] = useState<Record<string, { up: number, down: number, net: number }>>({});
     useEffect(() => {
         if (typeof auth.currentUser?.uid === 'undefined') {
             return;
@@ -113,11 +113,9 @@ const Splash: React.FC = () => {
                 setVoteScore(x => ({ ...x, [id]: null }))
                 const db = getFirestore(app);
                 const postRef = doc(db, 'post', id);
-                const snapshot = await getAggregateFromServer(collection(postRef, 'votes'), {
-                    voteScore: sum('vote')
-                });
-                console.log(snapshot.data(), "DATA")
-                setVoteScore(x => ({ ...x, [id]: snapshot.data().voteScore }));
+                const results = await Promise.all([getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', 1))), getCountFromServer(query(collection(postRef, 'votes'), where('vote', '==', -1)))]);
+                const [upDoc, downDoc] = results.map(x => x.data());
+                setVoteScore(x => ({ ...x, [id]: { up: upDoc.count, down: downDoc.count, net: upDoc.count - downDoc.count } }));
             }
         })
     }, [posts])
@@ -165,7 +163,7 @@ const Splash: React.FC = () => {
                                         </IonButton>
 
                                         <IonLabel style={{ position: 'absolute', bottom: '40%', right: 31 }}>
-                                            <IonText className='ion-text-center'>{voteScore[id] === null ? <></> : voteScore[id]}</IonText>
+                                            <IonText className='ion-text-center'>{voteScore[id] === null ? <></> : voteScore[id]?.net}</IonText>
                                         </IonLabel>
                                         <IonButton fill='clear' onClick={() => handleVote(id, auth.currentUser!.uid, false)} style={{ position: 'absolute', bottom: -12, right: 0 }}>
                                             <IonBadge color={typeof voted[id] !== 'undefined' && voted[id] !== null && voted[id] === -1 ? 'danger' : 'medium'}>
@@ -185,7 +183,7 @@ const Splash: React.FC = () => {
                                     <WriteMessage
                                         placeHolder='write a comment'
                                         address={''}
-                                        sendMessage={(content: any) => { makeComment(id, content) }} // Modify this if you want to handle comments
+                                        sendMessage={(content) => { makeComment(id, content) }} // Modify this if you want to handle comments
                                     />
                                 </IonCard>
                             )), [postType, posts, voted, voteScore])}
@@ -207,4 +205,4 @@ type Message = {
 };
 
 
-export default Splash;
+export default Posts;

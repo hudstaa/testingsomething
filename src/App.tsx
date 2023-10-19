@@ -57,7 +57,7 @@ import { publicProvider } from 'wagmi/providers/public';
 setupIonicReact({
   rippleEffect: true,
   mode: 'ios',
-  animated: false,
+  animated: false
 });
 const { chains, publicClient } = configureChains(
   [baseGoerli, base],
@@ -138,15 +138,6 @@ export const messaging = getMessaging(app);
 const routes = ['discover', 'activity', 'account']
 
 const App: React.FC = () => {
-  useEffect(() => {
-    onMessage(messaging, (payload) => {
-      new Notification(payload.notification?.title || payload.from, payload.notification)
-    });
-    const db = getFirestore(app);
-
-    const postsRef = collection(db, 'post');
-    // addDoc(postsRef, { nice: "OK", content: 'nice' })
-  }, [])
   return <IonApp >
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
