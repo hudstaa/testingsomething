@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonChip, IonContent, IonIcon, IonImg, IonItem, IonLoading, IonModal, IonPage, IonSpinner, IonTitle } from "@ionic/react"
+import { IonAvatar, IonButton, IonChip, IonContent, IonIcon, IonImg, IonItem, IonLoading, IonModal, IonPage, IonSpinner, IonText, IonTitle } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
 import { TwitterAuthProvider, getAuth, signInWithCustomToken, signInWithPopup } from "firebase/auth"
 import { useMember } from "../hooks/useMember"
@@ -72,6 +72,11 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                     <br />
                 </>}
             </> : <IonSpinner name="crescent" />}
+            <br />
+            <IonText color='tertiary'>
+                {!ready && "connecting to privy..."}
+                {me === null && ready && "loading member data..."}
+            </IonText>
 
         </IonTitle>, [refresh, me, walletAddress, user, ready])}
         <IonLoading isOpen={tribeLoading} />
