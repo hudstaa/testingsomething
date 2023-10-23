@@ -1,16 +1,14 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
+import { Route } from 'react-router-dom';
+import Account from './Account';
 import Activity from './Activity';
 import Chat from './Chat';
 import Discover from './Discover';
 import Member from './Member';
 import Posts from './Posts';
 import Room from './Room';
-import Watchlist from './Watchlist';
 import Transaction from './Transaction';
-import Account from './Account';
+import Watchlist from './Watchlist';
 
 const Tabs: React.FC = () => (
     <IonTabs>
@@ -18,7 +16,7 @@ const Tabs: React.FC = () => (
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/trade/:hash" component={Transaction} />
             <Route path="/chat" component={Chat} />
-            <Route exact path="/room/:address" component={Room} />
+            <Route exact path="/chat/:address" component={Room} />
             <Route path="/watchlist" component={Watchlist} exact />
             <Route path="/activity" component={Activity} exact />
             <Route path="/account" component={Account} />

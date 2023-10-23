@@ -15,7 +15,6 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 import { Firestore, doc, getDoc, getFirestore, limit, onSnapshot } from 'firebase/firestore';
 import { app } from '../App';
 import { getDatabase } from 'firebase/database';
-
 export default function useBoosters(wallet: Address | string | undefined, channel: Address | string) {
     const [syncing, setSyncing] = useState<boolean | null>(null);
     const { data: balance } = useContractRead({
@@ -24,61 +23,51 @@ export default function useBoosters(wallet: Address | string | undefined, channe
         args: [channel],
         watch: true
     });
-    // Fetch data from Firebase on component mount
+
     useEffect(() => {
-        console.log(balance);
-        if (typeof balance == 'undefined') {
+        if (!balance || !wallet || !channel) {
             return;
         }
+        const balanceInfo = balance as [string[], bigint[]];
+        const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)];
+        console.log('holder balance', holderBalance)
+
         const database = getFirestore(app);
-        if (!wallet || !channel) {
-            console.log("no wallet or channel");
-            console.log(wallet, channel);
-            return;
-        }
-        console.log(channel, wallet)
         const docRef = doc(database, 'channel', channel);
-        getDoc(docRef).then((data) => {
-            console.log("GOT CHANNEL DOC", channel, wallet, "BOOST")
-            if (!data.exists()) {
-                console.log("DATA NOT FOUND SYNCIN")
-                console.log("ASDASd")
-                setSyncing(true);
-                const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
-                syncHolders({ address: channel }).then(response => {
-                    setSyncing(false);
-                    console.log(response.data);
-                }).catch(error => {
-                    console.error("Error calling syncBoosters:", error);
-                });
-            }
-        }).catch((e) => {
-            console.log(e);
-        })
-        onSnapshot(docRef, (data) => {
-            console.log("SNAPSHOT")
+
+        const handleSnapshot = (data: any) => {
             const holderMap: Record<string, number> = data.data()?.holders || {};
-            const balanceInfo = balance as [string[], number[]];
-            const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)]
-            if (holderMap[wallet] !== Number(holderBalance)) {
-                if (typeof holderMap[wallet] === 'undefined' && balance === 0n) {
+            const dbBalance = holderMap[wallet];
+            if (dbBalance !== Number(holderBalance)) {
+                if (typeof dbBalance === 'undefined' && (holderBalance === 0n || typeof holderBalance === 'undefined')) {
                     return;
                 }
-                console.log(holderMap, holderBalance, wallet, channel, "OOOOOo")
+                console.log(dbBalance, holderBalance);
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
+                console.log(balance, dbBalance);
                 syncHolders({ address: channel }).then(response => {
-                    console.log(response.data, "Synced Boosters");
                     setSyncing(false);
                 }).catch(error => {
-                    setSyncing(null);
-                    console.log(error, "Synced Boosters");
+                    setSyncing(false);
                     console.error("Error calling syncBoosters:", error);
                 });
             } else {
                 setSyncing(false);
             }
-        });
+        };
+
+        if (holderBalance == 0n || typeof holderBalance === 'undefined') {
+            console.log('no balance')
+        } else {
+            getDoc(docRef).then(handleSnapshot);
+        }
+
+        // Subscribe to snapshot updates
+        const unsubscribe = onSnapshot(docRef, handleSnapshot);
+
+        // Cleanup the listener on component unmount
+        return () => unsubscribe();
     }, [wallet, channel, balance]);
 
     return { balance, syncing };

@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client"
-import { IonChip, IonGrid, IonProgressBar, IonSpinner, IonText } from "@ionic/react"
+import { IonCard, IonChip, IonGrid, IonProgressBar, IonSpinner, IonText } from "@ionic/react"
 import { push } from "ionicons/icons"
 import { LineChart, XAxis, Tooltip, YAxis, Line, ResponsiveContainer } from "recharts"
 import { formatEther, size } from "viem"
@@ -44,7 +44,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const { data, loading, error } = useQuery<{ trades: any[] }>(accountTradesOfQuery, { variables: { address: address.toLowerCase() } })
     const trades = parseTrades(data?.trades);
     const graph = useMemo(() => {
-        return <IonGrid>
+        return <IonGrid >
             {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
@@ -62,6 +62,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
                     <Line isAnimationActive={false} type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
 
                 </LineChart></ResponsiveContainer>}
+
         </IonGrid >
     }, [address, trades, data])
     return graph;

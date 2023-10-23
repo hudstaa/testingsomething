@@ -1,8 +1,8 @@
-import { IonPage, IonTab } from "@ionic/react"
+import { IonPage } from "@ionic/react"
 import { ReactElement } from "react"
 
 export const TribePage: React.FC<{ page: string, children: ReactElement | ReactElement[] }> = ({ children, page }) => {
-    return <IonPage>
+    return <IonPage id={page}>
         {children}
     </IonPage>
 }

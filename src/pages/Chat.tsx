@@ -1,29 +1,17 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { Member, useMember } from '../hooks/useMember';
-import { TribeHeader } from '../components/TribeHeader';
-import { TribeContent } from '../components/TribeContent';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { IonBadge, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSpinner, IonText, IonTitle } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
-import usePassBalance from '../hooks/usePassBalance';
-import usePassesBalance from '../hooks/useBoosters';
-import { Address, formatUnits } from 'viem';
-import { MemberCardHeader, MemberChip, MemberPfp, MemberToolbar } from '../components/MemberBadge';
-import { TribeFooter } from '../components/TribeFooter';
+import { Timestamp, collection, doc, getDocs, getFirestore, limit, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
-import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
 import { app } from '../App';
+import { MemberBadge, MemberCardHeader, MemberPfp } from '../components/MemberBadge';
+import { TribeFooter } from '../components/TribeFooter';
+import { TribeHeader } from '../components/TribeHeader';
 import { TribePage } from './TribePage';
+import { TribeContent } from '../components/TribeContent';
+import { timeAgo } from '../components/TradeItem';
 
 
-const myChatsQuery = gql`
-query MyQuery($hash:String!) {
-    transferSingles(to:$address) {
-    from
-    to
-  }
-}
-`
 const Chat: React.FC = () => {
     const { user } = usePrivy()
     const [members, setMembers] = useState<[{ address: string }]>()
@@ -48,23 +36,48 @@ const Chat: React.FC = () => {
     }, [user])
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chat' />
-            <IonContent >
+            <TribeHeader title='Chat' color='tertiary' />
+            <TribeContent >
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
 
                             {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                <IonItem color='light' lines='none' routerLink={'/room/' + address}>
-                                    <MemberCardHeader address={address} />
-                                </IonItem>) : <IonTitle><IonSpinner name='crescent' /></IonTitle>, [members])}
+                                <IonItem color='light' lines='none' routerLink={'/chat/' + address} key={address}>
+                                    <LastMessage address={address} />
+                                </IonItem>) : <><br /><br /><br /><IonTitle><IonSpinner name='crescent' /></IonTitle></>, [members])}
                         </IonCol></IonRow>
                 </IonGrid>
-            </IonContent>
+            </TribeContent>
             <TribeFooter page='chat' />
         </TribePage >
     );
 };
+const LastMessage: React.FC<{ address: string }> = ({ address }) => {
+    const [msg, setMsg] = useState<{ sent: Timestamp, content: string } | null>(null);
+    useEffect(() => {
+        const channelsRef = doc(getFirestore(app), "channel", address);
+        const q = query(collection(channelsRef, 'messages'), where('author', '==', address), orderBy('sent', 'desc'), limit(1));
+        getDocs(q)
+            .then(querySnapshot => {
+                const data = querySnapshot.docs[0].data()
+                data && setMsg(data as any)
+            })
+    }, [address])
+    return <>
+        <MemberPfp address={address} />
+        <IonChip>
+            {msg?.content.slice(0, 20)}
+        </IonChip>
+        <IonButtons slot='end'>
+            <IonBadge color={'light'}>
+                {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}
+            </IonBadge>
+
+        </IonButtons>
+
+    </>
+}
 
 export default Chat;
 

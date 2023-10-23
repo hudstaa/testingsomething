@@ -1,21 +1,19 @@
-import { IonAvatar, IonButton, IonChip, IonContent, IonIcon, IonImg, IonItem, IonLoading, IonModal, IonPage, IonSpinner, IonText, IonTitle } from "@ionic/react"
+import { IonButton, IonContent, IonIcon, IonLoading, IonSpinner, IonText, IonTitle } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
-import { TwitterAuthProvider, getAuth, signInWithCustomToken, signInWithPopup } from "firebase/auth"
-import { useMember } from "../hooks/useMember"
-import { useEffect, useMemo, useState } from "react"
-import { TribeHeader } from "../components/TribeHeader"
-import { getFunctions, httpsCallable } from "firebase/functions";
-import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore"
-import { app } from "../App"
 import axios from "axios"
-import { getDatabase } from "firebase/database"
-import { MemberBadge } from "../components/MemberBadge"
+import { getAuth, signInWithCustomToken } from "firebase/auth"
+import { doc, getDoc, getFirestore } from "firebase/firestore"
+import { getFunctions, httpsCallable } from "firebase/functions"
 import { checkmark } from "ionicons/icons"
+import { useEffect, useMemo, useState } from "react"
+import { app } from "../App"
+import { Browser } from '@capacitor/browser';
+import { isPlatform } from '@ionic/react';
 
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
 
     const auth = getAuth()
-    const { user, linkTwitter, logout, getAccessToken, ready } = usePrivy()
+    const { user, linkTwitter, login, getAccessToken, ready } = usePrivy()
     const walletAddress = user?.wallet?.address;
     const [refresh, setRefresh] = useState<number>(0)
     const [tribeLoading, setLoading] = useState<boolean>(false)
@@ -27,7 +25,6 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             if (typeof privyUid === 'undefined') {
                 return;
             }
-            // alert(privyUid)
 
             const docRef = doc(database, 'member', privyUid);
             getDoc(docRef).then((snap) => {
@@ -52,15 +49,17 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
                 signInWithCustomToken(auth, res.data.authToken)
             });
-
         });
-    }, [user, ready])
+    }, [user, ready, auth])
     return <IonContent>
         {useMemo(() => <IonTitle className="ion-text-center">
             <br />
             {ready ? <>
                 {(user === null) ? <IonButton onClick={() => {
                     linkTwitter();
+                    if (isPlatform("capacitor")) {
+                        Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'popover', windowName: 'auth' })
+                    }
                 }}>
                     Connect to Privvy
 
@@ -74,11 +73,11 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             </> : <IonSpinner name="crescent" />}
             <br />
             <IonText color='tertiary'>
-                {!ready && <>connecting to privy <br /><IonSpinner name='dots' /></>}
-                {me === null && ready && <>loading member data <br /><IonSpinner name='dots' /></>}
+                {!ready && <>connecting to privy</>}
+                {me === null && ready && user !== null && <>loading member data <br /><IonSpinner name='dots' /></>}
             </IonText>
 
-        </IonTitle>, [refresh, me, walletAddress, user, ready])}
+        </IonTitle>, [refresh, me, walletAddress, user, ready, refresh])}
         <IonLoading isOpen={tribeLoading} />
 
     </IonContent >

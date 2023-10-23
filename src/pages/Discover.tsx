@@ -1,20 +1,16 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { useDiscover } from '../hooks/useDiscover';
-import { Trade } from '../models/Trade';
-import { useMember } from '../hooks/useMember';
-import { TradeItem } from '../components/TradeItem'
-import { StatItem } from '../components/StatItem';
-import { TribeHeader } from '../components/TribeHeader';
-import { TribeContent } from '../components/TribeContent';
-import { MemberBadge } from '../components/MemberBadge';
-import useBuyPass from '../hooks/useBuyPass';
-import { Address, formatEther } from 'viem';
-import { useEffect } from 'react';
-import { useTitle } from '../hooks/useTitle';
+import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonImg, IonItem, IonList, IonListHeader, IonRow, IonText, IonTitle } from '@ionic/react';
 import { personOutline } from 'ionicons/icons';
-import { TribePage } from './TribePage';
+import { useEffect } from 'react';
+import { Address, formatEther } from 'viem';
+import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
+import { TribeHeader } from '../components/TribeHeader';
+import useBuyPass from '../hooks/useBuyPass';
+import { useDiscover } from '../hooks/useDiscover';
+import { useMember } from '../hooks/useMember';
+import { useTitle } from '../hooks/useTitle';
+import { TribePage } from './TribePage';
+import { MemberGraph } from '../components/MemberGraph';
 
 
 const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
@@ -35,23 +31,22 @@ const Discover: React.FC = () => {
   }, [])
   return (
     <TribePage page='discover'>
-      <TribeHeader title='Discover' />
-      <TribeContent >
+      <TribeHeader title='Discover' color='primary' />
+      <TribeContent>
         <IonGrid>
           <IonRow>
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
-              <IonList>
-                <IonListHeader></IonListHeader>
-                {Object.values(members).map((member) => <IonItem routerLink={'/member/' + member?.address}>
-                  <IonAvatar>
-                    <IonImg src={member?.twitterPfp || personOutline} />
-                  </IonAvatar>
-                  <IonText>
-                    {member?.twitterName}
-                  </IonText>
-                  <IonButtons slot='end'><BuyPriceBadge address={member?.address} /></IonButtons>
-                </IonItem>)}
-              </IonList>
+              <IonRow>
+                {Object.values(members).map((member, i) => <IonCol size='6' key={i}>
+                  <IonCard routerLink={'/member/' + member?.address} style={{ aspectRatio: 1 }}>
+                    <IonImg style={{ position: 'absolute' }} src={member?.twitterPfp || personOutline} />
+
+                    <IonBadge color='light' style={{ position: 'absolute', bottom: 25, left: 25 }}>
+                      {member?.twitterName}
+                    </IonBadge>
+                    {/* <MemberGraph address={member!.address} /> */}
+                  </IonCard></IonCol>)}
+              </IonRow>
             </IonCol>
             <IonCol>
             </IonCol>

@@ -1,17 +1,13 @@
-import { IonAvatar, IonBadge, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { useMember } from '../hooks/useMember';
-import { useWatchlist } from '../hooks/useWatchlist';
-import { TradeItem } from '../components/TradeItem';
-import { useActivity } from '../hooks/useActivity';
 import { gql, useQuery } from '@apollo/client';
-import { Trade } from '../models/Trade';
-import { TribeContent } from '../components/TribeContent';
+import { IonCol, IonGrid, IonProgressBar, IonRow } from '@ionic/react';
 import { useEffect } from 'react';
-import { useTitle } from '../hooks/useTitle';
-import { TribeHeader } from '../components/TribeHeader';
-import { TribePage } from './TribePage';
+import { TradeItem } from '../components/TradeItem';
+import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
+import { TribeHeader } from '../components/TribeHeader';
+import { useTitle } from '../hooks/useTitle';
+import { Trade } from '../models/Trade';
+import { TribePage } from './TribePage';
 
 
 const activityQuery = gql`
@@ -37,7 +33,6 @@ query MyQuery {
 
 
 const Activity: React.FC = () => {
-    const activity = useActivity(x => x.activity())
     const { data, loading } = useQuery<{ trades: Trade[] }>(activityQuery, { pollInterval: 2000 })
     const { setTitle } = useTitle();
     useEffect(() => {
@@ -45,16 +40,10 @@ const Activity: React.FC = () => {
     }, [])
 
     return (
-        <TribePage page='activity'>
-            <TribeHeader title={'Activity'} />
-            <TribeContent fullscreen>
-                <IonGrid>
-                    <IonRow>
-                        <IonCol sizeMd='8' offsetMd='2' sizeXs='12' offsetSm='1' sizeSm='10' >
-                            {!loading ? data?.trades?.map((trade, i) => <TradeItem trade={trade} key={trade.transactionHash} />) : <IonProgressBar type='indeterminate' />}
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+        <TribePage page='activity' >
+            <TribeHeader title={'Activity'} color='danger' />
+            <TribeContent>
+                {!loading ? data?.trades?.map((trade, i) => <TradeItem trade={trade} key={trade.transactionHash} />) : <IonProgressBar type='indeterminate' />}
             </TribeContent >
             <TribeFooter page='activity' />
         </TribePage>

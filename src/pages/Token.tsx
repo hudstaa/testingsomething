@@ -1,4 +1,4 @@
-import { IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonHeader, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import { TribeContent } from '../components/TribeContent';
 import { TribePage } from './TribePage';

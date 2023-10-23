@@ -8,6 +8,14 @@
     ],
     "headers": [
       {
+        "source": "/apple-app-site-association",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },      {
         "source": "/**",
         "headers": [
           {
@@ -40,10 +48,6 @@
       }
     ],
     "rewrites": [
-      {
-        "source": "/authenticateUser",
-        "function": "authenticateUser"
-      },
       {
         "source": "**",
         "destination": "/index.html"

@@ -1,10 +1,11 @@
-import { IonGrid, IonRow, IonChip } from "@ionic/react";
+import { IonGrid, IonRow, IonChip, IonAvatar, IonImg, IonButtons, IonCol, IonText, IonItem, IonList, IonBadge } from "@ionic/react";
 import { getFirestore, collection, onSnapshot, query, orderBy, limit } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { app } from "../App";
 import { uniqId } from "../lib/sugar";
 import { MemberPfp } from "./MemberBadge";
 import { Message } from "../models/Message";
+import { timeAgo } from "./TradeItem";
 type CommentListProps = {
     postId: string;
 };
@@ -54,16 +55,29 @@ export const CommentList: React.FC<CommentListProps> = ({ postId }) => {
     }, [postId]);
 
     return (
-        <IonGrid>
+        <IonList>
             {comments.map((comment, i) => (
-                <IonRow key={i}>
+                <IonItem key={i} color={'light'} lines="none">
                     <MemberPfp size='smol' address={comment.author} />
-                    <IonChip style={{ whiteSpace: 'pre-wrap' }}>
-                        {comment.content}
-                    </IonChip>
-                </IonRow>))}
+                    <IonText style={{ whitespace: 'pre-wrap' }} color={'medium'}>
 
-        </IonGrid>
+                        {comment.content}
+
+                    </IonText>
+                    {comment.media &&
+                        <IonImg style={{ height: 50 }} src={comment.media.src} />
+                    }
+                    <IonButtons slot='end'>
+                        <IonBadge color={'light'}>
+                            <IonText color='medium'>
+                                {timeAgo(new Date((comment.sent?.seconds ? comment.sent.seconds * 1000 : Date.now())))}
+                            </IonText>
+                        </IonBadge>
+                    </IonButtons>
+                </IonItem>))
+            }
+
+        </IonList >
 
     );
 };

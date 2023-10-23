@@ -47,13 +47,14 @@ service cloud.firestore {
       allow create: if authed() 
                 && request.resource.data.sent is timestamp
                 && isValidEthAddress(request.resource.data.author)
-                && request.resource.data.author == memberAddress();
+                && request.resource.data.author == memberAddress()
+                && request.resource.data.content is string;
       allow update, delete: if false;
     }
 
     match /post/{postId}/votes/{uid} {
       allow read: if authed();
-      allow create,update: if authed() && uid == userId() && (request.resource.data[uid].vote == 1||request.resource.data[uid].vote == -1);
+      allow create,update: if authed() && uid == userId() && (request.resource.data.vote == 1||request.resource.data.vote == -1);
       allow delete: if false;
     }
     
@@ -63,7 +64,7 @@ service cloud.firestore {
                 && request.resource.data.content is string 
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress();
-      allow update, delete: if false;
+      allow delete, update: if false;
     }
 
     match /channel/{channelAddress} {

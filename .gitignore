@@ -148,3 +148,6 @@ ios/capacitor-cordova-ios-plugins/CordovaPluginsResources.podspec
 ios/capacitor-cordova-ios-plugins/CordovaPluginsStatic.podspec
 ios/capacitor-cordova-ios-plugins/resources/.gitkeep
 ios/capacitor-cordova-ios-plugins/sources/.gitkeep
+ios/App/App.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+ios/App/App.xcworkspace/xcshareddata/swiftpm/Package.resolved
+ios/App/GoogleService-Info.plist

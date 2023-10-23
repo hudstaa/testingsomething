@@ -4,6 +4,7 @@ export interface Message {
     content: string
     author: string
     channel: string
+    media?: { src: string, type: string }
     sent: Timestamp | null
     reply?: string
     id: string

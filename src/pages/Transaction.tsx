@@ -1,13 +1,10 @@
-import { IonHeader, IonPage, IonSpinner, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { useQuery } from '@apollo/client';
-import { TradeItem } from '../components/TradeItem';
-import { Trade } from '../models/Trade';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
+import { IonSpinner, IonText } from '@ionic/react';
 import { useParams } from 'react-router';
+import { TradeItem } from '../components/TradeItem';
 import { TribeContent } from '../components/TribeContent';
-import { MemberBadge } from '../components/MemberBadge';
 import { TribeHeader } from '../components/TribeHeader';
+import { Trade } from '../models/Trade';
 import { TribePage } from './TribePage';
 
 

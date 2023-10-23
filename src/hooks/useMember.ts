@@ -201,10 +201,8 @@ export const useMember = create<FriendStore>((set, store) => ({
 
             // }
         } catch (err: any) {
-            console.log("CUGHT", err);
             set(state => ({ error: { ...state.error, [address]: err.message } }));
         } finally {
-            console.log("FINALLY", address);
             // !watch &&store().isLoading(address)&& set(state => ({ loading: { ...state.loading, [address]: false } }));
         }
     },

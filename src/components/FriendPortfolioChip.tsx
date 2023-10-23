@@ -30,21 +30,8 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
         </IonBadge>
     </IonButton> : <IonChip><IonSpinner /></IonChip>
 }
-export const FriendTechPortfolioChip: React.FC<{ address?: string, name: string, pfp: string }> = ({ address, name, pfp }) => {
-    const [points, setPoints] = useState<any>(undefined)
-    useEffect(() => {
-        address && getPoints(address).then((res) => {
-            console.log(res, "POINTS");
-            setPoints(res);
-        }).catch(() => {
-            setPoints(null)
-        })
-    }, [address])
-    if (address && typeof address === 'undefined' || points === null) {
-        return <></>
-    }
-    const color = points ? points.tier === 'GOLD' ? "warning" : points.tier === 'DIAMOND' ? "secondary" : points.tier === 'SILVER' ? "medium" : points.tier === 'BRONZE' ? "light" : "danger" : "";
-    return typeof points !== 'undefined' ? <IonItem lines="none">
+export const FriendTechPortfolioChip: React.FC<{ address?: string, name: string, pfp: string }> = ({ name, pfp }) => {
+    return <IonItem lines="none">
         <IonAvatar>
             <IonImg src={pfp} />
         </IonAvatar>
@@ -52,10 +39,6 @@ export const FriendTechPortfolioChip: React.FC<{ address?: string, name: string,
             {name}
         </IonText>
         <IonButtons slot='end'>
-
-            <IonBadge color={color}>
-                {points.leaderboard}
-            </IonBadge>
         </IonButtons>
-    </IonItem> : <IonChip><IonSpinner /></IonChip>
+    </IonItem>
 }

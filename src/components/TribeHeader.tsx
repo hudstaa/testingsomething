@@ -1,32 +1,19 @@
-import { IonHeader, IonToolbar, IonTitle, IonButton, IonButtons, IonImg, IonModal, IonIcon, IonProgressBar, IonRouterLink, IonNav, IonBackButton, IonRow, IonGrid, IonAvatar, IonCol, IonCard, IonChip, IonText, IonCardTitle, IonContent, IonMenu, IonMenuButton, IonMenuToggle, IonItem } from "@ionic/react"
+import { IonAvatar, IonButton, IonButtons, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
-import { useLocation } from "react-router"
-import { BalanceChip } from "./BalanceBadge";
-import { Address } from "viem";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
+import axios from "axios";
+import { getAuth, signInWithCustomToken } from "firebase/auth";
 import { ReactElement, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import { baseGoerli } from "viem/chains";
-import { MemberBadge } from "./MemberBadge";
-import { useTitle } from "../hooks/useTitle";
-import { flameOutline } from "ionicons/icons";
-import { signInWithCustomToken, signInWithPopup } from "firebase/auth";
-import { getMessaging } from "firebase/messaging";
-import { getAuth } from "firebase/auth";
-import { FriendPortfolioChip } from "./FriendPortfolioChip";
 import { useMember } from "../hooks/useMember";
 import { OnBoarding } from "../pages/OnBoarding";
-import axios from "axios";
-import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";
-import { app } from "../App";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement }> = ({ title, sticky = true, color, image, content }) => {
-    const { pathname } = useLocation();
     const { authenticated, linkTwitter, user, getAccessToken, ready } = usePrivy()
     const { wallets } = useWallets();
-
     const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
     const modalRef = useRef<HTMLIonModalElement>(null)
-    const [showLogOut, setShowLogOut] = useState<boolean>(false)
     useEffect(() => {
         wallets.forEach((wallet) => {
             if (wallet.connectorType === 'embedded') {
@@ -45,13 +32,11 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         if (fireUser && ready && me?.address) {
             modalRef.current?.dismiss();
         }
-    }, [ready, fireUser, me])
+    }, [ready, auth?.currentUser, me])
     const toolbar = useMemo(() => <IonToolbar>
         <IonButtons slot='start'>
-            <IonButton routerLink="/">
-                <IonAvatar>
-                    <IonImg src='/icon.svg' />
-                </IonAvatar>
+            <IonButton routerLink="/activity">
+                <IonImg style={{ height: 30 }} src='/icon.svg' />
             </IonButton>
             {/* <IonButton onClick={() => {
 
@@ -70,7 +55,6 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                     const auth = getAuth();
                     const privyToken = await getAccessToken();
                     const { data: token } = await axios.post('https://us-central1-tribal-pass.cloudfunctions.net/authenticateUser', { token: privyToken });
-                    console.log(token);
                     token !== null && signInWithCustomToken(auth, token)
                         .then((result) => {
                         }).catch((error) => {
@@ -98,7 +82,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
 
     return <IonHeader>
         {toolbar}
-        <IonModal canDismiss isOpen={me === null} onWillDismiss={() => { setShowLogOut(false) }} ref={modalRef}>
+        <IonModal canDismiss={me !== null} isOpen={me === null} ref={modalRef}>
             <OnBoarding dismiss={() => {
                 modalRef.current?.dismiss();
             }} me={me} />

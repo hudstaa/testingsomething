@@ -1,16 +1,28 @@
 import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon } from "@ionic/react";
-import { paperPlane } from "ionicons/icons";
+import { imageOutline, paperPlane } from "ionicons/icons";
 import { useState } from "react";
+import PfpUploader from "./UploadComponent";
+import { getAuth } from "firebase/auth";
 
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (content: string) => void }> = ({ address, placeHolder, sendMessage }) => {
-    const [newNote, setNewNote] = useState<string | undefined>(undefined)
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void }> = ({ address, placeHolder, sendMessage }) => {
+    const [content, setNewNote] = useState<string | undefined>(undefined)
+    const [image, setImage] = useState<string | undefined>(undefined)
+    const [sent, setSent] = useState<boolean>(false);
     const makeComment = () => {
-        newNote && sendMessage(newNote);
-        setNewNote(undefined);
-    }
 
+        const message = typeof image === 'undefined' ? { content: content || "" } : { content: content || "", media: { src: image, type: 'image' } }
+        content && sendMessage(message);
+        setNewNote(undefined);
+        setSent(true);
+    }
+    const uid = getAuth().currentUser?.uid;
     return <IonToolbar>
-        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={newNote} placeholder={placeHolder} onKeyUp={(e) => {
+        <IonButtons slot='start'>
+            {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
+                setImage(path);
+            }} />}
+        </IonButtons>
+        <IonTextarea autoGrow style={{ padding: 5, marginLeft: 10 }} value={content} placeholder={placeHolder} onKeyUp={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 makeComment();
             }
@@ -21,7 +33,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
             <IonButton onClick={async () => {
                 makeComment();
             }}>
-                <IonIcon color={typeof newNote !== 'undefined' && newNote.length > 0 ? 'primary' : 'light'} icon={paperPlane} />
+                <IonIcon color={typeof content !== 'undefined' && content.length > 0 ? 'primary' : 'light'} icon={paperPlane} />
             </IonButton>
         </IonButtons>
     </IonToolbar>

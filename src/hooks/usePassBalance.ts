@@ -14,7 +14,8 @@ export default function usePassBalance(wallet: Address, subject: Address) {
         ...tribePassesContract,
         functionName: 'balanceOf',
         args: [wallet, subject],
-        watch: true
+        watch: true,
+        onError: () => { }
     })
 
     return balance as bigint | undefined

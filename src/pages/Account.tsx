@@ -27,39 +27,37 @@ const Account: React.FC = () => {
     const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
     return (
         <TribePage page='account'>
-            <TribeHeader title='Account' />
+            <TribeHeader title='Account' color='tertiary' />
             <TribeContent >
                 <IonGrid>
                     <IonRow>
                         <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
                             <IonCard color='light'>
-                                <IonCardHeader color='tertiary'>
-                                    <IonTitle > {me?.twitterName}</IonTitle>
+                                <IonCardHeader color='light'>
+                                    <IonTitle  > {me?.twitterName}</IonTitle>
                                 </IonCardHeader>
-                                <IonCardContent color='light'>
+                                <IonCardContent >
                                     <IonList>
-
                                         <MemberToolbar address={me?.address || ""} />
 
-                                        <IonItem color='light'>
-                                            <IonButton fill='solid' routerLink={'/room/' + me?.address} onClick={() => {
-                                            }} color='tertiary'>Chat
+                                        <IonItem color='light' lines='none'>
+                                            <IonButton fill='solid' routerLink={'/chat/' + me?.address} onClick={() => {
+                                            }} color='primary'>Chat
                                                 <IonIcon icon={chatboxOutline} />
                                             </IonButton>
-                                            <IonButton fill='solid' routerLink={'/member/' + me?.address} onClick={() => {
-                                            }} color='success'>Profile
+                                            <IonButton routerLink={'/member/' + me?.address} onClick={() => {
+                                            }} color='tertiary'>Profile
                                                 <IonIcon icon={personOutline} />
                                             </IonButton>
-                                            <IonButton fill='solid' routerLink={'/'} onClick={() => {
-                                            }} color='primary'>Post
+                                            <IonButton fill='solid' routerLink={'/posts'} onClick={() => {
+                                            }} color='success'>Post
                                                 <IonIcon icon={albumsOutline} />
 
                                             </IonButton>
                                         </IonItem>
 
-                                        <IonItem color='light'>
+                                        <IonItem color='light' lines='none'>
                                             <IonButtons slot='end'>
-
                                                 <IonButton fill='outline' onClick={() => {
                                                     signOut(auth); logout();
                                                 }} color='danger'>Logout

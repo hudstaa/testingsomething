@@ -33,6 +33,9 @@ export function timesAgo(input: Date) {
 }
 
 export function timeAgo(input: Date) {
+    if (input == null) {
+        return "now"
+    }
     const date = (input instanceof Date) ? input : new Date(input);
     const now = new Date();
 

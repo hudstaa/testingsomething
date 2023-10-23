@@ -1,51 +1,47 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonList, IonListHeader, IonLoading, IonPage, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonSpinner, IonText, IonTitle, IonToolbar, useIonViewDidLeave, useIonViewWillLeave } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { useMember } from '../hooks/useMember';
-import { useParams } from 'react-router';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonFooter, IonIcon, IonImg, IonItem, IonListHeader, IonProgressBar, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
-import { chatboxEllipsesOutline, logoTwitter, personOutline, ticketOutline } from 'ionicons/icons';
-import useBuyPass from '../hooks/useBuyPass';
-import { Address, formatEther, formatUnits } from 'viem';
+import { usePrivyWagmi } from '@privy-io/wagmi-connector';
+import { chatboxEllipsesOutline, personOutline, ticketOutline } from 'ionicons/icons';
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router';
+import { Address, formatUnits } from 'viem';
 import { useChainId } from 'wagmi';
-import useSellPass from '../hooks/useSellPass';
+import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
+import { MemberBadge } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
+import { TribeHeader } from '../components/TribeHeader';
+import useBoosters from '../hooks/useBoosters';
+import useBuyPass from '../hooks/useBuyPass';
+import useFriendTechBalance from '../hooks/useFriendTechBalance';
+import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
+import { useMember } from '../hooks/useMember';
 import usePassBalance from '../hooks/usePassBalance';
 import usePassSupply from '../hooks/usePassSupply';
-import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { useEffect, useMemo, useState } from 'react';
-import { TribeHeader } from '../components/TribeHeader';
+import useSellPass from '../hooks/useSellPass';
 import { formatEth, uniq } from '../lib/sugar';
-import { MemberBadge, MemberChip } from '../components/MemberBadge';
-import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
-import useBoosters from '../hooks/useBoosters';
-import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
-import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import { TribePage } from './TribePage';
-import useTabvisibility from '../hooks/useTabVisibility';
+import { PostList } from '../components/PostList';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
     const loading = useMember(x => x.isLoading(address));
-    const { user, sendTransaction, logout } = usePrivy()
-    const chainId = useChainId();
-    const balance: bigint | undefined = usePassBalance((user?.wallet?.address || "0x0000000000000000000000000000000000000000") as Address, (address || "0x0000000000000000000000000000000000000000") as Address) as any;
-    const supply: bigint | undefined = usePassSupply((address || "0x0000000000000000000000000000000000000000") as Address) as any;
+    const { user } = usePrivy()
+    const balance: bigint | undefined = usePassBalance((user?.wallet?.address) as Address, (address) as Address) as any;
     const { buyPass, buyPrice, status: buyStatus } = useBuyPass(address as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
     const me = useMember(x => x.getFriend(user?.wallet?.address));
-    const { ready, wallet } = usePrivyWagmi()
     const holding = useFriendTechHolders(x => x.getHolding(member?.friendTechAddress, member?.friendTechAddress || ""))
-    const [selectedHolderType, setSelectedHolderType] = useState('tribe')
-    const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
+    const [segment, setSegment] = useState<'posts' | 'boosters' | 'holders'>('posts')
+    const { balance: boosters, syncing } = useBoosters(user?.wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
     return (
-        <>
+        <TribePage page='member'>
             <TribeHeader color='tertiary' title={
                 member !== null ? member.twitterName : ""} />
             <TribeContent fullscreen>
-                <IonCard color={'light'} style={{ aspectRatio: 5 / 1 }}  >
-                    <IonImg style={{ position: 'absolute', left: 0, right: 0, top: 0 }} src={member?.twitterBackground} />
+                <IonCard style={{ aspectRatio: 5 / 1 }}  >
+                    {member?.twitterBackground && <IonImg style={{ position: 'absolute', left: 0, right: 0, top: 0 }} src={member.twitterBackground} />}
                     <IonCardHeader className='ion-image-center'>
                         <IonCardTitle>
                             <IonImg style={{ width: '17vw', borderRadius: 200, borderCollapse: 'seperate', perspectice: 1, overflow: 'hidden' }} src={member?.twitterPfp || personOutline} />
@@ -54,30 +50,43 @@ const Member: React.FC = () => {
                     <IonCardHeader className='ion-image-center'>
                     </IonCardHeader>
                     <IonCardContent>
-
+                        <IonChip color={'medium'}>
+                            FriendTech:
+                            {ftBalance?.toString()}
+                        </IonChip>
+                        <IonChip>
+                            Tribe:
+                            {balance?.toString()}
+                        </IonChip>
                     </IonCardContent>
                 </IonCard>
-                <IonItem lines='none'>
+                <IonCardHeader>
                     {member?.bio}
-                </IonItem>
 
-                <IonListHeader>{selectedHolderType === 'tribe' ? 'Boosters' : 'Holders'}</IonListHeader>
+                </IonCardHeader>
 
-                <IonSegment value={selectedHolderType}>
-                    <IonSegmentButton value={'tribe'} onClick={() => { setSelectedHolderType('tribe') }} >
+                <IonListHeader>{segment.slice(0, 1).toUpperCase() + segment.slice(1, segment.length)}</IonListHeader>
+
+                <IonSegment value={segment}>
+                    <IonSegmentButton value={'posts'} onClick={() => { setSegment('posts') }} >
+                        Posts
+                    </IonSegmentButton>
+                    <IonSegmentButton value={'boosters'} onClick={() => { setSegment('boosters') }} >
                         Tribe
                     </IonSegmentButton>
-                    <IonSegmentButton value={'friendtech'} onClick={() => { setSelectedHolderType('friendtech') }} >
+                    {member?.friendTechAddress && <IonSegmentButton value={'holders'} onClick={() => { setSegment('holders') }} >
                         Friend Tech
-                    </IonSegmentButton>
+                    </IonSegmentButton>}
+
                 </IonSegment>
-                {selectedHolderType === 'tribe' && typeof boosters !== 'undefined' && boosters !== null && (boosters as any)[0]?.map((holder: any, i: number) => <IonItem lines='none'>
+                {segment === 'posts' && <PostList type={'top'} limit={3} from={member?.address} />}
+                {segment === 'boosters' && typeof boosters !== 'undefined' && boosters !== null && (boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
                     <MemberBadge address={holder} />
                     <IonButtons slot='end'>
                         {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
                     </IonButtons>
                 </IonItem>)}
-                {selectedHolderType === 'friendtech' && <>
+                {segment === 'holders' && <>
                     {uniq(holding?.users || []).map((holder) =>
                         <FriendTechPortfolioChip key={holder.address} address={holder.address} name={holder.twitterName} pfp={holder.twitterPfpUrl} />
                     )}
@@ -85,14 +94,6 @@ const Member: React.FC = () => {
 
 
                 {!user && loading === false && <IonTitle color='warning'>NOT AUTHENTICATED</IonTitle>}
-                <IonChip color={'medium'}>
-                    FriendTech:
-                    {ftBalance?.toString()}
-                </IonChip>
-                <IonChip>
-                    Tribe:
-                    {balance?.toString()}
-                </IonChip>
 
             </TribeContent >
             <IonFooter>
@@ -129,7 +130,7 @@ const Member: React.FC = () => {
                 {syncing && <IonProgressBar type='indeterminate' color='success' />}
 
                 {useMemo(() =>
-                    ((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) && !ftSyncing && !syncing ? <IonButton size='large' fill='solid' color='tertiary' expand='full' routerLink={'/room/' + address}>
+                    ((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) && !ftSyncing && !syncing ? <IonButton size='large' fill='solid' color='tertiary' expand='full' routerLink={'/chat/' + address}>
                         <IonText>
                             Chat
                         </IonText>
@@ -139,7 +140,7 @@ const Member: React.FC = () => {
                 { }
 
             </IonFooter>
-        </ >
+        </ TribePage>
 
     );
 };

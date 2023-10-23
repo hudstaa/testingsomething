@@ -1,19 +1,32 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
-@font-face {
+/* @font-face {
   font-family: 'SF-Pro';
-  src: url("/fonts/SF-Pro-Rounded-Light.otf") format("opentype");
+  src: url("/fonts/SF-Pro-Rounded.otf") format("opentype");
+} */
+@import url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap);
+
+html.ios {
+  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
 }
 
 
+
 * {
-  font-family: 'SF-Pro' !important;
+  font-family: 'Ubuntu' !important;
+}
+
+.bottom-start-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 /* .chat-item ion-item {
   margin: 100
 } */
+
 
 
 .ion-image-center {
