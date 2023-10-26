@@ -54,7 +54,7 @@ export function timeAgo(input: Date) {
 }
 
 export const TradeItem: React.FC<{ trade: Trade }> = ({ trade }) => {
-    return <IonItem lines={'none'} detail key={trade.transactionHash} >
+    return <IonItem lines={'none'} key={trade.transactionHash} >
         <MemberBadge address={getAddress(trade.trader)} />
         <IonText color={trade.isBuy ? "success" : "danger"}>
             {trade.isBuy ? "BUY" : "SELL"}

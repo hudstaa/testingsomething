@@ -94,6 +94,9 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { getAuth, signInWithCustomToken } from 'firebase/auth';
 import { Browser } from '@capacitor/browser';
+import Post from './pages/Post';
+import { nativeAuth } from './lib/sugar';
+import NewPost from './pages/NewPost';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -108,6 +111,7 @@ const firebaseConfig = {
   appId: "1:1053855163428:web:e27fdb0e300166ac0b24b1",
   measurementId: "G-CZQ06R7KZ2"
 };
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
@@ -134,58 +138,35 @@ function parseTribeURL(url: string): { token: string, refresh: string, jwt: stri
   const params = new URL(url).searchParams;
 
   return {
-    token: params.get('token')?.replace(/%22/g, '"') || '',
-    refresh: params.get('refresh')?.replace(/%22/g, '"') || '',
-    jwt: params.get('jwt')?.replace(/%22/g, '"') || ''
+    token: params.get('token')!,
+    refresh: params.get('refresh')!,
+    jwt: params.get('jwt')!
   };
 }
 
 const DeepLinkProvider: React.FC = () => {
-  const { login } = usePrivy();
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
-      const auth = getAuth();
+      Browser.close();
+      console.log("GOT IT!")
+      const auth = nativeAuth()
       const params = parseTribeURL(event.url);
       const privyToken = params.jwt;
-      localStorage.setItem('privy:token', '"' + params.token + '"');
-      localStorage.setItem('privy:refresh_token', '"' + params.refresh + '"');
-
-      fetch('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + privyToken
-        },
-        body: JSON.stringify({ token: privyToken })
-      })
-        .then(response => response.json())
-        .then(async res => {
-          console.log(res, "RESPONED")
-          const { authToken } = await res.json()
-          signInWithCustomToken(auth, authToken).then(() => {
-            login();
-          })
-        })
-        .catch(error => {
-          console.log(error, "ERR")
-          // Handle any errors here
-        });
+      localStorage.setItem('privy:token', params.token);
+      localStorage.setItem('privy:refresh_token', params.refresh);
 
       axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
         signInWithCustomToken(auth, res.data.authToken).then((e) => {
-          alert("nice");
           console.log(e, "SIGNED IN");
+          window.location.reload();
         }).catch((e) => {
           console.log('error', e);
-        }).finally(() => {
-          alert("finally");
-          console.log("DA HECK")
         })
       }).catch((err) => {
         console.log('error', err);
       });
-      Browser.close();
     })
+
   }, [])
   return null;
 }
@@ -196,7 +177,7 @@ const App: React.FC = () => {
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
-          {/* <DeepLinkProvider /> */}
+          <DeepLinkProvider />
           <IonReactHashRouter >
             <IonTabs>
               <IonRouterOutlet>
@@ -219,8 +200,11 @@ const App: React.FC = () => {
                 <Route path="/account" exact>
                   <Account />
                 </Route>
-                <Route path="/posts" exact>
+                <Route path="/posts/" exact>
                   <Posts />
+                </Route>
+                <Route path="/posts/:id" exact>
+                  <Post />
                 </Route>
                 <Route path="/auth" exact>
                   <MobileAuth />

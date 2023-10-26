@@ -12,11 +12,12 @@ const config: CapacitorConfig = {
   "server": {
     "hostname": "tribe.computer",
     "androidScheme": "https",
-    "iosScheme": 'tribe',
+    "iosScheme": 'tribe.computer',
     "allowNavigation": [
       "auth.privy.io",
+      'twitter.com',
       "*.privy.io",
-      "http://developers.google.com",
+      "developers.google.com",
       "developers.google.com",
       "verify.walletconnect.org",
       "tribal-pass.web.app",
@@ -26,6 +27,7 @@ const config: CapacitorConfig = {
       "mainnet.infura.io",
       "api.studio.thegraph.com",
       "mainnet.base.org",
+      "pbs.twimg.com",
       "us-central1-tribal-pass.cloudfunctions.net",
       "*"
     ]

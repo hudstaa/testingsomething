@@ -40,7 +40,7 @@ export const useMember = create<FriendStore>((set, store) => ({
     error: {},
     me: null,
     getCurrentUser: (uid) => {
-        if (typeof uid === 'undefined' || typeof uid == 'undefined' || uid.length === 0) {
+        if (typeof uid === 'undefined' || typeof uid == 'undefined' || uid.length === 0 || uid === null) {
             return null;
         }
         if (store().me != null) {

@@ -1,18 +1,19 @@
-import { IonButton, IonContent, IonIcon, IonLoading, IonSpinner, IonText, IonTitle } from "@ionic/react"
+import { Browser } from '@capacitor/browser'
+import { IonBadge, IonButton, IonContent, IonIcon, IonLoading, IonSpinner, IonText, IonTitle, isPlatform } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
 import axios from "axios"
-import { getAuth, signInWithCustomToken } from "firebase/auth"
+import { signInWithCustomToken } from "firebase/auth"
 import { doc, getDoc, getFirestore } from "firebase/firestore"
 import { getFunctions, httpsCallable } from "firebase/functions"
 import { checkmark } from "ionicons/icons"
 import { useEffect, useMemo, useState } from "react"
 import { app } from "../App"
-import { Browser } from '@capacitor/browser';
-import { isPlatform } from '@ionic/react';
+import { nativeAuth } from "../lib/sugar"
 
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
 
-    const auth = getAuth()
+    const auth = nativeAuth()
+    const [error, setError] = useState<string | undefined>();
     const { user, linkTwitter, login, getAccessToken, ready } = usePrivy()
     const walletAddress = user?.wallet?.address;
     const [refresh, setRefresh] = useState<number>(0)
@@ -39,6 +40,8 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             }).catch(() => {
 
             });
+        }, (e) => {
+            setError(e.message);
         })
     }, [])
     useEffect(() => {
@@ -51,17 +54,20 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             });
         });
     }, [user, ready, auth])
+
+
     return <IonContent>
         {useMemo(() => <IonTitle className="ion-text-center">
             <br />
             {ready ? <>
                 {(user === null) ? <IonButton onClick={() => {
-                    linkTwitter();
                     if (isPlatform("capacitor")) {
-                        Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'popover', windowName: 'auth' })
+                        Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'fullscreen', windowName: 'auth' })
+                    } else {
+                        linkTwitter();
                     }
                 }}>
-                    Connect to Privvy
+                    Connect to {isPlatform("capacitor") ? "tribe" : "privy"}
 
                 </IonButton> : <>
                     <IonButton onClick={dismiss} color={'tertiary'}>
@@ -76,6 +82,8 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                 {!ready && <>connecting to privy</>}
                 {me === null && ready && user !== null && <>loading member data <br /><IonSpinner name='dots' /></>}
             </IonText>
+            <br />
+            {error && <IonBadge color='danger'>{error}</IonBadge>}
 
         </IonTitle>, [refresh, me, walletAddress, user, ready, refresh])}
         <IonLoading isOpen={tribeLoading} />

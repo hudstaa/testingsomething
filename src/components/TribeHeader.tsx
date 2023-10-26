@@ -1,12 +1,12 @@
-import { IonAvatar, IonButton, IonButtons, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
-import { getAuth, signInWithCustomToken } from "firebase/auth";
-import { ReactElement, useEffect, useMemo, useRef, useState } from "react";
-import { useLocation } from "react-router";
+import { signInWithCustomToken } from "firebase/auth";
+import { ReactElement, useEffect, useMemo, useRef } from "react";
 import { baseGoerli } from "viem/chains";
 import { useMember } from "../hooks/useMember";
+import { nativeAuth } from "../lib/sugar";
 import { OnBoarding } from "../pages/OnBoarding";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement }> = ({ title, sticky = true, color, image, content }) => {
@@ -24,19 +24,20 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     useEffect(() => {
         activeWallet && activeWallet.switchChain(baseGoerli.id);
     }, [activeWallet])
-    const auth = getAuth();
+    const auth = nativeAuth();
     const fireUser = auth.currentUser;
-    const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
+    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
+    const me = useMember(x => x.getCurrentUser(uid));
 
     useEffect(() => {
         if (fireUser && ready && me?.address) {
             modalRef.current?.dismiss();
         }
     }, [ready, auth?.currentUser, me])
-    const toolbar = useMemo(() => <IonToolbar>
+    const toolbar = useMemo(() => <IonToolbar color={'tribe'}>
         <IonButtons slot='start'>
             <IonButton routerLink="/activity">
-                <IonImg style={{ height: 30 }} src='/icon.svg' />
+                <IonImg style={{ height: 30 }} src='/favicon.png' />
             </IonButton>
             {/* <IonButton onClick={() => {
 
@@ -45,30 +46,15 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
             </IonButton> */}
         </IonButtons>
 
-        <IonTitle color={color}>
+        <IonTitle>
             {title}
         </IonTitle>
 
         <IonButtons slot='end'>
-            {authenticated && user ? typeof fireUser === null ?
-                <IonButton onClick={async () => {
-                    const auth = getAuth();
-                    const privyToken = await getAccessToken();
-                    const { data: token } = await axios.post('https://us-central1-tribal-pass.cloudfunctions.net/authenticateUser', { token: privyToken });
-                    token !== null && signInWithCustomToken(auth, token)
-                        .then((result) => {
-                        }).catch((error) => {
-                        });
-                }}>
-                    Connect Twitter
-                </IonButton> :
-                <IonButton routerLink={'/account/'}> {!me?.twitterPfp ? <IonText>@{user.twitter?.username}</IonText> :
-                    <IonAvatar><IonImg src={me?.twitterPfp} /></IonAvatar>}
-                </IonButton> : <IonButton onClick={() => {
-                    linkTwitter()
-                }}>
-                Login
-            </IonButton>}
+            {me &&
+                <IonButton routerLink={'/account/'}>
+                    {me.twitterPfp ? <IonAvatar><IonImg src={me?.twitterPfp} /></IonAvatar> : <IonBadge>{me.twitterName}</IonBadge>}
+                </IonButton>}
         </IonButtons>
     </IonToolbar >, [user, fireUser, title, me])
     if (!sticky) {

@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import { Trade } from '../models/Trade'
-import { RoomInfo } from '../models/RoomInfo'
 
 
 

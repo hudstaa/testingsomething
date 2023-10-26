@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { Trade } from '../models/Trade'
 import { UserDetails } from '../lib/friendTech'
+import { Trade } from '../models/Trade'
 
 
 

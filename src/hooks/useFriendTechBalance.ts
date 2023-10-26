@@ -24,7 +24,6 @@ export default function useFriendTechBalance(friendTechWallet: Address | string 
 
     useEffect(() => {
         if (!friendTechWallet || !channel) {
-            setBalance(0n);
             return;
         }
 
@@ -39,6 +38,7 @@ export default function useFriendTechBalance(friendTechWallet: Address | string 
                 functionName: 'sharesBalance',
                 args: [friendTechChannel, friendTechWallet],
             });
+            console.log(blockChainBalance, "BALANCE")
 
             setBalance(blockChainBalance as bigint);
 

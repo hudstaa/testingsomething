@@ -1,14 +1,14 @@
-import type { Address } from 'viem'
+import { usePrivyWagmi } from '@privy-io/wagmi-connector';
+import { useCallback, useState } from 'react';
+import type { Address } from 'viem';
+import { baseGoerli } from 'viem/chains';
 import {
     useContractRead,
     useContractWrite,
     usePrepareContractWrite,
     useWaitForTransaction,
-} from 'wagmi'
-import { useCallback, useState } from 'react'
-import { tribePassesContract } from '../lib/constants'
-import { baseGoerli } from 'viem/chains';
-import { usePrivyWagmi } from '@privy-io/wagmi-connector';
+} from 'wagmi';
+import { tribePassesContract } from '../lib/constants';
 
 export default function useBuyPass(subject: Address, shares: bigint) {
 

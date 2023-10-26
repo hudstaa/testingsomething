@@ -1,20 +1,22 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
-/* @font-face {
-  font-family: 'SF-Pro';
-  src: url("/fonts/SF-Pro-Rounded.otf") format("opentype");
-} */
-@import url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap);
-
-html.ios {
-  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
+@font-face {
+  font-family: 'SF';
+  src: url("/fonts/SF-Pro-Rounded-Regular.otf") format("opentype");
 }
+
+/* @import url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap); */
+
+/* html.ios {
+  --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
+} */
 
 
 
 * {
-  font-family: 'Ubuntu' !important;
+  /* font-family: 'Ubuntu' !important; */
+  font-family: 'SF' !important;
 }
 
 .bottom-start-container {
@@ -63,14 +65,16 @@ html.ios {
   /* Overrides any full-width default */
   white-space: pre-wrap;
   /* Prevents text from wrapping */
-
 }
 
-.message-card ion-card {
-  margin: 100px;
-  --ion-margin: 100px;
-  --ion-padding: 100px;
+.message-card-content {
+  padding: 15px;
+  border: 1px solid rgba(1, 1, 1, 0.1);
+  border-radius: 20px;
+  /* Prevents text from wrapping */
 }
+
+
 
 .message-card ion-card-content {
   display: inline-block;
@@ -263,6 +267,17 @@ html.ios {
     --ion-item-background: #000000;
 
     --ion-card-background: #1c1c1d;
+
+    --ion-color-paper: #2e2e2e;
+    /* Dark Gray */
+    --ion-color-paper-rgb: 46, 46, 46;
+    --ion-color-paper-contrast: #ffffff;
+    /* Contrast to be easily visible on dark gray */
+    --ion-color-paper-contrast-rgb: 255, 255, 255;
+    --ion-color-paper-shade: #1c1c1c;
+    /* A bit darker shade */
+    --ion-color-paper-tint: #3f3f3f;
+    /* A bit lighter tint */
   }
 
   .ios ion-modal {
@@ -314,4 +329,109 @@ html.ios {
 
     --ion-card-background: #1e1e1e;
   }
+
+
+}
+
+/* Remove shadow from buttons */
+ion-button {
+  --box-shadow: none !important;
+  --box-shadow-hover: none !important;
+}
+
+/* Remove shadow from cards */
+ion-card {
+  --box-shadow: none !important;
+}
+
+/* Remove shadow from input elements */
+ion-input,
+ion-textarea,
+ion-select,
+ion-datetime,
+ion-searchbar {
+  --box-shadow: none !important;
+  --highlight-height: 0 !important;
+}
+
+/* Remove shadow from modals */
+ion-modal .modal-shadow {
+  box-shadow: none !important;
+}
+
+/* Remove shadow from floating labels */
+ion-label[floating] .sc-ion-label-md-h,
+ion-label[floating] .sc-ion-label-ios-h {
+  --box-shadow: none !important;
+}
+
+/* Remove shadow from toolbars */
+ion-header,
+ion-footer {
+  --box-shadow: none !important;
+}
+
+/* Remove shadow from segments */
+ion-segment-button {
+  --box-shadow: none !important;
+}
+
+/* Remove shadow from any other possible elements */
+* {
+  box-shadow: none !important;
+}
+
+/* New tribe Color */
+:root {
+  --ion-color-tribe: #ff5700;
+  --ion-color-tribe-rgb: 255, 87, 0;
+  --ion-color-tribe-contrast: #ffffff;
+  --ion-color-tribe-contrast-rgb: 255, 255, 255;
+  --ion-color-tribe-shade: #dd5700;
+  --ion-color-tribe-tint: #fff711;
+}
+
+/* Color Usage Example */
+.ion-color-tribe {
+  --ion-color-base: var(--ion-color-tribe);
+  --ion-color-base-rgb: var(--ion-color-tribe-rgb);
+  --ion-color-contrast: var(--ion-color-tribe-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-tribe-contrast-rgb);
+  --ion-color-shade: var(--ion-color-tribe-shade);
+  --ion-color-tint: var(--ion-color-tribe-tint);
+}
+
+/* New tribe Color */
+:root {
+  --ion-color-tribe: #ff5700;
+  --ion-color-tribe-rgb: 255, 87, 0;
+  --ion-color-tribe-contrast: #ffffff;
+  --ion-color-tribe-contrast-rgb: 255, 255, 255;
+  --ion-color-tribe-shade: #dd5700;
+  --ion-color-tribe-tint: #fff711;
+}
+
+/* Light Mode: Paper Color */
+:root {
+  --ion-color-paper: #fcfcfc;
+  /* Pale Whitish-Gray */
+  --ion-color-paper-rgb: 245, 245, 245;
+  --ion-color-paper-contrast: #000000;
+  /* Contrast to be easily visible on pale gray */
+  --ion-color-paper-contrast-rgb: 0, 0, 0;
+  --ion-color-paper-shade: #e0e0e0;
+  /* A bit darker shade */
+  --ion-color-paper-tint: #f8f8f8;
+  /* A bit lighter tint */
+}
+
+
+/* Color Usage */
+.ion-color-paper {
+  --ion-color-base: var(--ion-color-paper);
+  --ion-color-base-rgb: var(--ion-color-paper-rgb);
+  --ion-color-contrast: var(--ion-color-paper-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-paper-contrast-rgb);
+  --ion-color-shade: var(--ion-color-paper-shade);
+  --ion-color-tint: var(--ion-color-paper-tint);
 }

@@ -9,11 +9,11 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     const [image, setImage] = useState<string | undefined>(undefined)
     const [sent, setSent] = useState<boolean>(false);
     const makeComment = () => {
-
         const message = typeof image === 'undefined' ? { content: content || "" } : { content: content || "", media: { src: image, type: 'image' } }
-        content && sendMessage(message);
+        sendMessage(message);
         setNewNote(undefined);
         setSent(true);
+        setImage(undefined);
     }
     const uid = getAuth().currentUser?.uid;
     return <IonToolbar>

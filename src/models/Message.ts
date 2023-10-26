@@ -7,5 +7,6 @@ export interface Message {
     media?: { src: string, type: string }
     sent: Timestamp | null
     reply?: string
+    score?: number
     id: string
 }

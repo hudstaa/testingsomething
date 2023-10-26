@@ -1,35 +1,32 @@
-import { getAuth } from "firebase/auth";
-import { getFirestore, collection, onSnapshot, Timestamp, doc, setDoc, addDoc, serverTimestamp, getDoc, getAggregateFromServer, sum, query, limitToLast, orderBy, where } from "firebase/firestore";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { Timestamp, addDoc, collection, doc, getDoc, getFirestore, limit, limitToLast, onSnapshot, orderBy, query, serverTimestamp, setDoc, where } from "firebase/firestore";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { app } from "../App";
 import { useMember } from "../hooks/useMember";
-import { Post } from "./Post";
+import { nativeAuth } from "../lib/sugar";
+import { PostCard } from "./PostCard";
 
-export const PostList: React.FC<{ type: 'top' | 'recent', limit: number, from?: string }> = ({ type, limit, from }) => {
+export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: string }> = ({ type, max, from }) => {
     const [posts, setPosts] = useState<any[]>([]);
-    const auth = getAuth();
-    const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid));
+    const auth = nativeAuth();
+    const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
     useEffect(() => {
-        if (auth.currentUser === null) {
+        if (!auth.currentUser) {
             return;
         }
         const db = getFirestore(app);
-        const postsRef = query(collection(db, 'post'), orderBy(type == 'top' ? 'score' : 'sent', 'desc'), limitToLast(limit));
-        const authorPostsRef = query(collection(db, 'post'), orderBy('author'), where('author', from ? '==' : '!=', from ? from : null), orderBy(type == 'top' ? 'score' : 'sent', 'desc'), limitToLast(limit));
+        const postsRef = query(collection(db, 'post'), orderBy(type == 'top' ? 'score' : 'sent', type == 'top' ? 'desc' : 'desc'), limit(max));
+        const authorPostsRef = query(collection(db, 'post'), orderBy('author'), where('author', from ? '==' : '!=', from ? from : null), orderBy(type == 'top' ? 'score' : 'sent', 'desc'), limit(max));
         const unsubscribe = onSnapshot(from ? authorPostsRef : postsRef, snapshot => {
             setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, sent: doc.data().sent == null ? new Timestamp(new Date().getSeconds(), 0) : doc.data().sent })));
         });
         return unsubscribe;
-    }, [type, from, auth.currentUser]);
+    }, [type, from, me, auth.currentUser]);
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
         const postRef = doc(db, 'post', postId);
         const voteRef = doc(postRef, 'votes', uid);
         const vote = upvote ? 1 : -1;
-        if (voted[postId] != vote) {
-            setVoteScore(x => ({ ...x, [postId]: (x[postId] || 0) + vote }))
-        }
         setVoteCache((x) => ({ ...x, [postId]: vote }))
         setDoc(voteRef, ({ vote }))
     }
@@ -37,7 +34,7 @@ export const PostList: React.FC<{ type: 'top' | 'recent', limit: number, from?: 
 
     const makeComment = useCallback(async (postId: string, comment: { content: string, media?: { src: string, type: string } }) => {
         const author = me!.address;
-        const newMessage = ({ ...comment, author, sent: serverTimestamp(), type: 'string' });
+        const newMessage = ({ ...comment, author, sent: serverTimestamp(), type: 'string', score: 0 });
         const db = getFirestore(app);
         const commentCol = collection(db, "post", postId, "comments");
 
@@ -50,11 +47,8 @@ export const PostList: React.FC<{ type: 'top' | 'recent', limit: number, from?: 
 
 
     const [voted, setVoteCache] = useState<Record<string, 1 | -1 | null>>({});
-    const [voteScore, setVoteScore] = useState<Record<string, number>>({});
-
-
     useEffect(() => {
-        if (typeof auth.currentUser?.uid === 'undefined') {
+        if (me === null) {
             return;
         }
         posts.forEach(({ id }) => {
@@ -73,8 +67,8 @@ export const PostList: React.FC<{ type: 'top' | 'recent', limit: number, from?: 
 
     return <>
         {useMemo(() => posts.map((post) => (
-            <Post key={post.id} {...post} handleVote={handleVote} makeComment={makeComment} voted={voted[post.id]} uid={auth.currentUser?.uid} />
-        )), [type, posts, voted, voteScore])}
+            <PostCard hideComments key={post.id} {...post} handleVote={handleVote} makeComment={makeComment} voted={voted[post.id]} uid={auth.currentUser?.uid} />
+        )), [type, posts, voted])}
 
     </>
 }

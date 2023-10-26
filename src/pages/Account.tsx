@@ -1,30 +1,22 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import { useDiscover } from '../hooks/useDiscover';
-import { Trade } from '../models/Trade';
-import { useMember } from '../hooks/useMember';
-import { TradeItem } from '../components/TradeItem'
-import { StatItem } from '../components/StatItem';
-import { TribeHeader } from '../components/TribeHeader';
-import { TribeContent } from '../components/TribeContent';
-import { MemberBadge, MemberPfp, MemberToolbar } from '../components/MemberBadge';
-import useBuyPass from '../hooks/useBuyPass';
-import { Address, formatEther } from 'viem';
-import { useEffect, useState } from 'react';
-import { useTitle } from '../hooks/useTitle';
-import { albums, albumsOutline, chatbox, chatboxOutline, exit, personOutline } from 'ionicons/icons';
-import { getAuth, signOut } from 'firebase/auth';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonIcon, IonItem, IonList, IonRow, IonTitle } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
-import { TribePage } from './TribePage';
+import { signOut } from 'firebase/auth';
+import { albumsOutline, chatboxOutline, exit, personOutline } from 'ionicons/icons';
+import { MemberToolbar } from '../components/MemberBadge';
+import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
-import PfpUploader from '../components/UploadComponent';
+import { TribeHeader } from '../components/TribeHeader';
+import { useMember } from '../hooks/useMember';
+import { nativeAuth } from '../lib/sugar';
+import { TribePage } from './TribePage';
 
 
 
 const Account: React.FC = () => {
-    const auth = getAuth()
+    const auth = nativeAuth()
     const { logout } = usePrivy();
-    const me = useMember(x => x.getCurrentUser(auth.currentUser?.uid))
+    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
+    const me = useMember(x => x.getCurrentUser(uid));
     return (
         <TribePage page='account'>
             <TribeHeader title='Account' color='tertiary' />

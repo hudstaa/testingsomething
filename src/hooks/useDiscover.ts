@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { Trade } from '../models/Trade'
 import { MemberStats } from '../models/Stats'
 
 

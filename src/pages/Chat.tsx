@@ -10,13 +10,18 @@ import { TribeHeader } from '../components/TribeHeader';
 import { TribePage } from './TribePage';
 import { TribeContent } from '../components/TribeContent';
 import { timeAgo } from '../components/TradeItem';
+import { useMember } from '../hooks/useMember';
+import { nativeAuth } from '../lib/sugar';
 
 
 const Chat: React.FC = () => {
-    const { user } = usePrivy()
+    const auth = nativeAuth()
+    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
+    const me = useMember(x => x.getCurrentUser(uid));
+
     const [members, setMembers] = useState<[{ address: string }]>()
     useEffect(() => {
-        const address = user?.wallet?.address;
+        const address = me?.address;
 
         if (typeof address === 'undefined') {
             return;
@@ -33,19 +38,20 @@ const Chat: React.FC = () => {
             .catch(error => {
                 setMembers([] as any)
             });
-    }, [user])
+    }, [me])
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chat' color='tertiary' />
+            <TribeHeader title='Chat' />
             <TribeContent >
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
 
                             {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                <IonItem color='light' lines='none' routerLink={'/chat/' + address} key={address}>
+                                <IonItem color='paper' lines='none' routerLink={'/chat/' + address} key={address}>
                                     <LastMessage address={address} />
-                                </IonItem>) : <><br /><br /><br /><IonTitle><IonSpinner name='crescent' /></IonTitle></>, [members])}
+                                </IonItem>) : <><br /><br /><br /><IonTitle>
+                                    <IonSpinner name='crescent' /></IonTitle></>, [members])}
                         </IonCol></IonRow>
                 </IonGrid>
             </TribeContent>

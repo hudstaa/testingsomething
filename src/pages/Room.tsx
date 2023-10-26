@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonContent, IonFooter, IonGrid, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonList, IonLoading, IonRouterLink, IonSpinner, IonTitle } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonContent, IonFooter, IonGrid, IonIcon, IonImg, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonList, IonLoading, IonRouterLink, IonSpinner, IonTitle } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { close, lockClosed } from 'ionicons/icons';
@@ -10,8 +10,7 @@ import { useGroupMessages } from '../hooks/useGroupMessages';
 import { useMember } from '../hooks/useMember';
 import { Message } from '../models/Message';
 
-import { getAuth } from 'firebase/auth';
-import { Timestamp, addDoc, collection, doc, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, startAt, where } from "firebase/firestore";
+import { Timestamp, addDoc, collection, documentId, getDocs, getFirestore, limit, onSnapshot, orderBy, query, serverTimestamp, startAt, where } from "firebase/firestore";
 import { Address } from 'viem';
 import { app } from '../App';
 import { ChatBubble, ChatBubbleWithReply } from '../components/ChatBubble';
@@ -19,30 +18,30 @@ import { WriteMessage } from '../components/WriteMessage';
 import useBoosters from '../hooks/useBoosters';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import usePassBalance from '../hooks/usePassBalance';
+import { nativeAuth } from '../lib/sugar';
 import { TribePage } from './TribePage';
-import { TribeContent } from '../components/TribeContent';
-import { VariableSizeList } from 'react-window';
 
 
 
 
 const Room: React.FC = () => {
+    const initialFetch = 10;
+
     const { address } = useParams<{ address: string }>()
-    const { wallet, ready } = usePrivyWagmi();
-    const { user } = usePrivy();
     const channelOwner = useMember(x => x.getFriend(address, true))
-    const me = useMember(x => x.getCurrentUser(getAuth().currentUser?.uid))
+    const auth = nativeAuth();
+    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
+    const me = useMember(x => x.getCurrentUser(uid));
 
     const [replyingToMessage, setReplyingToMessage] = useState<Message | undefined>();
     const [lastMessageLoaded, setLastMessageLoaded] = useState<boolean>(false);
-    const a = useGroupMessages(x => x.groupMessages);
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
     const { pushMessages, modMessage } = useGroupMessages()
     const channel = address;
-    const balance: bigint | undefined = usePassBalance(wallet?.address || "" as any, channel as Address);
+    const balance: bigint | undefined = usePassBalance(me?.address || "" as any, channel as Address);
     const [latestMessageSent, setLatestMessageSent] = useState<Timestamp | null>()
     const sendMessage = useCallback(async (message: { content: string, media?: { src: string, type: string } }) => {
-        const author = wallet!.address;
+        const author = me!.address;
         const newMessage: any = ({ ...message, author, sent: serverTimestamp(), type: typeof message.media === 'undefined' ? 'string' : 'media' });
         const db = getFirestore(app);
         if (typeof replyingToMessage !== 'undefined') {
@@ -55,7 +54,7 @@ const Room: React.FC = () => {
         } catch (error) {
             console.error("Error sending message: ", error);
         }
-    }, [wallet?.address, wallet, address, replyingToMessage])
+    }, [me, address, replyingToMessage])
 
     const reply = useCallback((id: string) => {
         setReplyingToMessage(messages.find(x => x.id === id))
@@ -73,7 +72,7 @@ const Room: React.FC = () => {
                 query(
                     messagesCol,
                     orderBy("sent", "desc"),
-                    limit(6)
+                    limit(initialFetch)
                 ),
                 async (channelDocs) => {
 
@@ -81,15 +80,16 @@ const Room: React.FC = () => {
                     const replyIds = changes.map(change => change.doc.data().reply).filter(id => id);
                     let replies: any = [];
                     if (replyIds.length > 0) {
-                        const repliesSnapshot = await getDocs(query(messagesCol, where("id", "in", replyIds)));
+                        console.log("has replies")
+                        const repliesSnapshot = await getDocs(query(messagesCol, where(documentId(), "in", replyIds)));
                         replies = repliesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                        console.log(replies, replyIds);
                     }
-                    console.log(replies)
+                    const newMessages = changes.filter(x => x.type === 'added').map(x => (({ ...x.doc.data(), id: x.doc.id } as any)))
+                    pushMessages(channel, [...replies, ...newMessages]);
+                    setLatestMessageSent(newMessages[newMessages.length - 1].sent)
                     changes.forEach((change) => {
-                        if (change.type == 'added') {
-                            const newMessage = { ...change.doc.data(), id: change.doc.id } as Message;
-                            pushMessages(channel, [newMessage, ...replies]);
-                        } else if (change.type == 'modified') {
+                        if (change.type == 'modified') {
                             console.log("modified");
                             const newMessageTimestamped = change.doc.data() as Message;
                             newMessageTimestamped.sent !== null && setLatestMessageSent(newMessageTimestamped.sent)
@@ -101,7 +101,7 @@ const Room: React.FC = () => {
         })();
 
     }, [channel])
-    const messageList = useMemo(() => messages.map((msg: any) => msg.reply ? <ChatBubbleWithReply media={msg.media} id={msg.id} message={msg.content} address={msg.author} isMe={msg.author === me?.address} repliedTo={messages.find(x => x.id === msg.reply) as any} sent={msg.sent} reply={reply} /> :
+    const messageList = useMemo(() => messages.map((msg: any) => msg.reply ? <ChatBubbleWithReply key={msg.id} media={msg.media} id={msg.id} message={msg.content} address={msg.author} isMe={msg.author === me?.address} repliedTo={messages.find(x => x.id === msg.reply) || msg.reply} sent={msg.sent} reply={reply} /> :
         <ChatBubble media={msg.media} id={msg.id} reply={reply} key={msg.id} sent={msg.sent} isMe={msg.author === me?.address} address={msg.author} message={msg.content}></ChatBubble>
     ), [messages, me])
     const contentRef = useRef<HTMLIonContentElement>(null);
@@ -123,11 +123,11 @@ const Room: React.FC = () => {
             const replyIds = olderMessages.map((message: any) => message.reply).filter(id => id);
             let replies: any = [];
             if (replyIds.length > 0) {
-                const repliesSnapshot = await getDocs(query(messagesCol, where("id", "in", replyIds)));
+                const repliesSnapshot = await getDocs(query(messagesCol, where(documentId(), "in", replyIds)));
                 replies = repliesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                console.log(replies);
             }
-            console.log(replies);
-            pushMessages(channel, [...olderMessages as any, ...replies]);
+            pushMessages(channel, [...replies, ...olderMessages as any]);
             infiniteRef.current?.complete();
         }).catch((e) => {
             setLastMessageLoaded(true);
@@ -138,46 +138,47 @@ const Room: React.FC = () => {
     }, [messages])
     const member = useMember(x => x.getFriend(channel))
     const infiniteRef = useRef<HTMLIonInfiniteScrollElement>(null)
-    const { balance: boosters, syncing } = useBoosters(wallet?.address, address)
+    const { balance: boosters, syncing } = useBoosters(me?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
-    const hasAccess = (typeof ftBalance !== 'undefined' && ftBalance > 0n) || (typeof balance !== 'undefined' && balance > 0n) && !syncing && !ftSyncing;
-    const spacerRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        if (contentRef.current && spacerRef.current) {
-            const contentEl = contentRef.current;
-            const spacerEl = spacerRef.current;
-
-            const contentHeight = contentEl.scrollHeight;
-            const containerHeight = contentEl.clientHeight;
-            const spacerHeight = Math.max(0, containerHeight - contentHeight);
-
-            spacerEl.style.height = `${spacerHeight}px`;
-        }
-    }, [spacerRef.current, contentRef.current]); // Note: this effect will only run once. If content dynamically changes, consider dependencies.
+    const hasAccess = (typeof ftBalance !== 'undefined' && ftBalance > 0n) || (typeof balance !== 'undefined' && balance > 0n);
     // const VirtualMessage: React.FC<{ index: number, style: any }> = ({ index, style }) => {
     //     const msg = messages[index];
     //     return msg.reply ? <ChatBubbleWithReply media={msg.media} id={msg.id} message={msg.content} address={msg.author} isMe={msg.author === me?.address} repliedTo={messages.find(x => x.id === msg.reply) as any} sent={msg.sent} reply={reply} /> :
     //         <ChatBubble media={msg.media} id={msg.id} reply={reply} key={msg.id} sent={msg.sent!} isMe={msg.author === me?.address} address={msg.author} message={msg.content}></ChatBubble>
     // };
 
+
+    useLayoutEffect(() => {
+        if (messages.length < initialFetch) {
+            contentRef.current && contentRef.current.scrollToBottom(420);
+        }
+    }, [latestMessageSent]); // this will trigger every time the messages array changes
+
+    useLayoutEffect(() => {
+        if (messages.length > initialFetch) {
+            setTimeout(() => {
+                contentRef.current && contentRef.current.scrollToBottom(420);
+            }, 100)
+        }
+    }, [latestMessageSent]); // this will trigger every time the messages array changes
+
+
     return <TribePage page='room'>
         <TribeHeader title={(channelOwner?.twitterName) + ' tribe' || address} />
-
         <IonContent ref={contentRef}>
-            <div ref={spacerRef}></div>
-            {(lastMessageLoaded || messages.length < 5) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
+            {(lastMessageLoaded || messages.length < initialFetch) ? <></> : <IonInfiniteScroll position='top' ref={infiniteRef} disabled={lastMessageLoaded} onIonInfinite={(ev) => {
                 fetchMore(ev.target.complete);
             }}>
                 <IonInfiniteScrollContent loadingSpinner={'crescent'} >
                 </IonInfiniteScrollContent>
             </IonInfiniteScroll>}
 
-            <IonList color='light' style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
+            <IonList color={'paper'} style={{ display: 'flex!important', 'flexDirection': 'column-reverse' }}>
                 {hasAccess ? messageList : <></>}
                 <div style={{ height: 10 }} />
             </IonList>
             {hasAccess ? <></> : <IonRouterLink routerLink={'/member/' + channel}><IonTitle>
-                {(syncing || typeof balance === 'undefined' || ftSyncing || typeof ftBalance === 'undefined') && <IonSpinner />}
+                {(syncing || ftSyncing) && <IonSpinner color='tribe' />}
                 {!hasAccess && me != null && typeof balance !== 'undefined' && typeof ftBalance !== 'undefined' && !syncing && !ftSyncing ? <IonButton color='danger'>
                     No Access <IonIcon icon={lockClosed} />
                 </IonButton> : <></>}
@@ -190,13 +191,14 @@ const Room: React.FC = () => {
                 {replyingToMessage && <IonItem>
                     <MemberPfp size='smol' address={replyingToMessage.author} />
                     {replyingToMessage.content}
+                    {replyingToMessage.media && <IonAvatar> <IonImg src={replyingToMessage.media.src} /></IonAvatar>}
                     <IonButtons slot='end'>
                         <IonButton fill='clear' onClick={() => { setReplyingToMessage(undefined) }}>
                             <IonIcon color='danger' icon={close} />
                         </IonButton>
                     </IonButtons>
                 </IonItem>}
-                < WriteMessage placeHolder='send a message' address={user?.wallet?.address || ""} sendMessage={sendMessage} />
+                < WriteMessage placeHolder='send a message' address={me?.address || ""} sendMessage={sendMessage} />
             </IonGrid>
         </IonFooter> : <>
         </>}

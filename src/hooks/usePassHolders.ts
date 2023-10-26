@@ -1,11 +1,7 @@
 import type { Address } from 'viem'
 import {
-    useContractRead,
-    useContractWrite,
-    usePrepareContractWrite,
-    useWaitForTransaction,
+    useContractRead
 } from 'wagmi'
-import { useCallback, useState } from 'react'
 import { tribePassesContract } from '../lib/constants'
 
 export default function usePassBalance(wallet: Address, subjects: Address[]) {

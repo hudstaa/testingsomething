@@ -74,6 +74,12 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
                 </IonText>
             </IonRow>
             <IonRow>
+                <IonText color='medium'>
+
+                    {member?.twitterUsername}
+                </IonText>
+            </IonRow>
+            <IonRow>
                 {content ? content
                     : <></>}
             </IonRow>

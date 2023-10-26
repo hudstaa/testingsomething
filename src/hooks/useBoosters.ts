@@ -1,20 +1,14 @@
-import type { Address } from 'viem'
-import {
-    useContractRead,
-    useContractWrite,
-    usePrepareContractWrite,
-    useWaitForTransaction,
-} from 'wagmi'
-import { useCallback, useState } from 'react'
-import { tribePassesContract } from '../lib/constants'
-import { useEffect } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/functions';
 import 'firebase/database';
+import { doc, getDoc, getFirestore, onSnapshot } from 'firebase/firestore';
+import 'firebase/functions';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { Firestore, doc, getDoc, getFirestore, limit, onSnapshot } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import type { Address } from 'viem';
+import {
+    useContractRead
+} from 'wagmi';
 import { app } from '../App';
-import { getDatabase } from 'firebase/database';
+import { tribePassesContract } from '../lib/constants';
 export default function useBoosters(wallet: Address | string | undefined, channel: Address | string) {
     const [syncing, setSyncing] = useState<boolean | null>(null);
     const { data: balance } = useContractRead({
@@ -30,7 +24,6 @@ export default function useBoosters(wallet: Address | string | undefined, channe
         }
         const balanceInfo = balance as [string[], bigint[]];
         const holderBalance = balanceInfo[1][balanceInfo[0].indexOf(wallet)];
-        console.log('holder balance', holderBalance)
 
         const database = getFirestore(app);
         const docRef = doc(database, 'channel', channel);
@@ -42,10 +35,8 @@ export default function useBoosters(wallet: Address | string | undefined, channe
                 if (typeof dbBalance === 'undefined' && (holderBalance === 0n || typeof holderBalance === 'undefined')) {
                     return;
                 }
-                console.log(dbBalance, holderBalance);
                 setSyncing(true);
                 const syncHolders = httpsCallable(getFunctions(app), 'syncBoosters');
-                console.log(balance, dbBalance);
                 syncHolders({ address: channel }).then(response => {
                     setSyncing(false);
                 }).catch(error => {

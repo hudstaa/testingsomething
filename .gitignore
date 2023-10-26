@@ -151,3 +151,7 @@ ios/capacitor-cordova-ios-plugins/sources/.gitkeep
 ios/App/App.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
 ios/App/App.xcworkspace/xcshareddata/swiftpm/Package.resolved
 ios/App/GoogleService-Info.plist
+ios/App/App/Assets.xcassets/Splash.imageset/favicon.png
+ios/App/App/Assets.xcassets/Splash.imageset/favicon 2.png
+ios/App/App/Assets.xcassets/Splash.imageset/favicon 1.png
+ios/App/App/Assets.xcassets/AppIcon.appiconset/favicon.png
