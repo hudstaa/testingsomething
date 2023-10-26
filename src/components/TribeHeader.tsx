@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCardTitle, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
@@ -9,8 +9,8 @@ import { useMember } from "../hooks/useMember";
 import { nativeAuth } from "../lib/sugar";
 import { OnBoarding } from "../pages/OnBoarding";
 
-export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement }> = ({ title, sticky = true, color, image, content }) => {
-    const { authenticated, linkTwitter, user, getAccessToken, ready } = usePrivy()
+export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean }> = ({ title, sticky = true, color, hide, image, content }) => {
+    const { user, ready } = usePrivy()
     const { wallets } = useWallets();
     const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
     const modalRef = useRef<HTMLIonModalElement>(null)
@@ -34,7 +34,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
             modalRef.current?.dismiss();
         }
     }, [ready, auth?.currentUser, me])
-    const toolbar = useMemo(() => <IonToolbar color={'tribe'}>
+    const toolbar = !hide ? <IonToolbar color={'tribe'}>
         <IonButtons slot='start'>
             <IonButton routerLink="/activity">
                 <IonImg style={{ height: 30 }} src='/favicon.png' />
@@ -56,7 +56,9 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                     {me.twitterPfp ? <IonAvatar><IonImg src={me?.twitterPfp} /></IonAvatar> : <IonBadge>{me.twitterName}</IonBadge>}
                 </IonButton>}
         </IonButtons>
-    </IonToolbar >, [user, fireUser, title, me])
+    </IonToolbar > : <IonToolbar color='tribe'>
+        {content}
+    </IonToolbar>
     if (!sticky) {
         return toolbar;
     }
@@ -66,14 +68,14 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         </IonHeader>
     }
 
-    return <IonHeader>
+    return <IonHeader color="tribe" style={{ border: 0 }}>
         {toolbar}
         <IonModal canDismiss={me !== null} isOpen={me === null} ref={modalRef}>
             <OnBoarding dismiss={() => {
                 modalRef.current?.dismiss();
             }} me={me} />
         </IonModal>
-        {content}
+        {!hide && content}
     </IonHeader>
 
 }

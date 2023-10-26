@@ -34,7 +34,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
 export const MemberToolbar: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonItem color='light' lines='none' detail={false} routerLink={'/member/' + address}>
+    return <IonItem color='paper' lines='none' detail={false} routerLink={'/member/' + address}>
 
         <IonAvatar>
             <IonImg src={member?.twitterPfp || personOutline} />
@@ -63,9 +63,7 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
 
     return <IonRouterLink routerLink={'/member/' + address}><IonRow>
 
-        <IonAvatar>
-            <IonImg src={member?.twitterPfp || personOutline} />
-        </IonAvatar>
+        <IonImg style={{ width: 40, height: 40, borderRadius: 20, borderCollapse: 'seperate', perspective: '1px' }} src={member?.twitterPfp || personOutline} />
         <IonGrid fixed>
 
             <IonRow>
@@ -75,7 +73,6 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
             </IonRow>
             <IonRow>
                 <IonText color='medium'>
-
                     {member?.twitterUsername}
                 </IonText>
             </IonRow>
@@ -83,7 +80,6 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
                 {content ? content
                     : <></>}
             </IonRow>
-
         </IonGrid>
     </IonRow></IonRouterLink>
 }

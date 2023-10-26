@@ -13,11 +13,11 @@ export const ChatBubble: React.FC<{ id: string, media?: { src: string, type: str
                 <IonGrid>
                     <IonRow >
                         <IonCol size='9' offset='2'>
-                            <IonCard className='message-card ion-no-margin from-me'>
+                            <IonCard style={media ? { height: 100 } : undefined} className='message-card ion-no-margin from-me'>
                                 <IonCardContent className="message-card-content">
                                     <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
                                         {message}
-                                        <IonImg src={media?.src} />
+                                        <img style={{ objectFit: 'contain', height: 100 }} src={media?.src} />
                                     </IonText>
                                 </IonCardContent>
                             </IonCard>
@@ -55,7 +55,7 @@ export const ChatBubble: React.FC<{ id: string, media?: { src: string, type: str
                         </IonCol>
                         <IonCol size='9'>
 
-                            <IonCard className='message-card ion-no-margin'>
+                            <IonCard style={media ? { height: 100 } : undefined} className='message-card ion-no-margin'>
                                 <IonCardContent className="message-card-content">
 
                                     <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>

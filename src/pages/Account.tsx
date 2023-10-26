@@ -24,31 +24,25 @@ const Account: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
-                            <IonCard color='light'>
-                                <IonCardHeader color='light'>
+                            <IonCard color='paper'>
+                                <IonCardHeader>
                                     <IonTitle  > {me?.twitterName}</IonTitle>
                                 </IonCardHeader>
                                 <IonCardContent >
                                     <IonList>
                                         <MemberToolbar address={me?.address || ""} />
 
-                                        <IonItem color='light' lines='none'>
-                                            <IonButton fill='solid' routerLink={'/chat/' + me?.address} onClick={() => {
-                                            }} color='primary'>Chat
-                                                <IonIcon icon={chatboxOutline} />
-                                            </IonButton>
-                                            <IonButton routerLink={'/member/' + me?.address} onClick={() => {
-                                            }} color='tertiary'>Profile
-                                                <IonIcon icon={personOutline} />
-                                            </IonButton>
-                                            <IonButton fill='solid' routerLink={'/posts'} onClick={() => {
-                                            }} color='success'>Post
-                                                <IonIcon icon={albumsOutline} />
+                                        <IonButton color='light' fill='solid' routerLink={'/chat/' + me?.address} onClick={() => {
+                                        }} >Chat
+                                        </IonButton>
+                                        <IonButton color='light' routerLink={'/member/' + me?.address} onClick={() => {
+                                        }} >Profile
+                                        </IonButton>
+                                        <IonButton color='light' fill='solid' routerLink={'/posts'} onClick={() => {
+                                        }} >Post
+                                        </IonButton>
 
-                                            </IonButton>
-                                        </IonItem>
-
-                                        <IonItem color='light' lines='none'>
+                                        <IonItem color='paper' lines='none'>
                                             <IonButtons slot='end'>
                                                 <IonButton fill='outline' onClick={() => {
                                                     signOut(auth); logout();

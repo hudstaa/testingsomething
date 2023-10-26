@@ -25,6 +25,7 @@ import { WriteMessage } from '../components/WriteMessage';
 import { useMember } from '../hooks/useMember';
 import { nativeAuth } from '../lib/sugar';
 import Post from './Post';
+import { MemberBadge, MemberCardHeader, MemberPfp } from '../components/MemberBadge';
 
 
 const Posts: React.FC = () => {
@@ -59,9 +60,9 @@ const Posts: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
-
                             <IonCard>
-                                {uid && me && <WriteMessage address={me!.address} placeHolder='blaze your glory' sendMessage={(message) => addPost(uid!, me!.address, message)} />}
+                                {me && <MemberCardHeader address={me.address} />}
+                                {uid && me && <WriteMessage address={me!.address} placeHolder='write a post' sendMessage={(message) => addPost(uid!, me!.address, message)} />}
                             </IonCard>
                         </IonCol>
                     </IonRow>

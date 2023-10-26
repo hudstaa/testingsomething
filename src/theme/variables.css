@@ -74,7 +74,24 @@ http://ionicframework.com/docs/theming/ */
   /* Prevents text from wrapping */
 }
 
+ion-header,
+ion-header ion-toolbar {
+  --border-width: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 
+ion-segment {
+  --background-checked: rgba(255, 255, 255, 0.5);
+  --color-checked: rgba(0, 0, 0, 0.5);
+}
+
+ion-footer,
+ion-footer ion-toolbar {
+  --border-width: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 
 .message-card ion-card-content {
   display: inline-block;
@@ -408,7 +425,7 @@ ion-segment-button {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #fff711;
+  --ion-color-tribe-tint: #fd2200;
 }
 
 /* Light Mode: Paper Color */

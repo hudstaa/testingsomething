@@ -16,7 +16,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         setImage(undefined);
     }
     const uid = getAuth().currentUser?.uid;
-    return <IonToolbar>
+    return <IonToolbar color='paper'>
         <IonButtons slot='start'>
             {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
                 setImage(path);

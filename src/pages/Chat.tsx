@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { IonBadge, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSpinner, IonText, IonTitle } from '@ionic/react';
+import { IonBadge, IonButtons, IonCard, IonChip, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSpinner, IonText, IonTitle } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
@@ -46,13 +46,17 @@ const Chat: React.FC = () => {
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
+                            <IonCard>
 
-                            {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                <IonItem color='paper' lines='none' routerLink={'/chat/' + address} key={address}>
-                                    <LastMessage address={address} />
-                                </IonItem>) : <><br /><br /><br /><IonTitle>
-                                    <IonSpinner name='crescent' /></IonTitle></>, [members])}
-                        </IonCol></IonRow>
+                                {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
+                                    <IonItem color='paper' lines='none' routerLink={'/chat/' + address} key={address}>
+                                        <LastMessage address={address} />
+                                    </IonItem>) : <><br /><br /><br /><IonTitle>
+                                        <IonSpinner name='crescent' /></IonTitle></>, [members])}
+                            </IonCard>
+
+                        </IonCol>
+                    </IonRow>
                 </IonGrid>
             </TribeContent>
             <TribeFooter page='chat' />

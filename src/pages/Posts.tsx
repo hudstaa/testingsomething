@@ -1,16 +1,21 @@
 import {
+    IonButton,
+    IonButtons,
     IonCard,
+    IonCardTitle,
     IonCol,
     IonFab,
     IonFabButton,
     IonGrid,
+    IonHeader,
     IonIcon,
+    IonItem,
     IonLabel,
     IonPage,
     IonRefresher,
     IonRefresherContent,
     IonRow,
-    IonSegment, IonSegmentButton
+    IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -27,6 +32,7 @@ import { WriteMessage } from '../components/WriteMessage';
 import { useMember } from '../hooks/useMember';
 import { nativeAuth } from '../lib/sugar';
 import Post from './Post';
+import { TribePage } from './TribePage';
 
 
 
@@ -51,25 +57,32 @@ const Posts: React.FC = () => {
     const auth = nativeAuth();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     return (
-        <IonPage id='main-content'>
-            <TribeHeader color='success' title={'Posts'} content={<IonSegment value={postType} onIonChange={(e) => {
-                setPostType(e.detail.value?.toString() || "top" as any)
-            }}>
-                <IonSegmentButton layout='icon-end' value={'top'}>
-                    <IonLabel color={'medium'}>
-                        TOP
-                    </IonLabel>
-                    <IonIcon color='warning' icon={trophyOutline} />
-                </IonSegmentButton>
-                <IonSegmentButton value={'recent'} layout='icon-end'>
-                    <IonLabel color='medium'>
-                        RECENT
-                    </IonLabel>
-                    <IonIcon color='success' icon={timeOutline} />
-                </IonSegmentButton>
-            </IonSegment>
-            } />
-            <TribeContent fullscreen>
+        <TribePage page='posts'>
+            <TribeHeader title={'posts'}
+                hide
+                content={<>
+                    <IonButtons slot='start'>
+                        <IonCardTitle color='light'>
+                            Tribe
+                        </IonCardTitle>
+                    </IonButtons>
+                    <IonButtons slot='end'>
+                        <IonButton fill='clear' color={postType === 'top' ? 'light' : 'dark'} onClick={() => {
+                            setPostType('top')
+                        }}>
+                            TOP
+
+                        </IonButton>
+                        <IonButton fill='clear' color={postType === 'recent' ? 'light' : 'dark'} onClick={() => {
+                            setPostType('recent')
+                        }}>
+                            NEW
+                        </IonButton>
+                    </IonButtons></>
+                }
+            />
+
+            < TribeContent fullscreen page='posts'>
                 <IonRefresher slot="fixed" onIonRefresh={(event) => {
                     setTimeout(() => {
                         // Any calls to load data go here
@@ -85,10 +98,15 @@ const Posts: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-                <IonFab slot="fixed" vertical="bottom" horizontal="end"><IonFabButton routerLink='/posts/new' size='small'><IonIcon icon={addOutline} /></IonFabButton></IonFab>
-            </TribeContent>
+                <IonFab slot="fixed" vertical="bottom" horizontal="center">
+                    <IonButton color='tribe' routerLink='/posts/new'>
+                        New
+                        Post
+                    </IonButton>
+                </IonFab>
+            </TribeContent >
             <TribeFooter page='posts' />
-        </IonPage >
+        </TribePage >
     );
 };
 

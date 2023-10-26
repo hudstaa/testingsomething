@@ -86,7 +86,7 @@ export const graphQLclient = new ApolloClient({
 
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { albumsOutline, bodyOutline, chatbubbleOutline, peopleOutline, pulseOutline } from 'ionicons/icons';
+import { albumsOutline, bodyOutline, chatbubbleOutline, compass, home, homeOutline, paperPlane, peopleOutline, person, pulseOutline } from 'ionicons/icons';
 import Account from './pages/Account';
 import { MobileAuth } from './pages/MobileAuth';
 import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
@@ -173,7 +173,7 @@ const DeepLinkProvider: React.FC = () => {
 
 const App: React.FC = () => {
 
-  return <IonApp >
+  return <IonApp>
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
@@ -217,27 +217,19 @@ const App: React.FC = () => {
                 </Route>
               </IonRouterOutlet>
 
-              <IonTabBar slot="bottom">
+              <IonTabBar color='tribe' slot="bottom">
 
-                <IonTabButton tab="activity" href="/activity">
-                  <IonLabel>Activity</IonLabel>
-                  <IonIcon icon={pulseOutline} />
-                </IonTabButton>
                 <IonTabButton tab="posts" href="/posts" >
-                  <IonLabel>Post</IonLabel>
-                  <IonIcon icon={albumsOutline} />
+                  <IonIcon icon={home} />
                 </IonTabButton>
                 <IonTabButton tab="member" href="/member">
-                  <IonLabel>Discover</IonLabel>
-                  <IonIcon icon={peopleOutline} />
+                  <IonIcon icon={compass} />
                 </IonTabButton>
                 <IonTabButton tab="chat" href="/chat">
-                  <IonLabel>Chat</IonLabel>
-                  <IonIcon icon={chatbubbleOutline} />
+                  <IonIcon icon={paperPlane} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
-                  <IonLabel>Account</IonLabel>
-                  <IonIcon icon={bodyOutline} />
+                  <IonIcon icon={person} />
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>

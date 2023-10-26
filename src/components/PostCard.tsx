@@ -1,6 +1,6 @@
 import { IonCard, IonCardHeader, IonText, IonButton, IonBadge, IonIcon, IonLabel, IonCardContent, IonRouterLink, IonImg, IonItem, IonButtons } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
-import { chevronUp, chevronDown, chatbubble, pencilOutline } from "ionicons/icons"
+import { chevronUp, chevronDown, chatbubble, pencilOutline, arrowDown, arrowUp } from "ionicons/icons"
 import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
@@ -45,7 +45,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonButtons slot='end'>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} >
                     <IonBadge color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'}>
-                        <IonIcon icon={chevronDown} />
+                        <IonIcon icon={arrowDown} />
                     </IonBadge>
                 </IonButton>
                 <IonLabel >
@@ -54,7 +54,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, true)} >
                     <IonBadge color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                        <IonIcon icon={chevronUp} />
+                        <IonIcon icon={arrowUp} />
 
                     </IonBadge>
                 </IonButton>
