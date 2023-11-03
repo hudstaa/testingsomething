@@ -1,6 +1,6 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonImg, IonItem, IonList, IonListHeader, IonRow, IonText, IonTitle } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonImg, IonItem, IonList, IonListHeader, IonRow, IonSearchbar, IonText, IonTitle } from '@ionic/react';
 import { personOutline } from 'ionicons/icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Address, formatEther } from 'viem';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -11,11 +11,13 @@ import { useMember } from '../hooks/useMember';
 import { useTitle } from '../hooks/useTitle';
 import { TribePage } from './TribePage';
 import { MemberGraph } from '../components/MemberGraph';
+import algoliasearch from 'algoliasearch';
 
+const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb20');
 
-const BuyPriceBadge: React.FC<{ address: string | undefined }> = ({ address }) => {
+export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge>
+  return <IonBadge color='tribe' style={style} onClick={onClick}>
     {formatEther(buyPrice)}
   </IonBadge>
 }
@@ -29,9 +31,32 @@ const Discover: React.FC = () => {
     setTitle('discover')
     loadCache();
   }, [])
+  const [hits, setHits] = useState<{ twitterName: string, twitterUsername: string, address: string, twitterPfp: string }[]>([])
   return (
     <TribePage page='discover'>
-      <TribeHeader title='Discover' color='primary' />
+      <TribeHeader title='Discover' color='primary' content={
+        <>
+          <IonSearchbar onIonInput={(event) => {
+            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
+              setHits((res.results[0] as any).hits || [])
+            })
+          }} />
+          <IonList>
+            {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
+              setHits([])
+            }} routerLink={'/member/' + x.address}>
+              <IonButtons slot='start'>
+                <IonAvatar>
+                  <IonImg src={x.twitterPfp} />
+                </IonAvatar>
+              </IonButtons>
+              {x.twitterName}
+              <BuyPriceBadge address={x?.address} />
+            </IonItem>)}
+
+          </IonList>
+        </>
+      } />
       <TribeContent>
         <IonGrid>
           <IonRow>
@@ -41,9 +66,10 @@ const Discover: React.FC = () => {
                   <IonCard routerLink={'/member/' + member?.address} style={{ aspectRatio: 1 }}>
                     <IonImg style={{ position: 'absolute' }} src={member?.twitterPfp || personOutline} />
 
-                    <IonBadge color='light' style={{ position: 'absolute', bottom: 25, left: 25 }}>
+                    <IonBadge color='light' style={{ position: 'absolute', bottom: 5, left: 5 }}>
                       {member?.twitterName}
                     </IonBadge>
+                    <BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />
                     {/* <MemberGraph address={member!.address} /> */}
                   </IonCard></IonCol>)}
               </IonRow>

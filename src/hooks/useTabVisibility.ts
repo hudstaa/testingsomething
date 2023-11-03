@@ -1,14 +1,17 @@
 // tabStore.ts
 import { create } from 'zustand';
 
+type TribeTab = 'post' | 'channel' | 'account' | 'member';
 type TabState = {
-    showTabs: boolean;
-    setShowTabs: (state: boolean) => void;
+    tab: TribeTab;
+    setTab: (state: TribeTab) => void;
 };
 
-const useTabvisibility = create<TabState>((set) => ({
-    showTabs: true,
-    setShowTabs: (state) => set({ showTabs: state }),
+const useTabs = create<TabState>((set) => ({
+    tab: 'post',
+    setTab: (tab) => {
+        set({ tab });
+    },
 }));
 
-export default useTabvisibility;
+export default useTabs;

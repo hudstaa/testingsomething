@@ -1,59 +1,63 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCardTitle, IonHeader, IonImg, IonModal, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCardHeader, IonCardSubtitle, IonCardTitle, IonHeader, IonImg, IonModal, IonRouterLink, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
 import { signInWithCustomToken } from "firebase/auth";
-import { ReactElement, useEffect, useMemo, useRef } from "react";
+import { ReactElement, useEffect, useMemo, useRef, useState } from "react";
 import { baseGoerli } from "viem/chains";
 import { useMember } from "../hooks/useMember";
 import { nativeAuth } from "../lib/sugar";
 import { OnBoarding } from "../pages/OnBoarding";
+import { useHistory } from "react-router";
+import { app } from "../App";
+import { getFirestore, query, collection, where, getDocs, Timestamp, onSnapshot } from "firebase/firestore";
+import { MemberPfp } from "./MemberBadge";
+import { useNotifications } from "../hooks/useNotifications";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean }> = ({ title, sticky = true, color, hide, image, content }) => {
     const { user, ready } = usePrivy()
-    const { wallets } = useWallets();
-    const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
+    const { setNotifications, notifications } = useNotifications();
     const modalRef = useRef<HTMLIonModalElement>(null)
-    useEffect(() => {
-        wallets.forEach((wallet) => {
-            if (wallet.connectorType === 'embedded') {
-                setActiveWallet(wallet);
-            }
-        })
-    }, [wallets, activeWallet]);
-    useEffect(() => {
-        activeWallet && activeWallet.switchChain(baseGoerli.id);
-    }, [activeWallet])
     const auth = nativeAuth();
     const fireUser = auth.currentUser;
-    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser(uid));
+    const me = useMember(x => x.getCurrentUser());
 
     useEffect(() => {
         if (fireUser && ready && me?.address) {
             modalRef.current?.dismiss();
         }
     }, [ready, auth?.currentUser, me])
-    const toolbar = !hide ? <IonToolbar color={'tribe'}>
-        <IonButtons slot='start'>
-            <IonButton routerLink="/activity">
-                <IonImg style={{ height: 30 }} src='/favicon.png' />
-            </IonButton>
-            {/* <IonButton onClick={() => {
 
-            }}>
-                <IonImg src='/icon.png' />
-            </IonButton> */}
+    useEffect(() => {
+        if (!me) {
+            return;
+        }
+        const db = getFirestore(app);
+
+
+        const notificationsQuery = query(collection(db, 'notifications'), where('to', '==', me.address));
+        onSnapshot(notificationsQuery, (snap) => {
+            setNotifications(snap.docs.map(x => ({ ...x.data(), id: x.id } as any)));
+        })
+
+    }, [me]);
+
+    const { location } = useHistory();
+    const toolbar = !hide ? <IonToolbar>
+        <IonButtons slot='start' style={{ marginLeft: 12 }}>
+            <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
+                <IonText color='dark'>
+                    {title}
+                </IonText>
+            </IonRouterLink>
         </IonButtons>
-
-        <IonTitle>
-            {title}
-        </IonTitle>
-
         <IonButtons slot='end'>
             {me &&
-                <IonButton routerLink={'/account/'}>
-                    {me.twitterPfp ? <IonAvatar><IonImg src={me?.twitterPfp} /></IonAvatar> : <IonBadge>{me.twitterName}</IonBadge>}
+                <IonButton routerLink={'/account'}>
+                    {notifications && notifications.length > 0 && < IonBadge color='tribe'>
+                        {notifications.length}
+                    </IonBadge>}
+                    <MemberPfp address={me.address} size="smol" />
                 </IonButton>}
         </IonButtons>
     </IonToolbar > : <IonToolbar color='tribe'>

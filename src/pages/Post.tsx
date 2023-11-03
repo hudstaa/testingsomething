@@ -19,7 +19,7 @@ const Post: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const auth = nativeAuth();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser(uid));
+    const me = useMember(x => x.getCurrentUser());
     const [post, setPost] = useState<null | { id: string, commentCount: number | undefined, content: string, media?: { src: string, type: string } }>()
     useEffect(() => {
         id && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
@@ -38,6 +38,19 @@ const Post: React.FC = () => {
         const postRef = doc(db, 'post', postId);
         const voteRef = doc(postRef, 'votes', uid);
         const vote = upvote ? 1 : -1;
+        let diff = 0;
+        if (upvote && voted == -1) {
+            diff = 2;
+        }
+        if (!upvote && voted == 1) {
+            diff = -2;
+        }
+        if (voted === null || typeof voted === 'undefined') {
+            diff = vote;
+        }
+        let newPost = { ...post } as any;
+        newPost.score = newPost.score + diff;
+        setPost(newPost)
         setDoc(voteRef, ({ vote })).then(() => {
             setVoteCache(vote)
         })
@@ -68,8 +81,7 @@ const Post: React.FC = () => {
             <IonGrid>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
-
-                        <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid || ""} />
+                        <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
                     </IonCol></IonRow></IonGrid>
         </TribeContent>
     </TribePage>

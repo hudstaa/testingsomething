@@ -44,7 +44,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const { data, loading, error } = useQuery<{ trades: any[] }>(accountTradesOfQuery, { variables: { address: address.toLowerCase() } })
     const trades = parseTrades(data?.trades);
     const graph = useMemo(() => {
-        return <IonGrid >
+        return <IonGrid style={{ height: window.innerHeight / 3 }}>
             {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>

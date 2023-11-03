@@ -1,191 +1,70 @@
-import { IonRow, IonGrid, IonCol, IonCard, IonCardContent, IonText, IonAvatar, IonImg, IonButton, IonIcon, IonSpinner, IonRouterLink } from "@ionic/react";
-import { Timestamp } from "firebase/firestore";
-import { person, returnDownBack } from "ionicons/icons";
-import { useMember } from "../hooks/useMember";
-import { MemberPfp } from "./MemberBadge";
+import { IonButton, IonIcon, IonItem, IonText } from "@ionic/react";
+import { returnDownBack } from "ionicons/icons";
+import { useGroupMessages } from "../hooks/useGroupMessages";
+import { Message } from "../models/Message";
+import { ChatMemberPfp, MemberPfp } from "./MemberBadge";
 import { timeAgo } from "./TradeItem";
 
-export const ChatBubble: React.FC<{ id: string, media?: { src: string, type: string }, message: string, address: string, isMe: boolean, sent: Timestamp, reply: (id: string) => void }> = ({ message, address, reply, isMe, sent, id, media }) => {
-    const friend = useMember(x => x.getFriend(address));
-    return (
-        <IonRow key={id}>
-            {isMe ? <>
-                <IonGrid>
-                    <IonRow >
-                        <IonCol size='9' offset='2'>
-                            <IonCard style={media ? { height: 100 } : undefined} className='message-card ion-no-margin from-me'>
-                                <IonCardContent className="message-card-content">
-                                    <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {message}
-                                        <img style={{ objectFit: 'contain', height: 100 }} src={media?.src} />
-                                    </IonText>
-                                </IonCardContent>
-                            </IonCard>
-                            <IonText style={{ fontSize: 13, position: 'absolute', bottom: -10, right: 10 }} color='tertiary' >
-                                {friend?.twitterName} {timeAgo(new Date(sent.seconds * 1000))}
-                            </IonText>
-                        </IonCol>
-                        <IonCol
-                            size='1'
-                        >
-                            <div style={{ position: 'absolute', bottom: -10, left: 5 }}>
-                                <IonRouterLink routerLink={"/member/" + friend?.address}>
-                                    <IonAvatar >
-                                        <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
-                                    </IonAvatar>
-                                </IonRouterLink>
-                            </div>
-                        </IonCol>
+export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
+    const isMe = me === message.author;
+    const contentBubble = !message.media ? <div style={{ margin: 0 }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+        {message.content}
+    </div> : <div style={{ margin: 0, height: 250 }} className={(isMe ? "send" : "recieve") + ' msg image-msg'} >
+        <img className="msg" height={'100%'} src={message.media.src} />
+    </div>
 
-                    </IonRow>
-                </IonGrid>
-            </> : <>
-                <IonGrid>
-                    <IonRow >
-                        <IonCol
-                            size='1'
-                        >
-                            <div style={{ position: 'absolute', bottom: 0, right: -20 }}>
-                                <IonRouterLink routerLink={"/member/" + friend?.address}>
-                                    <IonAvatar >
-                                        <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
-                                    </IonAvatar>
-                                </IonRouterLink>
-                            </div>
-                        </IonCol>
-                        <IonCol size='9'>
+    const items = [
+        !isMe ? <button style={{ margin: '0px!important', padding: 0, background: 'rgba(0,0,0,0)' }} onClick={() => {
+            reply(message.id);
+        }} color='primary' >
+            <IonIcon color='tertiary' icon={returnDownBack} />
+        </button> : undefined
+        , message.reply ? isMe ? <div style={{ margin: '0px!important' }}>
+            <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />
+        </div> : <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />
+            : undefined,
+        <div style={{ margin: '0px!important' }}>
+            {contentBubble}
+        </div>
+        , isMe ? <></> :
+            <ChatMemberPfp size="smol" address={message.author} style={{ margin: '0px!important', width: '50px!important', height: '50px!important' }} />
+        ,
 
-                            <IonCard style={media ? { height: 100 } : undefined} className='message-card ion-no-margin'>
-                                <IonCardContent className="message-card-content">
 
-                                    <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {message}
-                                    </IonText>
-                                    {media && <IonImg src={media.src} />}
 
-                                </IonCardContent>
-                            </IonCard>
+    ]
 
-                            <IonButton onClick={() => {
-                                reply(id)
-                            }} color='tertiary' fill='clear' className='message-card ion-no-margin' style={{ top: '50%', transform: 'translateY(-50%)', position: 'absolute' }}>
-                                <IonIcon icon={returnDownBack} />
-                            </IonButton>
-                            <IonText style={{ fontSize: 13, position: 'absolute', bottom: -10, left: 10 }} color='tertiary' >
-                                {friend?.twitterName} {timeAgo(new Date(sent.seconds * 1000))}
-                            </IonText>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-            </>
-            }
-        </IonRow >
-    );
-};
-export const ChatBubbleWithReply: React.FC<{ id: string, media?: { src: string, type: string }, message: string, address: string, isMe: boolean, repliedTo: { id: string, content: string, media?: { src: string, type: string }, author: string, sent: Timestamp }, sent: Timestamp, reply: (id: string) => void }> = ({ message, address, reply, isMe, sent, id, repliedTo, media }) => {
-    const friend = useMember(x => x.getFriend(address));
-    if (typeof repliedTo === 'undefined') {
-        return <IonSpinner />
+    if (!isMe) {
+        items.reverse();
     }
-    return (
-        <IonRow key={id}>
-            {isMe ? <>
-                <IonGrid>
-                    <IonRow >
-                        <IonCol size='9' offset='2'>
-                            <IonCard className='message-card ion-no-margin from-me'>
-                                <IonCardContent className="message-card-content">
+    return <div className="message-container" key={message.id} style={{ margin: '0px!important', alignItems: isMe ? 'right' : 'left', display: 'flex', justifyContent: isMe ? 'end' : 'start' }} >
+        {items}
+    </div >
+}
 
-                                    <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {message}
-                                    </IonText>
-                                    {media && <IonImg src={media.src} />}
+export const RenderReply: React.FC<{ messageId: string, channel: string, isReplyToMe: boolean, me: string }> = ({ messageId, channel, me, isReplyToMe }) => {
+    const message = useGroupMessages(x => x.replyMessages[channel].find(x => x.id === messageId))
 
-                                </IonCardContent>
-                            </IonCard>
-                            <IonCard className='ion-no-margin message-card from-me' style={{ opacity: '70%' }}>
-                                <IonCardContent className="message-card-content">
-                                    {repliedTo.content && <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {repliedTo.content}
-                                    </IonText>}
-                                    {repliedTo.media && <IonImg style={{ width: 50 }} src={repliedTo.media.src} />}
+    if (message === null) {
+        return <></>
+    }
+    if (typeof message === 'undefined') {
+        return <></>
+    }
+    const isMe = me === message.author;
 
+    const contentBubble = !message.media ? <div style={{ margin: '0px!important', font: 'Avenir' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+        {message.content}
+    </div> : <><img style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} /></>
 
-                                </IonCardContent>
-                                <div style={{ position: 'absolute', right: 10, zIndex: 1000000000000 }}>
-                                    <MemberPfp address={repliedTo.author} size='veru-smol' />
-                                </div>
-                            </IonCard>
+    const items = [
+        // <ChatMemberPfp style={{ margin: '0px!important', position: 'absolute', bottom: 0, left: !isMe ? -20 : undefined, right: !isMe ? undefined : -20 }} size="veru-smol" address={message.author} />
+        , contentBubble]
 
-                            <IonText style={{ fontSize: 13, position: 'absolute', bottom: -10, right: 10 }} color='tertiary' >
-                                {friend?.twitterName} {timeAgo(new Date(sent.seconds * 1000))}
-                            </IonText>
-                        </IonCol>
-                        <IonCol
-                            size='1'
-                        >
-                            <div style={{ position: 'absolute', bottom: 0, left: 5 }}>
-                                <IonRouterLink routerLink={"/member/" + friend?.address}>
-                                    <IonAvatar >
-                                        <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
-                                    </IonAvatar>
-                                </IonRouterLink>
-                            </div>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-            </> : <>
-                <IonGrid>
-                    <IonRow >
-                        <IonCol
-                            size='1'
-                        >
-                            <div style={{ position: 'absolute', bottom: 0, right: -20 }}>
-                                <IonRouterLink routerLink={"/member/" + friend?.address}>
-                                    <IonAvatar >
-                                        <IonImg style={{ width: 25, height: 25 }} src={friend?.twitterPfp || person} />
-                                    </IonAvatar>
-                                </IonRouterLink>
-                            </div>
-                        </IonCol>
-                        <IonCol size='9'>
-
-                            <IonCard className='message-card ion-no-margin'>
-                                <IonCardContent className="message-card-content">
-
-                                    <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {message}
-                                    </IonText>
-                                    {media && <IonImg src={media.src} />}
-
-                                </IonCardContent>
-                            </IonCard>
-                            <IonCard className='ion-no-margin message-card' style={{ opacity: '70%' }}>
-                                <IonCardContent className="message-card-content">
-                                    {repliedTo.content && <IonText style={{ wordWrap: 'break-word', textWrap: 'break-word', maxWidth: '90%' }}>
-                                        {repliedTo.content}
-                                    </IonText>}
-                                    {repliedTo.media && <IonImg style={{ height: 50 }} src={repliedTo.media.src} />}
-                                </IonCardContent>
-                                <IonText style={{ fontSize: 13, position: 'absolute', bottom: 0, left: 0 }} color='tertiary' >
-                                    <IonRow>
-                                    </IonRow>
-                                </IonText>
-
-                            </IonCard>
-                            <IonText style={{ fontSize: 13, position: 'absolute', bottom: 15, left: 10 }} color='tertiary' >
-                                {friend?.twitterName} {timeAgo(new Date(sent.seconds * 1000))}
-                            </IonText>
-                            <IonButton onClick={() => {
-                                reply(id)
-                            }} color='tertiary' fill='clear' className='message-card ion-no-margin' style={{ top: '50%', transform: 'translateY(-50%)' }}>
-                                <IonIcon icon={returnDownBack} />
-                            </IonButton>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-            </>
-            }
-        </IonRow >
-    );
-};
+    if (!isReplyToMe) {
+        items.reverse();
+    }
+    return <div style={{ margin: '0px!important', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
+        {items}
+    </div>
+}

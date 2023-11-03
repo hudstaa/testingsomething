@@ -9,7 +9,7 @@ import { timeAgo } from './TradeItem';
 import { ReactElement } from 'react';
 export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
-    return <IonRouterLink routerLink={'/member/' + address}>
+    return <IonRouterLink routerDirection='none' routerLink={'/member/' + address}>
         {member && member !== null ? <IonChip color={color}>
             <IonAvatar>
                 <IonImg onError={() => {
@@ -24,12 +24,25 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
         </IonChip>}</IonRouterLink>
 }
 
-export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
+export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRouterLink routerLink={'/member/' + address}><IonAvatar style={size == 'smol' ? { width: 40, height: 40, padding: 5 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5 } : undefined}>
-        <IonImg style={{ cursor: 'pointer' }} src={member?.twitterPfp || personOutline} />
-    </IonAvatar></IonRouterLink>
+    return <IonRouterLink style={style} routerLink={'/member/' + address} routerDirection='none'>
+        <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: 40, height: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+    </IonRouterLink>
+}
+
+export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address))
+
+    return <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: '40px!important', height: '40px!important', minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+}
+export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
+    const member = useMember(x => x.getFriend(address))
+
+    return <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
+        {member?.twitterName}
+    </IonRouterLink>
 }
 export const MemberToolbar: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
@@ -61,27 +74,31 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRouterLink routerLink={'/member/' + address}><IonRow>
-
-        <IonImg style={{ width: 40, height: 40, borderRadius: 20, borderCollapse: 'seperate', perspective: '1px' }} src={member?.twitterPfp || personOutline} />
-        <IonGrid fixed>
-
+    return <IonRow>
+        <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
+            <img style={{ width: 40, height: 40, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
+        </IonRouterLink>        <IonGrid fixed>
             <IonRow>
-                <IonText>
-                    {member?.twitterName}
-                </IonText>
+                <IonRouterLink routerLink={'/member/' + address}>
+                    <IonText color='dark'>
+                        {member?.twitterName}
+                    </IonText>
+                </IonRouterLink>
             </IonRow>
             <IonRow>
-                <IonText color='medium'>
-                    {member?.twitterUsername}
-                </IonText>
+                <IonRouterLink routerLink={'/member/' + address}>
+
+                    <IonText color='medium' className='regular'>
+                        {member?.twitterUsername}
+                    </IonText>
+                </IonRouterLink>
             </IonRow>
             <IonRow>
                 {content ? content
                     : <></>}
             </IonRow>
         </IonGrid>
-    </IonRow></IonRouterLink>
+    </IonRow>
 }
 
 export const MemberBubble: React.FC<{ address: string, color?: string, message: string }> = ({ address, color = undefined }) => {

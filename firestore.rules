@@ -42,12 +42,19 @@ service cloud.firestore {
       allow update, delete: if false;
     }
     
+     match /notifications/{notifId} {
+      allow read,delete: if authed() && memberAddress() == resource.data.to;
+      allow update: if false;
+    }
+    
+    
     match /post/{postId}/comments/{commentId} {
       allow read: if authed();
       allow create: if authed() 
                 && request.resource.data.sent is timestamp
                 && isValidEthAddress(request.resource.data.author)
                 && request.resource.data.author == memberAddress()
+                && request.resource.data.score == 0
                 && request.resource.data.content is string;
       allow update, delete: if false;
     }
@@ -57,6 +64,13 @@ service cloud.firestore {
       allow create,update: if authed() && uid == userId() && (request.resource.data.vote == 1||request.resource.data.vote == -1);
       allow delete: if false;
     }
+
+	  match /post/{postId}/{comments}/{commentId}/votes/{uid} {
+      allow read: if authed();
+      allow create,update: if authed() && uid == userId() && (request.resource.data.vote == 1||request.resource.data.vote == -1);
+      allow delete: if false;
+    }
+    
     
     match /post/{postId} {
       allow read: if authed();
@@ -73,7 +87,7 @@ service cloud.firestore {
     }
 
     match /member/{uid} {
-      allow read: if true;
+      allow read: if authed();
       allow update, delete, create: if false;
     }
   }

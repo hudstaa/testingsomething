@@ -9,9 +9,9 @@ import {
     useWaitForTransaction,
 } from 'wagmi';
 import { tribePassesContract } from '../lib/constants';
+import { useMember } from './useMember';
 
 export default function useBuyPass(subject: Address, shares: bigint) {
-
     const [error, setError] = useState<any>();
     const [status, setStatus] = useState<any>();
     const [transactionHash, setTransactionHash] = useState<any>();
@@ -20,10 +20,10 @@ export default function useBuyPass(subject: Address, shares: bigint) {
         setStatus('error');
     }, [])
 
-    const { wallet } = usePrivyWagmi()
+    const me = useMember(x => x.getCurrentUser())
     const { data: buyPrice } = useContractRead({
         ...tribePassesContract,
-        account: wallet?.address as Address,
+        account: me?.address as Address,
         chainId: baseGoerli.id,
         functionName: 'getBuyPriceAfterFee',
         args: [subject, shares],

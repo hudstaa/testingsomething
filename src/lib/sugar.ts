@@ -7,7 +7,7 @@ export const formatEth = (info: bigint | undefined) => {
     if (typeof info == 'undefined') {
         return ""
     }
-    return parseFloat(formatEther(info)).toFixed(4) + "Ξ"
+    return parseFloat(formatEther(info)).toFixed(4) + " ETH"
 }
 
 export const uniq = (array: Record<string, any>[]) => {
@@ -31,11 +31,24 @@ export const uniqId = (array: Record<string, any>[]) => {
 export function nativeAuth() {
     let auth
     if (Capacitor.isNativePlatform()) {
-        auth = initializeAuth(app, {
-            persistence: indexedDBLocalPersistence
-        })
+        auth = initializeAuth(app)
     } else {
         auth = getAuth()
     }
     return auth
+}
+export function hideTabs() {
+    const tabsEl = document.querySelector('ion-tab-bar');
+    if (tabsEl) {
+        tabsEl.style.transition = 'transform 0.3s ease-in-out';
+        tabsEl.style.transform = 'translateY(100%)'; // Slide out
+    }
+}
+
+export function showTabs() {
+    const tabsEl = document.querySelector('ion-tab-bar');
+    if (tabsEl) {
+        tabsEl.style.transition = 'transform 0.3s ease-in-out';
+        tabsEl.style.transform = 'translateY(0)'; // Slide in
+    }
 }

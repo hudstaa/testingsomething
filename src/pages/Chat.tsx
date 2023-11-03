@@ -1,23 +1,22 @@
-import { gql } from '@apollo/client';
-import { IonBadge, IonButtons, IonCard, IonChip, IonCol, IonContent, IonGrid, IonItem, IonRow, IonSpinner, IonText, IonTitle } from '@ionic/react';
-import { usePrivy } from '@privy-io/react-auth';
+import { IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
-import { MemberBadge, MemberCardHeader, MemberPfp } from '../components/MemberBadge';
+import { MemberPfp } from '../components/MemberBadge';
+import { timeAgo } from '../components/TradeItem';
+import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { TribePage } from './TribePage';
-import { TribeContent } from '../components/TribeContent';
-import { timeAgo } from '../components/TradeItem';
 import { useMember } from '../hooks/useMember';
+import useTabs from '../hooks/useTabVisibility';
 import { nativeAuth } from '../lib/sugar';
+import { TribePage } from './TribePage';
 
 
 const Chat: React.FC = () => {
     const auth = nativeAuth()
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser(uid));
+    const me = useMember(x => x.getCurrentUser());
 
     const [members, setMembers] = useState<[{ address: string }]>()
     useEffect(() => {
@@ -39,6 +38,10 @@ const Chat: React.FC = () => {
                 setMembers([] as any)
             });
     }, [me])
+    const { setTab } = useTabs()
+    useIonViewWillEnter(() => {
+        setTab('channel')
+    })
     return (
         <TribePage page='chat'>
             <TribeHeader title='Chat' />
@@ -47,14 +50,12 @@ const Chat: React.FC = () => {
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
                             <IonCard>
-
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem color='paper' lines='none' routerLink={'/chat/' + address} key={address}>
+                                    <IonItem color='paper' lines='none' routerLink={'/channel/' + address} key={address}>
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
                             </IonCard>
-
                         </IonCol>
                     </IonRow>
                 </IonGrid>
@@ -75,10 +76,13 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
             })
     }, [address])
     return <>
-        <MemberPfp address={address} />
-        <IonChip>
+        <IonButtons slot='start'>
+
+            <MemberPfp address={address} size='smol' />
+        </IonButtons>
+        <div>
             {msg?.content.slice(0, 20)}
-        </IonChip>
+        </div>
         <IonButtons slot='end'>
             <IonBadge color={'light'}>
                 {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}

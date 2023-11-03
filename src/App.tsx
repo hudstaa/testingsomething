@@ -1,7 +1,6 @@
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
@@ -9,7 +8,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactHashRouter } from '@ionic/react-router';
-import { PrivyWagmiConnector } from '@privy-io/wagmi-connector';
+import { PrivyWagmiConnector, usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { Redirect, Route } from 'react-router-dom';
 
 
@@ -31,11 +30,13 @@ import '@ionic/react/css/flex-utils.css';
 
 /* Theme variables */
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { PrivyProvider, usePrivy } from '@privy-io/react-auth';
+import { App as CapacitorApp } from '@capacitor/app';
+import { PrivyProvider, useWallets } from '@privy-io/react-auth';
 import { base, baseGoerli } from 'viem/chains';
-import { configureChains, createConfig, createStorage } from 'wagmi';
+import { configureChains, createConfig, createStorage, useChainId, useSwitchNetwork } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-import { publicProvider } from 'wagmi/providers/public';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import Activity from './pages/Activity';
 import Chat from './pages/Chat';
 import Discover from './pages/Discover';
@@ -44,19 +45,35 @@ import Room from './pages/Room';
 import Transaction from './pages/Transaction';
 import Watchlist from './pages/Watchlist';
 import './theme/variables.css';
-import { App as CapacitorApp } from '@capacitor/app';
-
+import { Browser } from '@capacitor/browser';
+import { Capacitor } from '@capacitor/core';
+import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
+import axios from 'axios';
+import { initializeApp } from "firebase/app";
+import { signInWithCustomToken } from 'firebase/auth';
+import { useEffect } from 'react';
+import { useNotifications } from './hooks/useNotifications';
+import useTabs from './hooks/useTabVisibility';
+import { nativeAuth } from './lib/sugar';
+import Account from './pages/Account';
+import { MobileAuth } from './pages/MobileAuth';
+import Post from './pages/Post';
+import Trade from './pages/Trade';
 
 
 setupIonicReact({
   rippleEffect: true,
   mode: 'ios',
-  animated: false
 });
 const { chains, publicClient } = configureChains(
-  [baseGoerli, base],
-  [
-    publicProvider()
+  [baseGoerli],
+  [alchemyProvider({ apiKey: 'Tl5Ee2UY1CrR7ZIatURvZiwtrOaCiB7p' }),
+  jsonRpcProvider({
+    rpc: (chain) => ({
+      http: `https://base-goerli.publicnode.com`,
+      webSocket: 'wss://base-goerli.publicnode.com'
+    }),
+  }),
   ],
 )
 export const noopStorage = {
@@ -66,6 +83,7 @@ export const noopStorage = {
 }
 
 import Posts from './pages/Posts';
+import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -75,7 +93,7 @@ const storage = createStorage({
 const config = createConfig({
   autoConnect: true,
   connectors: [new InjectedConnector({ chains })],
-  publicClient: publicClient as any,
+  publicClient,
   storage
 })
 
@@ -84,19 +102,6 @@ export const graphQLclient = new ApolloClient({
   cache: new InMemoryCache({ resultCaching: false })
 });
 
-import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
-import { albumsOutline, bodyOutline, chatbubbleOutline, compass, home, homeOutline, paperPlane, peopleOutline, person, pulseOutline } from 'ionicons/icons';
-import Account from './pages/Account';
-import { MobileAuth } from './pages/MobileAuth';
-import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { getAuth, signInWithCustomToken } from 'firebase/auth';
-import { Browser } from '@capacitor/browser';
-import Post from './pages/Post';
-import { nativeAuth } from './lib/sugar';
-import NewPost from './pages/NewPost';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -111,10 +116,56 @@ const firebaseConfig = {
   appId: "1:1053855163428:web:e27fdb0e300166ac0b24b1",
   measurementId: "G-CZQ06R7KZ2"
 };
+const registerNotifications = async () => {
+  if (!Capacitor.isPluginAvailable('PushNotifications')) {
+    return;
+  };
 
+  let permStatus = await PushNotifications.checkPermissions();
+
+  if (permStatus.receive === 'prompt') {
+    permStatus = await PushNotifications.requestPermissions();
+  }
+
+  if (permStatus.receive === 'granted') {
+    listenForNotifications();
+    return;
+  } else {
+    await PushNotifications.register();
+    listenForNotifications();
+  }
+}
+const listenForNotifications = async () => {
+  PushNotifications.removeAllDeliveredNotifications();
+  PushNotifications.addListener('registration',
+    (token: Token) => {
+      useNotifications.getState().setToken(token.value);
+    }
+  );
+
+  // Show us the notification payload if the app is open on our device
+  PushNotifications.addListener('pushNotificationReceived',
+    (notification: PushNotificationSchema) => {
+      alert('Push received: ' + JSON.stringify(notification));
+    }
+  );
+
+  // Method called when tapping on a notification
+  PushNotifications.addListener('pushNotificationActionPerformed',
+    (notification: ActionPerformed) => {
+      alert('Push action performed: ' + JSON.stringify(notification));
+    }
+  );
+}
+registerNotifications();
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+// initializeFirestore(app,
+//   {
+//     localCache:
+//       persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+//   });
 // getToken(messaging, { vapidKey: 'BBRZkbpicNkmzSp3m0eSVw2mavWY47hDhEFnq7A0H2xCU7oLxBFcVTV0Ratuwq7MBJEZbA_FdeaVh0SnX_Mdtq0' }).then((currentToken) => {
 //   if (currentToken) {
 //     // Send the token to your server and update the UI if necessary
@@ -145,6 +196,26 @@ function parseTribeURL(url: string): { token: string, refresh: string, jwt: stri
 }
 
 const DeepLinkProvider: React.FC = () => {
+  const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
+  const { wallets } = useWallets();
+  const chainId = useChainId()
+  const { switchNetwork } = useSwitchNetwork();
+  useEffect(() => {
+    console.log(wallets);
+    wallets.forEach((wallet) => {
+      console.log(wallet)
+      if (wallet.connectorType === 'embedded') {
+        setActiveWallet(wallet);
+      }
+    })
+  }, [wallets, activeWallet]);
+  useEffect(() => {
+    console.log(activeWallet, wagmiReady);
+    activeWallet && activeWallet.switchChain(baseGoerli.id);
+  }, [activeWallet, wagmiReady])
+  useEffect(() => {
+    switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
+  }, [chainId])
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();
@@ -172,23 +243,28 @@ const DeepLinkProvider: React.FC = () => {
 }
 
 const App: React.FC = () => {
+  const { tab, setTab } = useTabs();
+  const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return <IonApp>
-    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
+    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ defaultChain: baseGoerli, appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
+          <WriteMessageModalProvider />
           <IonReactHashRouter >
-            <IonTabs>
+            <IonTabs onIonTabsWillChange={(e) => {
+              setTab(e.detail.tab as any);
+            }}>
               <IonRouterOutlet>
-                <Redirect exact path="/" to='/posts' />
+                <Redirect exact path="/" to='/post' />
                 <Route exact path="/trade/:hash">
                   <Transaction />
                 </Route>
-                <Route exact path="/chat">
+                <Route exact path="/channel">
                   <Chat />
                 </Route>
-                <Route exact path="/chat/:address">
+                <Route exact path="/channel/:address">
                   <Room />
                 </Route>
                 <Route path="/watchlist">
@@ -200,36 +276,39 @@ const App: React.FC = () => {
                 <Route path="/account" exact>
                   <Account />
                 </Route>
-                <Route path="/posts/" exact>
+                <Route path="/post/" exact>
                   <Posts />
                 </Route>
-                <Route path="/posts/:id" exact>
+                <Route path="/member/:address/trade" exact>
+                  <Trade />
+                </Route>
+                <Route path="/post/:id" exact>
                   <Post />
+                </Route>
+
+                <Route path="/member/:address" exact>
+                  <Member />
                 </Route>
                 <Route path="/auth" exact>
                   <MobileAuth />
                 </Route>
-                <Route path="/member/:address" exact>
-                  <Member />
-                </Route>
-                <Route path="/member/" exact>
+                <Route path="/member" exact>
                   <Discover />
                 </Route>
               </IonRouterOutlet>
 
-              <IonTabBar color='tribe' slot="bottom">
-
-                <IonTabButton tab="posts" href="/posts" >
-                  <IonIcon icon={home} />
+              <IonTabBar style={{ border: '0' }} slot="bottom">
+                <IonTabButton style={tab === 'channel' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="member" href="/member">
-                  <IonIcon icon={compass} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
                 </IonTabButton>
-                <IonTabButton tab="chat" href="/chat">
-                  <IonIcon icon={paperPlane} />
+                <IonTabButton tab="channel" href="/channel">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
-                  <IonIcon icon={person} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
                 </IonTabButton>
               </IonTabBar>
             </IonTabs>

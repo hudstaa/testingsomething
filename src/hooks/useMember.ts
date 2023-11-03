@@ -23,7 +23,7 @@ interface FriendStore {
     me: Member | null
     setFriendData: (address: string, data: Member) => void;
     setFriendsData: (data: Member[]) => void;
-    getCurrentUser: (uid: string | undefined) => Member | null
+    getCurrentUser: () => Member | null
     isLoading: (address: string | undefined) => boolean;
     isWatching: (address: string | undefined) => boolean;
     setError: (address: string, error: string | null) => void;
@@ -31,6 +31,7 @@ interface FriendStore {
     getFriend: (address: string | undefined, watch?: boolean) => Member | null;
     getError: (address: string) => string | null | undefined;
     loadCache: () => void
+    setCurrentUser: (member: Member) => void
 }
 
 export const useMember = create<FriendStore>((set, store) => ({
@@ -39,28 +40,13 @@ export const useMember = create<FriendStore>((set, store) => ({
     watching: {},
     error: {},
     me: null,
-    getCurrentUser: (uid) => {
-        if (typeof uid === 'undefined' || typeof uid == 'undefined' || uid.length === 0 || uid === null) {
-            return null;
-        }
+    setCurrentUser: (me) => {
+        set({ me, friendCache: { ...store().friendCache, [me.address]: me } })
+    },
+    getCurrentUser: () => {
         if (store().me != null) {
             return store().me;
         }
-
-        if (store().loading[uid]) {
-            return null;
-        }
-        if (store().watching[uid] || store().error[uid]) {
-            return null;
-        }
-        const database = getFirestore(app);
-
-        const docRef = doc(database, 'member', uid);
-        onSnapshot(docRef, (docSnap) => {
-            const me = docSnap.data() as Member;
-            set({ me, friendCache: { ...store().friendCache, [getAddress(me.address)]: me } })
-        });
-        set({ watching: { ...store().watching, [uid]: true } })
         return null;
     },
     setFriendsData: (data) => {
@@ -125,8 +111,9 @@ export const useMember = create<FriendStore>((set, store) => ({
             return null;
         }
 
-
-        store().fetchFriendData(addy, watch);
+        setTimeout(() => {
+            store().fetchFriendData(addy, watch);
+        }, 0)
         return null;
     },
     getError: (address) => store().error[address],

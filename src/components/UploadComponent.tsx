@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { imageOutline } from 'ionicons/icons';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 interface PfpUploaderProps {
     userId: string;
@@ -20,7 +21,7 @@ export function imageId(): string {
 const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
-
+    const { setMedia } = useWriteMessage();
     const onDrop = useCallback(async (acceptedFiles: File[]) => {
         if (acceptedFiles.length !== 1) {
             console.error('Only one file should be uploaded at a time.');
@@ -34,17 +35,20 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         const ext = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
         if (!allowedExtensions.includes('.' + ext)) {
             console.error('Invalid file extension.');
+            alert("Invalid file extension");
+            setPreviewUrl(null);
+            onUpload(null as any);
             return;
         }
-        console.log(file.name);
-
         setIsUploading(true);
+        onUpload(null as any);
         const storage = getStorage();
         const userPfpRef = ref(storage, `users/${userId}/${imageId()}.${ext}`);
         try {
             await uploadBytes(userPfpRef, file);
             console.log('Uploaded successfully!');
             const path = await getDownloadURL(userPfpRef);
+            setMedia({ src: path, type: 'image' })
             onUpload(path);
         } catch (error) {
             console.error('Error uploading file:', error);
@@ -66,7 +70,7 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         <div>
             <IonButton fill='clear' {...getRootProps()} >
                 <input {...getInputProps()} />
-                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : <img src={previewUrl} alt="Preview" style={{ width: '30px', height: '30px', borderRadius: 15 }} /> :
+                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='primary' icon={imageOutline} /> :
                     isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='medium' icon={imageOutline} />
                 }
             </IonButton>

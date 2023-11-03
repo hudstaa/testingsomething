@@ -1,5 +1,5 @@
 import { Browser } from '@capacitor/browser'
-import { IonBadge, IonButton, IonContent, IonIcon, IonLoading, IonSpinner, IonText, IonTitle, isPlatform } from "@ionic/react"
+import { IonBadge, IonButton, IonContent, IonIcon, IonLabel, IonLoading, IonSpinner, IonText, IonTitle, isPlatform } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
 import axios from "axios"
 import { signInWithCustomToken } from "firebase/auth"
@@ -9,6 +9,8 @@ import { checkmark } from "ionicons/icons"
 import { useEffect, useMemo, useState } from "react"
 import { app } from "../App"
 import { nativeAuth } from "../lib/sugar"
+import { useMember } from '../hooks/useMember'
+import { useHistory } from 'react-router'
 
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
 
@@ -16,26 +18,30 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
     const [error, setError] = useState<string | undefined>();
     const { user, linkTwitter, login, getAccessToken, ready } = usePrivy()
     const walletAddress = user?.wallet?.address;
+    const { setCurrentUser } = useMember();
     const [refresh, setRefresh] = useState<number>(0)
     const [tribeLoading, setLoading] = useState<boolean>(false)
     useEffect(() => {
-        auth.onAuthStateChanged(async () => {
+        auth.onAuthStateChanged(async (currentUser) => {
             setRefresh(x => x + 1);
             const database = getFirestore(app);
-            const privyUid = auth.currentUser?.uid as any;
-            if (typeof privyUid === 'undefined') {
+            const privyUid = currentUser?.uid as any;
+            if (typeof privyUid === 'undefined' || privyUid === null) {
                 return;
             }
-
             const docRef = doc(database, 'member', privyUid);
             getDoc(docRef).then((snap) => {
                 if (!snap.exists()) {
                     const joinTribe = httpsCallable(getFunctions(app), 'syncPrivy');
                     joinTribe().then((res) => {
-                        console.log(res, "PRIVVY SYNX SUCCESS")
+                        getDoc(docRef).then((snap) => {
+                            setCurrentUser(snap.data() as any);
+                        })
                     }).catch((e) => {
-                        console.log(e, "PRIVVY SYNC FAIL")
+                        alert("Un expected error");
                     })
+                } else {
+                    setCurrentUser(snap.data() as any);
                 }
             }).catch(() => {
 
@@ -48,19 +54,21 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
         if (user === null) {
             return;
         }
-        getAccessToken().then((privyToken) => {
-            axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
-                signInWithCustomToken(auth, res.data.authToken)
+        auth.authStateReady().then((state) => {
+            getAccessToken().then((privyToken) => {
+                axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
+                    signInWithCustomToken(auth, res.data.authToken)
+                });
             });
-        });
+        })
     }, [user, ready, auth])
 
-
+    const { location } = useHistory();
+    const path = location.pathname
     return <IonContent>
         {useMemo(() => <IonTitle className="ion-text-center">
-            <br />
             {ready ? <>
-                {(user === null) ? <IonButton onClick={() => {
+                {(user === null) ? <IonButton color='tribe' onClick={() => {
                     if (isPlatform("capacitor")) {
                         Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'fullscreen', windowName: 'auth' })
                     } else {
@@ -70,18 +78,25 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                     Connect to {isPlatform("capacitor") ? "tribe" : "privy"}
 
                 </IonButton> : <>
-                    <IonButton onClick={dismiss} color={'tertiary'}>
-                        {user.twitter?.name}
-                        <IonIcon color="success" icon={checkmark} />
+                    <IonButton onClick={dismiss} fill='clear'>
+                        {path === '/auth' ? 'open in tribe' : user.twitter?.name}
+                        {path !== '/auth' ? <IonIcon color="success" icon={checkmark} /> : <img style={{ borderRadius: 10 }} height={40} src={'/favicon.png'} />}
+
                     </IonButton>
                     <br />
                 </>}
             </> : <IonSpinner name="crescent" />}
             <br />
-            <IonText color='tertiary'>
+            <IonLabel color='tribe'>
                 {!ready && <>connecting to privy</>}
-                {me === null && ready && user !== null && <>loading member data <br /><IonSpinner name='dots' /></>}
-            </IonText>
+                {me === null && ready && user !== null && <>initializing <br />
+
+
+                    <IonSpinner name='dots' />
+                    <br />
+                </>}
+
+            </IonLabel>
             <br />
             {error && <IonBadge color='danger'>{error}</IonBadge>}
 

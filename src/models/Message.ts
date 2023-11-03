@@ -1,9 +1,8 @@
 import { Timestamp } from "firebase/firestore"
 
 export interface Message {
-    content: string
+    content?: string
     author: string
-    channel: string
     media?: { src: string, type: string }
     sent: Timestamp | null
     reply?: string

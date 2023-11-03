@@ -12,21 +12,19 @@ import { OnBoarding } from "./OnBoarding";
 
 export const MobileAuth: React.FC = () => {
     const { getAccessToken, linkTwitter, user, ready } = usePrivy();
-    const auth = nativeAuth()
-    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser(uid));
+    const me = useMember(x => x.getCurrentUser());
     useEffect(() => {
         // if (!user && ready) {
         //     linkTwitter();
         // } else {
-        uid && getAccessToken().then((token) => {
+        me && getAccessToken().then((token) => {
             if (token && localStorage.getItem('privy:token')) {
                 const url = ('tribe.computer://auth?token=' + localStorage.getItem('privy:token') + '&refresh=' + localStorage.getItem('privy:refresh_token') + '&jwt=' + token);
                 window.open(url, "_system", "location=yes");
             }
         })
         // }
-    }, [ready, user, auth.currentUser, uid])
+    }, [ready, user, me])
     return <IonPage>
         <IonModal isOpen={true} animated={false}>
 

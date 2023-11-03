@@ -27,7 +27,7 @@ export function timeAgo(input: Date) {
     for (let key in ranges) {
         if ((ranges[key]) < Math.abs(secondsElapsed)) {
             const delta = secondsElapsed / ranges[key];
-            return formatter.format(Math.round(delta), key as any)?.toString().replaceAll("ago", "").replaceAll("hours", "h").replaceAll("seconds", "s").replaceAll("minutes", "m").replaceAll("minute", "m").replaceAll("second", "s");
+            return formatter.format(Math.round(delta), key as any)?.toString().replaceAll("ago", "").replaceAll("hours", "h").replaceAll("hour", "h").replaceAll("seconds", "s").replaceAll("minutes", "m").replaceAll("minute", "m").replaceAll("second", "s").replaceAll("days", "d").replaceAll("day", "d").replaceAll("weeks", "w").replaceAll("week", "w");
         }
     }
 }

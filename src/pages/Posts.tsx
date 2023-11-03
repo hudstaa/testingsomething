@@ -1,4 +1,5 @@
 import {
+    IonBadge,
     IonButton,
     IonButtons,
     IonCard,
@@ -9,19 +10,22 @@ import {
     IonGrid,
     IonHeader,
     IonIcon,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonItem,
     IonLabel,
     IonPage,
     IonRefresher,
     IonRefresherContent,
+    IonRouterLink,
     IonRow,
-    IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar
+    IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar, useIonViewWillLeave
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
 import { addOutline, timeOutline, trophyOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
 import { PostList } from '../components/PostList';
@@ -33,6 +37,9 @@ import { useMember } from '../hooks/useMember';
 import { nativeAuth } from '../lib/sugar';
 import Post from './Post';
 import { TribePage } from './TribePage';
+import { useNotifications } from '../hooks/useNotifications';
+import { MemberPfp } from '../components/MemberBadge';
+import NewPost from './NewPost';
 
 
 
@@ -55,42 +62,36 @@ const Posts: React.FC = () => {
 
     const [postType, setPostType] = useState<'top' | 'recent'>('top')
     const auth = nativeAuth();
-    const uid = auth.currentUser ? auth.currentUser.uid : undefined;
+    const me = useMember(x => x.getCurrentUser());
+    const { notifications } = useNotifications();
+    const [isNewPosting, setIsNew] = useState(false)
     return (
         <TribePage page='posts'>
             <TribeHeader title={'posts'}
                 hide
-                content={<>
-                    <IonButtons slot='start'>
-                        <IonCardTitle color='light'>
-                            Tribe
+                content={!isNewPosting ? <>
+                    <IonButtons slot='start' style={{ marginLeft: 12 }}>
+                        <IonCardTitle style={{ letterSpacing: '-2px', color: 'white' }} >
+                            tribe
                         </IonCardTitle>
                     </IonButtons>
-                    <IonButtons slot='end'>
-                        <IonButton fill='clear' color={postType === 'top' ? 'light' : 'dark'} onClick={() => {
+                    <IonSegment value={postType} style={{ position: 'absolute', right: 15, top: 5 }}>
+                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
                             setPostType('top')
                         }}>
                             TOP
-
-                        </IonButton>
-                        <IonButton fill='clear' color={postType === 'recent' ? 'light' : 'dark'} onClick={() => {
+                        </IonSegmentButton>
+                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'light' : 'paper'} onClick={() => {
                             setPostType('recent')
                         }}>
                             NEW
-                        </IonButton>
-                    </IonButtons></>
+                        </IonSegmentButton>
+                    </IonSegment>
+                </> : <></>
                 }
             />
 
             < TribeContent fullscreen page='posts'>
-                <IonRefresher slot="fixed" onIonRefresh={(event) => {
-                    setTimeout(() => {
-                        // Any calls to load data go here
-                        event.detail.complete();
-                    }, 2000);
-                }}>
-                    <IonRefresherContent refreshingSpinner={'circular'}></IonRefresherContent>
-                </IonRefresher>
                 <IonGrid>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
@@ -99,10 +100,9 @@ const Posts: React.FC = () => {
                     </IonRow>
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="center">
-                    <IonButton color='tribe' routerLink='/posts/new'>
-                        New
-                        Post
-                    </IonButton>
+                    <IonRouterLink routerLink='/post/new' ><div style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF813B', padding: 13 }} >
+                        New Post
+                    </div></IonRouterLink>
                 </IonFab>
             </TribeContent >
             <TribeFooter page='posts' />
