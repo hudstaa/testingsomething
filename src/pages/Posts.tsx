@@ -40,6 +40,7 @@ import { TribePage } from './TribePage';
 import { useNotifications } from '../hooks/useNotifications';
 import { MemberPfp } from '../components/MemberBadge';
 import NewPost from './NewPost';
+import { OnBoarding } from './OnBoarding';
 
 
 
@@ -65,6 +66,11 @@ const Posts: React.FC = () => {
     const me = useMember(x => x.getCurrentUser());
     const { notifications } = useNotifications();
     const [isNewPosting, setIsNew] = useState(false)
+    if (!me) {
+        return <OnBoarding me={me} dismiss={function (): void {
+
+        }} />
+    }
     return (
         <TribePage page='posts'>
             <TribeHeader title={'posts'}

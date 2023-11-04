@@ -518,5 +518,6 @@ ion-tab-bar {
 }
 
 .image-msg {
+  padding: 0px !important;
   background: rgba(0, 0, 0, 0) !important;
 }

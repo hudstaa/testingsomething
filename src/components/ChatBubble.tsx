@@ -9,19 +9,20 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const isMe = me === message.author;
     const contentBubble = !message.media ? <div style={{ margin: 0 }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
         {message.content}
-    </div> : <div style={{ margin: 0, height: 250 }} className={(isMe ? "send" : "recieve") + ' msg image-msg'} >
-        <img className="msg" height={'100%'} src={message.media.src} />
+    </div> : <div style={{ margin: 0, padding: 0 }}>
+        <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} height={'200px'} src={message.media.src} />
+        {message.content && <div style={{ margin: 0 }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+            {message.content}
+        </div>}
     </div>
 
     const items = [
         !isMe ? <button style={{ margin: '0px!important', padding: 0, background: 'rgba(0,0,0,0)' }} onClick={() => {
             reply(message.id);
         }} color='primary' >
-            <IonIcon color='tertiary' icon={returnDownBack} />
+            <IonIcon style={{ margin: 0 }} color='tertiary' icon={returnDownBack} />
         </button> : undefined
-        , message.reply ? isMe ? <div style={{ margin: '0px!important' }}>
-            <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />
-        </div> : <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />
+        , message.reply ? <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />
             : undefined,
         <div style={{ margin: '0px!important' }}>
             {contentBubble}
@@ -43,13 +44,13 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 }
 
 export const RenderReply: React.FC<{ messageId: string, channel: string, isReplyToMe: boolean, me: string }> = ({ messageId, channel, me, isReplyToMe }) => {
-    const message = useGroupMessages(x => x.replyMessages[channel].find(x => x.id === messageId))
+    const message = useGroupMessages(x => x.replyMessages[channel].find(x => x.id === messageId) || x.groupMessages[channel].find(x => x.id === messageId))
 
     if (message === null) {
-        return <></>
+        return <>NULL</>
     }
     if (typeof message === 'undefined') {
-        return <></>
+        return <>undefined</>
     }
     const isMe = me === message.author;
 
