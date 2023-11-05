@@ -125,7 +125,7 @@ const Posts: React.FC = () => {
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="center">
                     {me && <div onClick={() => {
-                        open((message) => addPost(me.address, message as any), me.address, 'Blaze your glory');
+                        open((message) => addPost(me.address, message as any), me.address, 'Write a post');
                     }} style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
                         New Post
                     </div>}
