@@ -84,7 +84,7 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
         console.log("FETCHING MORE");
         const db = getFirestore(app);
         const messagesCol = collection(db, "channel", channel, "messages");
-        const q = query(messagesCol, orderBy("sent", "desc"), startAfter(lastFetchedTimestamp), limit(20));
+        const q = query(messagesCol, orderBy("sent", "desc"), startAfter(lastFetchedTimestamp), limit(10));
         return getDocs(q).then(async (snapshot) => {
             const olderMessages = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             const inputMessages = [...olderMessages as any];
@@ -95,7 +95,11 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
                 const repliesSnapshot = await getDocs(query(messagesCol, where(documentId(), "in", replyIds)));
                 replies = repliesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             }
-
+            if (messages.length === 0) {
+                setTimeout(() => {
+                    setNewMessage(olderMessages[0].id)
+                }, 100)
+            }
             if (inputMessages.length === 0) {
                 setLastMessageReached(true);
             } else {

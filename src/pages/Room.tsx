@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonContent, IonFooter, IonIcon, IonImg, IonItem, IonSpinner, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonFooter, IonIcon, IonImg, IonItem, IonSpinner, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import { close } from 'ionicons/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
@@ -11,11 +11,9 @@ import { addDoc, collection, getFirestore, serverTimestamp } from "firebase/fire
 import { app } from '../App';
 import { WriteMessage } from '../components/WriteMessage';
 import { hideTabs, showTabs } from '../lib/sugar';
+import { Message } from '../models/Message';
 import { TribePage } from './TribePage';
 import VirtuosoRoom from './VirtuosoRoom';
-import { WriteModalMessage } from '../components/WriteModalMessage';
-import { MessageFunction } from '../hooks/useWriteMessage';
-import { Message } from '../models/Message';
 
 
 

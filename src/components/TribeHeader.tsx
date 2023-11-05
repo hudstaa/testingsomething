@@ -28,20 +28,6 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         }
     }, [ready, auth?.currentUser, me])
 
-    useEffect(() => {
-        if (!me) {
-            return;
-        }
-        const db = getFirestore(app);
-
-
-        const notificationsQuery = query(collection(db, 'notifications'), where('to', '==', me.address));
-        onSnapshot(notificationsQuery, (snap) => {
-            setNotifications(snap.docs.map(x => ({ ...x.data(), id: x.id } as any)));
-        })
-
-    }, [me]);
-
     const { location } = useHistory();
     const toolbar = !hide ? <IonToolbar>
         <IonButtons slot='start' style={{ marginLeft: 12 }}>

@@ -7,7 +7,7 @@ import { PushNotifications } from '@capacitor/push-notifications'
 
 
 export type ActivityHook = {
-    notifications: []
+    notifications: any[]
     setNotifications: ({ }) => void
     subscribe: (topic: string) => void
     token: string | null

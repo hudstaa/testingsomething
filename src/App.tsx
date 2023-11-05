@@ -84,6 +84,7 @@ export const noopStorage = {
 
 import Posts from './pages/Posts';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
+import { NotificationsProvider } from './components/NotificationsProvider';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -251,6 +252,7 @@ const App: React.FC = () => {
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
+          <NotificationsProvider />
           <WriteMessageModalProvider />
           <IonReactHashRouter >
             <IonTabs onIonTabsWillChange={(e) => {

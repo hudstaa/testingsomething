@@ -39,7 +39,7 @@ export const useGroupMessages = create<groupMessageHook>((set, store) => ({
     },
     pushMessages: (address, messages, replies) => {
         const latestMessages: Message[] = [...store().getMessages(address), ...messages.map(x => ({ ...x, sent: x.sent === null ? new Timestamp(Date.now() / 1000, 0) : x.sent }))];
-        set({ replyMessages: { ...store().replyMessages, [address]: uniq(replies).sort((a, b) => a.sent.seconds - b.sent.seconds) }, groupMessages: { ...store().groupMessages, [address]: uniq(latestMessages).sort((a, b) => a.sent.seconds - b.sent.seconds) } })
+        set({ replyMessages: { ...store().replyMessages, [address]: uniq([...store().replyMessages[address] || [], ...replies]).sort((a, b) => a.sent.seconds - b.sent.seconds) }, groupMessages: { ...store().groupMessages, [address]: uniq(latestMessages).sort((a, b) => a.sent.seconds - b.sent.seconds) } })
     }, getMessages: (address) => {
         return store().groupMessages[address] || []
     },

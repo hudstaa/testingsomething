@@ -12,7 +12,6 @@ import { nativeAuth } from "../lib/sugar"
 import { useMember } from '../hooks/useMember'
 import { useHistory } from 'react-router'
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
-
     const auth = nativeAuth()
     const [error, setError] = useState<string | undefined>();
     const { user, linkTwitter, login, getAccessToken, ready } = usePrivy()
@@ -20,6 +19,9 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
     const { setCurrentUser } = useMember();
     const [refresh, setRefresh] = useState<number>(0)
     const [tribeLoading, setLoading] = useState<boolean>(false)
+    useEffect(() => {
+        console.log("ONOBAOD")
+    }, [])
     useEffect(() => {
         auth.onAuthStateChanged(async (currentUser) => {
             setRefresh(x => x + 1);
