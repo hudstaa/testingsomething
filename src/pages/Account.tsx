@@ -10,7 +10,7 @@ import { useMember } from '../hooks/useMember';
 import { formatEth, nativeAuth } from '../lib/sugar';
 import { TribePage } from './TribePage';
 import { useEffect, useState } from 'react';
-import { Timestamp, collection, deleteDoc, doc, getAggregateFromServer, getCountFromServer, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, deleteDoc, doc, getAggregateFromServer, getCountFromServer, getDoc, getDocs, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
 import { app } from '../App';
 import { get } from 'firebase/database';
 import { OnBoarding } from './OnBoarding';
@@ -19,6 +19,9 @@ import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notif
 import { Capacitor } from '@capacitor/core';
 import { useBalance, useChainId } from 'wagmi';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
+import { useHistory } from 'react-router';
+import { getAddress } from 'viem';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
 
@@ -58,12 +61,29 @@ const Account: React.FC = () => {
     }, [])
     const [showToast, setShowToast] = useState<boolean>(false);
     const { data: ethBalance } = useBalance({ address: me?.address as any, watch: true })
-    const { user, exportWallet } = usePrivy();
-    const chainId = useChainId();
+    const { exportWallet } = usePrivy();
+    const { open } = useWriteMessage();
+    const { push } = useHistory();
     if (!me) {
         return <IonPage>
             <OnBoarding me={me} dismiss={() => { }} />
         </IonPage>
+    }
+
+    const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
+        const db = getFirestore(app);
+        const newPost: any = {
+            author: getAddress(from), // Replace with actual user's address or ID
+            content: message.content,
+            sent: serverTimestamp(),
+            score: 0
+        }
+        if (message.media) {
+            newPost['media'] = message.media;
+        }
+        addDoc(collection(db, 'post'), newPost).then((doc) => {
+            push('/post/' + doc.id);
+        });
     }
     return (
         <TribePage page='account'>
@@ -134,7 +154,8 @@ const Account: React.FC = () => {
                                     <IonButton color='light' routerLink={'/member/' + me?.address} routerDirection='none' onClick={() => {
                                     }} >Profile
                                     </IonButton>
-                                    <IonButton color='light' fill='solid' routerLink={'/post/new'} routerDirection='none' onClick={() => {
+                                    <IonButton color='light' fill='solid' routerDirection='none' onClick={() => {
+                                        open((message) => addPost(me.address, message as any), me.address, "New Post")
                                     }} >Post
                                     </IonButton>
                                 </IonCardContent>
