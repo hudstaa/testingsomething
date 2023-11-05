@@ -18,8 +18,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }}>
 
         <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 5, paddingTop: 12 }}>
-            <IonBadge color='paper' style={{ position: 'absolute', right: 15, top: 20 }}>
-                <IonText color='tribel' className="regular" style={{ letterSpacing: -1 }}>
+            <IonBadge color='paper' style={{ position: 'absolute', right: 13, top: 20 }}>
+                <IonText color='tribel' className="bold" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
@@ -46,22 +46,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonButton color='medium' fill="clear" onClick={(e) => {
                 open((message: any) => { makeComment(id, message) }, '', 'make a comment')
             }}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-13px' }} />
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px' }} />
 
-                <IonText color={showComments ? 'tribe' : 'medium'} style={{ padding: 2, }}>
+                <IonText color={showComments ? 'white' : 'medium'} style={{ padding: 2, fontSize: 14 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
             <IonButtons slot='end'>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 20, width: 20}}/>
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 25, width: 25}}/>
                 </IonButton>
                 <IonLabel style={{paddingLeft: 2, paddingRight:2 }} >
                     <IonText className='ion-text-center'>{score} </IonText>
                 </IonLabel>
 
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 20, width: 20}}/>
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 25, width: 25}}/>
                 </IonButton>
 
             </IonButtons>
