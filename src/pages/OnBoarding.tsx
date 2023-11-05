@@ -11,7 +11,6 @@ import { app } from "../App"
 import { nativeAuth } from "../lib/sugar"
 import { useMember } from '../hooks/useMember'
 import { useHistory } from 'react-router'
-
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
 
     const auth = nativeAuth()
