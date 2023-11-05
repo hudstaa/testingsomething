@@ -27,7 +27,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonRouterLink routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 3, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
-                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '17.5px' }} onClick={() => {
+                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '20px' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
@@ -47,7 +47,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             }}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px', marginBottom: '-1px' }} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
+                <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 3, fontSize: 15 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
