@@ -183,18 +183,14 @@ const Account: React.FC = () => {
                                     </IonItem>)}
                                 </IonCardContent>
                             </IonCard>
-                            <IonItem lines='none'>
-                                <IonButtons slot='end'>
-                                    <IonButton fill='outline' onClick={() => {
-                                        signOut(auth); logout(); setCurrentUser(null as any);
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 1000)
-                                    }} color='danger'>Logout
-                                        <IonIcon icon={exit} />
-                                    </IonButton>
-                                </IonButtons>
-                            </IonItem>
+                            <IonButton expand='full' fill='outline' onClick={() => {
+                                signOut(auth); logout(); setCurrentUser(null as any);
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1000)
+                            }} color='danger'>Logout
+                                <IonIcon icon={exit} />
+                            </IonButton>
                         </IonCol>
                     </IonRow>
 

@@ -16,7 +16,8 @@ export type ActivityHook = {
 
 export const useNotifications = create<ActivityHook>((set, store) => ({
     setNotifications: (notifications) => {
-        set(notifications);
+        console.log(notifications)
+        set({ notifications: notifications as any });
     },
     notifications: [],
     setToken: () => {

@@ -16,7 +16,6 @@ import { useNotifications } from "../hooks/useNotifications";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean }> = ({ title, sticky = true, color, hide, image, content }) => {
     const { user, ready } = usePrivy()
-    const { setNotifications, notifications } = useNotifications();
     const modalRef = useRef<HTMLIonModalElement>(null)
     const auth = nativeAuth();
     const fireUser = auth.currentUser;
@@ -40,9 +39,6 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         <IonButtons slot='end'>
             {me &&
                 <IonButton routerLink={'/account'}>
-                    {notifications && notifications.length > 0 && < IonBadge color='tribe'>
-                        {notifications.length}
-                    </IonBadge>}
                     <MemberPfp address={me.address} size="smol" />
                 </IonButton>}
         </IonButtons>

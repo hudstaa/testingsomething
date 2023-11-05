@@ -41,6 +41,7 @@ import { useNotifications } from '../hooks/useNotifications';
 import { MemberPfp } from '../components/MemberBadge';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
 
@@ -66,6 +67,7 @@ const Posts: React.FC = () => {
     const me = useMember(x => x.getCurrentUser());
     const { notifications } = useNotifications();
     const [isNewPosting, setIsNew] = useState(false)
+    const { open } = useWriteMessage();
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
@@ -77,9 +79,9 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                    <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', color: 'white', fontFamily: 'AvenirBold' }} >
-                        tribe
-                    </IonCardTitle>
+                        <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', color: 'white', fontFamily: 'AvenirBold' }} >
+                            tribe
+                        </IonCardTitle>
                     </IonButtons>
                     <IonSegment value={postType} style={{ position: 'absolute', right: 15, top: 5 }}>
                         <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
@@ -100,15 +102,17 @@ const Posts: React.FC = () => {
             < TribeContent fullscreen page='posts'>
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
-                    <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                        <PostList type={postType} max={10} />
-                    </IonCol>
+                        <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
+                            <PostList type={postType} max={10} />
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="center">
-                    <IonRouterLink routerLink='/post/new' ><div style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
+                    {me && <div onClick={() => {
+                        open(() => { }, me.address, 'Blaze your glory');
+                    }} style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
                         New Post
-                    </div></IonRouterLink>
+                    </div>}
                 </IonFab>
             </TribeContent >
             <TribeFooter page='posts' />

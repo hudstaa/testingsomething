@@ -1,5 +1,6 @@
 import {
   IonApp,
+  IonBadge,
   IonIcon,
   IonRouterOutlet,
   IonTabBar,
@@ -243,18 +244,24 @@ const DeepLinkProvider: React.FC = () => {
   return null;
 }
 
+const NotifBadge: React.FC = () => {
+  const { notifications } = useNotifications();
+  return notifications.length !== 0 ? <IonBadge color='tribe'>
+    {notifications.length}
+  </IonBadge> : <></>
+}
+
 const App: React.FC = () => {
   const { tab, setTab } = useTabs();
   const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   return <IonApp>
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ defaultChain: baseGoerli, appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
-          <NotificationsProvider />
           <WriteMessageModalProvider />
           <IonReactHashRouter >
+            <NotificationsProvider />
             <IonTabs onIonTabsWillChange={(e) => {
               setTab(e.detail.tab as any);
             }}>
@@ -310,6 +317,7 @@ const App: React.FC = () => {
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
+                  <NotifBadge />
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
                 </IonTabButton>
               </IonTabBar>
