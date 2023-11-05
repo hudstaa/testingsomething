@@ -71,9 +71,9 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                    <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
-                        tribe
-                    </IonCardTitle>
+                        <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
+                            tribe
+                        </IonCardTitle>
                     </IonButtons>
                     <IonSegment value={postType} style={{ position: 'absolute', right: 15, top: 5 }}>
                         <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
@@ -94,13 +94,13 @@ const Posts: React.FC = () => {
             < TribeContent fullscreen page='posts'>
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
-                    <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                        <PostList type={postType} max={10} />
-                    </IonCol>
+                        <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
+                            <PostList type={postType} max={10} />
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="center">
-                <IonRouterLink routerLink='/post/new' ><div style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
+                    <IonRouterLink routerLink='/post/new' ><div style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
                         New Post
                     </div></IonRouterLink>
                 </IonFab>
