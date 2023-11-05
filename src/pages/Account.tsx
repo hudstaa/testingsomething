@@ -196,6 +196,7 @@ const Account: React.FC = () => {
                                 </IonButtons>
                             </IonItem>
                         </IonCol>
+
                     </IonRow>
 
                 </IonGrid>
