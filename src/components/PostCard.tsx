@@ -16,24 +16,24 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 13, paddingBottom: 3, paddingTop: 12, marginLeft: -2 }}>
-            <IonBadge color='paper' style={{ position: 'absolute', right: 13, top: 20 }}>
-                <IonText color='tribel' className="bold" style={{ letterSpacing: '-.25px' }}>
+        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 12, marginLeft: -2, marginRight: -2 }}>
+            <IonBadge color='paper' style={{ position: 'absolute', right: 15, top: 20 }}>
+                <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 3, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 14, paddingBottom: 4, paddingTop: 3, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
-                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '17.5px' }} onClick={() => {
+                    <IonText color='dark' className='bold' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '20px' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 2, overflow: 'hidden', borderRadius: '10px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -6, overflow: 'hidden', borderRadius: '15px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
@@ -45,23 +45,23 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonButton color='white' fill="clear" onClick={(e) => {
                 open((message: any) => { makeComment(id, message) }, '', 'make a comment')
             }}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px', marginBottom: '-1px' }} />
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 35, width: 35, marginLeft: '-14px' }} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
+                <IonText color={showComments ? 'white' : 'medium'} className="heavy" style={{ padding: 0, marginTop: 0, fontSize: 14 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
             <IonButtons slot='end'>
-                <IonButton style={{ position: 'absolute', right: 50 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 25, width: 25 }} />
+                <IonButton style={{ position: 'absolute', right: 52 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
                 <IonLabel style={{ position: 'absolute', paddingLeft: 2, right: 38, paddingRight: 2 }} >
-                    <IonText className='ion-text-center'>{score} </IonText>
+                    <IonText className='heavy'>{score} </IonText>
                 </IonLabel>
 
-                <IonButton style={{ position: 'absolute', right: 0 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 25, width: 25 }} />
+                <IonButton style={{ position: 'absolute', right: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
             </IonButtons>
