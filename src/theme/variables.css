@@ -324,7 +324,7 @@ ion-footer ion-toolbar {
     --ion-color-paper-contrast: #ffffff;
     /* Contrast to be easily visible on dark gray */
     --ion-color-paper-contrast-rgb: 255, 255, 255;
-    --ion-color-paper-shade: #1c1c1c;
+    --ion-color-paper-shade: #151515;
     /* A bit darker shade */
     --ion-color-paper-tint: #3f3f3f;
     /* A bit lighter tint */
