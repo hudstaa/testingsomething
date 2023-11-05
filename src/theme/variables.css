@@ -462,6 +462,26 @@ ion-segment-button {
   --ion-color-tribe-tint: #fd2200;
 }
 
+/* Color Usage Example */
+.ion-color-tribel {
+  --ion-color-base: var(--ion-color-tribel);
+  --ion-color-base-rgb: var(--ion-color-tribel-rgb);
+  --ion-color-contrast: var(--ion-color-tribel-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-tribel-contrast-rgb);
+  --ion-color-shade: var(--ion-color-tribel-shade);
+  --ion-color-tint: var(--ion-color-tribel-tint);
+}
+
+/* New tribel Color */
+:root {
+  --ion-color-tribel: #989AA2;
+  --ion-color-tribel-rgb: 255, 87, 0;
+  --ion-color-tribel-contrast: #ffffff;
+  --ion-color-tribel-contrast-rgb: 255, 255, 255;
+  --ion-color-tribel-shade: #dd5700;
+  --ion-color-tribel-tint: #fd2200;
+}
+
 /* Light Mode: Paper Color */
 :root {
   --ion-color-paper: #fcfcfc;

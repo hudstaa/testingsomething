@@ -86,7 +86,7 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
                     </IonText>
                 </IonRouterLink>
             </IonRow>
-            <IonRow style={{ marginTop: '-3px' }}> {/* Reduced top margin */}
+            <IonRow style={{ marginTop: '-4px' }}> {/* Reduced top margin */}
                 <IonRouterLink routerLink={'/member/' + address}>
                     <IonText color='medium' className='medium' style={{ fontSize: '12px' }}>
                         {member?.twitterUsername}
