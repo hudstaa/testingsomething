@@ -2,13 +2,23 @@
 http://ionicframework.com/docs/theming/ */
 
 @font-face {
+  font-family: 'SF Bold';
+  src: url("/fonts/bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Medium';
+  src: url("/fonts/bold.otf") format("opentype");
+}
+
+@font-face {
   font-family: 'AvenirBold';
   src: url("/fonts/AvenirNextLTPro-Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'Avenir';
-  src: url("/fonts/AvenirNextLTPro-Regular.otf") format("opentype");
+  font-family: 'SF';
+  src: url("/fonts/regular.otf") format("opentype");
 }
 
 /* @import url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap); */
@@ -17,14 +27,25 @@ http://ionicframework.com/docs/theming/ */
   --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
 } */
 
-
+@font-face {
+  font-family: 'SF Medium';
+  src: url("/fonts/medium.otf") format("opentype");
+}
 
 * {
-  font-family: 'AvenirBold';
+  font-family: 'SF Bold';
+}
+
+.header {
+  font-family: 'AvenirBold' !important;
 }
 
 .regular {
-  font-family: 'Avenir' !important;
+  font-family: 'SF' !important;
+}
+
+.medium {
+  font-family: 'SF Medium' !important;
 }
 
 .bottom-start-container {
@@ -273,7 +294,7 @@ ion-footer ion-toolbar {
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255, 255, 255;
 
-    --ion-color-step-50: #0d0d0d;
+    --ion-color-step-50: #000000;
     --ion-color-step-100: #1a1a1a;
     --ion-color-step-150: #262626;
     --ion-color-step-200: #333333;
@@ -297,7 +318,7 @@ ion-footer ion-toolbar {
 
     --ion-card-background: #1c1c1d;
 
-    --ion-color-paper: #2e2e2e;
+    --ion-color-paper: #151515;
     /* Dark Gray */
     --ion-color-paper-rgb: 46, 46, 46;
     --ion-color-paper-contrast: #ffffff;
@@ -467,7 +488,7 @@ ion-segment-button {
 }
 
 ion-card {
-  border-radius: 13px;
+  border-radius: 10px;
   /* Adjust the value to your desired border radius */
 }
 

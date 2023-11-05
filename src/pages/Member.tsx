@@ -200,7 +200,7 @@ const Member: React.FC = () => {
 
                         <IonGrid>
                             <IonRow>
-                                <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
+                                <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
 
                                     <PostList type={'top'} max={3} from={member?.address} />
                                 </IonCol></IonRow></IonGrid>
