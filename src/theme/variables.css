@@ -32,6 +32,17 @@ http://ionicframework.com/docs/theming/ */
   src: url("/fonts/medium.otf") format("opentype");
 }
 
+
+@font-face {
+  font-family: 'SF Heavy';
+  src: url("/fonts/heavy.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Semi';
+  src: url("/fonts/semibold.otf") format("opentype");
+}
+
 * {
   font-family: 'SF Bold';
 }
@@ -42,6 +53,14 @@ http://ionicframework.com/docs/theming/ */
 
 .regular {
   font-family: 'SF' !important;
+}
+
+.heavy {
+  font-family: 'SF Heavy' !important;
+}
+
+.semi {
+  font-family: 'SF Semi' !important;
 }
 
 .medium {
