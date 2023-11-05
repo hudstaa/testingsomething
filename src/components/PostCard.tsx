@@ -13,7 +13,7 @@ import { useWriteMessage } from "../hooks/useWriteMessage"
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
-    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingLeft: 0, marginBottom: 10, cursor: 'pointer!important' }} onClick={(e) => {
+    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingLeft: 0, marginBottom: 7, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
@@ -48,7 +48,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             }}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-13px' }} />
 
-                <IonText color={showComments ? 'tribe' : 'medium'} style={{ padding: 2 }}>
+                <IonText color={showComments ? 'tribe' : 'medium'} style={{ padding: 2, }}>
                     {commentCount}
                 </IonText>
             </IonButton>

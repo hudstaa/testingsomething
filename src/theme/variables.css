@@ -490,7 +490,7 @@ ion-segment-button {
   --ion-color-paper-contrast: #000000;
   /* Contrast to be easily visible on pale gray */
   --ion-color-paper-contrast-rgb: 0, 0, 0;
-  --ion-color-paper-shade: #e0e0e0;
+  --ion-color-paper-shade: #ffffff;
   /* A bit darker shade */
   --ion-color-paper-tint: #f8f8f8;
   /* A bit lighter tint */
