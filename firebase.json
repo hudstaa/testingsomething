@@ -49,6 +49,9 @@
     ],
     "rewrites": [
       {
+        "source": "/@**",
+        "function": "share"
+      },{
         "source": "**",
         "destination": "/index.html"
       }
