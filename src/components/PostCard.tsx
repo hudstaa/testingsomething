@@ -44,10 +44,6 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                                 </IonText>
                             </IonRouterLink>
                         </IonRow>
-                        <IonRow>
-                            {content ? content
-                                : <></>}
-                        </IonRow>
                     </IonGrid>
                 </IonRow>
             </IonCardHeader>
