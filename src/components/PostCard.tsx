@@ -26,15 +26,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 5, margin: 0 }}  >
-                <IonRouterLink routerLink={'/post/' + id}>
-                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0 }} onClick={() => {
-                    }} >
-                        {content}
-                    </IonText>
-                </IonRouterLink>
+                    <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 3, margin: 0 }}  >
+                    <IonRouterLink routerLink={'/post/' + id}>
+            <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '18px' }} onClick={() => {
+            }} >
+                {content}
+            </IonText>
+        </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 5, overflow: 'hidden', borderRadius: '10px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, overflow: 'hidden', borderRadius: '10px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
