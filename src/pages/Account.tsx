@@ -174,12 +174,12 @@ const Account: React.FC = () => {
 
                                         {body}
                                     </IonItem>)}
-                                    {notifications.map(({ from, ref, timestamp, to, id }: any) => <IonItem lines='none' color='paper' onClick={() => {
+                                    {notifications.map(({ from, ref, timestamp, message, id }: any) => <IonItem lines='none' color='paper' onClick={() => {
                                         deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
 
                                         })
                                     }} routerLink={ref.split('/')[0] + '/' + ref.split('/')[1]}>
-                                        <MemberBadge address={from} /> {ref.includes('comments') && "Commented on your Post"} {ref.includes('channel') && "sent a message in your Chat"}
+                                        <MemberBadge address={from} />{message}
                                     </IonItem>)}
                                 </IonCardContent>
                             </IonCard>

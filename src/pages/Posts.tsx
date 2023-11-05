@@ -68,10 +68,26 @@ const Posts: React.FC = () => {
     const { notifications } = useNotifications();
     const [isNewPosting, setIsNew] = useState(false)
     const { open } = useWriteMessage();
+    const { push } = useHistory();
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
         }} />
+    }
+    const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
+        const db = getFirestore(app);
+        const newPost: any = {
+            author: getAddress(from), // Replace with actual user's address or ID
+            content: message.content,
+            sent: serverTimestamp(),
+            score: 0
+        }
+        if (message.media) {
+            newPost['media'] = message.media;
+        }
+        addDoc(collection(db, 'post'), newPost).then((doc) => {
+            push('/post/' + doc.id);
+        });
     }
     return (
         <TribePage page='posts'>
@@ -109,7 +125,7 @@ const Posts: React.FC = () => {
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="center">
                     {me && <div onClick={() => {
-                        open(() => { }, me.address, 'Blaze your glory');
+                        open((message) => addPost(me.address, message as any), me.address, 'Blaze your glory');
                     }} style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
                         New Post
                     </div>}

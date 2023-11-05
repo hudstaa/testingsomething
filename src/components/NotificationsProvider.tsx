@@ -29,12 +29,12 @@ export const NotificationsProvider: React.FC = () => {
 
     }, [me]);
     return <>
-        {notifications.slice(0, 1).map(({ from, ref, timestamp, to, id }: any) =>
+        {notifications.slice(0, 1).map(({ from, ref, timestamp, to, id, message }: any) =>
             <IonToast
                 position='top'
                 style={{ cursor: 'pointer' }}
                 isOpen={notifications.length > 0}
-                message={ref.includes('comments') ? "new comment on your Post" : 'new message in your chat'}
+                message={message}
                 onClick={() => {
                     deleteDoc(doc(getFirestore(app), 'notifications', id))
                     push("/" + ref.split('/')[0] + '/' + ref.split('/')[1]);

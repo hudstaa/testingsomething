@@ -1,7 +1,7 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, useIonViewWillEnter } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewWillEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { personOutline, ticketOutline } from 'ionicons/icons';
-import { useMemo, useState } from 'react';
+import { close, personOutline, ticketOutline } from 'ionicons/icons';
+import { useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { Address, formatUnits } from 'viem';
 import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
@@ -42,11 +42,13 @@ const Member: React.FC = () => {
     const { setTab } = useTabs()
     const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
     const { wallets } = useWallets();
-
+    const modalRef = useRef<HTMLIonModalElement>(null)
     useIonViewWillEnter(() => {
         setTrade(false);
         setTab('member')
     })
+    const isDesktop = window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
+
     return (
         <TribePage page='member'>
             <TribeHeader color='tertiary' title={
@@ -57,13 +59,14 @@ const Member: React.FC = () => {
                 }}>
                     <IonRefresherContent />
                 </IonRefresher>
-                {member && member.twitterBackground && <IonCard style={{ aspectRatio: 3 / 1 }}  >
+                {member && member.twitterBackground && !isDesktop && <IonCard style={{ aspectRatio: 3 / 1 }}  >
                     {member?.twitterBackground && <IonImg style={{ position: 'absolute', left: 0, right: 0, top: 0 }} src={member.twitterBackground} />}
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
                     </IonCardHeader>
                     <IonCardContent>
                     </IonCardContent>
                 </IonCard>}
+
                 {member && <IonItem lines='none'>
                     <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
                         <img style={{ width: 40, height: 40, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
@@ -88,6 +91,7 @@ const Member: React.FC = () => {
                                     </IonRouterLink>
                                 </IonRow>
                             </IonCol>
+
                             {
                                 ftBalance ? <IonChip>
                                     <IonAvatar>
@@ -147,27 +151,6 @@ const Member: React.FC = () => {
                 </IonFab>
 
 
-                <IonFab slot='fixed' horizontal='center' vertical='center'>
-
-                    {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
-                        sellPass && sellPass();
-                    }}>
-
-                        <IonIcon icon={ticketOutline} />
-                        <IonText>
-
-                            Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
-                        </IonText>
-                    </IonButton>}
-                    {trade && <IonButton disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
-                        // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
-                        buyPass && buyPass();
-                        console.log(buyPass);
-                    }} color='success'>
-                        <IonIcon icon={ticketOutline} />                                Buy
-                        {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
-                    </IonButton>}
-                </IonFab>
 
 
                 {<>
@@ -192,7 +175,42 @@ const Member: React.FC = () => {
 
 
                 </IonItem>
+                <IonModal ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
 
+                    <IonItem>
+                        {member?.twitterName}
+                        <IonButtons slot='end'>
+                            <IonButton color='danger' onClick={() => {
+                                modalRef.current?.dismiss();
+                            }}><IonIcon icon={close} /></IonButton>
+                        </IonButtons>
+                    </IonItem>
+                    <IonTitle>
+
+                        <IonImg src={member?.twitterPfp} />
+                    </IonTitle>
+                    <IonCard>
+                        {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
+                            sellPass && sellPass();
+                            modalRef.current?.dismiss();
+                        }}>
+
+                            <IonIcon icon={ticketOutline} />
+                            <IonText>
+
+                                Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
+                            </IonText>
+                        </IonButton>}
+                        {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
+                            // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
+                            buyPass && buyPass();
+                            modalRef.current?.dismiss();
+                        }} color='success'>
+                            <IonIcon icon={ticketOutline} />                                Buy
+                            {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
+                        </IonButton>}
+                    </IonCard>
+                </IonModal>
                 <div style={{ minHeight: 700 }}>
 
                     {
