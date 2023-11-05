@@ -52,16 +52,16 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonText>
             </IonButton>
             <IonButtons slot='end'>
-                <IonButton style={{ position: 'absolute', right: 45 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 25, width: 25 }} />
+                <IonButton style={{ position: 'absolute', right: 52 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
-                <IonLabel style={{ position: 'absolute', paddingLeft: 2, right: 33, paddingRight: 2 }} >
+                <IonLabel style={{ position: 'absolute', paddingLeft: 2, right: 38, paddingRight: 2 }} >
                     <IonText className='ion-text-center'>{score} </IonText>
                 </IonLabel>
 
                 <IonButton style={{ position: 'absolute', right: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 25, width: 25 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
             </IonButtons>
