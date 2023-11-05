@@ -28,7 +28,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonRouterLink routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 5, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
-                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0, letterSpacing: '0.05px'}} onClick={() => {
+                    <IonText color='dark' style={{ whiteSpace: 'pre-wrap', padding: 0 }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
