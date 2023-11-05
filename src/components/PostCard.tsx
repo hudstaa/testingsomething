@@ -1,13 +1,11 @@
-import { IonCard, IonCardHeader, IonText, IonButton, IonBadge, IonIcon, IonLabel, IonCardContent, IonRouterLink, IonImg, IonItem, IonButtons, IonGrid, IonRow } from "@ionic/react"
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
-import { chevronUp, chevronDown, chatbubble, pencilOutline, arrowDown, arrowUp, personOutline } from "ionicons/icons"
+import { useState } from "react"
+import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { useEffect, useState } from "react"
-import { useWriteMessage } from "../hooks/useWriteMessage"
-import { useMember } from "../hooks/useMember"
 
 
 
