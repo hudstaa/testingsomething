@@ -192,6 +192,7 @@ const Account: React.FC = () => {
                                 <IonIcon icon={exit} />
                             </IonButton>
                         </IonCol>
+
                     </IonRow>
 
                 </IonGrid>

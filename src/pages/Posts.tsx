@@ -95,7 +95,7 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                        <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', color: 'white', fontFamily: 'AvenirBold' }} >
+                        <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
                             tribe
                         </IonCardTitle>
                     </IonButtons>
@@ -103,12 +103,12 @@ const Posts: React.FC = () => {
                         <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
                             setPostType('top')
                         }}>
-                            TOP
+                            Top
                         </IonSegmentButton>
                         <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'light' : 'paper'} onClick={() => {
                             setPostType('recent')
                         }}>
-                            NEW
+                            New
                         </IonSegmentButton>
                     </IonSegment>
                 </> : <></>

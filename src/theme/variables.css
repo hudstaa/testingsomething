@@ -324,7 +324,7 @@ ion-footer ion-toolbar {
     --ion-color-paper-contrast: #ffffff;
     /* Contrast to be easily visible on dark gray */
     --ion-color-paper-contrast-rgb: 255, 255, 255;
-    --ion-color-paper-shade: #1c1c1c;
+    --ion-color-paper-shade: #151515;
     /* A bit darker shade */
     --ion-color-paper-tint: #3f3f3f;
     /* A bit lighter tint */
@@ -462,6 +462,26 @@ ion-segment-button {
   --ion-color-tribe-tint: #fd2200;
 }
 
+/* Color Usage Example */
+.ion-color-tribel {
+  --ion-color-base: var(--ion-color-tribel);
+  --ion-color-base-rgb: var(--ion-color-tribel-rgb);
+  --ion-color-contrast: var(--ion-color-tribel-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-tribel-contrast-rgb);
+  --ion-color-shade: var(--ion-color-tribel-shade);
+  --ion-color-tint: var(--ion-color-tribel-tint);
+}
+
+/* New tribel Color */
+:root {
+  --ion-color-tribel: #989AA2;
+  --ion-color-tribel-rgb: 255, 87, 0;
+  --ion-color-tribel-contrast: #ffffff;
+  --ion-color-tribel-contrast-rgb: 255, 255, 255;
+  --ion-color-tribel-shade: #dd5700;
+  --ion-color-tribel-tint: #fd2200;
+}
+
 /* Light Mode: Paper Color */
 :root {
   --ion-color-paper: #fcfcfc;
@@ -470,7 +490,7 @@ ion-segment-button {
   --ion-color-paper-contrast: #000000;
   /* Contrast to be easily visible on pale gray */
   --ion-color-paper-contrast-rgb: 0, 0, 0;
-  --ion-color-paper-shade: #e0e0e0;
+  --ion-color-paper-shade: #ffffff;
   /* A bit darker shade */
   --ion-color-paper-tint: #f8f8f8;
   /* A bit lighter tint */
