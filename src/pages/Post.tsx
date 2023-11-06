@@ -76,7 +76,7 @@ const Post: React.FC = () => {
     }
 
     return <TribePage page='post'>
-        <TribeHeader title={'Post'} />
+        <TribeHeader title={'Post'}/>
         <TribeContent>
             <IonGrid>
                 <IonRow>
