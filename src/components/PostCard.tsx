@@ -33,7 +33,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -5, overflow: 'hidden', borderRadius: '15px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -6, overflow: 'hidden', borderRadius: '15px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
