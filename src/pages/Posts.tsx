@@ -1,65 +1,31 @@
 import {
-    IonBadge,
-    IonButton,
     IonButtons,
-    IonCard,
     IonCardTitle,
     IonCol,
     IonFab,
-    IonFabButton,
     IonGrid,
-    IonHeader,
-    IonIcon,
-    IonInfiniteScroll,
-    IonInfiniteScrollContent,
-    IonItem,
-    IonLabel,
-    IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    IonRouterLink,
     IonRow,
-    IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar, useIonViewWillLeave
+    IonSegment, IonSegmentButton
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
-import { addOutline, timeOutline, trophyOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
 import { PostList } from '../components/PostList';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { WriteMessage } from '../components/WriteMessage';
 import { useMember } from '../hooks/useMember';
-import { nativeAuth } from '../lib/sugar';
-import Post from './Post';
-import { TribePage } from './TribePage';
 import { useNotifications } from '../hooks/useNotifications';
-import { MemberPfp } from '../components/MemberBadge';
-import NewPost from './NewPost';
-import { OnBoarding } from './OnBoarding';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { nativeAuth } from '../lib/sugar';
+import { OnBoarding } from './OnBoarding';
+import { TribePage } from './TribePage';
 
 
 
-const addPost = (uid: string, from: string, message: { content: string, media?: { src: string, type: string } }) => {
-    const db = getFirestore(app);
-    const newPost: any = {
-        author: getAddress(from), // Replace with actual user's address or ID
-        content: message.content,
-        sent: serverTimestamp(),
-        score: 0
-    }
-    if (message.media) {
-        newPost['media'] = message.media;
-    }
-    addDoc(collection(db, 'post'), newPost).then(() => {
-    }).catch(() => {
-    });
-}
 const Posts: React.FC = () => {
 
     const [postType, setPostType] = useState<'top' | 'recent'>('top')

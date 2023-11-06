@@ -1,4 +1,4 @@
-import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText } from "@ionic/react"
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
 import { useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
@@ -6,12 +6,14 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
+import { share } from "ionicons/icons"
 
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
+    const [notif, setNotif] = useState<string | null>(null);
     return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 2, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
@@ -50,6 +52,17 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
                     {commentCount}
                 </IonText>
+            </IonButton>
+            <IonToast duration={3000}
+                color='light' position="top" message={notif !== null ? notif : ""} isOpen={notif !== null} onDidDismiss={() => {
+                    setNotif(null);
+                }} />
+            <IonButton color='white' fill="clear" onClick={(e) => {
+                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
+                setNotif("Copied link to clipboard");
+
+            }}>
+                <IonIcon color={'medium'} icon={share} />
             </IonButton>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 50 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >

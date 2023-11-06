@@ -40,7 +40,7 @@ export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
         set({ send, author, isOpen: true, placeholder })
     },
     setMedia(media) {
-        set({ message: { author: store().author, media, ...store().message, content: store().message?.content, sent: null, id: '' } });
+        set({ message: { author: store().author, media: media, ...store().message, content: store().message?.content, sent: null, id: '' } });
     },
     setContent(content: string) {
         set({ message: { author: store().author, ...store().message, content, sent: null, id: '' } });
