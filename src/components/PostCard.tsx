@@ -25,7 +25,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 14, paddingBottom: 4, paddingTop: 3, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 15, paddingBottom: 4, paddingTop: 3, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
                     <IonText color='dark' className='bold' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '20px' }} onClick={() => {
                     }} >
@@ -33,7 +33,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -6, overflow: 'hidden', borderRadius: '15px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -5, overflow: 'hidden', borderRadius: '15px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
@@ -42,15 +42,14 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" >
-            <IonButton color='white' fill="clear" onClick={(e) => {
-                open((message: any) => { makeComment(id, message) }, '', 'make a comment')
-            }}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 35, width: 35, marginLeft: '-14px' }} />
-
-                <IonText color={showComments ? 'white' : 'medium'} className="heavy" style={{ padding: 0, marginTop: 0, fontSize: 14 }}>
-                    {commentCount}
-                </IonText>
-            </IonButton>
+        <IonButton color='white' fill="clear" style={{ marginLeft: '-12px', overflow: 'visible' }} onClick={(e) => {
+            open((message: any) => { makeComment(id, message) }, '', 'make a comment')
+        }}>
+            <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 36, width: 36 }} />
+            <IonText color={showComments ? 'white' : 'medium'} className="heavy" style={{ marginLeft: -1, marginTop: 1, fontSize: 14 }}>
+                {commentCount}
+            </IonText>
+        </IonButton>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 52 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 30, width: 30 }} />
