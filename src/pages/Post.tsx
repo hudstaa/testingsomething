@@ -1,7 +1,7 @@
 import { getAuth } from 'firebase/auth';
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
@@ -10,8 +10,11 @@ import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
 import { nativeAuth } from '../lib/sugar';
-import { IonCol, IonGrid, IonRow } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonRow } from '@ionic/react';
 import NewPost from './NewPost';
+import { OnBoarding } from './OnBoarding';
+import { WriteMessage } from '../components/WriteMessage';
+import { useNotifications } from '../hooks/useNotifications';
 
 
 
@@ -58,12 +61,13 @@ const Post: React.FC = () => {
     const [voted, setVoteCache] = useState<1 | -1 | null>(null);
 
 
-
+    const { commentAdded } = useNotifications();
     const makeComment = useCallback(async (postId: string, comment: { content: string, media?: { src: string, type: string } }) => {
         const author = me!.address;
         const newMessage = ({ ...comment, author, sent: serverTimestamp(), type: 'string', score: 0 });
         const db = getFirestore(app);
         const commentCol = collection(db, "post", postId, "comments");
+        commentAdded(postId)
 
         try {
             await addDoc(commentCol, newMessage);
@@ -71,19 +75,29 @@ const Post: React.FC = () => {
             console.error("Error sending message: ", error);
         }
     }, [me])
+    const contentRef = useRef<HTMLIonContentElement>(null)
     if (id === 'new') {
         return <NewPost />
     }
-
+    if (me === null) {
+        return <OnBoarding me={me} dismiss={() => { }} />
+    }
     return <TribePage page='post'>
         <TribeHeader title={'Post'} />
-        <TribeContent>
+        <IonContent ref={contentRef} >
             <IonGrid>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
-                        <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
-                    </IonCol></IonRow></IonGrid>
-        </TribeContent>
+                        <PostCard   {...post as any} handleVote={handleVote} voted={voted} uid={auth.currentUser?.uid} />
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
+        </IonContent>
+        <IonFooter>
+            <WriteMessage sendMessage={(message) => makeComment(id, message).then(() => {
+                contentRef.current?.scrollToBottom(500);
+            })} address={me.address} placeHolder='Write a comment' />
+        </IonFooter>
     </TribePage>
 };
 

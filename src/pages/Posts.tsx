@@ -31,7 +31,6 @@ const Posts: React.FC = () => {
     const [postType, setPostType] = useState<'top' | 'recent'>('top')
     const auth = nativeAuth();
     const me = useMember(x => x.getCurrentUser());
-    const { notifications } = useNotifications();
     const [isNewPosting, setIsNew] = useState(false)
     const { open } = useWriteMessage();
     const { push } = useHistory();

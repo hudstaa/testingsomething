@@ -1,18 +1,20 @@
 import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { share } from "ionicons/icons"
+import { useNotifications } from "../hooks/useNotifications"
 
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
+    const { localCommentCount } = useNotifications()
     const [notif, setNotif] = useState<string | null>(null);
     return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 2, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
@@ -49,9 +51,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             }}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px', marginBottom: '-1px' }} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
-                    {commentCount}
-                </IonText>
+                {useMemo(() => <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
+                    {(commentCount || 0) + (localCommentCount[id] || 0)}
+                </IonText>, [commentCount, localCommentCount[id]])}
             </IonButton>
             <IonToast duration={3000}
                 color='light' position="top" message={notif !== null ? notif : ""} isOpen={notif !== null} onDidDismiss={() => {
@@ -80,7 +82,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButtons>
         </IonItem>}
         {showComments && <CommentList total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
-        {(showComments) && <WriteMessage
+        {(showComments) && makeComment && <WriteMessage
             placeHolder='write a comment'
             address={''}
             sendMessage={(message: any) => { makeComment(id, message) }}

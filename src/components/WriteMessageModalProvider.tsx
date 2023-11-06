@@ -39,7 +39,7 @@ export const WriteMessageModalProvider: React.FC = () => {
                 {/* {message && message.media !== null && <IonButton onClick={() => {
                     setMedia(undefined as any)
                 }} fill='clear'><IonIcon icon={close} /></IonButton>} */}
-                {message && message.media !== null && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
+                {message && message.media?.src && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
             </IonGrid>
         </IonModal>
     </>
