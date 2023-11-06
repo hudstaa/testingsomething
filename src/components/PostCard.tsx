@@ -16,7 +16,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 15, paddingBottom: 3, paddingTop: 12, marginLeft: -2, marginRight: -2 }}>
+        <IonCardHeader style={{ paddingLeft: 16, paddingBottom: 3, paddingTop: 12, marginLeft: -2, marginRight: -2 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 15, top: 20 }}>
                 <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
