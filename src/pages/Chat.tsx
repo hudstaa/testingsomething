@@ -44,7 +44,7 @@ const Chat: React.FC = () => {
     })
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chat' />
+            <TribeHeader title='Chats' />
             <TribeContent >
                 <IonGrid style={{padding: 0}}>
                     <IonRow>
