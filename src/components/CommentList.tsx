@@ -60,7 +60,12 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
     }, [postId]);
 
     return (
-        <IonList>
+        <div>
+        <IonList style={{marginTop: 0}}>
+            <div className='behind' style={{ height: 30, marginTop: '0px'}}>        
+                <div style={{ height: 10, borderRadius: '0 0 20px 20px', backgroundColor: 'var(--ion-color-paper)'}}>
+                    </div>
+            </div>
             {comments.map((comment, i) => (
                 <IonItem key={i} color={'paper'} lines="none">
                     <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
@@ -89,6 +94,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                 </IonItem>))
             }
         </IonList >
+        </div>
 
     );
 };

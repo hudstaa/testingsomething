@@ -76,11 +76,11 @@ const Post: React.FC = () => {
     }
 
     return <TribePage page='post'>
-        <TribeHeader title={'Post'}/>
+        <TribeHeader title={'〱'}/>
         <TribeContent>
-            <IonGrid>
+            <IonGrid style={{padding: 0}}>
                 <IonRow>
-                    <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12'>
+                    <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{padding: 0}}>
                         <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
                     </IonCol></IonRow></IonGrid>
         </TribeContent>
