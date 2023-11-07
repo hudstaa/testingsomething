@@ -44,14 +44,14 @@ const Chat: React.FC = () => {
     })
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chat' />
+            <TribeHeader title='Chats' />
             <TribeContent >
-                <IonGrid>
+                <IonGrid style={{padding: 0}}>
                     <IonRow>
-                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
-                            <IonCard>
+                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{padding: 0}}>
+                            <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem color='paper' lines='none' routerLink={'/channel/' + address} key={address}>
+                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address}>
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}

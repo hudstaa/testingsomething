@@ -59,15 +59,17 @@ const Member: React.FC = () => {
     }, [member]);
     return (
         <TribePage page='member'>
-            <TribeHeader color='tertiary' title={
-                member !== null ? member.twitterName : ""} />
+            <TribeHeader
+            color='tertiary'
+            title={member !== null ? '〱  ' + member.twitterName : ""}
+            />
             < TribeContent fullscreen >
                 <IonRefresher slot='fixed' onIonRefresh={() => {
 
                 }}>
                     <IonRefresherContent />
                 </IonRefresher>
-                {member && member.twitterBackground && !isDesktop && <IonCard style={{ aspectRatio: 3 / 1 }}  >
+                {member && member.twitterBackground && !isDesktop && <IonCard style={{ aspectRatio: 3 / 1, margin: 0, borderRadius: 0 }}  >
                     {member?.twitterBackground && <IonImg style={{ position: 'absolute', left: 0, right: 0, top: 0 }} src={member.twitterBackground} />}
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
                     </IonCardHeader>
@@ -75,7 +77,7 @@ const Member: React.FC = () => {
                     </IonCardContent>
                 </IonCard>}
 
-                {member && <IonItem lines='none'>
+                {member && <IonItem lines='none' style={{marginTop: 10}}>
                     <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
                         <img style={{ width: 40, height: 40, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
                     </IonRouterLink>

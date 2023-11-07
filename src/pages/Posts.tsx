@@ -123,11 +123,11 @@ const Posts: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-                <IonFab slot="fixed" vertical="bottom" horizontal="center">
+                <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     {me && <div onClick={() => {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} style={{ cursor: 'pointer', borderRadius: 1000, color: 'white', background: '#FF6000', padding: 13 }} >
-                        New Post
+                    }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 3, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', }}>
+                        +
                     </div>}
                 </IonFab>
             </TribeContent >

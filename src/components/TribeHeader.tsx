@@ -28,21 +28,22 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [ready, auth?.currentUser, me])
 
     const { location } = useHistory();
-    const toolbar = !hide ? <IonToolbar>
-        <IonButtons slot='start' style={{ marginLeft: 12 }}>
-            <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
-                <IonText color='dark'>
-                    {title}
-                </IonText>
-            </IonRouterLink>
-        </IonButtons>
-        <IonButtons slot='end'>
-            {me &&
-                <IonButton routerLink={'/account'}>
-                    <MemberPfp address={me.address} size="smol" />
-                </IonButton>}
-        </IonButtons>
-    </IonToolbar > : <IonToolbar color='tribe'>
+    const toolbar = !hide ? (
+        <IonToolbar>
+            <IonButtons slot='start' style={{ marginLeft: 12 }}>
+                <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
+                    <IonText color='dark'>
+                        {title}
+                    </IonText>
+                </IonRouterLink>
+            </IonButtons>
+            <IonButtons slot='end'>
+                {me &&
+                    <IonButton routerLink={'/account'}>
+                        <MemberPfp address={me.address} size="smol" />
+                    </IonButton>}
+            </IonButtons>
+    </IonToolbar > ) : <IonToolbar color='tribe'>
         {content}
     </IonToolbar>
     if (!sticky) {
