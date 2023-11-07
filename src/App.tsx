@@ -63,7 +63,7 @@ import Trade from './pages/Trade';
 
 
 setupIonicReact({
-  rippleEffect: true,
+  rippleEffect: false,
   mode: 'ios',
 });
 const { chains, publicClient } = configureChains(
