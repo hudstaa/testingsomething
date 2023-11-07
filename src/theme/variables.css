@@ -491,6 +491,18 @@ ion-segment-button {
   --ion-color-tint: var(--ion-color-tribel-tint);
 }
 
+ion-button,
+ion-icon {
+  --ripple-color: transparent;
+  /* For Ionic 4+ */
+  --background-activated: transparent;
+  /* For Ionic 4+ */
+  --background-focused: transparent;
+  /* For Ionic 4+ */
+  --background-hover: transparent;
+  /* For Ionic 4+ */
+}
+
 /* New tribel Color */
 :root {
   --ion-color-tribel: #989AA2;

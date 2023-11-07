@@ -5,6 +5,7 @@ import { useMember } from "../hooks/useMember";
 import { nativeAuth } from "../lib/sugar";
 import { PostCard } from "./PostCard";
 import { IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRefresher, IonRefresherContent } from "@ionic/react";
+import { useNotifications } from "../hooks/useNotifications";
 
 export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: string }> = ({ type, max, from }) => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -12,6 +13,8 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
     const [pullRefresh, setPullRefresh] = useState<number>(0)
     const auth = nativeAuth();
     const me = useMember(x => x.getCurrentUser())
+    const { commentAdded } = useNotifications();
+
     useEffect(() => {
         if (!auth.currentUser) {
             return;
@@ -57,6 +60,7 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
 
         try {
             await addDoc(commentCol, newMessage);
+            commentAdded(postId)
         } catch (error) {
             console.error("Error sending message: ", error);
         }

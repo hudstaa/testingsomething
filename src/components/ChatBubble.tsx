@@ -17,7 +17,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     </div>
 
     const items = [
-        !isMe ? <button style={{ margin: '0px!important', padding: 0, background: 'rgba(0,0,0,0)' }} onClick={() => {
+        !isMe ? <button style={{ margin: '0px!important', padding: 0, paddingRight: 5, paddingLeft: 5, background: 'rgba(0,0,0,0)' }} onClick={() => {
             reply(message.id);
         }} color='primary' >
             <IonIcon style={{ margin: 0 }} color='tertiary' icon={returnDownBack} />

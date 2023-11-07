@@ -52,6 +52,12 @@
         "source": "/@**",
         "function": "share"
       },{
+        "source": "/$**",
+        "function": "share"
+      },{
+        "source": "/post/**",
+        "function": "share"
+      },{
         "source": "**",
         "destination": "/index.html"
       }
