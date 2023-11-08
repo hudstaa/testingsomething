@@ -8,18 +8,32 @@ import { timeAgo } from "./TradeItem";
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
 
-    const bubbleAndButtonContainerStyle = {
+    const messageContainerStyle: React.CSSProperties = {
         display: 'flex',
-        alignItems: 'center', // Vertically align the content bubble and reply button
-        // Adjust the width to account for the profile picture
+        flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
+        alignItems: 'flex-end', // Align items to the end (bottom for row layout)
+        maxWidth: '70%', // Set a max width for the message container
+    };
+
+    const textBubbleStyle: React.CSSProperties = {
+        maxWidth: '100%', // Maximum width for text bubble
+        padding: '10px', // Padding around text
+        wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
+        // Additional styles as needed
+    };
+    
+    const imageStyle: React.CSSProperties = {
+        maxWidth: '100%', // Image can fill the width of the chat container
+        height: 'auto', // Keep image aspect ratio
+        // Additional styles as needed
     };
 
     const contentBubble = (
-        <div style={{ maxWidth: '70%', alignSelf: isMe ? 'flex-end' : 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMe ? 'flex-end' : 'flex-start' }}>
             {message.media && (
-                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={{ maxWidth: '100%', height: 'auto' }} src={message.media.src} />
+                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
             )}
-            <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={{ margin: 0 }}>
+            <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
                 {message.content}
             </div>
         </div>
@@ -51,10 +65,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         }} >
             {/* Render the reply if present */}
             {message.reply && <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />}
-            {/* Render the message content with the profile picture */}
-            <div style={{ display: 'flex', flexDirection: isMe ? 'row-reverse' : 'row' }}>
+            {/* Render the message content and profile picture in a row */}
+            <div style={messageContainerStyle}>
                 {profilePic}
-                {contentBubble}
+                {contentBubble} 
             </div>
             {replyButton}
         </div>
