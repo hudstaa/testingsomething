@@ -15,11 +15,11 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { localCommentCount } = useNotifications()
     const [notif, setNotif] = useState<string | null>(null);
-    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 2, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 16, paddingBottom: 3, paddingTop: 12, marginLeft: -2, marginRight: -2 }}>
+        <IonCardHeader style={{ paddingLeft: 8, paddingBottom: 3, paddingTop: 8, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 15, top: 20 }}>
                 <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
@@ -28,15 +28,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 15, paddingBottom: 0, paddingTop: 2, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 8, paddingBottom: 0, paddingTop: 2, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
-                    <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '18px', fontWeight: 475, letterSpacing: '-0.035em' }} onClick={() => {
+                    <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '18px', fontWeight: 500, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -5, overflow: 'hidden', borderRadius: '15px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -12, overflow: 'hidden', borderRadius: '15px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
@@ -44,9 +44,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" >
+        {<IonItem color='paper' lines="inset" style={{ marginRight: '-12px', marginLeft: '-10px'}}>
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-13px', marginBottom: '-1px' }} />
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px'}} />
 
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
                     {commentCount}
