@@ -19,7 +19,6 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         maxWidth: '100%', // Maximum width for text bubble
         padding: '10px', // Padding around text
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
-        // Additional styles as needed
     };
     
     const imageStyle: React.CSSProperties = {
@@ -67,9 +66,9 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             {message.reply && <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />}
             {/* Render the message content and profile picture in a row */}
             <div style={messageContainerStyle}>
-                {profilePic}
-                {contentBubble} 
-            </div>
+                    {profilePic}
+                    {contentBubble} 
+                </div>
             {replyButton}
         </div>
     );
