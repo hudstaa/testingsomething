@@ -44,7 +44,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
               id={isModal ? 'modal-write-message' : undefined}
               ref={textRef}
               autoGrow
-              style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 5, marginBottom: -15}} /* flex: 1 allows the textarea to grow and fill available space */
+              style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 4, marginBottom: -15}} /* flex: 1 allows the textarea to grow and fill available space */
               value={content}
               placeholder={placeHolder}
               onKeyUp={(e) => {
@@ -60,7 +60,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
               <IonButton onClick={async () => {
                 makeComment();
               }}>
-                <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ fontSize: '30px' }} icon={'/icons/sendLarge.svg'} />
+                <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
               </IonButton>
             </IonButtons>
           </div>
