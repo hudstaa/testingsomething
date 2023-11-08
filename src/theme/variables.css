@@ -58,8 +58,6 @@ http://ionicframework.com/docs/theming/ */
   font-weight: 500; /* Medium weight */
 }
 
-
-
 .bottom-start-container {
   position: absolute;
   bottom: 0;
@@ -70,6 +68,14 @@ http://ionicframework.com/docs/theming/ */
   margin: 100
 } */
 
+.rounded-div {
+  background-color:rgba(255, 255, 255, 0.2); /* Your color */
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px; /* Adjust as needed for rounded corners */
+  display: flex; /* Use flexbox to align children horizontally */
+  align-items: center; /* Center align the flex items vertically */
+}
 
 
 .ion-image-center {
@@ -109,7 +115,9 @@ http://ionicframework.com/docs/theming/ */
 }
 
 textarea {
-  font-family: 'Avenir' !important
+  font-family: 'rubik' !important;
+  font-size: 18px !important;
+  font-weight: 500 !important;
 }
 
 .message-card-content {

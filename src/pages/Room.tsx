@@ -71,7 +71,7 @@ const Room: React.FC = () => {
                 </IonButtons>
             </IonItem> : <>
             </>, [replyingToMessageId, messages, me])}
-            < WriteMessage placeHolder='send a message' address={me?.address || ""} sendMessage={sendMessage as any} />
+            < WriteMessage placeHolder='Message' address={me?.address || ""} sendMessage={sendMessage as any} />
         </IonFooter>
     </TribePage>
 }
