@@ -58,7 +58,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonButton>
 
                 <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 2, right: 40, paddingRight: 2 }} >
-                    <IonText className='heavy'>{score} </IonText>
+                    <IonText className='bold'>{score} </IonText>
                 </IonLabel>
 
                 <IonButton style={{ position: 'absolute', right: 0 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
