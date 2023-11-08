@@ -48,7 +48,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px', marginBottom: '-1px' }} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
+                <IonText color={showComments ? 'white' : 'medium'} className="medium" style={{ padding: 0, marginTop: 3, fontSize: 18 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
