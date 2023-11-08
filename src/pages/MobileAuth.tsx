@@ -18,10 +18,10 @@ export const MobileAuth: React.FC = () => {
         //     linkTwitter();
         // } else {
         me && getAccessToken().then((token) => {
-            if (token && localStorage.getItem('privy:token')) {
-                const url = ('tribe.computer://auth?token=' + localStorage.getItem('privy:token') + '&refresh=' + localStorage.getItem('privy:refresh_token') + '&jwt=' + token);
-                window.open(url, "_system", "location=yes");
-            }
+            // if (token && localStorage.getItem('privy:token')) {
+            //     const url = ('tribe.computer://auth?token=' + localStorage.getItem('privy:token') + '&refresh=' + localStorage.getItem('privy:refresh_token') + '&jwt=' + token);
+            //     window.open(url, "_system", "location=yes");
+            // }
         })
         // }
     }, [ready, user, me])
