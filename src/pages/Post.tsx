@@ -84,13 +84,23 @@ const Post: React.FC = () => {
     }
     return <TribePage page='post'>
         <TribeHeader title={'〱'} />
-        <TribeContent>
+        <IonContent ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                         <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
-                    </IonCol></IonRow></IonGrid>
-        </TribeContent>
+                    </IonCol></IonRow>
+
+
+            </IonGrid>
+        </IonContent>
+        <IonFooter>
+            <WriteMessage sendMessage={(message) => {
+                makeComment(id, message).then(() => {
+                    contentRef.current?.scrollToBottom(500);
+                })
+            }} placeHolder={'Write a comment'} address={me.address} />
+        </IonFooter>
     </TribePage>
 };
 

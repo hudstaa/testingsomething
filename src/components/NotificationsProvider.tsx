@@ -20,10 +20,8 @@ export const NotificationsProvider: React.FC = () => {
         }
         const db = getFirestore(app);
 
-        console.log("GET NOTIS!!")
         const notificationsQuery = query(collection(db, 'notifications'), where('to', '==', me.address));
         onSnapshot(notificationsQuery, (snap) => {
-            console.log("GOT NOTIS", snap.docs.map(x => x.data()));
             setNotifications(snap.docs.map(x => ({ ...x.data(), id: x.id } as any)));
         })
 

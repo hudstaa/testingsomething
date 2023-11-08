@@ -10,9 +10,12 @@ import { useEffect, useMemo, useState } from "react"
 import { app } from "../App"
 import { nativeAuth } from "../lib/sugar"
 import { useMember } from '../hooks/useMember'
-import { useHistory } from 'react-router'
+import { useLocation, useHistory } from 'react-router'
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
     const auth = nativeAuth()
+    const { search } = useLocation();
+
+    const searchParams = useMemo(() => new URLSearchParams(search), [search]);
     const [error, setError] = useState<string | undefined>();
     const { user, linkTwitter, login, getAccessToken, ready } = usePrivy()
     const walletAddress = user?.wallet?.address;
@@ -34,7 +37,9 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             getDoc(docRef).then((snap) => {
                 if (!snap.exists()) {
                     const joinTribe = httpsCallable(getFunctions(app), 'syncPrivy');
-                    joinTribe().then((res) => {
+                    const referrer = searchParams.get("ref") || "lil_esper"
+
+                    joinTribe({ referrer }).then((res) => {
                         getDoc(docRef).then((snap) => {
                             setCurrentUser(snap.data() as any);
                         })
@@ -64,7 +69,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
         })
     }, [user, ready, auth])
 
-    const { location } = useHistory();
+    const navigate = useHistory();
     const path = location.pathname
     return <IonContent>
         {useMemo(() => <IonTitle className="ion-text-center">

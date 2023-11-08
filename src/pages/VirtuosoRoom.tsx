@@ -149,7 +149,7 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
                 return <NewChatBubble reply={reply} channel={channel} me={me.address} message={msg} />
             }}
         /> */}
-        {lastMessageReached ? <></> : <IonButton onClick={fetchMore} fill="clear" expand="full">
+        {lastMessageReached || messages.length === 0 || messages.length < 10 ? <></> : <IonButton onClick={fetchMore} fill="clear" expand="full">
             Load More
         </IonButton>}
         {messages.map(x => <NewChatBubble key={x.id} message={x} me={me.address} channel={channel} reply={reply} />)}

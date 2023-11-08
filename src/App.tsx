@@ -231,7 +231,6 @@ const DeepLinkProvider: React.FC = () => {
       axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
         signInWithCustomToken(auth, res.data.authToken).then((e) => {
           console.log(e, "SIGNED IN");
-          window.location.reload();
         }).catch((e) => {
           console.log('error', e);
         })
@@ -274,6 +273,9 @@ const App: React.FC = () => {
                   <Chat />
                 </Route>
                 <Route exact path="/channel/:address">
+                  <Room />
+                </Route>
+                <Route exact path="/channel/:chainId/:address">
                   <Room />
                 </Route>
                 <Route path="/watchlist">

@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
 import { albumsOutline, chatboxOutline, copy, exit, key, notificationsOutline, personOutline, wallet } from 'ionicons/icons';
@@ -6,10 +6,10 @@ import { MemberBadge, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { useMember } from '../hooks/useMember';
+import { Member, useMember } from '../hooks/useMember';
 import { formatEth, nativeAuth } from '../lib/sugar';
 import { TribePage } from './TribePage';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Timestamp, addDoc, collection, deleteDoc, doc, getAggregateFromServer, getCountFromServer, getDoc, getDocs, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
 import { app } from '../App';
 import { get } from 'firebase/database';
@@ -19,18 +19,23 @@ import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notif
 import { Capacitor } from '@capacitor/core';
 import { useBalance, useChainId } from 'wagmi';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { useHistory } from 'react-router';
 import { getAddress } from 'viem';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { httpsCallable, getFunctions } from 'firebase/functions';
+import { useHistory, useLocation } from "react-router-dom";
 
 
 
 const Account: React.FC = () => {
     const auth = nativeAuth()
-    const { logout, ready, login } = usePrivy();
+    const { logout, ready } = usePrivy();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser());
+    const me = useMember(x => x.getCurrentUser()) as Member;
     const { setCurrentUser } = useMember();
+    const { search } = useLocation();
+
+    const searchParams = useMemo(() => new URLSearchParams(search), [search]);
+
     const { notifications } = useNotifications();
     const [pushNotifications, setPushNotifications] = useState<PushNotificationSchema[]>([]);
     const [count, setCount] = useState<number | null>(null);
@@ -64,11 +69,6 @@ const Account: React.FC = () => {
     const { exportWallet } = usePrivy();
     const { open } = useWriteMessage();
     const { push } = useHistory();
-    if (!me) {
-        return <IonPage>
-            <OnBoarding me={me} dismiss={() => { }} />
-        </IonPage>
-    }
 
     const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
         const db = getFirestore(app);
@@ -84,6 +84,32 @@ const Account: React.FC = () => {
         addDoc(collection(db, 'post'), newPost).then((doc) => {
             push('/post/' + doc.id);
         });
+    }
+    const { linkGoogle, linkWallet, linkTiktok, login, linkDiscord, user } = usePrivy();
+    useEffect(() => {
+        const accountAddress = (user?.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address;
+        const privyUid = auth.currentUser?.uid as any;
+        if (!ready || !accountAddress || !privyUid) {
+            return;
+        }
+        if (accountAddress != me?.injectedWallet) {
+            const database = getFirestore(app);
+
+            const docRef = doc(database, 'member', privyUid);
+
+            const joinTribe = httpsCallable(getFunctions(app), 'syncPrivy');
+            const referrer = searchParams.get("ref") || "lil_esper"
+            joinTribe({ referrer }).then((res) => {
+                getDoc(docRef).then((snap) => {
+                    setCurrentUser(snap.data() as any);
+                })
+            }).catch((e) => {
+                alert("Un expected error");
+            })
+        }
+    }, [ready, user, me])
+    if (!me) {
+        return <TribePage page='account'><></></TribePage>
     }
     return (
         <TribePage page='account'>
@@ -158,6 +184,19 @@ const Account: React.FC = () => {
                                         open((message) => addPost(me.address, message as any), me.address, "New Post")
                                     }} >Post
                                     </IonButton>
+                                    {user ? <IonRow>
+
+                                        {user && typeof (user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address === 'undefined' ? <IonButton fill='clear' onClick={linkWallet}>
+                                            Link Browser wallet
+                                        </IonButton> : <IonChip>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
+                                        {user && typeof user.discord?.username === 'undefined' ? <IonButton fill='clear' onClick={linkDiscord}>
+                                            Link Discord
+                                        </IonButton> : <IonChip>{user?.discord?.username}</IonChip>}
+                                        {user && typeof user.google?.name === 'undefined' ? <IonButton fill='clear' onClick={linkGoogle}>
+                                            Link Google
+                                        </IonButton> : <IonChip>{user?.google?.name}</IonChip>}
+                                    </IonRow> : <IonButton onClick={login}>
+                                        Login</IonButton>}
                                 </IonCardContent>
                             </IonCard>
                             <IonCard color='paper'>

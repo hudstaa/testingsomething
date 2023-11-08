@@ -28,12 +28,12 @@ const Room: React.FC = () => {
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
     const channel = address;
 
-    useIonViewDidEnter(() => {
-        hideTabs();
-    })
-    useIonViewDidLeave(() => {
-        showTabs();
-    })
+    // useIonViewDidEnter(() => {
+    //     hideTabs();
+    // })
+    // useIonViewDidLeave(() => {
+    //     showTabs();
+    // })
 
     const sendMessage = useCallback(async (message: Message) => {
         const author = me!.address;

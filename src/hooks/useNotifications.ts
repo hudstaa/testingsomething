@@ -22,7 +22,6 @@ export const useNotifications = create<ActivityHook>((set, store) => ({
         set({ localCommentCount: { ...store().localCommentCount, [id]: (store().localCommentCount[id] || 0) + 1 } })
     },
     setNotifications: (notifications) => {
-        console.log(notifications)
         set({ notifications: notifications as any });
     },
     notifications: [],
@@ -32,7 +31,7 @@ export const useNotifications = create<ActivityHook>((set, store) => ({
     token: null,
     subscribe: (topic) => {
         const { token } = store();
-        const subscibe = httpsCallable(getFunctions(app), 'syncPrivy');
+        const subscibe = httpsCallable(getFunctions(app), 'subscribeToTopic');
         subscibe({ token, topic })
     }
 

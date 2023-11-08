@@ -24,12 +24,14 @@ import { TribePage } from './TribePage';
 import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { OnBoarding } from './OnBoarding';
 import { BuyPriceBadge } from './Discover';
+import useERCBalance from '../hooks/useERCBalance';
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
     const { user } = usePrivy()
     const me = useMember(x => x.getCurrentUser());
     const balance: bigint | undefined = usePassBalance((me?.address) as Address, (address) as Address) as any;
+    const ercBalance: bigint | undefined = useERCBalance((address) as Address, 1) as any;
     const { buyPass, buyPrice, status: buyStatus } = useBuyPass(address as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
@@ -60,8 +62,8 @@ const Member: React.FC = () => {
     return (
         <TribePage page='member'>
             <TribeHeader
-            color='tertiary'
-            title={member !== null ? '〱  ' + member.twitterName : ""}
+                color='tertiary'
+                title={member !== null ? '〱  ' + member.twitterName : ""}
             />
             < TribeContent fullscreen >
                 <IonRefresher slot='fixed' onIonRefresh={() => {
@@ -77,7 +79,7 @@ const Member: React.FC = () => {
                     </IonCardContent>
                 </IonCard>}
 
-                {member && <IonItem lines='none' style={{marginTop: 10}}>
+                {member && <IonItem lines='none' style={{ marginTop: 10 }}>
                     <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
                         <img style={{ width: 40, height: 40, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
                     </IonRouterLink>
@@ -125,7 +127,7 @@ const Member: React.FC = () => {
                             }
 
                             {
-                                ((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ?
+                                ((ercBalance && ercBalance !== null) || (balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ?
                                     <IonButton routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                         <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
                                     </IonButton>
@@ -148,13 +150,13 @@ const Member: React.FC = () => {
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
                 <IonFab slot='fixed' horizontal='end' vertical='bottom'>
-                    <IonFabButton color='tribe' onClick={() => { setTrade(!trade) }}>
+                    {member?.type !== 'contract' && <IonFabButton color='tribe' onClick={() => { setTrade(!trade) }}>
                         {trade ? 'OK' : "Boost"}
-                    </IonFabButton>
+                    </IonFabButton>}
                 </IonFab>
                 <IonFab slot='fixed' horizontal='start' vertical='bottom'>
                     <IonRouterLink href={'javascript:void(0)'}>
-                        {member && !trade && <BuyPriceBadge onClick={() => {
+                        {member && !trade && member.type !== 'contract' && <BuyPriceBadge onClick={() => {
                             setTrade(true);
                         }} address={member.address} />}
                     </IonRouterLink>
@@ -168,7 +170,7 @@ const Member: React.FC = () => {
                 </>}
                 <IonItem>
 
-                    <IonSegment mode='md' value={segment}>
+                    {member && member.type !== 'contract' && <IonSegment mode='md' value={segment}>
                         <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                             Posts
                         </IonSegmentButton>
@@ -179,9 +181,7 @@ const Member: React.FC = () => {
                             Chart
                         </IonSegmentButton>}
 
-                    </IonSegment>
-
-
+                    </IonSegment>}
 
 
                 </IonItem>

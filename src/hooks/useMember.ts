@@ -11,9 +11,11 @@ export interface Member {
     twitterPfp: string;
     twitterBackground: string;
     bio: string;
+    injectedWallet?: string;
     address: string;
     privyAddress: string;
     friendTechAddress?: string
+    type?: string
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;
@@ -126,7 +128,7 @@ export const useMember = create<FriendStore>((set, store) => ({
             const db = getFirestore(app);
 
             const memberQuery = query(collection(db, "member"), where("address", "==", address));
-
+            console.log("NICE", address);
             if (watch) {
                 onSnapshot(memberQuery, (snapshot) => {
                     if (!snapshot.empty) {

@@ -28,6 +28,16 @@ export const uniqId = (array: Record<string, any>[]) => {
         )
     );
 }
+export const uniqByProp = (array: Record<string, any>[], prop: string) => {
+
+    return array.filter((person, index, self) =>
+        !self.some((otherPerson, otherIndex) =>
+            otherIndex < index &&
+            person[prop].toLowerCase() === otherPerson[prop].toLowerCase()
+        )
+    );
+}
+
 export function nativeAuth() {
     let auth
     if (Capacitor.isNativePlatform()) {

@@ -7,7 +7,7 @@ import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
 import useBuyPass from '../hooks/useBuyPass';
 import { useDiscover } from '../hooks/useDiscover';
-import { useMember } from '../hooks/useMember';
+import { Member, useMember } from '../hooks/useMember';
 import { useTitle } from '../hooks/useTitle';
 import { TribePage } from './TribePage';
 import { MemberGraph } from '../components/MemberGraph';
@@ -31,7 +31,7 @@ const Discover: React.FC = () => {
     setTitle('discover')
     loadCache();
   }, [])
-  const [hits, setHits] = useState<{ twitterName: string, twitterUsername: string, address: string, twitterPfp: string }[]>([])
+  const [hits, setHits] = useState<Member[]>([])
   return (
     <TribePage page='discover'>
       <TribeHeader title='Discover' color='primary' content={
@@ -51,7 +51,8 @@ const Discover: React.FC = () => {
                 </IonAvatar>
               </IonButtons>
               {x.twitterName}
-              <BuyPriceBadge address={x?.address} />
+              {x.type}
+              {typeof x.type === 'undefined' && <BuyPriceBadge address={x?.address} />}
             </IonItem>)}
 
           </IonList>
@@ -69,7 +70,8 @@ const Discover: React.FC = () => {
                     <IonBadge color='light' style={{ position: 'absolute', bottom: 5, left: 5 }}>
                       {member?.twitterName}
                     </IonBadge>
-                    <BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />
+
+                    {typeof member?.type === 'undefined' && <BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />}
                     {/* <MemberGraph address={member!.address} /> */}
                   </IonCard></IonCol>)}
               </IonRow>

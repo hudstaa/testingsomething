@@ -13,7 +13,6 @@ import { useNotifications } from "../hooks/useNotifications"
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
-    const { open } = useWriteMessage();
     const { localCommentCount } = useNotifications()
     const [notif, setNotif] = useState<string | null>(null);
     return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 2, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
@@ -46,9 +45,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" >
-            <IonButton color='white' fill="clear" onClick={(e) => {
-                open((message: any) => { makeComment(id, message) }, '', 'make a comment')
-            }}>
+            <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-13px', marginBottom: '-1px' }} />
 
                 <IonText color={showComments ? 'white' : 'medium'} className="semi" style={{ padding: 0, marginTop: 2, fontSize: 15 }}>
@@ -71,11 +68,6 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButtons>
         </IonItem>}
         {showComments && <CommentList total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
-        {(showComments) && makeComment && <WriteMessage
-            placeHolder='write a comment'
-            address={''}
-            sendMessage={(message: any) => { makeComment(id, message) }}
-        />}
 
     </IonCard>
 }
