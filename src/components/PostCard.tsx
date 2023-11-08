@@ -20,7 +20,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }}>
 
         <IonCardHeader style={{ paddingLeft: 8, paddingBottom: 3, paddingTop: 8, marginRight: 0 }}>
-            <IonBadge color='paper' style={{ position: 'absolute', right: 15, top: 20 }}>
+            <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 15 }}>
                 <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
