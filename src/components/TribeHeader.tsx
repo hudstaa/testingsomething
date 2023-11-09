@@ -33,13 +33,13 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         backPage = '/chat'
     }
     const toolbar = !hide ? (
-        <IonToolbar style={{paddingTop: 25}}>
+        <IonToolbar style={{paddingTop: 15}}>
             <IonButtons slot="start" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
                 {showBackButton && title !== 'channel' && (
                 <IonBackButton color="dark" defaultHref="/" />
                 )}
             </IonButtons>
-            <IonTitle style={{ display: 'flex', justifyContent: 'center', flex: 1, alignItems: 'center', fontSize: '20px' }}>
+            <IonTitle style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '20px' }}>
                 {title}
             </IonTitle>
             <IonButtons slot="end" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
