@@ -35,7 +35,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     const toolbar = !hide ? (
         <IonToolbar style={{
           paddingTop: 'max(env(safe-area-inset-top), 10px)', // Updated this line
-          paddingBottom: 'env(safe-area-inset-bottom)',
+          paddingBottom: 'env(safe-area-inset-bottom), 0px',
         }}>
           <IonButtons slot="start">
             {showBackButton && title !== 'channel' && (
