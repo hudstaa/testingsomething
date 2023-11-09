@@ -76,19 +76,19 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
 
     return <IonRow>
         <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
-            <img style={{ width: 36, height: 36, borderRadius: '10px', marginLeft: 0 }} src={member?.twitterPfp || personOutline} />
+            <img style={{ width: 32, height: 32, borderRadius: '10px', marginLeft: 0 }} src={member?.twitterPfp || personOutline} />
         </IonRouterLink>        
-        <IonGrid fixed style={{ paddingLeft: 7 }}>
-            <IonRow style={{ marginTop: -2, marginBottom: '2px' }}> {/* Reduced bottom margin */}
+        <IonGrid fixed style={{ paddingLeft: 5 }}>
+            <IonRow style={{ marginTop: -5, marginBottom: '2px' }}> {/* Reduced bottom margin */}
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='dark' className='bold' style={{ fontSize: '14px' }}>
+                    <IonText color='dark' className='bold' style={{ fontSize: '14px' , letterSpacing: '-0.035em' }}>
                         {member?.twitterName}
                     </IonText>
                 </IonRouterLink>
             </IonRow>
-            <IonRow style={{ marginTop: '-4px' }}> {/* Reduced top margin */}
+            <IonRow style={{ marginTop: '-6px' }}> {/* Reduced top margin */}
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='medium' className='semi' style={{ fontSize: '11px' }}>
+                    <IonText color='medium' className='medium' style={{ fontSize: '10px', letterSpacing: '-0.035em', opacity: 0.75 }}>
                         @{member?.twitterUsername}
                     </IonText>
                 </IonRouterLink>

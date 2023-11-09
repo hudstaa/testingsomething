@@ -1,25 +1,8 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
-@font-face {
-  font-family: 'SF Bold';
-  src: url("/fonts/bold.otf") format("opentype");
-}
 
-@font-face {
-  font-family: 'SF Medium';
-  src: url("/fonts/bold.otf") format("opentype");
-}
 
-@font-face {
-  font-family: 'AvenirBold';
-  src: url("/fonts/AvenirNextLTPro-Bold.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF';
-  src: url("/fonts/regular.otf") format("opentype");
-}
 
 /* @import url(https://fonts.googleapis.com/css2?family=Ubuntu&display=swap); */
 
@@ -28,23 +11,23 @@ http://ionicframework.com/docs/theming/ */
 } */
 
 @font-face {
-  font-family: 'SF Medium';
-  src: url("/fonts/medium.otf") format("opentype");
+  font-family: 'AvenirBold';
+  src: url("/fonts/AvenirNextLTPro-Bold.otf") format("opentype");
 }
 
 
-@font-face {
-  font-family: 'SF Heavy';
-  src: url("/fonts/heavy.otf") format("opentype");
-}
 
 @font-face {
-  font-family: 'SF Semi';
-  src: url("/fonts/semibold.otf") format("opentype");
+  font-family: 'Rubik';
+  src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 300, 400, 500, 600 700; /* Define the range of font-weight Rubik supports */
 }
+
+/* Remove the individual @font-face rules for SF Bold, SF Medium, etc. */
 
 * {
-  font-family: 'SF Bold';
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500; /* Regular weight */
 }
 
 .header {
@@ -52,19 +35,28 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .regular {
-  font-family: 'SF' !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 500; /* Regular weight */
 }
 
 .heavy {
-  font-family: 'SF Heavy' !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 700; /* Bold weight, assuming 'heavy' is bolder than 'bold' */
 }
 
 .semi {
-  font-family: 'SF Semi' !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 600; /* Semi-bold weight */
+}
+
+.light {
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 300; /* Semi-bold weight */
 }
 
 .medium {
-  font-family: 'SF Medium' !important;
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 500; /* Medium weight */
 }
 
 .bottom-start-container {
@@ -77,6 +69,15 @@ http://ionicframework.com/docs/theming/ */
   margin: 100
 } */
 
+.rounded-div {
+  background-color:rgba(255, 255, 255, 0.2); /* Your color */
+  padding-left: 10px;
+  padding-right: 3px;
+  height: 45px;
+  border-radius: 40px; /* Adjust as needed for rounded corners */
+  display: flex; /* Use flexbox to align children horizontally */
+  align-items: center; /* Center align the flex items vertically */
+}
 
 
 .ion-image-center {
@@ -116,7 +117,9 @@ http://ionicframework.com/docs/theming/ */
 }
 
 textarea {
-  font-family: 'Avenir' !important
+  font-family: 'rubik' !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
 }
 
 .message-card-content {
@@ -214,8 +217,8 @@ ion-footer ion-toolbar {
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
-  --ion-color-medium: #92949c;
-  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium: #A2A2A2;
+  --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
   --ion-color-medium-shade: #808289;
@@ -286,8 +289,8 @@ ion-footer ion-toolbar {
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
 
-    --ion-color-medium: #989aa2;
-    --ion-color-medium-rgb: 152, 154, 162;
+    --ion-color-medium: #A2A2A2;
+    --ion-color-medium-rgb: 162, 162, 162;
     --ion-color-medium-contrast: #000000;
     --ion-color-medium-contrast-rgb: 0, 0, 0;
     --ion-color-medium-shade: #86888f;
