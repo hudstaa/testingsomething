@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonFab, IonGrid, IonIcon, IonImg, IonItem, IonList, IonModal } from "@ionic/react"
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle,IonCardHeader, IonFab, IonGrid, IonIcon, IonImg, IonItem, IonList, IonModal, IonRouterOutlet } from "@ionic/react"
 import { WriteMessage } from "./WriteMessage"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { useMember } from "../hooks/useMember";
@@ -17,14 +17,14 @@ export const WriteMessageModalProvider: React.FC = () => {
         }
     }, [isOpen])
     return <>
-        <IonModal ref={modalRef} isOpen={isOpen} color='paper' onDidDismiss={() => {
+        <IonModal ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
-            <IonGrid fixed style={{ marginLeft: 0, marginRight: 0, padding: 0 }}>
+            <IonGrid fixed style={{ marginLeft: 0, marginRight: 0, paddingTop: 30, paddingLeft: 0, paddingRight: 0 }}>
 
-                <IonItem color='light'>
+                <IonItem>
                     <IonButtons slot='end'>
-                        <IonButton fill="clear" color='danger' onClick={() => {
+                        <IonButton fill="clear" color='medium' onClick={() => {
                             dismiss(false)
                             setMedia(undefined as any)
                         }}>

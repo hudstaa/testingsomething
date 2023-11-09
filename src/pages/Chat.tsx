@@ -2,7 +2,7 @@ import { IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonInput, IonItem, IonR
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
-import { MemberPfp } from '../components/MemberBadge';
+import { MemberPfp, MemberAlias } from '../components/MemberBadge';
 import { timeAgo } from '../components/TradeItem';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -72,10 +72,10 @@ const Chat: React.FC = () => {
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
-                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
+                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0}}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address}>
+                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address} className="chat-item">
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
@@ -100,26 +100,31 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
         const q = query(collection(channelsRef, 'messages'), orderBy('sent', 'desc'), limit(1));
         getDocs(q)
             .then(querySnapshot => {
-                const data = querySnapshot.docs[0].data()
-                data && setMsg(data as any)
-            })
-    }, [address])
-    return <>
-        <IonButtons slot='start'>
-            <MemberPfp address={address} size='smol' />
-        </IonButtons>
-        <div>
-            {msg?.content.slice(0, 20)}
+                const data = querySnapshot.docs[0].data();
+                data && setMsg(data as any);
+            });
+    }, [address]);
+
+    return (
+        <div style={{ padding: '10px', paddingLeft: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
+            <IonButtons slot='start'>
+                <MemberPfp address={address} size='double-smol' />
+            </IonButtons>
+            <div style={{ flex: 1, minWidth: 0, paddingLeft: '8px' }}>
+                <MemberAlias address={address}/>
+                <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
+                    {msg?.content.slice(0, 20)}
+                </div>
+            </div>
+            <IonButtons slot='end'>
+                <IonBadge color={'transparent'}>
+                    {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}
+                </IonBadge>
+            </IonButtons>
         </div>
-        <IonButtons slot='end'>
-            <IonBadge color={'light'}>
-                {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}
-            </IonBadge>
-
-        </IonButtons>
-
-    </>
-}
+    );
+    
+};
 
 export default Chat;
 

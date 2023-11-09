@@ -24,11 +24,28 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
         </IonChip>}</IonRouterLink>
 }
 
-export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
-    const member = useMember(x => x.getFriend(address))
+export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address));
 
-    return <IonRouterLink style={style} routerLink={'/member/' + address} routerDirection='none'>
-        <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: 40, height: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+    let pfpStyle = {};
+    switch (size) {
+        case 'smol':
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            break;
+        case 'veru-smol':
+            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            break;
+        case 'double-smol':
+            pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 15 }; // Adjust dimensions as needed for "double-smol"
+            break;
+        case 'big':
+        default:
+            pfpStyle = { width: 100, height: 100, padding: 10, borderRadius: 20 };
+            break;
+    }
+
+    return <IonRouterLink style={{ ...style, ...pfpStyle }} routerLink={'/member/' + address} routerDirection='none'>
+        <img src={member?.twitterPfp || personOutline} style={pfpStyle} />
     </IonRouterLink>
 }
 
