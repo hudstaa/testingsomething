@@ -32,7 +32,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
                 <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
-                    <IonText color='dark' style={{fontWeight: 600, fontSize: '18px'}}>
+                    <IonText color='dark' style={{fontWeight: 600, fontSize: '16px'}}>
                         {title}
                     </IonText>
                 </IonRouterLink>
