@@ -81,7 +81,7 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
         <IonGrid fixed style={{ paddingLeft: 7 }}>
             <IonRow >
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='dark' className='' style={{ fontWeight: 575, fontSize: '15px' , letterSpacing: '-0.035em', opacity: 0.95}}>
+                    <IonText color='dark' className='' style={{ fontWeight: 575, fontSize: '15px' , letterSpacing: '-0.035em', opacity: 0.85}}>
                         {member?.twitterName}
                     </IonText>
                 </IonRouterLink>
