@@ -70,12 +70,12 @@ const Chat: React.FC = () => {
         <TribePage page='chat'>
             <TribeHeader title='Chats' />
             <TribeContent >
-                <IonGrid className="chatheader-item" style={{ padding: 0 }}>
+                <IonGrid style={{ padding: 0 }}>
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0}}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address} className="chat-item">
+                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
@@ -106,16 +106,23 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
     }, [address]);
 
     return (
-        <div style={{ padding: '10px', paddingLeft: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <div style={{ paddingTop: '5px', paddingBottom: '5px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
             <IonButtons slot='start'>
                 <MemberPfp address={address} size='double-smol' />
             </IonButtons>
             <div style={{ flex: 1, minWidth: 0, paddingLeft: '8px' }}>
-                <MemberAlias address={address}/>
-                <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
-                    {msg?.content.slice(0, 20)}
+                <div>
+                    <MemberAlias address={address}/>
                 </div>
-            </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <span style={{ fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
+                            <MemberAlias address={address}/>
+                        </span>
+                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5, marginLeft: '5px' }}>
+                            : {msg?.content.slice(0, 20)}
+                        </span>
+                    </div>
+                </div>
             <IonButtons slot='end'>
                 <IonBadge color={'transparent'}>
                     {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}

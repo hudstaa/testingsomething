@@ -69,14 +69,6 @@ http://ionicframework.com/docs/theming/ */
   margin: 100
 } */
 
-.chat-item {
-  border-bottom: 0.5px solid var(--ion-color-paper);
-}
-
-.chatheader-item {
-  border-top: 0.5px solid var(--ion-color-paper);
-}
-
 
 .rounded-div {
   background-color: var(--ion-color-paper); /* Your color */
