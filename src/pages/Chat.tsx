@@ -68,7 +68,7 @@ const Chat: React.FC = () => {
     const { balance, syncing } = useERCBalance(channelAddress as any, chainId as any);
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chats' />
+        <TribeHeader title="Chats" showBackButton={false} />
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>

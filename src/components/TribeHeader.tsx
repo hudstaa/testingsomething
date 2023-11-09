@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCardHeader, IonCardSubtitle, IonCardTitle, IonHeader, IonImg, IonModal, IonRouterLink, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonAvatar, IonBadge, IonButton, IonButtons, IonCardHeader, IonCardSubtitle, IonCardTitle, IonHeader, IonImg, IonModal, IonRouterLink, IonText, IonTitle, IonToolbar } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { getFirestore, query, collection, where, getDocs, Timestamp, onSnapshot 
 import { MemberPfp } from "./MemberBadge";
 import { useNotifications } from "../hooks/useNotifications";
 
-export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean }> = ({ title, sticky = true, color, hide, image, content }) => {
+export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
     const modalRef = useRef<HTMLIonModalElement>(null)
     const auth = nativeAuth();
@@ -31,19 +31,12 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
-                    <IonText color='dark' style={{fontWeight: 600, fontSize: '16px', letterSpacing: '-1px'}}>
-                        {title}
-                    </IonText>
-                </IonRouterLink>
+                {showBackButton && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
+                <IonText color='dark' style={{ fontWeight: 600, fontSize: '16px', letterSpacing: '-1px' }}>
+                    {title}
+                </IonText>
             </IonButtons>
-            <IonButtons slot='end'>
-                {me &&
-                    <IonButton routerLink={'/account'}>
-                        <MemberPfp address={me.address} size="smol" />
-                    </IonButton>}
-            </IonButtons>
-    </IonToolbar > ) : <IonToolbar color='tribe'>
+        </IonToolbar> ) : <IonToolbar color='tribe'>
         {content}
     </IonToolbar>
     if (!sticky) {
