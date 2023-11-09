@@ -57,7 +57,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
-                <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 2, right: 40, paddingRight: 2 }} >
+                <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 1, right: 40, paddingRight: 4 }} >
                     <IonText className='bold'>{score} </IonText>
                 </IonLabel>
 
