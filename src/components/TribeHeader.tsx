@@ -33,14 +33,19 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         backPage = '/chat'
     }
     const toolbar = !hide ? (
-        <IonToolbar>
-            <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton && title !== 'channel' && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
-                <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
-                    {title}
-                </IonText>
+        <IonToolbar style={{paddingTop: 5}}>
+            <IonButtons slot="start" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
+                {showBackButton && title !== 'channel' && (
+                <IonBackButton color="dark" defaultHref="/" />
+                )}
             </IonButtons>
-        </IonToolbar>) : <IonToolbar color='tribe'>
+            <IonTitle style={{ display: 'flex', justifyContent: 'center', flex: 1, alignItems: 'center', fontSize: '20px' }}>
+                {title}
+            </IonTitle>
+            <IonButtons slot="end" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
+                {/* Add buttons here if you have any for the end slot */}
+            </IonButtons>
+        </IonToolbar> ) : <IonToolbar color='tribe'>
         {content}
     </IonToolbar>
     if (!sticky) {

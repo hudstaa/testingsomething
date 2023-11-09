@@ -76,6 +76,10 @@ http://ionicframework.com/docs/theming/ */
   margin: 100
 } */
 
+ion-searchbar.custom {
+
+  --border-radius: 15px;
+}
 
 .rounded-div {
   background-color: var(--ion-color-paper);
