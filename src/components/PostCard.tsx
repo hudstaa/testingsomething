@@ -19,7 +19,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 8, paddingBottom: 3, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 12, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 15 }}>
                 <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
@@ -28,7 +28,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 8, paddingBottom: 0, paddingTop: 2, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 0, paddingTop: 2, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
                     <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '20px', lineHeight: '1', fontWeight: 500, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
@@ -36,7 +36,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -12, overflow: 'hidden', borderRadius: '15px' }}>
+                    <div style={{ marginTop: 10, marginBottom: 2, marginRight: -8, overflow: 'hidden', borderRadius: '15px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
@@ -44,7 +44,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" style={{ marginRight: '-12px', marginLeft: '-10px'}}>
+        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-8px'}}>
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-10px'}} />
 
