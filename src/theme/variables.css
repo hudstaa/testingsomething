@@ -135,6 +135,7 @@ textarea {
 }
 
 .message-card-content {
+
   padding: 15px;
   border: 1px solid rgba(1, 1, 1, 0.1);
   border-radius: 20px;
@@ -577,6 +578,8 @@ ion-tab-bar {
   display: block;
   clear: both;
   font-weight: 400;
+  white-space: pre-wrap !important;
+
 }
 
 ::slotted([slot="start"]) {

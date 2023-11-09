@@ -35,7 +35,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
+                {showBackButton && title !== 'channel' && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
                 <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title}
                 </IonText>

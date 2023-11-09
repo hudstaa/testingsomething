@@ -308,14 +308,14 @@ const App: React.FC = () => {
                 </IonRouterOutlet>
 
                 <IonTabBar style={{ border: '0' }} slot="bottom">
-                  <IonTabButton style={tab === 'channel' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
+                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
                     <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
                   </IonTabButton>
                   <IonTabButton tab="member" href="/member">
                     <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
                   </IonTabButton>
                   <IonTabButton tab="chat" href="/chat">
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'chat' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
                   </IonTabButton>
                   <IonTabButton tab="account" href="/account">
                     <NotifBadge />
