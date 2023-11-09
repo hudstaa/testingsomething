@@ -70,11 +70,11 @@ http://ionicframework.com/docs/theming/ */
 } */
 
 .chat-item {
-  border-bottom: 1px solid var(--ion-color-paper);
+  border-bottom: 0.5px solid var(--ion-color-paper);
 }
 
 .chatheader-item {
-  border-top: 1px solid var(--ion-color-paper);
+  border-top: 0.5px solid var(--ion-color-paper);
 }
 
 
