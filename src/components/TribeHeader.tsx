@@ -32,7 +32,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
                 {showBackButton && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
-                <IonText color='dark' style={{ fontWeight: 600, fontSize: '16px', letterSpacing: '-1px' }}>
+                <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title}
                 </IonText>
             </IonButtons>
