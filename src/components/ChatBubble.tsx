@@ -40,9 +40,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const replyButton = !isMe && (
         <button
-            style={{ margin: '0px!important', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             onClick={() => reply(message.id)}
             color='primary'
+
         >
             <IonIcon color='tertiary' icon={returnDownBack} />
         </button>
@@ -57,7 +58,6 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     );
     return (
         <div className="message-container" key={message.id} style={{
-            margin: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: isMe ? 'flex-end' : 'flex-start',
@@ -68,8 +68,8 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             <div style={messageContainerStyle}>
                 {profilePic}
                 {contentBubble}
+                {replyButton}
             </div>
-            {replyButton}
         </div>
     );
 }

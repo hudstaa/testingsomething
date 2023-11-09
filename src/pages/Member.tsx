@@ -25,6 +25,9 @@ import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { OnBoarding } from './OnBoarding';
 import { BuyPriceBadge } from './Discover';
 import useERCBalance from '../hooks/useERCBalance';
+import { createChart } from 'lightweight-charts';
+import { TradingViewWidget } from '../components/Erc20Chart';
+
 
 const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
@@ -216,9 +219,9 @@ const Member: React.FC = () => {
                         </IonButton>}
                     </IonCard>
                 </IonModal>
-                {member != null && member.type && member?.lp &&
+                {member != null && member.type && member?.symbol &&
 
-                    <iframe style={{ width: '100%', height: '100%' }} src={"https://dexscreener.com/ethereum/" + member.lp + "?embed=1&theme=dark&trades=0"}></iframe>
+                    <TradingViewWidget symbol={member?.symbol} />
                 }
 
                 <div>

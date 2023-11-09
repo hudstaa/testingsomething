@@ -20,14 +20,16 @@ http://ionicframework.com/docs/theming/ */
 @font-face {
   font-family: 'Rubik';
   src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype-variations");
-  font-weight: 300, 400, 500, 600 700; /* Define the range of font-weight Rubik supports */
+  font-weight: 300, 400, 500, 600 700;
+  /* Define the range of font-weight Rubik supports */
 }
 
 /* Remove the individual @font-face rules for SF Bold, SF Medium, etc. */
 
 * {
   font-family: 'Rubik', sans-serif;
-  font-weight: 500; /* Regular weight */
+  font-weight: 500;
+  /* Regular weight */
 }
 
 .header {
@@ -36,27 +38,32 @@ http://ionicframework.com/docs/theming/ */
 
 .regular {
   font-family: 'Rubik', sans-serif !important;
-  font-weight: 500; /* Regular weight */
+  font-weight: 500;
+  /* Regular weight */
 }
 
 .heavy {
   font-family: 'Rubik', sans-serif !important;
-  font-weight: 700; /* Bold weight, assuming 'heavy' is bolder than 'bold' */
+  font-weight: 700;
+  /* Bold weight, assuming 'heavy' is bolder than 'bold' */
 }
 
 .semi {
   font-family: 'Rubik', sans-serif !important;
-  font-weight: 600; /* Semi-bold weight */
+  font-weight: 600;
+  /* Semi-bold weight */
 }
 
 .light {
   font-family: 'Rubik', sans-serif !important;
-  font-weight: 300; /* Semi-bold weight */
+  font-weight: 300;
+  /* Semi-bold weight */
 }
 
 .medium {
   font-family: 'Rubik', sans-serif !important;
-  font-weight: 500; /* Medium weight */
+  font-weight: 500;
+  /* Medium weight */
 }
 
 .bottom-start-container {
@@ -70,13 +77,17 @@ http://ionicframework.com/docs/theming/ */
 } */
 
 .rounded-div {
-  background-color:rgba(255, 255, 255, 0.2); /* Your color */
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Your color */
   padding-left: 10px;
   padding-right: 3px;
   height: 45px;
-  border-radius: 40px; /* Adjust as needed for rounded corners */
-  display: flex; /* Use flexbox to align children horizontally */
-  align-items: center; /* Center align the flex items vertically */
+  border-radius: 40px;
+  /* Adjust as needed for rounded corners */
+  display: flex;
+  /* Use flexbox to align children horizontally */
+  align-items: center;
+  /* Center align the flex items vertically */
 }
 
 

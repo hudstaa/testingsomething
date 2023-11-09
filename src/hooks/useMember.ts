@@ -6,6 +6,7 @@ import { getAddress } from 'viem';
 
 
 export interface Member {
+    symbol?: string;
     twitterName: string;
     twitterUsername: string;
     twitterPfp: string;
