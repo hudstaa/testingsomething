@@ -64,15 +64,21 @@ const Posts: React.FC = () => {
                             tribe
                         </IonCardTitle>
                     </IonButtons>
-                    <IonSegment value={postType} style={{ position: 'absolute', right: 15, top: 5 }}>
-                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
-                            setPostType('top')
-                        }}>
+                    <IonSegment 
+                        onIonChange={(e) => {
+                            const newValue = e.detail.value;
+                            if (newValue === 'top' || newValue === 'recent') {
+                            setPostType(newValue);
+                            }
+                        }}
+                        value={postType} 
+                        style={{ position: 'absolute', right: 15, top: 5 }}
+                        swipeGesture={true}
+                        >
+                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'}>
                             Top
                         </IonSegmentButton>
-                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'light' : 'paper'} onClick={() => {
-                            setPostType('recent')
-                        }}>
+                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'light' : 'paper'}>
                             New
                         </IonSegmentButton>
                     </IonSegment>
