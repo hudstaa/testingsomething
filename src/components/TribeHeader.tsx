@@ -33,21 +33,37 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
         backPage = '/chat'
     }
     const toolbar = !hide ? (
-        <IonToolbar style={{paddingTop: 25}}>
-            <IonButtons slot="start" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
-                {showBackButton && title !== 'channel' && (
-                <IonBackButton color="dark" defaultHref="/" />
-                )}
-            </IonButtons>
-            <IonTitle style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '20px' }}>
-                {title}
-            </IonTitle>
-            <IonButtons slot="end" style={{ display: 'flex', justifyContent: 'center', flex: 1 }}>
-                {/* Add buttons here if you have any for the end slot */}
-            </IonButtons>
-        </IonToolbar> ) : <IonToolbar color='tribe'>
-        {content}
-    </IonToolbar>
+        <IonToolbar style={{
+          paddingTop: 'max(env(safe-area-inset-top), 10px)', // Updated this line
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}>
+          <IonButtons slot="start">
+            {showBackButton && title !== 'channel' && (
+              <IonBackButton color="dark" defaultHref={backPage} />
+            )}
+          </IonButtons>
+          <IonTitle style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            fontSize: '20px',
+            flex: showBackButton ? 'none' : 1, // Adjust flex when a back button is present
+            marginLeft: showBackButton ? 0 : 'env(safe-area-inset-left)',
+            marginRight: 'env(safe-area-inset-right)',
+          }}>
+            {title}
+          </IonTitle>
+          <IonButtons slot="end">
+            {/* Placeholder for end buttons, if any */}
+          </IonButtons>
+        </IonToolbar>
+      ) : (
+        <IonToolbar color='tribe' style={{
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}>
+          {content}
+        </IonToolbar> );
     if (!sticky) {
         return toolbar;
     }
