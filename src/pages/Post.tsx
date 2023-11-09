@@ -83,7 +83,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <TribePage page='post'>
-        <TribeHeader title={'〱'} />
+        <TribeHeader showBackButton={true}  />
         <IonContent ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
