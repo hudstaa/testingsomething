@@ -23,7 +23,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const imageStyle: React.CSSProperties = {
         maxWidth: '100%', // Image can fill the width of the chat container
-        height: 'auto', // Keep image aspect ratio
+        height: '200px', // Keep image aspect ratio
         // Additional styles as needed
     };
 

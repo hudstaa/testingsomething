@@ -25,7 +25,9 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
         if (containerRef.current) {
             // Ionic's IonContent has a method scrollToBottom
             if (typeof newMessage !== 'undefined') {
-                containerRef.current.scrollToBottom(500); // 500ms for a smooth scroll
+                setTimeout(() => {
+                    containerRef.current!.scrollToBottom(500); // 500ms for a smooth scroll
+                }, 100)
             }
         }
     }, [newMessage, containerRef]);
