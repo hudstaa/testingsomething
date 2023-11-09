@@ -25,7 +25,6 @@ import { usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { OnBoarding } from './OnBoarding';
 import { BuyPriceBadge } from './Discover';
 import useERCBalance from '../hooks/useERCBalance';
-import { createChart } from 'lightweight-charts';
 import { TradingViewWidget } from '../components/Erc20Chart';
 
 
