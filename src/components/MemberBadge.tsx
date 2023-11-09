@@ -74,19 +74,15 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRow>
-        <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
-            <img style={{ width: 30, height: 30, borderRadius: '10px', marginLeft: 0 }} src={member?.twitterPfp || personOutline} />
-        </IonRouterLink>        
-        <IonGrid fixed style={{ paddingLeft: 5 }}>
+    return <IonRow>      
+        <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow >
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='dark' className='' style={{ fontWeight: 575, fontSize: '15px' , letterSpacing: '-0.035em'}}>
-                        {member?.twitterName}
+                    <IonText color='medium' className='semi' style={{ fontSize: '11px' }}>
+                        @{member?.twitterUsername}
                     </IonText>
                 </IonRouterLink>
             </IonRow>
-            
             <IonRow>
                 {content ? content : <></>}
             </IonRow>
