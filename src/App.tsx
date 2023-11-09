@@ -261,69 +261,69 @@ const App: React.FC = () => {
           <WriteMessageModalProvider />
           <IonReactHashRouter >
             <NotificationsProvider />
-            <IonTabs onIonTabsWillChange={(e) => {
-              setTab(e.detail.tab as any);
-            }}>
-              <IonRouterOutlet>
-                <Redirect exact path="/" to='/post' />
-                <Route exact path="/trade/:hash">
-                  <Transaction />
-                </Route>
-                <Route exact path="/channel">
-                  <Chat />
-                </Route>
-                <Route exact path="/channel/:address">
-                  <Room />
-                </Route>
-                <Route exact path="/channel/:chainId/:address">
-                  <Room />
-                </Route>
-                <Route path="/watchlist">
-                  <Watchlist />
-                </Route>
-                <Route path="/activity">
-                  <Activity />
-                </Route>
-                <Route path="/account" exact>
-                  <Account />
-                </Route>
-                <Route path="/post/" exact>
-                  <Posts />
-                </Route>
-                <Route path="/member/:address/trade" exact>
-                  <Trade />
-                </Route>
-                <Route path="/post/:id" exact>
-                  <Post />
-                </Route>
+            <IonRouterOutlet>
+              <Route exact path="/channel/:address">
+                <Room />
+              </Route>
 
-                <Route path="/member/:address" exact>
-                  <Member />
-                </Route>
-                <Route path="/auth" exact>
-                  <MobileAuth />
-                </Route>
-                <Route path="/member" exact>
-                  <Discover />
-                </Route>
-              </IonRouterOutlet>
+              <IonTabs onIonTabsWillChange={(e) => {
+                setTab(e.detail.tab as any);
+              }}>
+                <IonRouterOutlet>
+                  <Redirect exact path="/" to='/post' />
+                  <Route exact path="/trade/:hash">
+                    <Transaction />
+                  </Route>
+                  <Route exact path="/chat">
+                    <Chat />
+                  </Route>
+                  <Route path="/watchlist">
+                    <Watchlist />
+                  </Route>
+                  <Route path="/activity">
+                    <Activity />
+                  </Route>
+                  <Route path="/account" exact>
+                    <Account />
+                  </Route>
+                  <Route path="/post/" exact>
+                    <Posts />
+                  </Route>
+                  <Route path="/member/:address/trade" exact>
+                    <Trade />
+                  </Route>
+                  <Route path="/post/:id" exact>
+                    <Post />
+                  </Route>
 
-              <IonTabBar style={{ border: '0' }} slot="bottom">
-                <IonTabButton style={tab === 'channel' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="member" href="/member">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="channel" href="/channel">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="account" href="/account">
-                  <NotifBadge />
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
-                </IonTabButton>
-              </IonTabBar>
-            </IonTabs>
+                  <Route path="/member/:address" exact>
+                    <Member />
+                  </Route>
+                  <Route path="/auth" exact>
+                    <MobileAuth />
+                  </Route>
+                  <Route path="/member" exact>
+                    <Discover />
+                  </Route>
+                </IonRouterOutlet>
+
+                <IonTabBar style={{ border: '0' }} slot="bottom">
+                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="member" href="/member">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="chat" href="/chat">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'chat' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="account" href="/account">
+                    <NotifBadge />
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
+                  </IonTabButton>
+                </IonTabBar>
+              </IonTabs>
+            </IonRouterOutlet>
 
           </IonReactHashRouter>
         </ApolloProvider>

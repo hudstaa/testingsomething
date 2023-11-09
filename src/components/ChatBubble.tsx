@@ -22,10 +22,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         paddingRight: '15px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
     };
-    
+
     const imageStyle: React.CSSProperties = {
         maxWidth: '100%', // Image can fill the width of the chat container
-        height: 'auto', // Keep image aspect ratio
+        height: '200px', // Keep image aspect ratio
         // Additional styles as needed
     };
 
@@ -42,9 +42,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const replyButton = !isMe && (
         <button
-            style={{ margin: '0px!important', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             onClick={() => reply(message.id)}
             color='primary'
+
         >
             <IonIcon color='tertiary' icon={returnDownBack} />
         </button>
@@ -74,7 +75,6 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     return (
         <div className="message-container" key={message.id} style={{
-            margin: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: isMe ? 'flex-end' : 'flex-start',
@@ -107,7 +107,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     }
     const isMe = me === message.author;
 
-    const contentBubble = !message.media ? <div style={{ margin: '0px!important', font: 'Avenir' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+    const contentBubble = !message.media ? <div style={{ margin: '0px!important', font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
         {message.content}
     </div> : <><img style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} /></>
 

@@ -1,7 +1,7 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
-import { albumsOutline, chatboxOutline, copy, exit, key, notificationsOutline, personOutline, wallet } from 'ionicons/icons';
+import { albumsOutline, chatboxOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, personOutline, wallet } from 'ionicons/icons';
 import { MemberBadge, MemberToolbar } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -184,22 +184,37 @@ const Account: React.FC = () => {
                                         open((message) => addPost(me.address, message as any), me.address, "New Post")
                                     }} >Post
                                     </IonButton>
-                                    {user ? <IonRow>
+                                    <IonItem color='paper'>
 
+                                        <IonText>
+                                            Connected accounts:
+                                        </IonText>
+                                    </IonItem>
+
+                                    {user ? <IonRow>
                                         {user && typeof (user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address === 'undefined' ? <IonButton fill='clear' onClick={linkWallet}>
                                             Link Browser wallet
-                                        </IonButton> : <IonChip>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
+                                        </IonButton> : <IonChip color='medium'>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
                                         {user && typeof user.discord?.username === 'undefined' ? <IonButton fill='clear' onClick={linkDiscord}>
                                             Link Discord
-                                        </IonButton> : <IonChip>{user?.discord?.username}</IonChip>}
+                                        </IonButton> : <IonChip color='tertiary'>
+                                            <IonIcon icon={logoDiscord} />
+                                            <IonText>
+                                                {user?.discord?.username}
+                                            </IonText>
+                                        </IonChip>}
                                         {user && typeof user.google?.name === 'undefined' ? <IonButton fill='clear' onClick={linkGoogle}>
                                             Link Google
-                                        </IonButton> : <IonChip>{user?.google?.name}</IonChip>}
+                                        </IonButton> : <IonChip color='primary'>
+                                            <IonIcon icon={logoGoogle} />
+                                            <IonText>
+                                                {user?.google?.name}
+                                            </IonText></IonChip>}
                                     </IonRow> : <IonButton onClick={login}>
                                         Login</IonButton>}
                                 </IonCardContent>
                             </IonCard>
-                            <IonCard color='paper'>
+                            {notifications && notifications.length > 0 && <IonCard color='paper'>
                                 <IonCardHeader>
                                     <IonItem lines='none' color='paper'>
 
@@ -242,7 +257,7 @@ const Account: React.FC = () => {
                                         <MemberBadge address={from} />{message}
                                     </IonItem>)}
                                 </IonCardContent>
-                            </IonCard>
+                            </IonCard>}
                             <IonButton expand='full' fill='outline' onClick={() => {
                                 signOut(auth); logout(); setCurrentUser(null as any);
                                 setTimeout(() => {

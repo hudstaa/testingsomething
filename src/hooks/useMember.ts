@@ -6,6 +6,7 @@ import { getAddress } from 'viem';
 
 
 export interface Member {
+    symbol?: string;
     twitterName: string;
     twitterUsername: string;
     twitterPfp: string;
@@ -16,6 +17,7 @@ export interface Member {
     privyAddress: string;
     friendTechAddress?: string
     type?: string
+    lp?: string
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;

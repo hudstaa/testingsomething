@@ -48,17 +48,15 @@ export function nativeAuth() {
     return auth
 }
 export function hideTabs() {
-    const tabsEl = document.querySelector('ion-tab-bar');
-    if (tabsEl) {
-        tabsEl.style.transition = 'transform 0.3s ease-in-out';
-        tabsEl.style.transform = 'translateY(100%)'; // Slide out
-    }
+    // const tabsEl = document.querySelector('ion-tab-bar');
+    // if (tabsEl) {
+    //     tabsEl.style.transform = 'translateY(100%)'; // Slide out
+    // }
 }
 
 export function showTabs() {
-    const tabsEl = document.querySelector('ion-tab-bar');
-    if (tabsEl) {
-        tabsEl.style.transition = 'transform 0.3s ease-in-out';
-        tabsEl.style.transform = 'translateY(0)'; // Slide in
-    }
+    // const tabsEl = document.querySelector('ion-tab-bar');
+    // if (tabsEl) {
+    //     tabsEl.style.transform = 'translateY(0)'; // Slide in
+    // }
 }

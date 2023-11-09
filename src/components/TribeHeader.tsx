@@ -28,15 +28,19 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [ready, auth?.currentUser, me])
 
     const { location } = useHistory();
+    let backPage = '/' + location.pathname?.split('/')[1];
+    if (backPage || "".includes('/channel')) {
+        backPage = '/chat'
+    }
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
+                {showBackButton && title !== 'channel' && <IonBackButton text="" color="dark" defaultHref="/" />} {/* Here is the conditional back button */}
                 <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title}
                 </IonText>
             </IonButtons>
-        </IonToolbar> ) : <IonToolbar color='tribe'>
+        </IonToolbar>) : <IonToolbar color='tribe'>
         {content}
     </IonToolbar>
     if (!sticky) {

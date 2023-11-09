@@ -9,7 +9,7 @@ import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
 import { useMember, Member } from '../hooks/useMember';
 import useTabs from '../hooks/useTabVisibility';
-import { formatEth, nativeAuth, uniqByProp } from '../lib/sugar';
+import { formatEth, nativeAuth, showTabs, uniqByProp } from '../lib/sugar';
 import { TribePage } from './TribePage';
 import useERCBalance from '../hooks/useERCBalance';
 import { usePrivy } from '@privy-io/react-auth';
@@ -64,7 +64,7 @@ const Chat: React.FC = () => {
     }, [me])
     const { setTab } = useTabs()
     useIonViewWillEnter(() => {
-        setTab('channel')
+        setTab('chat')
     })
     const { user } = usePrivy();
     const [channelAddress, setChannelAddress] = useState("0x6982508145454Ce325dDbE47a25d4ec3d2311933")
@@ -74,36 +74,36 @@ const Chat: React.FC = () => {
 
     return (
         <TribePage page='chat'>
-         <TribeHeader title='Chats' color='primary' content={
-        <>
-          <IonSearchbar onIonInput={(event) => {
-            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
-              setHits((res.results[0] as any).hits || [])
-            })
-          }} />
-          <IonList>
-            {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
-              setHits([])
-            }} routerLink={'/member/' + x.address}>
-              <IonButtons slot='start'>
-                <IonAvatar>
-                  <IonImg src={x.twitterPfp} />
-                </IonAvatar>
-              </IonButtons>
-              {x.twitterName}
-              {x.type}
-            </IonItem>)}
+            <TribeHeader title='Chats' color='primary' content={
+                <>
+                    <IonSearchbar onIonInput={(event) => {
+                        event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
+                            setHits((res.results[0] as any).hits || [])
+                        })
+                    }} />
+                    <IonList>
+                        {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
+                            setHits([])
+                        }} routerLink={'/member/' + x.address}>
+                            <IonButtons slot='start'>
+                                <IonAvatar>
+                                    <IonImg src={x.twitterPfp} />
+                                </IonAvatar>
+                            </IonButtons>
+                            {x.twitterName}
+                            {x.type}
+                        </IonItem>)}
 
-          </IonList>
-        </>
-      } />
+                    </IonList>
+                </>
+            } />
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
-                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0}}>
+                        <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address} >
+                                    <IonItem routerDirection='root' lines='none' routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
@@ -140,25 +140,25 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
             </IonButtons>
             <div style={{ flex: 1, minWidth: 0, paddingLeft: '8px' }}>
                 <div>
-                    <MemberAlias address={address}/>
+                    <MemberAlias address={address} />
                 </div>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <span style={{ fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
-                            <MemberAlias address={address}/>
-                        </span>
-                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5, marginLeft: '5px' }}>
-                            : {msg?.content.slice(0, 20)}
-                        </span>
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
+                        <MemberAlias address={address} />
+                    </span>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5, marginLeft: '5px' }}>
+                        : {msg?.content.slice(0, 20)}
+                    </span>
                 </div>
+            </div>
             <IonButtons slot='end'>
-                <IonBadge color={'transparent'} style={{opacity: 0.5}}>
+                <IonBadge color={'transparent'} style={{ opacity: 0.5 }}>
                     {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}
                 </IonBadge>
             </IonButtons>
         </div>
     );
-    
+
 };
 
 export default Chat;
