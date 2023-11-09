@@ -79,6 +79,7 @@ http://ionicframework.com/docs/theming/ */
 ion-searchbar.custom {
 
   --border-radius: 15px;
+  padding-top: 0px;
 }
 
 .rounded-div {
