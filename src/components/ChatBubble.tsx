@@ -51,15 +51,24 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     );
 
     const profileAndAlias = (
-        <div style={{ alignItems: isMe ? 'flex-end' : 'flex-start' }}>
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row', // This will align the items horizontally
+            alignItems: 'center', // This will center the items vertically within the row
+            fontSize: '12px',
+        }}>
             {!isMe && (
                 <ChatMemberPfp
-                    size="smol"
+                    size="veru-smol"
                     address={message.author}
-                    style={{ margin: '0 0 2px 0', width: '50px', height: '50px' }} // Adjust sizes as needed
+                    style={{ marginRight: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
                 />
             )}
-            {!isMe && <MemberAlias address={message.author} size='veru-smol' />}
+            {!isMe && (
+                <div style={{ lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                    <MemberAlias address={message.author} size='veru-smol' />
+                </div>
+            )}
         </div>
     );
 
@@ -76,12 +85,12 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             {/* Render the message content */}
             <div style={messageContainerStyle}>
                 {contentBubble}
+                {replyButton}
+
             </div>
 
             {/* Render the profile picture and username under the message */}
             {profileAndAlias}
-
-            {replyButton}
         </div>
     );
 }

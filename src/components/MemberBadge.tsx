@@ -49,11 +49,29 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
     </IonRouterLink>
 }
 
-export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
-    const member = useMember(x => x.getFriend(address))
+export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address));
 
-    return <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: '40px!important', height: '40px!important', minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+    let pfpStyle = {};
+    switch (size) {
+        case 'smol':
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            break;
+        case 'veru-smol':
+            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 5 };
+            break;
+        case 'double-smol':
+            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
+            break;
+        case 'big':
+        default:
+            pfpStyle = { width: 100, height: 100, padding: 10, borderRadius: 20 };
+            break;
+    }
+
+    return <img src={member?.twitterPfp || personOutline} style={{ ...style, ...pfpStyle }} />
 }
+
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
 
