@@ -70,7 +70,7 @@ const Chat: React.FC = () => {
         <TribePage page='chat'>
             <TribeHeader title='Chats' />
             <TribeContent >
-                <IonGrid style={{ padding: 0 }}>
+                <IonGrid className="chatheader-item" style={{ padding: 0 }}>
                     <IonRow>
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0}}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
