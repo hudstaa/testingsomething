@@ -144,8 +144,8 @@ ion-segment {
 
 ion-footer,
 ion-footer ion-toolbar {
-  --border-width: 0 !important;
-  border: none !important;
+  --border-width: 0 ;
+  border: none ;
   box-shadow: none !important;
 }
 
@@ -347,7 +347,7 @@ ion-footer ion-toolbar {
     --ion-color-paper-contrast: #ffffff;
     /* Contrast to be easily visible on dark gray */
     --ion-color-paper-contrast-rgb: 255, 255, 255;
-    --ion-color-paper-shade: #000000;
+    --ion-color-paper-shade: #00000000; /* modal color */
     /* A bit darker shade */
     --ion-color-paper-tint: #3f3f3f;
     /* A bit lighter tint */
@@ -355,7 +355,7 @@ ion-footer ion-toolbar {
   }
 
   .ios ion-modal {
-    --ion-background-color: var(--ion-color-paper-shade);
+    --ion-background-color: var(--ion-color-step-50);
     --ion-toolbar-background: var(--ion-color-step-150);
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
@@ -443,6 +443,7 @@ ion-label[floating] .sc-ion-label-ios-h {
 ion-header,
 ion-footer {
   --box-shadow: none !important;
+  
 }
 
 /* Remove shadow from segments */

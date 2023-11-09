@@ -22,7 +22,7 @@ export const WriteMessageModalProvider: React.FC = () => {
         }}>
             <IonGrid fixed style={{ marginLeft: 0, marginRight: 0, paddingTop: 30, paddingLeft: 0, paddingRight: 0 }}>
 
-                <IonItem>
+                <IonItem >
                     <IonButtons slot='end'>
                         <IonButton fill="clear" color='medium' onClick={() => {
                             dismiss(false)

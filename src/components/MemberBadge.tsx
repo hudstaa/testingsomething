@@ -58,7 +58,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 5 };
+            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
             break;
         case 'double-smol':
             pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
