@@ -149,13 +149,13 @@ const Member: React.FC = () => {
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
                 <IonFab slot='fixed' horizontal='end' vertical='bottom'>
-                    {member?.type !== 'contract' && <IonFabButton color='tribe' onClick={() => { setTrade(!trade) }}>
+                    {!member?.type && <IonFabButton color='tribe' onClick={() => { setTrade(!trade) }}>
                         {trade ? 'OK' : "Boost"}
                     </IonFabButton>}
                 </IonFab>
                 <IonFab slot='fixed' horizontal='start' vertical='bottom'>
                     <IonRouterLink href={'javascript:void(0)'}>
-                        {member && !trade && member.type !== 'contract' && <BuyPriceBadge onClick={() => {
+                        {member && !trade && !member.type && <BuyPriceBadge onClick={() => {
                             setTrade(true);
                         }} address={member.address} />}
                     </IonRouterLink>
@@ -167,9 +167,8 @@ const Member: React.FC = () => {
                 {<>
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
-                <IonItem>
-
-                    {member && member.type !== 'contract' && <IonSegment mode='md' value={segment}>
+                {member && !member.type && <IonItem>
+                    <IonSegment mode='md' value={segment}>
                         <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                             Posts
                         </IonSegmentButton>
@@ -179,11 +178,8 @@ const Member: React.FC = () => {
                         {<IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
                             Chart
                         </IonSegmentButton>}
-
-                    </IonSegment>}
-
-
-                </IonItem>
+                    </IonSegment>
+                </IonItem>}
                 <IonModal ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
 
                     <IonItem>
@@ -220,7 +216,7 @@ const Member: React.FC = () => {
                         </IonButton>}
                     </IonCard>
                 </IonModal>
-                {member != null && member.type === 'contract' && member?.lp &&
+                {member != null && member.type && member?.lp &&
 
                     <iframe style={{ width: '100%', height: '100%' }} src={"https://dexscreener.com/ethereum/" + member.lp + "?embed=1&theme=dark&trades=0"}></iframe>
                 }
