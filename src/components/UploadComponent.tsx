@@ -70,8 +70,8 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         <div>
             <IonButton fill='clear' {...getRootProps()} >
                 <input {...getInputProps()} />
-                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='primary' icon={imageOutline} /> :
-                    isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='medium' icon={imageOutline} />
+                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='primary' icon={'/icons/uploadd.svg'} /> :
+                    isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="large" color='medium' icon={'/icons/uploadd.svg'} />
                 }
             </IonButton>
         </div>
