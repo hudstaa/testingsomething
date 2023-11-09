@@ -48,7 +48,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-10px'}} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 16 }}>
+                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
@@ -58,7 +58,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonButton>
 
                 <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 1, right: 40, paddingRight: 4 }} >
-                    <IonText className='bold'>{score} </IonText>
+                    <IonText className='semi'>{score} </IonText>
                 </IonLabel>
 
                 <IonButton style={{ position: 'absolute', right: 0 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
