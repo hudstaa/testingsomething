@@ -24,19 +24,54 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
         </IonChip>}</IonRouterLink>
 }
 
-export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
-    const member = useMember(x => x.getFriend(address))
+export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address));
 
-    return <IonRouterLink style={style} routerLink={'/member/' + address} routerDirection='none'>
-        <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: 40, height: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+    let pfpStyle = {};
+    switch (size) {
+        case 'smol':
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            break;
+        case 'veru-smol':
+            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            break;
+        case 'double-smol':
+            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 }; 
+            break;
+        case 'big':
+        default:
+            pfpStyle = { width: 100, height: 100, padding: 10, borderRadius: 20 };
+            break;
+    }
+
+    return <IonRouterLink style={{ ...style, ...pfpStyle }} routerLink={'/member/' + address} routerDirection='none'>
+        <img src={member?.twitterPfp || personOutline} style={pfpStyle} />
     </IonRouterLink>
 }
 
-export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
-    const member = useMember(x => x.getFriend(address))
+export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address));
 
-    return <img src={member?.twitterPfp || personOutline} style={size == 'smol' ? { width: '40px!important', height: '40px!important', minWidth: 40, maxWidth: 40, minHeight: 40, maxHeight: 40, padding: 5, borderRadius: 15 } : size === 'veru-smol' ? { width: 20, height: 20, padding: 5, borderRadius: 10 } : { width: 100, height: 100, padding: 10, borderRadius: 20 }} />
+    let pfpStyle = {};
+    switch (size) {
+        case 'smol':
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            break;
+        case 'veru-smol':
+            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
+            break;
+        case 'double-smol':
+            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
+            break;
+        case 'big':
+        default:
+            pfpStyle = { width: 100, height: 100, padding: 10, borderRadius: 20 };
+            break;
+    }
+
+    return <img src={member?.twitterPfp || personOutline} style={{ ...style, ...pfpStyle }} />
 }
+
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
 
@@ -74,21 +109,11 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRow>
-        <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
-            <img style={{ width: 32, height: 32, borderRadius: '10px', marginLeft: 0 }} src={member?.twitterPfp || personOutline} />
-        </IonRouterLink>        
-        <IonGrid fixed style={{ paddingLeft: 5 }}>
-            <IonRow style={{ marginTop: -5, marginBottom: '2px' }}> {/* Reduced bottom margin */}
+    return <IonRow>      
+        <IonGrid fixed style={{ paddingLeft: 0 }}>
+            <IonRow >
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='dark' className='bold' style={{ fontSize: '14px' , letterSpacing: '-0.035em' }}>
-                        {member?.twitterName}
-                    </IonText>
-                </IonRouterLink>
-            </IonRow>
-            <IonRow style={{ marginTop: '-6px' }}> {/* Reduced top margin */}
-                <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='medium' className='medium' style={{ fontSize: '10px', letterSpacing: '-0.035em', opacity: 0.75 }}>
+                    <IonText color='medium' className='medium' style={{ fontSize: '11px' }}>
                         @{member?.twitterUsername}
                     </IonText>
                 </IonRouterLink>

@@ -2,7 +2,7 @@ import { IonButton, IonIcon, IonItem, IonText } from "@ionic/react";
 import { returnDownBack } from "ionicons/icons";
 import { useGroupMessages } from "../hooks/useGroupMessages";
 import { Message } from "../models/Message";
-import { ChatMemberPfp, MemberPfp } from "./MemberBadge";
+import { ChatMemberPfp, MemberAlias, MemberPfp } from "./MemberBadge";
 import { timeAgo } from "./TradeItem";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
@@ -18,6 +18,8 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
         padding: '10px', // Padding around text
+        paddingLeft: '15px',
+        paddingRight: '15px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
     };
 
@@ -49,27 +51,46 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         </button>
     );
 
-    const profilePic = isMe ? <></> : (
-        <ChatMemberPfp
-            size="smol"
-            address={message.author}
-            style={{ margin: '0px!important', width: '50px!important', height: '50px!important' }}
-        />
+    const profileAndAlias = (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'row', // This will align the items horizontally
+            alignItems: 'center', // This will center the items vertically within the row
+            fontSize: '12px',
+        }}>
+            {!isMe && (
+                <ChatMemberPfp
+                    size="veru-smol"
+                    address={message.author}
+                    style={{ marginRight: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
+                />
+            )}
+            {!isMe && (
+                <div style={{ lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                    <MemberAlias address={message.author} size='veru-smol' />
+                </div>
+            )}
+        </div>
     );
+
     return (
         <div className="message-container" key={message.id} style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: isMe ? 'flex-end' : 'flex-start',
-        }} >
+        }}>
             {/* Render the reply if present */}
             {message.reply && <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />}
-            {/* Render the message content and profile picture in a row */}
+
+            {/* Render the message content */}
             <div style={messageContainerStyle}>
-                {profilePic}
                 {contentBubble}
                 {replyButton}
+
             </div>
+
+            {/* Render the profile picture and username under the message */}
+            {profileAndAlias}
         </div>
     );
 }

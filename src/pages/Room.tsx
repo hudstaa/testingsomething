@@ -29,6 +29,12 @@ const Room: React.FC = () => {
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
     const channel = address;
 
+    //useIonViewDidEnter(() => {
+    //     hideTabs();
+    // })
+    // useIonViewDidLeave(() => {
+    //     showTabs();
+    // })
 
     const sendMessage = useCallback(async (message: Message) => {
         const author = me!.address;
@@ -52,9 +58,9 @@ const Room: React.FC = () => {
 
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
     return <TribePage page='room'>
-        <TribeHeader title={'〱 ' + (channelOwner?.twitterName) || address} />
+        <TribeHeader showBackButton={true} title={(channelOwner?.twitterName) || address} />
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
-        <IonFooter>
+        <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
             {useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
                 <MemberPfp size='smol' address={replyingToMessage.author} />
                 {replyingToMessage.content}
@@ -66,7 +72,7 @@ const Room: React.FC = () => {
                 </IonButtons>
             </IonItem> : <>
             </>, [replyingToMessageId, messages, me])}
-            < WriteMessage placeHolder='Send a message' address={me?.address || ""} sendMessage={sendMessage as any} />
+            < WriteMessage placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
         </IonFooter>
     </TribePage>
 }

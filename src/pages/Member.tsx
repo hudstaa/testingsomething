@@ -66,7 +66,8 @@ const Member: React.FC = () => {
         <TribePage page='member'>
             <TribeHeader
                 color='tertiary'
-                title={member !== null ? '〱  ' + member.twitterName : ""}
+                title={member !== null ? member.twitterName : ""}
+                showBackButton={true} 
             />
             < TribeContent fullscreen >
                 <IonRefresher slot='fixed' onIonRefresh={() => {

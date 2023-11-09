@@ -32,9 +32,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     const textRef = useRef<HTMLIonTextareaElement>(null);
 
     return (
-        <IonToolbar color='paper' style={{ padding: 5 }}>
+        <IonToolbar style={{ padding: 5 }}>
           <div className="rounded-div"> {/* This div now uses flexbox layout */}
-            <IonButtons slot='start'>
+          <IonButtons slot='start'>
               {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
                 setImage(path);
               }} />}
@@ -44,7 +44,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
               id={isModal ? 'modal-write-message' : undefined}
               ref={textRef}
               autoGrow
-              style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 1, marginBottom: -15}} /* flex: 1 allows the textarea to grow and fill available space */
+              style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 0, marginBottom: -18}} /* flex: 1 allows the textarea to grow and fill available space */
               value={content}
               placeholder={placeHolder}
               onKeyUp={(e) => {
