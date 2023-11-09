@@ -32,7 +32,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     const textRef = useRef<HTMLIonTextareaElement>(null);
 
     return (
-        <IonToolbar style={{ padding: 5 }}>
+        <IonToolbar style={{ padding: 5, paddingBottom: 20 }}>
           <div className="rounded-div"> {/* This div now uses flexbox layout */}
           <IonButtons slot='start'>
               {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
