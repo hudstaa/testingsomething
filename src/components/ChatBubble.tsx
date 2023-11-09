@@ -2,7 +2,7 @@ import { IonButton, IonIcon, IonItem, IonText } from "@ionic/react";
 import { returnDownBack } from "ionicons/icons";
 import { useGroupMessages } from "../hooks/useGroupMessages";
 import { Message } from "../models/Message";
-import { ChatMemberPfp, MemberPfp } from "./MemberBadge";
+import { ChatMemberPfp, MemberAlias, MemberPfp } from "./MemberBadge";
 import { timeAgo } from "./TradeItem";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
@@ -50,27 +50,37 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         </button>
     );
 
-    const profilePic = isMe ? <></> : (
-        <ChatMemberPfp
-            size="smol"
-            address={message.author}
-            style={{ margin: '0px!important', width: '50px!important', height: '50px!important' }}
-        />
+    const profileAndAlias = (
+        <div style={{ alignItems: isMe ? 'flex-end' : 'flex-start' }}>
+            {!isMe && (
+                <ChatMemberPfp
+                    size="smol"
+                    address={message.author}
+                    style={{ margin: '0 0 2px 0', width: '50px', height: '50px' }} // Adjust sizes as needed
+                />
+            )}
+            {!isMe && <MemberAlias address={message.author} size='veru-smol' />}
+        </div>
     );
+
     return (
         <div className="message-container" key={message.id} style={{
             margin: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: isMe ? 'flex-end' : 'flex-start',
-        }} >
+        }}>
             {/* Render the reply if present */}
             {message.reply && <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />}
-            {/* Render the message content and profile picture in a row */}
+
+            {/* Render the message content */}
             <div style={messageContainerStyle}>
-                    {profilePic}
-                    {contentBubble} 
-                </div>
+                {contentBubble}
+            </div>
+
+            {/* Render the profile picture and username under the message */}
+            {profileAndAlias}
+
             {replyButton}
         </div>
     );
