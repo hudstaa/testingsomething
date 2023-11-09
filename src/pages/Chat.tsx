@@ -1,4 +1,4 @@
-import { IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter } from '@ionic/react';
+import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
@@ -7,12 +7,16 @@ import { timeAgo } from '../components/TradeItem';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { useMember } from '../hooks/useMember';
+import { useMember, Member } from '../hooks/useMember';
 import useTabs from '../hooks/useTabVisibility';
 import { formatEth, nativeAuth, uniqByProp } from '../lib/sugar';
 import { TribePage } from './TribePage';
 import useERCBalance from '../hooks/useERCBalance';
 import { usePrivy } from '@privy-io/react-auth';
+import algoliasearch from 'algoliasearch';
+
+
+const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb20');
 
 
 
@@ -66,9 +70,33 @@ const Chat: React.FC = () => {
     const [channelAddress, setChannelAddress] = useState("0x6982508145454Ce325dDbE47a25d4ec3d2311933")
     const [chainId, setChainId] = useState(1)
     const { balance, syncing } = useERCBalance(channelAddress as any, chainId as any);
+    const [hits, setHits] = useState<Member[]>([])
+
     return (
         <TribePage page='chat'>
-        <TribeHeader title="Chats" showBackButton={false} />
+         <TribeHeader title='Chats' color='primary' content={
+        <>
+          <IonSearchbar onIonInput={(event) => {
+            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
+              setHits((res.results[0] as any).hits || [])
+            })
+          }} />
+          <IonList>
+            {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
+              setHits([])
+            }} routerLink={'/member/' + x.address}>
+              <IonButtons slot='start'>
+                <IonAvatar>
+                  <IonImg src={x.twitterPfp} />
+                </IonAvatar>
+              </IonButtons>
+              {x.twitterName}
+              {x.type}
+            </IonItem>)}
+
+          </IonList>
+        </>
+      } />
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
