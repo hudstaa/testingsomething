@@ -70,7 +70,7 @@ http://ionicframework.com/docs/theming/ */
 } */
 
 .rounded-div {
-  background-color:rgba(255, 255, 255, 0.2); /* Your color */
+  background-color: var(--ion-color-paper); /* Your color */
   padding-left: 5px;
   padding-right: 5px;
   height: 50px;
@@ -240,9 +240,9 @@ ion-footer ion-toolbar {
    */
 
   body {
-    --ion-color-primary: #428cff;
+    --ion-color-primary: #ffffff;
     --ion-color-primary-rgb: 66, 140, 255;
-    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast: #000000;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #3a7be0;
     --ion-color-primary-tint: #5598ff;
@@ -562,6 +562,7 @@ ion-tab-bar {
   border-radius: 20px;
   display: block;
   clear: both;
+  font-weight: 400;
 }
 
 ::slotted([slot="start"]) {
