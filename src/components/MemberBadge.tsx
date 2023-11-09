@@ -36,7 +36,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 }; 
+            pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 }; 
             break;
         case 'big':
         default:
