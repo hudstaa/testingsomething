@@ -46,15 +46,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px'}}>
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 25, width: 25, marginLeft: '-10px'}} />
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 35, width: 35, marginLeft: '-10px'}} />
 
-                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{fontSize: 14 }}>
+                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{fontSize: 16 }}>
                     {commentCount}
                 </IonText>
             </IonButton>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 25, width: 25 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
                 <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 2, right: 40, paddingRight: 2 }} >
@@ -62,7 +62,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonLabel>
 
                 <IonButton style={{ position: 'absolute', right: 0 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 25, width: 25 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 30, width: 30 }} />
                 </IonButton>
 
             </IonButtons>
