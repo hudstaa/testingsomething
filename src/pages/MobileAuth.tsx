@@ -29,10 +29,7 @@ export const MobileAuth: React.FC = () => {
         <IonModal isOpen={true} animated={false}>
 
             <OnBoarding me={me} dismiss={() => {
-                getAccessToken().then((token) => {
-                    const url = ('tribe.computer://auth?token=' + localStorage.getItem('privy:token') + '&refresh=' + localStorage.getItem('privy:refresh_token') + '&jwt=' + token);
-                    window.open(url, "_system", "location=yes");
-                });
+
             }} />
         </IonModal>
     </IonPage >

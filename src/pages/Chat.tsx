@@ -1,4 +1,4 @@
-import { IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter } from '@ionic/react';
+import { IonBadge, IonButtons, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
@@ -9,7 +9,7 @@ import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import useTabs from '../hooks/useTabVisibility';
-import { formatEth, nativeAuth, uniqByProp } from '../lib/sugar';
+import { formatEth, nativeAuth, showTabs, uniqByProp } from '../lib/sugar';
 import { TribePage } from './TribePage';
 import useERCBalance from '../hooks/useERCBalance';
 import { usePrivy } from '@privy-io/react-auth';
@@ -66,6 +66,10 @@ const Chat: React.FC = () => {
     const [channelAddress, setChannelAddress] = useState("0x6982508145454Ce325dDbE47a25d4ec3d2311933")
     const [chainId, setChainId] = useState(1)
     const { balance, syncing } = useERCBalance(channelAddress as any, chainId as any);
+    useIonViewDidEnter(() => {
+        showTabs();
+    })
+
     return (
         <TribePage page='chat'>
             <TribeHeader title='Chats' />
@@ -75,7 +79,7 @@ const Chat: React.FC = () => {
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem lines='none' routerLink={'/channel/' + address} key={address}>
+                                    <IonItem routerDirection='root' lines='none' routerLink={'/channel/' + address} key={address}>
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}

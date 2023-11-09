@@ -16,7 +16,7 @@ const Tabs: React.FC = () => (
             <Route exact path="/discover" component={Discover} />
             <Route exact path="/trade/:hash" component={Transaction} />
             <Route path="/chat" component={Chat} />
-            <Route exact path="/channel/:address" component={Room} />
+            <Route exact path="/chat/:address" component={Room} />
             <Route path="/watchlist" component={Watchlist} exact />
             <Route path="/activity" component={Activity} exact />
             <Route path="/account" component={Account} />

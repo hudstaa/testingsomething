@@ -1,7 +1,7 @@
 import { IonAvatar, IonButton, IonButtons, IonFooter, IonIcon, IonImg, IonItem, IonSpinner, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import { close } from 'ionicons/icons';
 import { useCallback, useMemo, useState } from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { MemberPfp } from '../components/MemberBadge';
 import { TribeHeader } from '../components/TribeHeader';
 import { useGroupMessages } from '../hooks/useGroupMessages';
@@ -10,7 +10,6 @@ import { useMember } from '../hooks/useMember';
 import { addDoc, collection, getFirestore, serverTimestamp } from "firebase/firestore";
 import { app } from '../App';
 import { WriteMessage } from '../components/WriteMessage';
-import { hideTabs, showTabs } from '../lib/sugar';
 import { Message } from '../models/Message';
 import { TribePage } from './TribePage';
 import VirtuosoRoom from './VirtuosoRoom';
@@ -20,7 +19,9 @@ import VirtuosoRoom from './VirtuosoRoom';
 
 const Room: React.FC = () => {
 
-    const { address } = useParams<{ address: string }>()
+    const { pathname } = useLocation()
+    const address = pathname.split('/')[2]
+    console.log(address, pathname)
     const channelOwner = useMember(x => x.getFriend(address, true))
     const me = useMember(x => x.getCurrentUser());
 
@@ -28,12 +29,6 @@ const Room: React.FC = () => {
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
     const channel = address;
 
-    useIonViewDidEnter(() => {
-        hideTabs();
-    })
-    useIonViewDidLeave(() => {
-        showTabs();
-    })
 
     const sendMessage = useCallback(async (message: Message) => {
         const author = me!.address;

@@ -28,10 +28,14 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
     }, [ready, auth?.currentUser, me])
 
     const { location } = useHistory();
+    let backPage = '/' + location.pathname?.split('/')[1];
+    if (backPage || "".includes('/channel')) {
+        backPage = '/chat'
+    }
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                <IonRouterLink routerDirection="back" routerLink={'/' + location.pathname?.split('/')[1]}>
+                <IonRouterLink routerDirection="back" routerLink={backPage}>
                     <IonText color='dark'>
                         {title}
                     </IonText>
@@ -43,7 +47,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
                         <MemberPfp address={me.address} size="smol" />
                     </IonButton>}
             </IonButtons>
-    </IonToolbar > ) : <IonToolbar color='tribe'>
+        </IonToolbar >) : <IonToolbar color='tribe'>
         {content}
     </IonToolbar>
     if (!sticky) {
