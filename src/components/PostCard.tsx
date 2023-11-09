@@ -19,7 +19,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 12, marginRight: 0 }}>
+        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 10, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 15 }}>
                 <IonText color='tribel' className="regular" style={{ letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
@@ -28,7 +28,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 5, paddingTop: 3, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 3, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
                     <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '18px', lineHeight: '1', fontWeight: 500, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
@@ -36,7 +36,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 5, marginBottom: 5, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
+                    <div style={{ marginTop: 5, marginBottom: 3, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
