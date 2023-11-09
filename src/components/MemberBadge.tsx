@@ -79,20 +79,14 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
             <img style={{ width: 32, height: 32, borderRadius: '10px', marginLeft: 0 }} src={member?.twitterPfp || personOutline} />
         </IonRouterLink>        
         <IonGrid fixed style={{ paddingLeft: 5 }}>
-            <IonRow style={{ marginTop: -5, marginBottom: '2px' }}> {/* Reduced bottom margin */}
+            <IonRow >
                 <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='dark' className='' style={{ fontWeight: 550, fontSize: '14px' , letterSpacing: '-0.035em' }}>
+                    <IonText color='dark' className='' style={{ fontWeight: 600, fontSize: '16px' , letterSpacing: '-0.035em', opacity: 0.75 }}>
                         {member?.twitterName}
                     </IonText>
                 </IonRouterLink>
             </IonRow>
-            <IonRow style={{ marginTop: '-6px' }}> {/* Reduced top margin */}
-                <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='medium' className='medium' style={{ fontSize: '10px', letterSpacing: '-0.035em' }}>
-                        @{member?.twitterUsername}
-                    </IonText>
-                </IonRouterLink>
-            </IonRow>
+            
             <IonRow>
                 {content ? content : <></>}
             </IonRow>

@@ -28,7 +28,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <MemberCardHeader address={author} />
         </IonCardHeader>
         <IonRouterLink routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 0, paddingTop: 3, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 5, paddingTop: 3, margin: 0 }}  >
                 <IonRouterLink routerLink={'/post/' + id}>
                     <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', padding: 0, fontSize: '18px', lineHeight: '1', fontWeight: 500, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
@@ -46,7 +46,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px'}}>
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 30, width: 30, marginLeft: '-10px'}} />
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px'}} />
 
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount}
