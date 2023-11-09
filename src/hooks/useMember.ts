@@ -16,6 +16,7 @@ export interface Member {
     privyAddress: string;
     friendTechAddress?: string
     type?: string
+    lp?: string
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;

@@ -145,7 +145,6 @@ const Member: React.FC = () => {
                     {member?.bio}
                 </IonCardHeader>
 
-
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
@@ -221,7 +220,12 @@ const Member: React.FC = () => {
                         </IonButton>}
                     </IonCard>
                 </IonModal>
-                <div style={{ minHeight: 700 }}>
+                {member != null && member.type === 'contract' && member?.lp &&
+
+                    <iframe style={{ width: '100%', height: '100%' }} src={"https://dexscreener.com/ethereum/" + member.lp + "?embed=1&theme=dark&trades=0"}></iframe>
+                }
+
+                <div>
 
                     {
                         segment === 'posts' &&
