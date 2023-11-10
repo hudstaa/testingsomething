@@ -216,8 +216,8 @@ const DeepLinkProvider: React.FC = () => {
     activeWallet && activeWallet.switchChain(baseGoerli.id);
   }, [activeWallet, wagmiReady])
   useEffect(() => {
-    switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
-  }, [chainId])
+    activeWallet?.connectorType == 'embedded' && switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
+  }, [chainId, activeWallet])
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();
