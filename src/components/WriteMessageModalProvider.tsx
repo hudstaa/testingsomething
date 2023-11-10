@@ -20,27 +20,32 @@ export const WriteMessageModalProvider: React.FC = () => {
         <IonModal ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
-            <IonGrid fixed style={{ marginLeft: 0, marginRight: 0, paddingTop: 30, paddingLeft: 0, paddingRight: 0 }}>
+            <>
+                <IonList>
 
-                <IonItem lines="none" color='tribe'>
-                    <IonButtons slot='end'>
-                        <IonButton fill="clear" color='dark' onClick={() => {
-                            dismiss(false)
-                            setMedia(undefined as any)
-                        }}>
-                            <IonIcon icon={close} />
-                        </IonButton>
-                    </IonButtons>
-                </IonItem>
-                <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
-                    setContent(message.content)
-                    dismiss(true);
-                }} />
+                    <IonItem lines="none" color='tribe'>
+                        <IonButtons slot='end'>
+                            <IonButton fill="clear" color='dark' onClick={() => {
+                                dismiss(false)
+                                setMedia(undefined as any)
+                            }}>
+                                <IonIcon icon={close} />
+                            </IonButton>
+                        </IonButtons>
+                    </IonItem>
+
+                    <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
+                        setContent(message.content)
+                        dismiss(true);
+                    }} />
+
+                </IonList>
+
                 {/* {message && message.media !== null && <IonButton onClick={() => {
                     setMedia(undefined as any)
                 }} fill='clear'><IonIcon icon={close} /></IonButton>} */}
                 {message && message.media?.src && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
-            </IonGrid>
+            </>
         </IonModal>
     </>
 }
