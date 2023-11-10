@@ -1,4 +1,4 @@
-import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
@@ -44,9 +44,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px'}}>
+        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
             <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px'}} />
+                {!showComments && <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />}
 
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount}
