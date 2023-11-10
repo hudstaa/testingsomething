@@ -13,12 +13,12 @@ import { WriteMessage } from '../components/WriteMessage';
 import { Message } from '../models/Message';
 import { TribePage } from './TribePage';
 import VirtuosoRoom from './VirtuosoRoom';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
 
 
 const Room: React.FC = () => {
-
     const { pathname } = useLocation()
     const address = pathname.split('/')[2]
     console.log(address, pathname)
@@ -28,6 +28,7 @@ const Room: React.FC = () => {
 
     const [replyingToMessageId, setReplyingToMessageId] = useState<string | null>(null);
     const messages = useGroupMessages(x => x.groupMessages[address] || [])
+    const [focused, setFocus] = useState<boolean>(false);
     const channel = address;
 
     //useIonViewDidEnter(() => {
@@ -38,6 +39,7 @@ const Room: React.FC = () => {
     // })
 
     const sendMessage = useCallback(async (message: Message) => {
+        setFocus(false);
         const author = me!.address;
         const newMessage: any = ({ ...message, author, sent: serverTimestamp(), type: typeof message?.media === 'undefined' ? 'string' : 'media' });
         const db = getFirestore(app);
@@ -55,6 +57,8 @@ const Room: React.FC = () => {
 
     const reply = useCallback((id: string) => {
         setReplyingToMessageId(id)
+        setFocus(true);
+
     }, []);
 
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
@@ -81,7 +85,7 @@ const Room: React.FC = () => {
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
         <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
             {footerMemo}
-            < WriteMessage placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
+            < WriteMessage focused={focused} placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
         </IonFooter>
     </TribePage>
 }

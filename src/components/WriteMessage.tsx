@@ -5,7 +5,7 @@ import PfpUploader from "./UploadComponent";
 import { getAuth } from "firebase/auth";
 import { useWriteMessage } from "../hooks/useWriteMessage";
 
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean }> = ({ address, isModal, placeHolder, sendMessage }) => {
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [content, setNewNote] = useState<string | undefined>(undefined)
   const [image, setImage] = useState<string | undefined>(undefined)
   const [sent, setSent] = useState<boolean>(false);
@@ -18,6 +18,23 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     setImage(undefined);
   }
   const uid = getAuth().currentUser?.uid;
+
+  useEffect(() => {
+
+    if (focused) {
+      textRef.current!.querySelector('textarea')!.focus();
+      setTimeout(() => {
+        textRef.current!.querySelector('textarea')!.focus();
+      }, 0)
+      setTimeout(() => {
+        textRef.current!.querySelector('textarea')!.focus();
+      }, 100)
+      setTimeout(() => {
+        textRef.current!.querySelector('textarea')!.focus();
+      }, 200)
+
+    }
+  }, [focused])
   useEffect(() => {
     setTimeout(() => {
       (document.querySelector("#modal-write-message textarea") as any)?.focus();
@@ -29,6 +46,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
       (document.querySelector("#modal-write-message textarea") as any)?.focus();
     }, 100)
   }, [isOpen])
+  useEffect(() => {
+
+  })
   const textRef = useRef<HTMLIonTextareaElement>(null);
   const strippedLength = content ? content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
@@ -40,8 +60,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         }} />}
 
         {image &&
-          <IonChip onClick={() => { setImage(undefined); removeMedia() }}>
-
+          <IonChip onMouseDown={() => { setImage(undefined); removeMedia() }}>
             <IonAvatar>
               <IonImg src={image} />
             </IonAvatar>
@@ -51,7 +70,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           </IonChip>}
       </IonButtons>
       <IonTextarea
-        autoFocus={isModal}
+        autoFocus={isModal || focused}
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
         autoGrow
