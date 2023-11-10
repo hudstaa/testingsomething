@@ -30,6 +30,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     }, 100)
   }, [isOpen])
   const textRef = useRef<HTMLIonTextareaElement>(null);
+  const strippedLength = content ? content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
     <IonToolbar style={{ padding: 5, border: 0 }} >
@@ -58,7 +59,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         value={content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
-          if (e.key === 'Enter' && !e.shiftKey) {
+          if (e.key === 'Enter' && !e.shiftKey && strippedLength > 0) {
             makeComment();
           }
         }}
@@ -67,7 +68,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         }}
       />
       <IonButtons slot='end'>
-        <IonButton disabled={(content?.length || 0) < 1} onClick={async () => {
+        <IonButton disabled={strippedLength < 1} onClick={async () => {
           makeComment();
         }}>
           <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />

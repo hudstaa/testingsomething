@@ -15,10 +15,14 @@ export interface Post {
 interface PostStore {
     postCache: Record<string, Post | undefined>;
     setPostsData: (data: Post[]) => void;
+    updatePost: (data: Post) => void
 }
 
 export const usePost = create<PostStore>((set, store) => ({
     postCache: {},
+    updatePost: (post) => {
+        set({ postCache: { ...store().postCache, [post.id]: post } })
+    },
     setPostsData: (data: Post[]) => {
         const cache: Record<string, Post> = {};
         data.forEach(item => {

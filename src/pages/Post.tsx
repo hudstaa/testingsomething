@@ -26,7 +26,7 @@ const Post: React.FC = () => {
     const id = pathname.split('/')[2]
     const post = usePost(x => x.postCache[id])
     const auth = nativeAuth();
-    const { setPostsData } = usePost();
+    const { setPostsData, updatePost } = usePost();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
     useEffect(() => {
@@ -57,7 +57,7 @@ const Post: React.FC = () => {
         }
         let newPost = { ...post } as any;
         newPost.score = newPost.score + diff;
-        setPost(newPost)
+        updatePost(newPost)
         setDoc(voteRef, ({ vote })).then(() => {
             setVoteCache(vote)
         })
