@@ -21,10 +21,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     // Style for the text bubble
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%',
-        padding: '10px',
-        borderRadius: '16px', // Optional: to make it look like a bubble
-        borderBottomLeftRadius: isMe ? '16px' : '4px',
-        borderBottomRightRadius: isMe ? '4px' : '16px',
+        padding: '8px',
+        borderRadius: '10px', // Optional: to make it look like a bubble
+        borderBottomLeftRadius: isMe ? '16px' : '2px',
+        borderBottomRightRadius: isMe ? '2px' : '16px',
         backgroundColor: isMe ? 'var(--ion-color-paper)' : 'var(--ion-color-paper)', // Optional: different background for sender and receiver
         marginLeft: isMe ? '0' : '5px', // Make space for the profile picture if not 'me'
     };
@@ -41,7 +41,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const contentBubble = (
         <div style={textBubbleStyle}>
             {!isMe && (
-                <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}> {/* Styling for the alias */}
+                <div style={{ fontSize: '14px' }}>
                     <MemberAlias address={message.author} size='smol' />
                 </div>
             )}
