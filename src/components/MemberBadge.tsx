@@ -118,7 +118,7 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
             <IonRow >
                 <IonButton fill='clear' onMouseDown={() => {
                     push('/member/' + member!.address);
-                }} color='medium' className='medium' style={{ fontSize: '11px' }}>
+                }} color='medium' className='medium' style={{ fontSize: '11px', margin: 0 }}>
                     @{member?.twitterUsername}
                 </IonButton>
             </IonRow>

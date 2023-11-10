@@ -620,9 +620,6 @@ ion-footer {
 }
 
 ion-content {
-  --offset-bottom: auto !important;
-  --overflow: hidden;
-  overflow: auto;
 
   &::-webkit-scrollbar {
     display: none;

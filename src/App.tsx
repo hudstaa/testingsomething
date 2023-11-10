@@ -268,7 +268,7 @@ const App: React.FC = () => {
               <IonTabs onIonTabsWillChange={(e) => {
                 setTab(e.detail.tab as any);
               }}>
-                <IonRouterOutlet animated={true}>
+                <IonRouterOutlet animated={false}>
                   <Redirect exact path="/" to='/posts' />
                   <Route exact path="/trade/:hash">
                     <Transaction />

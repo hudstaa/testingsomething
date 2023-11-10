@@ -52,6 +52,14 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
+            {<IonButton routerDirection="root" color='white' fill="clear" onMouseDown={() => {
+                push('/post/' + id);
+            }}>
+                <IonIcon color={'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
+                <IonText color={'medium'} className="regular" style={{ fontSize: 15 }}>
+                    {commentCount || 0}
+                </IonText>
+            </IonButton>}
             <IonButton fill='clear' onMouseDown={() => {
                 setNotif("Copied to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
@@ -60,12 +68,6 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 <IonIcon color={'medium'} icon={'/icons/paper-plane.svg'} style={{ height: 28, width: 28, marginLeft: '-10px', filter: darkmode ? 'invert(100%)' : undefined }} />
             </IonButton>
 
-            {!showComments && <IonButton routerDirection="root" color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
-                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
-                    {commentCount || 0}
-                </IonText>
-            </IonButton>}
 
             <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={1000} message={notif || ""}>
             </IonToast>
