@@ -19,7 +19,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     return <IonCard onMouseDown={(e) => {
-        if ((e.target as any).nodeName != 'ion-button') {
+        if ((e.target as any).nodeName != 'ION-BUTTON') {
             push('/post/' + id);
         }
     }} color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
