@@ -146,21 +146,21 @@ const Member: React.FC = () => {
                         </IonSegmentButton>}
                     </IonSegment>
                 </IonItem>}
-                <IonModal ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
+                <IonModal initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
 
-                    <IonItem>
-                        {member?.twitterName}
-                        <IonButtons slot='end'>
-                            <IonButton color='danger' onClick={() => {
-                                modalRef.current?.dismiss();
-                            }}><IonIcon icon={close} /></IonButton>
-                        </IonButtons>
-                    </IonItem>
-                    <IonTitle>
-
-                        <IonImg src={member?.twitterPfp} />
-                    </IonTitle>
                     <IonCard>
+                        <IonItem lines='none'>
+                            <IonAvatar>
+                                <IonImg src={member?.twitterPfp} />
+                            </IonAvatar>
+
+                            {member?.twitterName}
+                            <IonButtons slot='end'>
+                                <IonButton color='danger' onClick={() => {
+                                    modalRef.current?.dismiss();
+                                }}><IonIcon icon={close} /></IonButton>
+                            </IonButtons>
+                        </IonItem>
                         <IonRow>
                             <IonCol size='6'>
                                 {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {

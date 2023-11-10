@@ -40,11 +40,11 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton ? <IonButton onMouseDown={() => {
-
-                    backPage !== '/posts' && backPage !== '/chat' && history.back();
-                    replace(backPage)
-                }} fill='clear' color="dark" routerLink={backPage} routerDirection="back" >{title}</IonButton> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
+                {showBackButton ? <div onMouseDown={() => {
+                    backPage !== '/posts' && backPage !== '/chat' ? history.back() : replace(backPage)
+                }}><IonBackButton text={title as any} color="dark" >
+                    </IonBackButton>{backPage === '/chat' && <IonText> 〱{title}</IonText>}
+                </div> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title as any}
                 </IonText>}
             </IonButtons>

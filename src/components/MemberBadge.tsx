@@ -116,11 +116,11 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
     return <IonRow>
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow >
-                <IonButton fill='clear' onMouseDown={() => {
+                <IonText onMouseDown={() => {
                     push('/member/' + member!.address);
-                }} color='medium' className='medium' style={{ fontSize: '11px', margin: 0 }}>
+                }} color='medium' className='medium alias' style={{ fontSize: '11px', margin: 0, padding: 0 }}>
                     @{member?.twitterUsername}
-                </IonButton>
+                </IonText>
             </IonRow>
             <IonRow>
                 {content ? content : <></>}
