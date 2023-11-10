@@ -10,7 +10,6 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
     const [points, setPoints] = useState<any>(undefined)
     useEffect(() => {
         member && member.friendTechAddress && getPoints(member?.friendTechAddress).then((res) => {
-            console.log(res, "POINTS");
             setPoints(res);
         }).catch(() => {
             setPoints(null)

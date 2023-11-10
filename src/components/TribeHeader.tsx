@@ -14,7 +14,7 @@ import { getFirestore, query, collection, where, getDocs, Timestamp, onSnapshot 
 import { MemberPfp } from "./MemberBadge";
 import { useNotifications } from "../hooks/useNotifications";
 
-export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
+export const TribeHeader: React.FC<{ image?: string, title?: string | Element, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
     const modalRef = useRef<HTMLIonModalElement>(null)
     const auth = nativeAuth();
@@ -29,15 +29,18 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
 
     const { location } = useHistory();
     let backPage = '/' + location.pathname?.split('/')[1];
-    if (backPage || "".includes('/channel')) {
+    if ((backPage || "").includes('/channel')) {
         backPage = '/chat'
+    }
+    if ((backPage || "").includes('/post')) {
+        backPage = '/posts'
     }
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
                 {showBackButton && <IonBackButton text="" color="dark" defaultHref={backPage} />} {/* Here is the conditional back button */}
                 <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
-                    {title}
+                    {title as any}
                 </IonText>
             </IonButtons>
         </IonToolbar>) : <IonToolbar color='tribe'>
@@ -54,11 +57,6 @@ export const TribeHeader: React.FC<{ image?: string, title?: string, sticky?: bo
 
     return <IonHeader color="tribe" style={{ border: 0 }}>
         {toolbar}
-        <IonModal canDismiss={me !== null} isOpen={me === null} ref={modalRef}>
-            <OnBoarding dismiss={() => {
-                modalRef.current?.dismiss();
-            }} me={me} />
-        </IonModal>
         {!hide && content}
     </IonHeader>
 

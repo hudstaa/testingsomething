@@ -65,6 +65,7 @@ import Trade from './pages/Trade';
 setupIonicReact({
   rippleEffect: false,
   mode: 'ios',
+  animated: false,
 });
 const { chains, publicClient } = configureChains(
   [baseGoerli],
@@ -203,16 +204,13 @@ const DeepLinkProvider: React.FC = () => {
   const chainId = useChainId()
   const { switchNetwork } = useSwitchNetwork();
   useEffect(() => {
-    console.log(wallets);
     wallets.forEach((wallet) => {
-      console.log(wallet)
       if (wallet.connectorType === 'embedded') {
         setActiveWallet(wallet);
       }
     })
   }, [wallets, activeWallet]);
   useEffect(() => {
-    console.log(activeWallet, wagmiReady);
     activeWallet && activeWallet.switchChain(baseGoerli.id);
   }, [activeWallet, wagmiReady])
   useEffect(() => {
@@ -221,7 +219,6 @@ const DeepLinkProvider: React.FC = () => {
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();
-      console.log("GOT IT!")
       const auth = nativeAuth()
       const params = parseTribeURL(event.url);
       const privyToken = params.jwt;
@@ -230,7 +227,6 @@ const DeepLinkProvider: React.FC = () => {
 
       axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
         signInWithCustomToken(auth, res.data.authToken).then((e) => {
-          console.log(e, "SIGNED IN");
         }).catch((e) => {
           console.log('error', e);
         })
@@ -265,12 +261,16 @@ const App: React.FC = () => {
               <Route exact path="/channel/:address">
                 <Room />
               </Route>
+              <Route path="/post/:id" exact>
+                <Post />
+              </Route>
+
 
               <IonTabs onIonTabsWillChange={(e) => {
                 setTab(e.detail.tab as any);
               }}>
                 <IonRouterOutlet>
-                  <Redirect exact path="/" to='/post' />
+                  <Redirect exact path="/" to='/posts' />
                   <Route exact path="/trade/:hash">
                     <Transaction />
                   </Route>
@@ -286,14 +286,11 @@ const App: React.FC = () => {
                   <Route path="/account" exact>
                     <Account />
                   </Route>
-                  <Route path="/post/" exact>
+                  <Route path="/posts/" exact>
                     <Posts />
                   </Route>
                   <Route path="/member/:address/trade" exact>
                     <Trade />
-                  </Route>
-                  <Route path="/post/:id" exact>
-                    <Post />
                   </Route>
 
                   <Route path="/member/:address" exact>
@@ -308,7 +305,7 @@ const App: React.FC = () => {
                 </IonRouterOutlet>
 
                 <IonTabBar style={{ border: '0' }} slot="bottom">
-                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
+                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="posts" href="/posts">
                     <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
                   </IonTabButton>
                   <IonTabButton tab="member" href="/member">

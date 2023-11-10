@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonFooter, IonIcon, IonImg, IonItem, IonSpinner, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonFooter, IonIcon, IonImg, IonItem, IonLoading, IonPage, IonSpinner, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import { close } from 'ionicons/icons';
 import { useCallback, useMemo, useState } from 'react';
 import { useLocation, useParams } from 'react-router';
@@ -22,6 +22,7 @@ const Room: React.FC = () => {
     const { pathname } = useLocation()
     const address = pathname.split('/')[2]
     console.log(address, pathname)
+
     const channelOwner = useMember(x => x.getFriend(address, true))
     const me = useMember(x => x.getCurrentUser());
 
@@ -57,23 +58,29 @@ const Room: React.FC = () => {
     }, []);
 
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
+    const footerMemo = useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
+        <MemberPfp size='smol' address={replyingToMessage.author} />
+        {replyingToMessage.content}
+        {replyingToMessage.media && <IonAvatar>
+            <IonImg src={replyingToMessage.media.src} />
+        </IonAvatar>}
+        <IonButtons slot='end'>
+            <IonButton fill='clear' onClick={() => { setReplyingToMessageId(null) }}>
+                <IonIcon color='danger' icon={close} />
+            </IonButton>
+        </IonButtons>
+    </IonItem> : <>
+    </>, [replyingToMessageId, messages, me]);
+    if (!address || address && address.length !== 42) {
+        return <IonPage>
+            <IonLoading />
+        </IonPage>
+    }
     return <TribePage page='room'>
         <TribeHeader showBackButton={true} title={(channelOwner?.twitterName) || address} />
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
         <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
-            {useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
-                <MemberPfp size='smol' address={replyingToMessage.author} />
-                {replyingToMessage.content}
-                {replyingToMessage.media && <IonAvatar>
-                    <IonImg src={replyingToMessage.media.src} />
-                </IonAvatar>}
-                <IonButtons slot='end'>
-                    <IonButton fill='clear' onClick={() => { setReplyingToMessageId(null) }}>
-                        <IonIcon color='danger' icon={close} />
-                    </IonButton>
-                </IonButtons>
-            </IonItem> : <>
-            </>, [replyingToMessageId, messages, me])}
+            {footerMemo}
             < WriteMessage placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
         </IonFooter>
     </TribePage>

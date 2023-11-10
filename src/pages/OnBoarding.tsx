@@ -23,9 +23,6 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
     const [refresh, setRefresh] = useState<number>(0)
     const [tribeLoading, setLoading] = useState<boolean>(false)
     useEffect(() => {
-        console.log("ONOBAOD")
-    }, [])
-    useEffect(() => {
         auth.onAuthStateChanged(async (currentUser) => {
             setRefresh(x => x + 1);
             const database = getFirestore(app);

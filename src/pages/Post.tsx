@@ -1,8 +1,8 @@
 import { getAuth } from 'firebase/auth';
 import 'firebase/firestore';
-import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
 import { TribeContent } from '../components/TribeContent';
@@ -15,15 +15,18 @@ import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
 import { useNotifications } from '../hooks/useNotifications';
+import { MemberAlias } from '../components/MemberBadge';
+import { timeAgo } from '../components/TradeItem';
 
 
 
 const Post: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const { pathname } = useLocation()
+    const id = pathname.split('/')[2]
     const auth = nativeAuth();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
-    const [post, setPost] = useState<null | { id: string, commentCount: number | undefined, content: string, media?: { src: string, type: string } }>()
+    const [post, setPost] = useState<null | { sent: Timestamp | null, author: string, id: string, commentCount: number | undefined, content: string, media?: { src: string, type: string } }>()
     useEffect(() => {
         id && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
             setPost({ ...postDoc.data(), id: postDoc.id } as any);
@@ -83,12 +86,12 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <TribePage page='post'>
-        <TribeHeader showBackButton={true}  />
+        <TribeHeader showBackButton={true} title={post ? <>@<MemberAlias address={post.author} /> {timeAgo(post.sent as any)}</> as any : "Loading..."} />
         <IonContent ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                        <PostCard  {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
+                        <PostCard id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
                     </IonCol></IonRow>
 
 

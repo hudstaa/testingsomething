@@ -29,7 +29,6 @@ const Chat: React.FC = () => {
     const [members, setMembers] = useState<[{ address: string }]>()
     useEffect(() => {
         const address = me?.address;
-        console.log(me, "ME");
         if (typeof address === 'undefined') {
             return;
         }
@@ -130,7 +129,6 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
         getDocs(q)
             .then(querySnapshot => {
                 const data = querySnapshot.docs[0].data();
-                console.log(data)
                 data && setMsg(data as any);
             });
     }, [address]);

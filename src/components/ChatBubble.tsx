@@ -99,17 +99,14 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 export const RenderReply: React.FC<{ messageId: string, channel: string, isReplyToMe: boolean, me: string }> = ({ messageId, channel, me, isReplyToMe }) => {
     const message = useGroupMessages(x => x.replyMessages[channel].find(x => x.id === messageId) || x.groupMessages[channel].find(x => x.id === messageId))
 
-    if (message === null) {
-        return <>NULL</>
-    }
-    if (typeof message === 'undefined') {
-        return <>undefined</>
+    if (message === null || typeof message === 'undefined') {
+        return null
     }
     const isMe = me === message.author;
 
-    const contentBubble = !message.media ? <div style={{ margin: '0px!important', font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+    const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px!important', font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
         {message.content}
-    </div> : <><img style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} /></>
+    </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
 
     const items = [
         // <ChatMemberPfp style={{ margin: '0px!important', position: 'absolute', bottom: 0, left: !isMe ? -20 : undefined, right: !isMe ? undefined : -20 }} size="veru-smol" address={message.author} />
