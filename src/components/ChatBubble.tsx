@@ -8,33 +8,47 @@ import { timeAgo } from "./TradeItem";
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
 
+    // Style for the container of the message and the profile picture
     const messageContainerStyle: React.CSSProperties = {
         display: 'flex',
-        flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
-        alignItems: 'flex-end', // Align items to the end (bottom for row layout)
-        maxWidth: '70%', // Set a max width for the message container
+        flexDirection: isMe ? 'row-reverse' : 'row',
+        alignItems: 'flex-end',
+        maxWidth: '70%',
+        padding: '5px',
+
     };
 
+    // Style for the text bubble
     const textBubbleStyle: React.CSSProperties = {
-        maxWidth: '100%', // Maximum width for text bubble
-        padding: '10px', // Padding around text
-        paddingLeft: '15px',
-        paddingRight: '15px',
-        wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
+        maxWidth: '100%',
+        padding: '10px',
+        borderRadius: '16px', // Optional: to make it look like a bubble
+        borderBottomLeftRadius: isMe ? '16px' : '4px',
+        borderBottomRightRadius: isMe ? '4px' : '16px',
+        backgroundColor: isMe ? 'var(--ion-color-paper)' : 'var(--ion-color-paper)', // Optional: different background for sender and receiver
+        marginLeft: isMe ? '0' : '5px', // Make space for the profile picture if not 'me'
     };
 
-    const imageStyle: React.CSSProperties = {
-        maxWidth: '100%', // Image can fill the width of the chat container
-        height: '200px', // Keep image aspect ratio
-        // Additional styles as needed
+    // Style for the profile picture
+    const profilePictureStyle: React.CSSProperties = {
+        width: '30px', // Adjusted for a visible profile picture
+        height: '30px',
+        alignSelf: 'end',
+        display: isMe ? 'none' : 'flex', // Hide the profile picture if 'me'
     };
 
+    // Construct the content bubble with the alias and the message content
     const contentBubble = (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMe ? 'flex-end' : 'flex-start' }}>
-            {message.media && (
-                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
+        <div style={textBubbleStyle}>
+            {!isMe && (
+                <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}> {/* Styling for the alias */}
+                    <MemberAlias address={message.author} size='smol' />
+                </div>
             )}
-            <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
+            {message.media && (
+                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={{ maxWidth: '100%', height: '200px' }} src={message.media.src} />
+            )}
+            <div className={(isMe ? "send" : "recieve") + ' msg regular'}>
                 {message.content}
             </div>
         </div>
@@ -54,21 +68,22 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const profileAndAlias = (
         <div style={{
             display: 'flex',
-            flexDirection: 'row', // This will align the items horizontally
-            alignItems: 'center', // This will center the items vertically within the row
+            flexDirection: 'row',
+            alignItems: 'center',
             fontSize: '12px',
+            marginBottom: '5px', // Add space between alias and message bubble
         }}>
             {!isMe && (
-                <ChatMemberPfp
-                    size="veru-smol"
-                    address={message.author}
-                    style={{ marginRight: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
-                />
-            )}
-            {!isMe && (
-                <div style={{ lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias address={message.author} size='veru-smol' />
-                </div>
+                <>
+                    <ChatMemberPfp
+                        size="veru-smol"
+                        address={message.author}
+                        style={{ marginRight: '5px', width: '20px', height: '20px' }}
+                    />
+                    <div style={{ lineHeight: '20px' }}>
+                        <MemberAlias address={message.author} size='veru-smol' />
+                    </div>
+                </>
             )}
         </div>
     );
@@ -79,22 +94,15 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             flexDirection: 'column',
             alignItems: isMe ? 'flex-end' : 'flex-start',
         }}>
-            {/* Render the reply if present */}
             {message.reply && <RenderReply messageId={message.reply} channel={channel} me={me} isReplyToMe={isMe} />}
-
-            {/* Render the message content */}
             <div style={messageContainerStyle}>
+                {!isMe && <ChatMemberPfp size="smol" address={message.author} style={profilePictureStyle} />}
                 {contentBubble}
                 {replyButton}
-
             </div>
-
-            {/* Render the profile picture and username under the message */}
-            {profileAndAlias}
         </div>
     );
-}
-
+};
 
 export const RenderReply: React.FC<{ messageId: string, channel: string, isReplyToMe: boolean, me: string }> = ({ messageId, channel, me, isReplyToMe }) => {
     const message = useGroupMessages(x => x.replyMessages[channel].find(x => x.id === messageId) || x.groupMessages[channel].find(x => x.id === messageId))

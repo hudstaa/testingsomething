@@ -578,11 +578,11 @@ ion-tab-bar {
 
 .msg {
   margin: 0px !important;
-  padding: 10px;
+  padding: 6px;
   border-radius: 20px;
   display: block;
   clear: both;
-  font-weight: 400;
+  font-weight: 500;
   white-space: pre-wrap !important;
 
 }
@@ -596,16 +596,18 @@ ion-tab-bar {
 .send {
   margin: 0px !important;
   float: right;
-  color: var(--ion-color-primary-contrast);
-  background: var(--ion-color-primary);
+  color: var(--ion-color-light-contrast);
+  background: var(--ion-color-paper);
   border-bottom-right-radius: 7px;
 }
 
 
 .recieve {
   margin: 0px !important;
+  padding: 0px !important;
+  padding-top: 5px !important;
   color: var(--ion-color-light-contrast);
-  background: var(--ion-color-light-tint);
+  background: var(--ion-color-paper);
   border-bottom-left-radius: 5px;
 }
 

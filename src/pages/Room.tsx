@@ -58,9 +58,9 @@ const Room: React.FC = () => {
 
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
     return <TribePage page='room'>
-        <TribeHeader showBackButton={false} sticky title={(channelOwner?.twitterName) || address} />
+        <TribeHeader showBackButton={true} sticky title={(channelOwner?.twitterName) || address} />
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
-        <IonFooter style={{ paddingBottom: 30, borderTop: '1px solid' }}> {/* Add your border style here */}
+        <IonFooter style={{ paddingBottom: 20, borderTop: '1px solid' }}> {/* Add your border style here */}
             {useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
                 <MemberPfp size='smol' address={replyingToMessage.author} />
                 {replyingToMessage.content}
