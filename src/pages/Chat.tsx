@@ -14,6 +14,7 @@ import { TribePage } from './TribePage';
 import useERCBalance from '../hooks/useERCBalance';
 import { usePrivy } from '@privy-io/react-auth';
 import algoliasearch from 'algoliasearch';
+import { Message } from '../models/Message';
 
 
 const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb20');
@@ -122,13 +123,14 @@ const Chat: React.FC = () => {
     );
 };
 const LastMessage: React.FC<{ address: string }> = ({ address }) => {
-    const [msg, setMsg] = useState<{ sent: Timestamp, content: string } | null>(null);
+    const [msg, setMsg] = useState<Message | null>(null);
     useEffect(() => {
         const channelsRef = doc(getFirestore(app), "channel", address);
         const q = query(collection(channelsRef, 'messages'), orderBy('sent', 'desc'), limit(1));
         getDocs(q)
             .then(querySnapshot => {
                 const data = querySnapshot.docs[0].data();
+                console.log(data)
                 data && setMsg(data as any);
             });
     }, [address]);
@@ -144,10 +146,10 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <span style={{ fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
-                        <MemberAlias address={address} />
+                        <MemberAlias address={msg?.author as any} />
                     </span>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5, marginLeft: '5px' }}>
-                        : {msg?.content.slice(0, 20)}
+                        : {msg?.content?.slice(0, 20)}
                     </span>
                 </div>
             </div>

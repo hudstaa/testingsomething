@@ -155,3 +155,5 @@ ios/App/App/Assets.xcassets/Splash.imageset/favicon.png
 ios/App/App/Assets.xcassets/Splash.imageset/favicon 2.png
 ios/App/App/Assets.xcassets/Splash.imageset/favicon 1.png
 ios/App/App/Assets.xcassets/AppIcon.appiconset/favicon.png
+*.cache
+dist/index.html
