@@ -203,25 +203,33 @@ const Member: React.FC = () => {
                         <IonImg src={member?.twitterPfp} />
                     </IonTitle>
                     <IonCard>
-                        {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
-                            sellPass && sellPass();
-                            modalRef.current?.dismiss();
-                        }}>
+                        <IonRow>
+                            <IonCol size='6'>
+                                {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
+                                    sellPass && sellPass();
+                                    modalRef.current?.dismiss();
+                                }}>
 
-                            <IonIcon icon={ticketOutline} />
-                            <IonText>
+                                    <IonText>
 
-                                Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
-                            </IonText>
-                        </IonButton>}
-                        {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
-                            // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
-                            buyPass && buyPass();
-                            modalRef.current?.dismiss();
-                        }} color='success'>
-                            <IonIcon icon={ticketOutline} />                                Buy
-                            {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
-                        </IonButton>}
+                                        Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
+                                    </IonText>
+                                </IonButton>}
+                            </IonCol>
+                            <IonCol size='6'>
+
+                                {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
+                                    // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
+                                    buyPass && buyPass();
+                                    modalRef.current?.dismiss();
+                                }} color='success'>
+                                    Buy
+                                    {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
+                                </IonButton>}
+                            </IonCol>
+
+                        </IonRow>
+
                     </IonCard>
                 </IonModal>
                 {member != null && member.type && member?.symbol &&

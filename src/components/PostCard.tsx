@@ -27,9 +27,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonBadge>
             <MemberCardHeader address={author} />
         </IonCardHeader>
-        <IonRouterLink routerLink={"/post/" + id}>
+        <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
-                <IonRouterLink routerLink={'/post/' + id}>
+                <IonRouterLink routerDirection="root" routerLink={'/post/' + id}>
                     <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', fontWeight: 550, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
                         {content}
@@ -45,7 +45,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
-            {!showComments && <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
+            {!showComments && <IonButton routerDirection="root" color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount}
@@ -56,7 +56,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 
-                <IonIcon color={'medium'} icon={shareSocialOutline} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
+                <IonIcon color={'medium'} icon={''} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
             </IonButton>
             <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={5000} message={notif || ""}>
             </IonToast>

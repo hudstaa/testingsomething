@@ -65,7 +65,6 @@ import Trade from './pages/Trade';
 setupIonicReact({
   rippleEffect: false,
   mode: 'ios',
-  animated: false,
 });
 const { chains, publicClient } = configureChains(
   [baseGoerli],

@@ -17,21 +17,23 @@ import { WriteMessage } from '../components/WriteMessage';
 import { useNotifications } from '../hooks/useNotifications';
 import { MemberAlias } from '../components/MemberBadge';
 import { timeAgo } from '../components/TradeItem';
+import { usePost } from '../hooks/usePosts';
 
 
 
 const Post: React.FC = () => {
     const { pathname } = useLocation()
     const id = pathname.split('/')[2]
+    const post = usePost(x => x.postCache[id])
     const auth = nativeAuth();
+    const { setPostsData } = usePost();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
-    const [post, setPost] = useState<null | { sent: Timestamp | null, author: string, id: string, commentCount: number | undefined, content: string, media?: { src: string, type: string } }>()
     useEffect(() => {
-        id && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
-            setPost({ ...postDoc.data(), id: postDoc.id } as any);
+        id && !post && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
+            setPostsData([{ ...postDoc.data(), id: postDoc.id }] as any[]);
         })
-    }, [id])
+    }, [id, post])
     useEffect(() => {
         id && uid && getDoc(doc(getFirestore(app), 'post', id, 'votes', uid!)).then((postDoc) => {
             setVoteCache(postDoc.data()?.vote || null);

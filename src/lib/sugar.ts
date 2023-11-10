@@ -7,7 +7,7 @@ export const formatEth = (info: bigint | undefined) => {
     if (typeof info == 'undefined') {
         return ""
     }
-    return parseFloat(formatEther(info)).toFixed(4) + " ETH"
+    return parseFloat(formatEther(info)).toFixed(3) + "Ξ"
 }
 
 export const uniq = (array: Record<string, any>[]) => {

@@ -6,9 +6,11 @@ import { nativeAuth } from "../lib/sugar";
 import { PostCard } from "./PostCard";
 import { IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRefresher, IonRefresherContent } from "@ionic/react";
 import { useNotifications } from "../hooks/useNotifications";
+import { Post, usePost } from "../hooks/usePosts";
 
 export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: string }> = ({ type, max, from }) => {
     const [posts, setPosts] = useState<any[]>([]);
+    const { setPostsData } = usePost();
     const [currentMax, setMax] = useState(max)
     const [pullRefresh, setPullRefresh] = useState<number>(0)
     const auth = nativeAuth();
@@ -23,7 +25,9 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
         const postsRef = query(collection(db, 'post'), orderBy(type == 'top' ? 'score' : 'sent', type == 'top' ? 'desc' : 'desc'), limit(currentMax));
         const authorPostsRef = query(collection(db, 'post'), orderBy('author'), where('author', from ? '==' : '!=', from ? from : null), orderBy(type == 'top' ? 'score' : 'sent', 'desc'), limit(currentMax));
         getDocs(from ? authorPostsRef : postsRef).then(snapshot => {
-            setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, sent: doc.data().sent == null ? new Timestamp(new Date().getSeconds(), 0) : doc.data().sent })));
+            const postsData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, sent: doc.data().sent == null ? new Timestamp(new Date().getSeconds(), 0) : doc.data().sent }));
+            setPostsData(postsData as Post[])
+            setPosts(postsData);
         });
     }, [type, from, me, auth.currentUser, pullRefresh, currentMax]);
 

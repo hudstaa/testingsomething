@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast } from '@ionic/react';
+import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast, useIonViewDidEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
 import { albumsOutline, chatboxOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, personOutline, wallet } from 'ionicons/icons';
@@ -110,6 +110,10 @@ const Account: React.FC = () => {
         }
     }, [ready, user, me])
     const { setTab } = useTabs();
+    useIonViewDidEnter(() => {
+        setTab('account')
+    })
+
     if (!me) {
         return <TribePage page='account'><></></TribePage>
     }
@@ -122,6 +126,51 @@ const Account: React.FC = () => {
                         <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
                             <IonCard color='paper'>
                                 <IonCardContent >
+                                    {notifications && notifications.length > 0 && <IonCard color='paper'>
+                                        <IonCardHeader>
+                                            <IonItem lines='none' color='paper'>
+
+                                                <IonText>
+                                                    Notifications
+                                                </IonText>
+                                                <IonButtons slot='end'>
+                                                    <IonBadge color='tribe'>
+                                                        {notifications.length}
+                                                        <IonIcon icon={notificationsOutline} />
+                                                    </IonBadge>
+                                                    {notifications.length > 0 && <IonButton color='tribe' fill='solid' onClick={() => {
+                                                        notifications.forEach(({ id }) => {
+                                                            deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
+
+                                                            })
+
+                                                        })
+                                                    }}>
+                                                        Clear
+                                                    </IonButton>}
+                                                </IonButtons>
+                                            </IonItem>
+
+                                        </IonCardHeader>
+                                        <IonCardContent>
+                                            {pushNotifications.map(({ title, subtitle, body, id, data }) => <IonItem>
+                                                <IonButtons slot='start'>
+                                                    {title}
+                                                </IonButtons>
+                                                {subtitle}
+
+                                                {body}
+                                            </IonItem>)}
+                                            {notifications.map(({ from, ref, timestamp, message, id }: any) => <IonItem lines='none' color='paper' onClick={() => {
+                                                deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
+
+                                                })
+                                            }} routerLink={ref.split('/')[0] + '/' + ref.split('/')[1]}>
+                                                <MemberBadge address={from} />{message}
+                                            </IonItem>)}
+                                        </IonCardContent>
+                                    </IonCard>}
+
                                     <IonItem lines='none' color='paper'>
                                         <IonButtons slot='start'>
                                             <MemberBadge address={me!.address} />
@@ -140,6 +189,7 @@ const Account: React.FC = () => {
                                             </IonBadge>
                                         </IonButtons>
                                     </IonItem>
+
                                     <IonItem color='paper' lines='none' detail={false} href='javascript:void(0)' onClick={() => {
                                         navigator.clipboard.writeText(me.address);
                                         setShowToast(true);
@@ -176,18 +226,6 @@ const Account: React.FC = () => {
                                     </IonItem>
 
 
-                                    <IonButton color='light' fill='solid' routerLink={'/channel/' + me?.address} routerDirection='root' onClick={() => {
-                                        setTab('chat')
-                                    }} >Chat
-                                    </IonButton>
-                                    <IonButton color='light' routerLink={'/member/' + me?.address} routerDirection='forward' onClick={() => {
-                                        setTab('member')
-                                    }} >Profile
-                                    </IonButton>
-                                    <IonButton color='light' fill='solid' routerDirection='none' onClick={() => {
-                                        open((message) => addPost(me.address, message as any), me.address, "New Post")
-                                    }} >Post
-                                    </IonButton>
                                     <IonItem color='paper'>
 
                                         <IonText>
@@ -218,50 +256,6 @@ const Account: React.FC = () => {
                                         Login</IonButton>}
                                 </IonCardContent>
                             </IonCard>
-                            {notifications && notifications.length > 0 && <IonCard color='paper'>
-                                <IonCardHeader>
-                                    <IonItem lines='none' color='paper'>
-
-                                        <IonText>
-                                            Notifications
-                                        </IonText>
-                                        <IonButtons slot='end'>
-                                            <IonBadge color='tribe'>
-                                                {notifications.length}
-                                                <IonIcon icon={notificationsOutline} />
-                                            </IonBadge>
-                                            {notifications.length > 0 && <IonButton color='tribe' fill='solid' onClick={() => {
-                                                notifications.forEach(({ id }) => {
-                                                    deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
-
-                                                    })
-
-                                                })
-                                            }}>
-                                                Clear
-                                            </IonButton>}
-                                        </IonButtons>
-                                    </IonItem>
-
-                                </IonCardHeader>
-                                <IonCardContent>
-                                    {pushNotifications.map(({ title, subtitle, body, id, data }) => <IonItem>
-                                        <IonButtons slot='start'>
-                                            {title}
-                                        </IonButtons>
-                                        {subtitle}
-
-                                        {body}
-                                    </IonItem>)}
-                                    {notifications.map(({ from, ref, timestamp, message, id }: any) => <IonItem lines='none' color='paper' onClick={() => {
-                                        deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
-
-                                        })
-                                    }} routerLink={ref.split('/')[0] + '/' + ref.split('/')[1]}>
-                                        <MemberBadge address={from} />{message}
-                                    </IonItem>)}
-                                </IonCardContent>
-                            </IonCard>}
                             <IonButton expand='full' fill='outline' onClick={() => {
                                 signOut(auth); logout(); setCurrentUser(null as any);
                                 setTimeout(() => {

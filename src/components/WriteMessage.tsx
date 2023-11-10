@@ -67,7 +67,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         }}
       />
       <IonButtons slot='end'>
-        <IonButton onClick={async () => {
+        <IonButton disabled={(content?.length || 0) < 1} onClick={async () => {
           makeComment();
         }}>
           <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
