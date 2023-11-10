@@ -43,7 +43,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const replyButton = !isMe && (
         <button
             style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
-            onClick={() => reply(message.id)}
+            onMouseDown={() => reply(message.id)}
             color='primary'
 
         >

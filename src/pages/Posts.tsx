@@ -55,7 +55,7 @@ const Posts: React.FC = () => {
             newPost['media'] = message.media;
         }
         addDoc(collection(db, 'post'), newPost).then((doc) => {
-            push('/post/' + doc.id);
+            push('/post/' + doc.id, { routerDirection: 'root' });
         });
     }
     return (

@@ -9,19 +9,21 @@ import { timeAgo } from './TradeItem';
 import { ReactElement } from 'react';
 export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
-    return <IonRouterLink routerDirection='none' routerLink={'/member/' + address}>
-        {member && member !== null ? <IonChip color={color}>
-            <IonAvatar>
-                <IonImg onError={() => {
+    const { push } = useHistory();
+    return member && member !== null ? <IonChip onMouseDown={() => {
+        push('/member/' + address);
+    }} color={color}>
+        <IonAvatar>
+            <IonImg onError={() => {
 
-                }} src={member?.twitterPfp || personOutline} />
-            </IonAvatar>
-            <IonText>
-                {member?.twitterName || address.slice(0, 4) + "..." + address.slice(38, 42)}
-            </IonText>
-        </IonChip> : <IonChip>
-            {address.slice(0, 4) + '...' + address.slice(38, 42)}
-        </IonChip>}</IonRouterLink>
+            }} src={member?.twitterPfp || personOutline} />
+        </IonAvatar>
+        <IonText>
+            {member?.twitterName || address.slice(0, 4) + "..." + address.slice(38, 42)}
+        </IonText>
+    </IonChip> : <IonChip>
+        {address.slice(0, 4) + '...' + address.slice(38, 42)}
+    </IonChip>
 }
 
 export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
@@ -74,10 +76,12 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
 
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
-
-    return <IonRouterLink routerLink={'/member/' + address} routerDirection='none' color='dark'>
+    const { push } = useHistory();
+    return <IonText style={{ margin: 0, padding: 0 }} onMouseDown={() => {
+        push('/member/' + address);
+    }} color='dark'>
         {member?.twitterName}
-    </IonRouterLink>
+    </IonText>
 }
 export const MemberToolbar: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
@@ -108,15 +112,15 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
-
+    const { push } = useHistory();
     return <IonRow>
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow >
-                <IonRouterLink routerLink={'/member/' + address}>
-                    <IonText color='medium' className='medium' style={{ fontSize: '11px' }}>
-                        @{member?.twitterUsername}
-                    </IonText>
-                </IonRouterLink>
+                <IonButton fill='clear' onMouseDown={() => {
+                    push('/member/' + member!.address);
+                }} color='medium' className='medium' style={{ fontSize: '11px' }}>
+                    @{member?.twitterUsername}
+                </IonButton>
             </IonRow>
             <IonRow>
                 {content ? content : <></>}

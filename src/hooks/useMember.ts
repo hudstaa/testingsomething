@@ -100,7 +100,13 @@ export const useMember = create<FriendStore>((set, store) => ({
         if (typeof address === 'undefined' || typeof address == 'undefined' || address.length === 0) {
             return null;
         }
-        const addy = getAddress(address) as string;
+        let addy: any = null;
+        try {
+
+            addy = getAddress(address) as string;
+        } catch (e) {
+            return null;
+        }
 
         if (store().loading[addy]) {
             return null;

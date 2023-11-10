@@ -8,6 +8,7 @@ import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
+import { useHistory } from "react-router"
 
 
 
@@ -15,7 +16,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { localCommentCount } = useNotifications()
     const [notif, setNotif] = useState<string | null>(null);
-    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    const { push } = useHistory();
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return <IonCard onMouseDown={(e) => {
+        if ((e.target as any).nodeName != 'ion-button') {
+            push('/post/' + id);
+        }
+    }} color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
@@ -45,20 +52,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
+            <IonButton fill='clear' onMouseDown={() => {
+                setNotif("Copied to clipboard")
+                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
+            }}>
+
+                <IonIcon color={'medium'} icon={'/icons/paper-plane.svg'} style={{ height: 28, width: 28, marginLeft: '-10px', filter: darkmode ? 'invert(100%)' : undefined }} />
+            </IonButton>
+
             {!showComments && <IonButton routerDirection="root" color='white' fill="clear" routerLink={'/post/' + id}>
                 <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount || 0}
                 </IonText>
             </IonButton>}
-            <IonButton fill='clear' onClick={() => {
-                setNotif("Copied to clipboard")
-                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
-            }}>
 
-                <IonIcon color={'medium'} icon={''} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
-            </IonButton>
-            <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={5000} message={notif || ""}>
+            <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={1000} message={notif || ""}>
             </IonToast>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >

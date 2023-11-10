@@ -3,7 +3,7 @@ import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
 import { signInWithCustomToken } from "firebase/auth";
-import { ReactElement, useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { baseGoerli } from "viem/chains";
 import { useMember } from "../hooks/useMember";
 import { nativeAuth } from "../lib/sugar";
@@ -15,7 +15,7 @@ import { MemberPfp } from "./MemberBadge";
 import { useNotifications } from "../hooks/useNotifications";
 import useTabs from "../hooks/useTabVisibility";
 
-export const TribeHeader: React.FC<{ image?: string, title?: string | Element, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
+export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
     const { setTab } = useTabs();
     const modalRef = useRef<HTMLIonModalElement>(null)
@@ -29,7 +29,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | Element, s
         }
     }, [ready, auth?.currentUser, me])
 
-    const { location } = useHistory();
+    const { location, replace } = useHistory();
     let backPage = '/' + location.pathname?.split('/')[1];
     if ((backPage || "").includes('/channel')) {
         backPage = '/chat'
@@ -40,7 +40,11 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | Element, s
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton ? <IonBackButton text={title as any} color="dark" defaultHref={backPage} /> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
+                {showBackButton ? <IonButton onMouseDown={() => {
+
+                    backPage !== '/posts' && backPage !== '/chat' && history.back();
+                    replace(backPage)
+                }} fill='clear' color="dark" routerLink={backPage} routerDirection="back" >{title}</IonButton> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title as any}
                 </IonText>}
             </IonButtons>

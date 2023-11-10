@@ -256,7 +256,7 @@ const App: React.FC = () => {
           <WriteMessageModalProvider />
           <IonReactHashRouter >
             <NotificationsProvider />
-            <IonRouterOutlet>
+            <IonRouterOutlet animated={false}>
               <Route exact path="/channel/:address">
                 <Room />
               </Route>
@@ -268,7 +268,7 @@ const App: React.FC = () => {
               <IonTabs onIonTabsWillChange={(e) => {
                 setTab(e.detail.tab as any);
               }}>
-                <IonRouterOutlet>
+                <IonRouterOutlet animated={true}>
                   <Redirect exact path="/" to='/posts' />
                   <Route exact path="/trade/:hash">
                     <Transaction />
