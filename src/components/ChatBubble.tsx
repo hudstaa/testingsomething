@@ -68,6 +68,9 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             {!isMe && (
                 <div style={{ lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
                     <MemberAlias address={message.author} size='veru-smol' />
+                    <span style={{ paddingLeft: 10 }}>
+                        {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
+                    </span>
                 </div>
             )}
         </div>
