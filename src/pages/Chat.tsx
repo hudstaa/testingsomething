@@ -155,7 +155,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
             </div>
             <IonButtons slot='end'>
                 <IonBadge color={'transparent'} style={{ opacity: 0.5 }}>
-                    {msg === null ? <IonSpinner name='dots' /> : timeAgo(new Date(msg.sent.seconds * 1000))}
+                    {msg && msg?.sent !== null ? timeAgo(new Date(msg.sent.seconds * 1000)) : <IonSpinner name='dots' />}
                 </IonBadge>
             </IonButtons>
         </div>

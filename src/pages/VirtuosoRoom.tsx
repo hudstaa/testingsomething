@@ -1,6 +1,6 @@
 import { Capacitor } from "@capacitor/core";
 import { Keyboard } from "@capacitor/keyboard";
-import { IonButton, IonContent, IonItem, IonProgressBar } from "@ionic/react";
+import { IonButton, IonContent, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonProgressBar } from "@ionic/react";
 import { Timestamp, collection, documentId, getDocs, getFirestore, limit, onSnapshot, orderBy, query, startAfter, where } from "firebase/firestore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
@@ -15,7 +15,7 @@ import { Member } from "../hooks/useMember";
 const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) => void }> = ({ channel, me, reply }) => {
     const [lastMessageReached, setLastMessageReached] = useState(false)
     const [lastFetchedTimestamp, setLastTimestamp] = useState(new Timestamp(Date.now() / 1000, 0))
-
+    const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const messages = useGroupMessages(x => x.groupMessages[channel] || [])
     const { pushMessages } = useGroupMessages()
     const [newMessage, setNewMessage] = useState<string | undefined>();
@@ -85,11 +85,16 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
             );
         })();
     }, [hasMessages])
-    const fetchMore = useCallback(async () => {
+    const fetchMore = useCallback(async (event: any) => {
+        console.log(event);
+        if (loadingMore) {
+            return;
+        }
+        setLoadingMore(true);
         console.log("FETCHING MORE");
         const db = getFirestore(app);
         const messagesCol = collection(db, "channel", channel, "messages");
-        const q = query(messagesCol, orderBy("sent", "desc"), startAfter(lastFetchedTimestamp), limit(10));
+        const q = query(messagesCol, orderBy("sent", "desc"), startAfter(lastFetchedTimestamp), limit(20));
         return getDocs(q).then(async (snapshot) => {
             const olderMessages = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
             const inputMessages = [...olderMessages as any];
@@ -108,13 +113,20 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
             if (inputMessages.length === 0) {
                 setLastMessageReached(true);
             } else {
+                event.complete();
                 pushMessages(channel, inputMessages, replies);
                 setLastTimestamp((olderMessages[olderMessages.length - 1] as any).sent);
             }
+            setLoadingMore(false);
+
         })
-    }, [messages, lastFetchedTimestamp])
+    }, [messages, lastFetchedTimestamp, loadingMore])
     useEffect(() => {
-        me && fetchMore();
+        me && fetchMore({
+            complete: () => {
+                containerRef.current!.scrollToBottom(500); // 500ms for a smooth scroll
+            }
+        });
     }, [me, channel])
     // useEffect(() => {
     //     if (Capacitor.isPluginAvailable('Keyboard')) {
@@ -154,9 +166,18 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
                 return <NewChatBubble reply={reply} channel={channel} me={me.address} message={msg} />
             }}
         /> */}
-        {lastMessageReached || messages.length === 0 || messages.length < 10 ? <></> : <IonButton onClick={fetchMore} fill="clear" expand="full">
-            Load More
-        </IonButton>}
+        <IonInfiniteScroll position="top"
+            onIonInfinite={(e) => {
+                fetchMore(e.target)
+            }}
+            threshold="100px"
+            disabled={lastMessageReached || messages.length < 20}
+        >
+            <IonInfiniteScrollContent
+                loadingSpinner="crescent"
+                loadingText="Loading more messages..."
+            />
+        </IonInfiniteScroll>
         {messages.map(x => <NewChatBubble key={x.id} message={x} me={me.address} channel={channel} reply={reply} />)}
     </IonContent>
 
