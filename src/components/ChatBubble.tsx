@@ -22,6 +22,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%',
         padding: '10px',
+        paddingTop: '7px',
         borderTopLeftRadius: '12px', // Optional: to make it look like a bubble
         borderTopRightRadius: '12px', // Optional: to make it look like a bubble
         borderBottomLeftRadius: isMe ? '12px' : '2px',
