@@ -51,6 +51,29 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
     </IonRouterLink>
 }
 
+export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
+    const member = useMember(x => x.getFriend(address));
+
+    let pfpStyle = {};
+    switch (size) {
+        case 'smol':
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            break;
+        case 'veru-smol':
+            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            break;
+        case 'double-smol':
+            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
+            break;
+        case 'big':
+        default:
+            pfpStyle = { width: 100, height: 100, padding: 10, borderRadius: 20 };
+            break;
+    }
+
+    return <img src={member?.twitterPfp || personOutline} style={pfpStyle} />
+}
+
 export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
     const member = useMember(x => x.getFriend(address));
 
@@ -76,10 +99,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
 
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
-    const { push } = useHistory();
-    return <IonText style={{ margin: 0, padding: 0 }} onMouseDown={() => {
-        push('/member/' + address);
-    }} color='dark'>
+    return <IonText style={{ margin: 0, padding: 0 }} color='dark'>
         {member?.twitterName}
     </IonText>
 }

@@ -1,7 +1,7 @@
-import { IonAvatar, IonButton, IonButtons, IonFooter, IonIcon, IonImg, IonItem, IonLoading, IonPage, IonSpinner, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCardHeader, IonFooter, IonHeader, IonIcon, IonImg, IonItem, IonLoading, IonPage, IonSpinner, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import { close } from 'ionicons/icons';
 import { useCallback, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import { MemberPfp } from '../components/MemberBadge';
 import { TribeHeader } from '../components/TribeHeader';
 import { useGroupMessages } from '../hooks/useGroupMessages';
@@ -14,14 +14,14 @@ import { Message } from '../models/Message';
 import { TribePage } from './TribePage';
 import VirtuosoRoom from './VirtuosoRoom';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { hideTabs, showTabs } from '../lib/sugar';
+import Chat from './Chat';
 
 
 
 
 const Room: React.FC = () => {
-    const { pathname } = useLocation()
-    const address = pathname.split('/')[2]
-    console.log(address, pathname)
+    const { address } = useParams<{ address: string }>()
 
     const channelOwner = useMember(x => x.getFriend(address, true))
     const me = useMember(x => x.getCurrentUser());
@@ -31,12 +31,12 @@ const Room: React.FC = () => {
     const [focused, setFocus] = useState<boolean>(false);
     const channel = address;
 
-    //useIonViewDidEnter(() => {
-    //     hideTabs();
-    // })
-    // useIonViewDidLeave(() => {
-    //     showTabs();
-    // })
+    useIonViewDidEnter(() => {
+        hideTabs();
+    })
+    useIonViewDidLeave(() => {
+        showTabs();
+    })
 
     const sendMessage = useCallback(async (message: Message) => {
         setFocus(false);
@@ -75,13 +75,17 @@ const Room: React.FC = () => {
         </IonButtons>
     </IonItem> : <>
     </>, [replyingToMessageId, messages, me]);
-    if (!address || address && address.length !== 42) {
-        return <IonPage>
-            <IonLoading />
-        </IonPage>
-    }
+
     return <TribePage page='room'>
-        <TribeHeader showBackButton={true} title={(channelOwner?.twitterName) || address} />
+        <IonHeader>
+            <IonToolbar>
+                <IonButtons slot='start'>
+                    <IonButton routerLink='/channel'>
+                        {(channelOwner?.twitterName) || address}
+                    </IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
         <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
             {footerMemo}

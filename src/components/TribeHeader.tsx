@@ -30,23 +30,13 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     }, [ready, auth?.currentUser, me])
 
     const { location, replace } = useHistory();
-    let backPage = '/' + location.pathname?.split('/')[1];
-    if ((backPage || "").includes('/channel')) {
-        backPage = '/chat'
-    }
-    if ((backPage || "").includes('/post')) {
-        backPage = '/posts'
-    }
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton ? <div onMouseDown={() => {
-                    backPage !== '/posts' && backPage !== '/chat' ? history.back() : replace(backPage)
-                }}><IonBackButton text={title as any} color="dark" >
-                    </IonBackButton>{backPage === '/chat' && <IonText> 〱{title}</IonText>}
-                </div> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
-                    {title as any}
-                </IonText>}
+                {showBackButton ? <IonBackButton text={title as any} color="dark" />
+                    : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
+                        {title as any}
+                    </IonText>}
             </IonButtons>
         </IonToolbar>) : <IonToolbar color='tribe'>
         {content}

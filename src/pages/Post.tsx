@@ -9,8 +9,8 @@ import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
-import { nativeAuth } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText } from '@ionic/react';
+import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
+import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
@@ -22,8 +22,7 @@ import { usePost } from '../hooks/usePosts';
 
 
 const Post: React.FC = () => {
-    const { pathname } = useLocation()
-    const id = pathname.split('/')[2]
+    const { id } = useParams<{ id: string }>()
     const post = usePost(x => x.postCache[id])
     const auth = nativeAuth();
     const { setPostsData, updatePost } = usePost();
@@ -39,6 +38,12 @@ const Post: React.FC = () => {
             setVoteCache(postDoc.data()?.vote || null);
         })
     }, [id, uid])
+    useIonViewDidEnter(() => {
+        hideTabs();
+    })
+    useIonViewDidLeave(() => {
+        showTabs();
+    })
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);

@@ -2,7 +2,7 @@ import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
-import { MemberPfp, MemberAlias } from '../components/MemberBadge';
+import { MemberPfp, MemberAlias, MemberPfpImg } from '../components/MemberBadge';
 import { timeAgo } from '../components/TradeItem';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -38,17 +38,17 @@ const Chat: React.FC = () => {
             where(`holders.${address}`, '>', 0)
         ];
         // If walletField is defined, add an additional condition
-        if (walletField) {
-            const q2 = query(channelsRef, where(walletField, '!=', null));
-            getDocs(q2)
-                .then(querySnapshot => {
-                    if (!querySnapshot.empty) {
-                        const result = querySnapshot.docs.map(doc => ({ ...doc.data(), address: doc.id }));
-                        setMembers(x => uniqByProp([...x ? x : [], ...result] as any, 'address') as any);
-                    }
-                })
+        // if (walletField) {
+        //     const q2 = query(channelsRef, where(walletField, '!=', null));
+        //     getDocs(q2)
+        //         .then(querySnapshot => {
+        //             if (!querySnapshot.empty) {
+        //                 const result = querySnapshot.docs.map(doc => ({ ...doc.data(), address: doc.id }));
+        //                 setMembers(x => uniqByProp([...x ? x : [], ...result] as any, 'address') as any);
+        //             }
+        //         })
 
-        }
+        // }
 
         const q = query(channelsRef, ...conditions);
         getDocs(q)
@@ -63,13 +63,10 @@ const Chat: React.FC = () => {
 
     }, [me])
     const { setTab } = useTabs()
-    useIonViewWillEnter(() => {
+    useIonViewDidEnter(() => {
         setTab('chat')
     })
     const { user } = usePrivy();
-    const [channelAddress, setChannelAddress] = useState("0x6982508145454Ce325dDbE47a25d4ec3d2311933")
-    const [chainId, setChainId] = useState(1)
-    const { balance, syncing } = useERCBalance(channelAddress as any, chainId as any);
     const [hits, setHits] = useState<Member[]>([])
 
     return (
@@ -103,7 +100,7 @@ const Chat: React.FC = () => {
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem routerDirection='root' lines='none' routerLink={'/channel/' + address} key={address} >
+                                    <IonItem routerDirection='forward' lines='none' routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
@@ -136,7 +133,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
     return (
         <div style={{ paddingTop: '5px', paddingBottom: '5px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
             <IonButtons slot='start'>
-                <MemberPfp address={address} size='double-smol' />
+                <MemberPfpImg address={address} size='double-smol' />
             </IonButtons>
             <div style={{ flex: 1, minWidth: 0, paddingLeft: '8px' }}>
                 <div>
