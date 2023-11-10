@@ -582,6 +582,10 @@ ion-tab-bar {
 
 }
 
+ion-footer {
+  border-top: 0px !important;
+}
+
 ::slotted([slot="start"]) {
   margin: 0px !important;
 }

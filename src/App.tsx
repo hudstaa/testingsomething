@@ -305,7 +305,7 @@ const App: React.FC = () => {
                 </IonRouterOutlet>
 
                 <IonTabBar style={{ border: '0' }} slot="bottom">
-                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="posts" href="/posts">
+                  <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/posts">
                     <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
                   </IonTabButton>
                   <IonTabButton tab="member" href="/member">

@@ -5,7 +5,7 @@ import {
     IonFab,
     IonGrid,
     IonRow,
-    IonSegment, IonSegmentButton
+    IonSegment, IonSegmentButton, useIonViewDidEnter
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -23,11 +23,15 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { nativeAuth } from '../lib/sugar';
 import { OnBoarding } from './OnBoarding';
 import { TribePage } from './TribePage';
+import useTabs from '../hooks/useTabVisibility';
 
 
 
 const Posts: React.FC = () => {
-
+    const { setTab } = useTabs();
+    useIonViewDidEnter(() => {
+        setTab('post');
+    })
     const [postType, setPostType] = useState<'top' | 'recent'>('top')
     const auth = nativeAuth();
     const me = useMember(x => x.getCurrentUser());
@@ -60,7 +64,7 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                        <IonCardTitle style={{ paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
+                        <IonCardTitle style={{ color: 'white', paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
                             tribe
                         </IonCardTitle>
                     </IonButtons>

@@ -66,12 +66,16 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
             setPreviewUrl(null);
         }
     }, [done])
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const uploadImage = <IonIcon style={{
+        filter: !darkmode ? 'invert(100%)' : undefined
+    }} size="small" color='primary' icon={'/icons/uploadd.svg'} />
     return (
         <div>
             <IonButton fill='clear' {...getRootProps()} >
                 <input {...getInputProps()} />
-                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : <IonIcon size="small" color='primary' icon={'/icons/uploadd.svg'} /> :
-                    isUploading ? <IonSpinner name='crescent' /> : <IonIcon style={{width: 25, height: 25, marginRight: 5}} color='medium' icon={'/icons/uploadd.svg'} />
+                {previewUrl ? isUploading ? <IonSpinner name='crescent' /> : uploadImage :
+                    isUploading ? <IonSpinner name='crescent' /> : uploadImage
                 }
             </IonButton>
         </div>

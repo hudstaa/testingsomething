@@ -10,7 +10,7 @@ import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
 import { nativeAuth } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonRow } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText } from '@ionic/react';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
@@ -30,7 +30,6 @@ const Post: React.FC = () => {
     useEffect(() => {
         id && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
             setPost({ ...postDoc.data(), id: postDoc.id } as any);
-
         })
     }, [id])
     useEffect(() => {
@@ -86,12 +85,12 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <TribePage page='post'>
-        <TribeHeader showBackButton={true} title={post ? <>@<MemberAlias address={post.author} /> {timeAgo(post.sent as any)}</> as any : "Loading..."} />
+        <TribeHeader showBackButton={true} title={'Post from ' + post?.sent?.toDate().toDateString()} />
         <IonContent ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                        <PostCard id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} />
+                        {post !== null ? <PostCard id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} /> : <IonSkeletonText />}
                     </IonCol></IonRow>
 
 

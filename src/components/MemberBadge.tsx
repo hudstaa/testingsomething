@@ -36,7 +36,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 }; 
+            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
             break;
         case 'big':
         default:
@@ -75,7 +75,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
+    return <IonRouterLink routerLink={'/member/' + address} routerDirection='none' color='dark'>
         {member?.twitterName}
     </IonRouterLink>
 }
@@ -109,7 +109,7 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
 
-    return <IonRow>      
+    return <IonRow>
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow >
                 <IonRouterLink routerLink={'/member/' + address}>

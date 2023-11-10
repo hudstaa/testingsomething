@@ -13,9 +13,11 @@ import { app } from "../App";
 import { getFirestore, query, collection, where, getDocs, Timestamp, onSnapshot } from "firebase/firestore";
 import { MemberPfp } from "./MemberBadge";
 import { useNotifications } from "../hooks/useNotifications";
+import useTabs from "../hooks/useTabVisibility";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string | Element, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
+    const { setTab } = useTabs();
     const modalRef = useRef<HTMLIonModalElement>(null)
     const auth = nativeAuth();
     const fireUser = auth.currentUser;
@@ -38,10 +40,9 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | Element, s
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton && <IonBackButton text="" color="dark" defaultHref={backPage} />} {/* Here is the conditional back button */}
-                <IonText color='dark' style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
+                {showBackButton ? <IonBackButton text={title as any} color="dark" defaultHref={backPage} /> : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                     {title as any}
-                </IonText>
+                </IonText>}
             </IonButtons>
         </IonToolbar>) : <IonToolbar color='tribe'>
         {content}

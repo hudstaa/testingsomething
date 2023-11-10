@@ -23,6 +23,7 @@ import { getAddress } from 'viem';
 import { useWriteMessage } from '../hooks/useWriteMessage';
 import { httpsCallable, getFunctions } from 'firebase/functions';
 import { useHistory, useLocation } from "react-router-dom";
+import useTabs from '../hooks/useTabVisibility';
 
 
 
@@ -108,6 +109,7 @@ const Account: React.FC = () => {
             })
         }
     }, [ready, user, me])
+    const { setTab } = useTabs();
     if (!me) {
         return <TribePage page='account'><></></TribePage>
     }
@@ -174,10 +176,12 @@ const Account: React.FC = () => {
                                     </IonItem>
 
 
-                                    <IonButton color='light' fill='solid' routerLink={'/channel/' + me?.address} routerDirection='none' onClick={() => {
+                                    <IonButton color='light' fill='solid' routerLink={'/channel/' + me?.address} routerDirection='root' onClick={() => {
+                                        setTab('chat')
                                     }} >Chat
                                     </IonButton>
-                                    <IonButton color='light' routerLink={'/member/' + me?.address} routerDirection='none' onClick={() => {
+                                    <IonButton color='light' routerLink={'/member/' + me?.address} routerDirection='forward' onClick={() => {
+                                        setTab('member')
                                     }} >Profile
                                     </IonButton>
                                     <IonButton color='light' fill='solid' routerDirection='none' onClick={() => {

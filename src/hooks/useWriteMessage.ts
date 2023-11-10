@@ -17,6 +17,7 @@ export type WriteMessageHook = {
     author: string
     open: (callback: MessageFunction, author: string, placeHolder: string) => void
     setMedia: (media: { src: string, type: string }) => void
+    removeMedia: () => void
     setContent: (content: string) => void
     dismiss: (shouldSend: boolean) => void
     setIsOpen: (open: boolean) => void
@@ -41,6 +42,11 @@ export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
     },
     setMedia(media) {
         set({ message: { author: store().author, media: media, ...store().message, content: store().message?.content, sent: null, id: '' } });
+    },
+    removeMedia: () => {
+        const message = store().message;
+        delete message?.media
+        set({ message });
     },
     setContent(content: string) {
         set({ message: { author: store().author, ...store().message, content, sent: null, id: '' } });

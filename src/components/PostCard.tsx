@@ -6,7 +6,7 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { share } from "ionicons/icons"
+import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 
 
@@ -45,13 +45,21 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
-            <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                {!showComments && <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />}
-
+            {!showComments && <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
+                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
                 <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
                     {commentCount}
                 </IonText>
+            </IonButton>}
+            <IonButton fill='clear' onClick={() => {
+                setNotif("Copied to clipboard")
+                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
+            }}>
+
+                <IonIcon color={'medium'} icon={shareSocialOutline} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
             </IonButton>
+            <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={5000} message={notif || ""}>
+            </IonToast>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 28, width: 28 }} />

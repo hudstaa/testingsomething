@@ -1,4 +1,4 @@
-import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter } from '@ionic/react';
+import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter, useIonViewDidEnter } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';

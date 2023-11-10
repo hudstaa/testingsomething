@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -52,6 +52,10 @@ const Member: React.FC = () => {
         setTrade(false);
         setTab('member')
     })
+    useIonViewDidEnter(() => {
+        setTab('member');
+    })
+
     useIonViewDidLeave(() => {
         document.title = 'Tribe Alpha';
     })
@@ -67,7 +71,7 @@ const Member: React.FC = () => {
             <TribeHeader
                 color='tertiary'
                 title={member !== null ? member.twitterName : ""}
-                showBackButton={true} 
+                showBackButton={true}
             />
             < TribeContent fullscreen >
                 <IonRefresher slot='fixed' onIonRefresh={() => {
