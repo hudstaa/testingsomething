@@ -80,7 +80,7 @@ const Member: React.FC = () => {
                 </IonRefresher>
                 <IonCard color='black' style={{marginTop: 0, marginBottom: 5 }}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0, paddingTop: 0 }}>
-                        <IonText color='medium' style={{ paddingTop: 0 }}>
+                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 16, fontWeight: 450 }}>
                             {member?.bio}
                         </IonText>
                         <IonCardContent style={{padding: 5}}><IonItem lines='none' color='black' className='ion-text-center'>
@@ -96,13 +96,13 @@ const Member: React.FC = () => {
                         </div>
                     </IonItem>
                     </IonCardContent>
-                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 12}}>
+                        <IonText color='medium' style={{ opacity: 0.75, paddingTop: 5, fontSize: 16, fontWeight: 450 }}>
                             @{member?.twitterUsername}
                         </IonText>
                         <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600, letterSpacing: -1}}>
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 65, height: 65, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
+                        <img style={{ width: 100, height: 100, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
                     
                 </IonCard>
