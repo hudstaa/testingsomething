@@ -1,4 +1,4 @@
-import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
+import { IonBadge, IonButton, IonRow, IonGrid, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
@@ -6,14 +6,16 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
+import { paperPlane, share, shareOutline, shareSocialOutline, personOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory } from "react-router"
+import { useMember } from "../hooks/useMember"
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { localCommentCount } = useNotifications()
+    const member = useMember(x => x.getFriend(author));
     const [notif, setNotif] = useState<string | null>(null);
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -31,7 +33,10 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
-            <MemberCardHeader address={author} />
+                <IonRow style={{marginTop: 5, marginBottom: 10}}>
+                    <img style={{ width: 28, height: 28, borderRadius: '7px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
+                    <MemberCardHeader address={author} />
+                </IonRow>
         </IonCardHeader>
         <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 1, margin: 0 }}  >
