@@ -54,8 +54,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
                 push('/post/' + id);
             }}>
-                <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 20, width: 20, marginLeft: '-5px' }} />
-                <IonText color={'medium'} className='header' style={{ fontSize: 15, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
+                <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
+                <IonText color={'medium'} className='header' style={{ fontSize: 16, marginTop: 3, paddingLeft: 3, color: 'var(--ion-color-soft)' }}>
                     {commentCount || 0}
                 </IonText>
             </IonButton>}
@@ -64,7 +64,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 
-                <IonIcon icon={'/icons/se.svg'} style={{ height: 20, width: 20, marginTop: 2, marginLeft: '-5px', color: 'var(--ion-color-soft)' }} />
+                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton>
 
 
