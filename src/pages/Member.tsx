@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -51,6 +51,10 @@ const Member: React.FC = () => {
         setTrade(false);
         setTab('member')
     })
+    useIonViewDidEnter(() => {
+        setTab('member');
+    })
+
     useIonViewDidLeave(() => {
         document.title = 'Tribe Alpha';
     })
@@ -66,7 +70,7 @@ const Member: React.FC = () => {
             <TribeHeader
                 color='tertiary'
                 title={member !== null ? member.twitterName : ""}
-                showBackButton={true} 
+                showBackButton={true}
             />
             < TribeContent fullscreen >
                 <IonRefresher slot='fixed' onIonRefresh={() => {
@@ -74,88 +78,49 @@ const Member: React.FC = () => {
                 }}>
                     <IonRefresherContent />
                 </IonRefresher>
-                {member && member.twitterBackground && !isDesktop && <IonCard style={{ aspectRatio: 3 / 1, margin: 0, borderRadius: 0 }}  >
-                    {member?.twitterBackground && <IonImg style={{ position: 'absolute', left: 0, right: 0, top: 0 }} src={member.twitterBackground} />}
+                <IonCard color='light'>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
+                        <IonText color='medium' style={{ paddingTop: 10 }}>
+                            {member?.bio}
+                        </IonText>
+                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 12}}>
+                            @{member?.twitterUsername}
+                        </IonText>
+                        <IonText style={{ paddingTop: 10, fontSize: 24}}>
+                            {member?.twitterName}
+                        </IonText>
+                        <img style={{ width: 80, height: 80, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
-                    <IonCardContent>
-                    </IonCardContent>
-                </IonCard>}
-
-                {member && <IonItem lines='none' style={{ marginTop: 10 }}>
-                    <IonRouterLink routerLink={'/member/' + address} routerDirection='none'>
-                        <img style={{ width: 40, height: 40, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
-                    </IonRouterLink>
-                    <IonGrid fixed>
-                        <IonRow>
-                            <IonCol>
-
-                                <IonRow>
-                                    <IonRouterLink routerLink={'/member/' + address}>
-                                        <IonText>
-                                            {member?.twitterName}
-                                        </IonText>
-                                    </IonRouterLink>
-                                </IonRow>
-                                <IonRow>
-                                    <IonRouterLink routerLink={'/member/' + address}>
-
-                                        <IonText color='medium' className='regular'>
-                                            {member?.twitterUsername}
-                                        </IonText>
-                                    </IonRouterLink>
-                                </IonRow>
-                            </IonCol>
-
-                            {
-                                ftBalance ? <IonChip>
-                                    <IonAvatar>
-                                        <IonImg src={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAMAAADUMSJqAAAAV1BMVEX///8AuvoAt/oAtfr8//8Uvfr3/f/d9P5ZyvvO8P7y+//G7P6y5v1mz/tJxvvn+P6V3P2H1/zV8f43w/un4v171Py86f1x0vyf3/0ewPp50fyu4v04wPvgoS+uAAADkUlEQVRoge1Z25bqIAyVYC/WDr2o1R7n/7/zQIvIJYmdkXlzv+mC3TQkOwnd7T744IPcaMZDt/8b6u5SAIjT0P0B90EzGwD0+bmFA9SZjd8XwmMXY1byG4gAx4zcgeELMtreQkwuqmzk14QcTrkifv+dGK5jJhN5k3pFs9/zkB8lQi4gj9vPmOUCVBbyASUX0OYgv+DkoshB/kWQw4CtbqZ+6NuxfJNciFTCygEWSKGGttrwBJIcLvHSbn6u1Y8o6nPzgjxNULc/Mr2co6X6AWpiJZo6UL33Gq6s0XQTV0bniFBMvX6kTh5qMuNiNfe33V4abumvhPPxDF3hx/qIysSDvsBzbmI2yem5jj74dSla2iuG3JPeMqlX8Vos6VDJdTvckR54w43tiExjxeJJ7lzZvyQXBXKqitugolWcczDH0OJiYP3S2J8n1vS09LIv/IiXR706cabLQ0JOZd4C+AotqNkTuiXkHesWm0e1/anmDZb4YP1og/Hxc665xXNKzkmXgKVz7NyL/GPfMw1GNj/Wjn0E95NdnKpvydmy+nFy5JzOYeSMmGp8771g0SnLWoJ034yki9WPlyc5G4tTSt4x64WsvEjUTSQnvRj5josvOPjRChfuNVFyvBm1G9qnsmiokSNHazWjGKab9jS/4HyIkzN5ZAK98pqhivEhoHW6YsiHIM1gYpxONK+0qJuubvLIr0wbQEw7dJk2KeoPfHM6Wrql1HBPSqMhv3vk0JEHhCXoArJkGHLfzXCmg5Fsqqk6nZDXO0IBmAGTssccaKCzsCdklxujCNNNKIbkZ6IwzsyoQdQMEwKhqQoPXP4iCNc7k/4huRzRnIsHkRB4mhpPhuT6iJHy8uoGCzXdBG+U8XJEspTzuEGD5Z5Runv0VJWaLjEpD4Dc6yyujMlhigMmHs4wYCLQYA8to2PYcg+BZJK5NZriv3Uy+o6B+dW0uyAVJWNTmgI6NpT7E9Qmbr9a2o1mSEcEWR73X/LxGlvvGeJavbTFSL4bRxyVBJDqB/eQUbAv3UI6lNlrqqptf3RfFQX7wpLMiWRZeIVo6jVnFU98b1xWBxGzFvRQjtObmO0ovdHEVpdAY9+70vR7oD55GThtjTwcZ+d2e3K+LG7LRgbODbYC+Pn/9qeBclUwEHbiroS09EWGy3XjdhC980Az1WC+mkA6JP8CE6hbeHDduc72yQFL6y7fJ4EPPviAxH9sByOUcm2KWAAAAABJRU5ErkJggg=='} />
-                                    </IonAvatar>
-                                    <IonText>
-                                        {formatUnits(ftBalance, 0)}
-                                    </IonText>
-                                </IonChip> : <></>
-                            }
-
-                            {
-                                balance ? <IonChip>
+                    <IonCardContent><IonItem lines='none' color='light' className='ion-text-center'>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton style={{ margin: 'auto', marginRight: 0 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
+                                Boost
+                            </IonButton>
+                            {balance ? (
+                                <IonChip style={{ margin: 4 }}>
                                     <IonAvatar>
                                         <IonImg src='/favicon.png' />
                                     </IonAvatar>
                                     <IonText>
                                         {formatUnits(balance, 0)}
                                     </IonText>
-                                </IonChip> : <></>
-                            }
+                                </IonChip>
+                            ) : null}
 
-                            {
-                                ((ercBalance && ercBalance !== null) || (balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ?
-                                    <IonButton routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
-                                        <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                                    </IonButton>
-                                    : <></>
-                            }
+                            {((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ? (
+                                <IonButton style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                    <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                                </IonButton>
+                            ) : null}
+                        </div>
+                    </IonItem>
 
-                        </IonRow>
-
-                    </IonGrid>
-
-
-                </IonItem>}
-
-                <IonCardHeader>
-                    {member?.bio}
-                </IonCardHeader>
+                    </IonCardContent>
+                </IonCard>
 
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
-                <IonFab slot='fixed' horizontal='end' vertical='bottom'>
-                    {!member?.type && <IonFabButton color='tribe' onClick={() => { setTrade(!trade) }}>
-                        {trade ? 'OK' : "Boost"}
-                    </IonFabButton>}
-                </IonFab>
                 <IonFab slot='fixed' horizontal='start' vertical='bottom'>
                     <IonRouterLink href={'javascript:void(0)'}>
                         {member && !trade && !member.type && <BuyPriceBadge onClick={() => {
@@ -183,40 +148,48 @@ const Member: React.FC = () => {
                         </IonSegmentButton>}
                     </IonSegment>
                 </IonItem>}
-                <IonModal ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
+                <IonModal initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
 
-                    <IonItem>
-                        {member?.twitterName}
-                        <IonButtons slot='end'>
-                            <IonButton color='danger' onClick={() => {
-                                modalRef.current?.dismiss();
-                            }}><IonIcon icon={close} /></IonButton>
-                        </IonButtons>
-                    </IonItem>
-                    <IonTitle>
-
-                        <IonImg src={member?.twitterPfp} />
-                    </IonTitle>
                     <IonCard>
-                        {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
-                            sellPass && sellPass();
-                            modalRef.current?.dismiss();
-                        }}>
+                        <IonItem lines='none'>
+                            <IonAvatar>
+                                <IonImg src={member?.twitterPfp} />
+                            </IonAvatar>
 
-                            <IonIcon icon={ticketOutline} />
-                            <IonText>
+                            {member?.twitterName}
+                            <IonButtons slot='end'>
+                                <IonButton color='danger' onClick={() => {
+                                    modalRef.current?.dismiss();
+                                }}><IonIcon icon={close} /></IonButton>
+                            </IonButtons>
+                        </IonItem>
+                        <IonRow>
+                            <IonCol size='6'>
+                                {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
+                                    sellPass && sellPass();
+                                    modalRef.current?.dismiss();
+                                }}>
 
-                                Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
-                            </IonText>
-                        </IonButton>}
-                        {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
-                            // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
-                            buyPass && buyPass();
-                            modalRef.current?.dismiss();
-                        }} color='success'>
-                            <IonIcon icon={ticketOutline} />                                Buy
-                            {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
-                        </IonButton>}
+                                    <IonText>
+
+                                        Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
+                                    </IonText>
+                                </IonButton>}
+                            </IonCol>
+                            <IonCol size='6'>
+
+                                {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
+                                    // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
+                                    buyPass && buyPass();
+                                    modalRef.current?.dismiss();
+                                }} color='success'>
+                                    Buy
+                                    {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
+                                </IonButton>}
+                            </IonCol>
+
+                        </IonRow>
+
                     </IonCard>
                 </IonModal>
                 {member != null && member.type && member?.symbol &&
