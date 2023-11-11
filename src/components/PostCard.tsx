@@ -33,7 +33,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
-                <IonRow style={{marginTop: 5, marginBottom: 10}}>
+                <IonRow style={{marginTop: 5, marginBottom: 7}}>
                     <img style={{ width: 28, height: 28, borderRadius: '7px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
                     <MemberCardHeader address={author} />
                 </IonRow>
