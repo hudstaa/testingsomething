@@ -9,8 +9,6 @@ import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory } from "react-router"
-import { lightTheme } from "@uniswap/widgets"
-
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
