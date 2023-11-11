@@ -27,21 +27,21 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 10, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
+        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 10 }}>
                 <IonText className='semi' style={{ fontSize: '11px', letterSpacing: '-.25px',  color: 'var(--ion-color-mid)' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
-                <IonRow style={{marginTop: 5, marginBottom: 7}}>
+                <IonRow style={{marginTop: 5, marginBottom: 10}}>
                     <img style={{ width: 28, height: 28, borderRadius: '6px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
                     <MemberCardHeader address={author} />
                 </IonRow>
         </IonCardHeader>
         <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 1, margin: 0 }}  >
+            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
                 <IonRouterLink routerDirection="root" routerLink={'/post/' + id}>
-                    <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+                    <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
