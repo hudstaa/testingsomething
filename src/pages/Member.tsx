@@ -80,9 +80,9 @@ const Member: React.FC = () => {
                 </IonRefresher>
                 <IonCard color='black' style={{marginTop: 0, marginBottom: 5 }}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0, paddingTop: 0 }}>
-                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 16, fontWeight: 450 }}>
-                            {member?.bio}
-                        </IonText>
+                    <IonText color='medium' style={{ paddingTop: 5, fontSize: 16, fontWeight: 450, textAlign: 'center' }}>
+                        {member?.bio}
+                    </IonText>
                         <IonCardContent style={{padding: 5}}><IonItem lines='none' color='black' className='ion-text-center'>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton style={{ margin: 0, marginRight: 5 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
