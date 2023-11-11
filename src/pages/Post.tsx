@@ -28,6 +28,9 @@ const Post: React.FC = () => {
     const { setPostsData, updatePost } = usePost();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const bgColor = darkmode ? 'paper' : 'light';
+
     useEffect(() => {
         id && !post && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
             setPostsData([{ ...postDoc.data(), id: postDoc.id }] as any[]);
@@ -93,7 +96,7 @@ const Post: React.FC = () => {
     }
     return <TribePage page='post'>
         <TribeHeader showBackButton={true} title={'Post from ' + post?.sent?.toDate().toDateString()} />
-        <IonContent ref={contentRef}>
+        <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>

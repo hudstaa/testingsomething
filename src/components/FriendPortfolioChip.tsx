@@ -31,12 +31,16 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
 }
 export const FriendTechPortfolioChip: React.FC<{ address?: string, held: number, name: string, pfp: string }> = ({ name, pfp, held }) => {
     return <IonItem lines="none">
-        <IonAvatar>
-            <IonImg src={pfp} />
-        </IonAvatar>
-        <IonText>
-            {name}
-        </IonText>
+        <IonChip>
+
+            <IonAvatar>
+                <IonImg src={pfp} />
+            </IonAvatar>
+            <IonText>
+                {name}
+            </IonText>
+        </IonChip>
+
         <IonButtons slot='end'>
             <IonChip>
 

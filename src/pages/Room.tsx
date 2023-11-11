@@ -75,14 +75,16 @@ const Room: React.FC = () => {
         </IonButtons>
     </IonItem> : <>
     </>, [replyingToMessageId, messages, me]);
-
+    const { goBack } = useHistory();
     return <TribePage page='room'>
         <IonHeader>
-            <IonToolbar>
+            <IonToolbar color='tribe'>
                 <IonButtons slot='start'>
-                    <IonButton routerLink='/channel'>
-                        {(channelOwner?.twitterName) || address}
-                    </IonButton>
+                    <IonButton onMouseDown={() => {
+
+                        goBack()
+                    }}>
+                        〱{(channelOwner?.twitterName) || address}           {length}          </IonButton>
                 </IonButtons>
             </IonToolbar>
         </IonHeader>

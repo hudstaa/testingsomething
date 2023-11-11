@@ -38,6 +38,9 @@ const Posts: React.FC = () => {
     const [isNewPosting, setIsNew] = useState(false)
     const { open } = useWriteMessage();
     const { push } = useHistory();
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const bgColor = darkmode ? 'paper' : 'light';
+
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
@@ -84,7 +87,7 @@ const Posts: React.FC = () => {
                 }
             />
 
-            < TribeContent fullscreen page='posts'>
+            < TribeContent color={bgColor} fullscreen page='posts'>
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>

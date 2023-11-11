@@ -2,8 +2,6 @@ import { IonContent, IonHeader, IonItem } from "@ionic/react"
 import { TribeHeader } from "./TribeHeader"
 import { ReactElement, ReactNode } from "react"
 
-export const TribeContent: React.FC<{ page?: string, fullscreen?: boolean, children: ReactNode[] | ReactNode }> = ({ children, page }) => {
-    return <IonContent >
-        {children}
-    </IonContent>
+export const TribeContent: React.FC<{ color?: string, page?: string, fullscreen?: boolean, children: ReactNode[] | ReactNode }> = (props) => {
+    return <IonContent {...props} />
 }
