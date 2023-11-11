@@ -102,7 +102,7 @@ const Member: React.FC = () => {
                         <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600, letterSpacing: -1}}>
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 80, height: 80, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
+                        <img style={{ width: 65, height: 65, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
                     
                 </IonCard>
