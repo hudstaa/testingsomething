@@ -27,7 +27,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 5, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 10 }}>
-                <IonText className='medium' style={{ fontSize: '11px', letterSpacing: '-.25px',  color: 'var(--ion-color-mid)' }}>
+                <IonText className='semi' style={{ fontSize: '11px', letterSpacing: '-.25px',  color: 'var(--ion-color-mid)' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
