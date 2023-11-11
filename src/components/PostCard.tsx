@@ -27,14 +27,14 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
+        <IonCardHeader style={{ paddingLeft: 10, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 10 }}>
                 <IonText className='semi' style={{ fontSize: '11px', letterSpacing: '-.25px',  color: 'var(--ion-color-mid)' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
                 <IonRow style={{marginTop: 5, marginBottom: 7}}>
-                    <img style={{ width: 28, height: 28, borderRadius: '7px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
+                    <img style={{ width: 28, height: 28, borderRadius: '6px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
                     <MemberCardHeader address={author} />
                 </IonRow>
         </IonCardHeader>
