@@ -54,7 +54,7 @@ const Member: React.FC = () => {
     useIonViewDidEnter(() => {
         setTab('member');
     })
-    
+
     useIonViewDidLeave(() => {
         document.title = 'Tribe Alpha';
     })
@@ -103,7 +103,7 @@ const Member: React.FC = () => {
                         <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600, letterSpacing: -1}}>
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 64, height: 64, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
+                        <img style={{ width: 84, height: 84, borderRadius: '20px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
                     
                 </IonCard>
