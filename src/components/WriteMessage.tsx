@@ -31,39 +31,25 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     }, [isOpen])
     const textRef = useRef<HTMLIonTextareaElement>(null);
 
-    return (
-        <IonToolbar style={{ padding: 10 }}>
-          <div className="rounded-div"> {/* This div now uses flexbox layout */}
-          <IonButtons slot='start'>
-              {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
+    return <IonToolbar color='paper'>
+        <IonButtons slot='start'>
+            {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
                 setImage(path);
-              }} />}
-            </IonButtons>
-            <IonTextarea
-              autoFocus={isModal}
-              id={isModal ? 'modal-write-message' : undefined}
-              ref={textRef}
-              autoGrow
-              style={{ 'Avenir Demi': 'sans-serif', flex: 1, paddingTop: 0, marginBottom: -18}} /* flex: 1 allows the textarea to grow and fill available space */
-              value={content}
-              placeholder={placeHolder}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  makeComment();
-                }
-              }}
-              onIonInput={(e) => {
-                setNewNote(e.detail.value!)
-              }}
-            />
-            <IonButtons slot='end'>
-              <IonButton onClick={async () => {
+            }} />}
+        </IonButtons>
+        <IonTextarea autoFocus={isModal} id={isModal ? 'modal-write-message' : undefined} ref={textRef} autoGrow style={{ padding: 5, marginLeft: 10, '--placeholder-font-family': 'Avenir' }} value={content} placeholder={placeHolder} onKeyUp={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
                 makeComment();
-              }}>
-                <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
-              </IonButton>
-            </IonButtons>
-          </div>
-        </IonToolbar>
-      );
+            }
+        }} onIonInput={(e) => {
+            setNewNote(e.detail.value!)
+        }} />
+        <IonButtons slot='end'>
+            <IonButton onClick={async () => {
+                makeComment();
+            }}>
+                <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} icon={paperPlane} />
+            </IonButton>
+        </IonButtons>
+    </IonToolbar>
 }
