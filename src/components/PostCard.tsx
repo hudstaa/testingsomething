@@ -55,7 +55,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 push('/post/' + id);
             }}>
                 <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
-                <IonText color={'medium'} className='header' style={{ fontSize: 16, marginTop: 3, paddingLeft: 3, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 3, color: 'var(--ion-color-soft)' }}>
                     {commentCount || 0}
                 </IonText>
             </IonButton>}
