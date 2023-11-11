@@ -60,12 +60,10 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
     }, [postId]);
 
     return (
-        <div>
-        <IonList style={{marginTop: 0}}>
-
+        <IonList>
             {comments.map((comment, i) => (
                 <IonItem key={i} color={'paper'} lines="none">
-                    <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: 0 }} slot='start'>
+                    <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
                         <MemberPfp size='smol' address={comment.author} />
                     </IonButtons>
                     <IonText style={{ whitespace: 'pre-wrap' }} color={'medium'}>
@@ -91,7 +89,6 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                 </IonItem>))
             }
         </IonList >
-        </div>
 
     );
 };
