@@ -78,7 +78,7 @@ const Member: React.FC = () => {
                 }}>
                     <IonRefresherContent />
                 </IonRefresher>
-                <IonCard color='black' style={{marginTop: 10, marginBottom: 5 }}>
+                <IonCard color='black' style={{marginTop: 0, marginBottom: 5 }}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0, paddingTop: 0 }}>
                         <IonText color='medium' style={{ paddingTop: 0 }}>
                             {member?.bio}
