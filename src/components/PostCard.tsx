@@ -1,4 +1,4 @@
-import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
@@ -6,8 +6,9 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { share } from "ionicons/icons"
+import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
+import { useHistory } from "react-router"
 
 
 
@@ -15,7 +16,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { localCommentCount } = useNotifications()
     const [notif, setNotif] = useState<string | null>(null);
-    return <IonCard color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    const { push } = useHistory();
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return <IonCard onMouseDown={(e) => {
+        if ((e.target as any).nodeName != 'ION-BUTTON' && !(e.target as any).classList.contains('alias')) {
+            push('/post/' + id);
+        }
+    }} color='paper' key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
@@ -27,16 +34,16 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonBadge>
             <MemberCardHeader address={author} />
         </IonCardHeader>
-        <IonRouterLink routerLink={"/post/" + id}>
+        <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
-                <IonRouterLink routerLink={'/post/' + id}>
+                <IonRouterLink routerDirection="root" routerLink={'/post/' + id}>
                     <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', fontWeight: 550, letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
                 </IonRouterLink>
                 {media && (
-                    <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '7px' }}>
+                    <div style={{ marginTop: 5, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
                         <IonImg src={media.src} />
                     </div>
                 )}
@@ -44,14 +51,26 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px'}}>
-            <IonButton color='white' fill="clear" routerLink={'/post/' + id}>
-                <IonIcon color={showComments ? 'tribe' : 'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px'}} />
-
-                <IonText color={showComments ? 'white' : 'medium'} className="regular" style={{ fontSize: 15 }}>
-                    {commentCount}
+        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
+            {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
+                push('/post/' + id);
+            }}>
+                <IonIcon color={'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
+                <IonText color={'medium'} className="regular" style={{ fontSize: 15 }}>
+                    {commentCount || 0}
                 </IonText>
+            </IonButton>}
+            <IonButton fill='clear' onMouseDown={() => {
+                setNotif("Copied to clipboard")
+                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
+            }}>
+
+                <IonIcon color={'medium'} icon={'/icons/paper-plane.svg'} style={{ height: 28, width: 28, marginLeft: '-10px', filter: darkmode ? 'invert(100%)' : undefined }} />
             </IonButton>
+
+
+            <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={1000} message={notif || ""}>
+            </IonToast>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 28, width: 28 }} />
