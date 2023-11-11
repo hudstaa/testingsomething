@@ -130,6 +130,9 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
     //         })
     //     }
     // }, [channel])
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+
     useEffect(() => {
     }, [newMessage])
     const virtuosoRef = useRef<VirtuosoHandle>(null); // Create a reference

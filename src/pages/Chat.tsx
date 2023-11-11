@@ -73,7 +73,7 @@ const Chat: React.FC = () => {
         <TribePage page='chat'>
             <TribeHeader title='Chats' color='primary' content={
                 <>
-                    <IonSearchbar onIonInput={(event) => {
+                    <IonSearchbar class="custom" onIonInput={(event) => {
                         event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
                             setHits((res.results[0] as any).hits || [])
                         })
@@ -135,7 +135,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
             <IonButtons slot='start'>
                 <MemberPfpImg address={address} size='double-smol' />
             </IonButtons>
-            <div style={{ flex: 1, minWidth: 0, paddingLeft: '8px' }}>
+            <div style={{ flex: 1, minWidth: 0, paddingLeft: '10px' }}>
                 <div>
                     <MemberAlias address={address} />
                 </div>

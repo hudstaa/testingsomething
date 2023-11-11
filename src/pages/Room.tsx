@@ -84,7 +84,7 @@ const Room: React.FC = () => {
 
                         goBack()
                     }}>
-                        〱{(channelOwner?.twitterName) || address}           {length}          </IonButton>
+                        〱{(channelOwner?.twitterName) || address}                </IonButton>
                 </IonButtons>
             </IonToolbar>
         </IonHeader>

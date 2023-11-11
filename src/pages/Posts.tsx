@@ -39,7 +39,7 @@ const Posts: React.FC = () => {
     const { open } = useWriteMessage();
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'paper' : 'light';
+    const bgColor = darkmode ? undefined : 'light';
 
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
@@ -67,19 +67,25 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                        <IonCardTitle style={{ color: 'white', paddingTop: 5, letterSpacing: '-2px', fontFamily: 'AvenirBold' }} >
+                        <IonCardTitle style={{ color: 'white', paddingTop: 5, letterSpacing: '-1px', fontFamily: 'Avenir Bold' }} >
                             tribe
                         </IonCardTitle>
                     </IonButtons>
-                    <IonSegment value={postType} style={{ position: 'absolute', right: 15, top: 5 }}>
-                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'light' : 'paper'} onClick={() => {
-                            setPostType('top')
-                        }}>
+                    <IonSegment
+                        onIonChange={(e) => {
+                            const newValue = e.detail.value;
+                            if (newValue === 'top' || newValue === 'recent') {
+                                setPostType(newValue);
+                            }
+                        }}
+                        value={postType}
+                        style={{ position: 'absolute', right: 15, top: 5 }}
+                        swipeGesture={true}
+                    >
+                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
                             Top
                         </IonSegmentButton>
-                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'light' : 'paper'} onClick={() => {
-                            setPostType('recent')
-                        }}>
+                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
                             New
                         </IonSegmentButton>
                     </IonSegment>

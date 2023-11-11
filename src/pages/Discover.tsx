@@ -36,7 +36,7 @@ const Discover: React.FC = () => {
     <TribePage page='discover'>
       <TribeHeader title='Discover' color='primary' content={
         <>
-          <IonSearchbar onIonInput={(event) => {
+          <IonSearchbar class="custom" onIonInput={(event) => {
             event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
               setHits((res.results[0] as any).hits || [])
             })

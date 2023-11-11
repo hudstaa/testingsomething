@@ -33,7 +33,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton ? <IonButton onClick={goBack} color="dark" >{title}</IonButton>
+                {showBackButton ? <IonButton onClick={goBack} color="dark" >〱{title}</IonButton>
                     : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                         {title as any}
                     </IonText>}

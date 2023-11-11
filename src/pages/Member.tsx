@@ -59,13 +59,15 @@ const Member: React.FC = () => {
     useIonViewDidLeave(() => {
         document.title = 'Tribe Alpha';
     })
-    const isDesktop = window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
     useEffect(() => {
         if (member && member.twitterName) {
 
             document.title = member.twitterName;
         }
     }, [member]);
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const bgColor = darkmode ? undefined : 'light';
+
     return (
         <TribePage page='member'>
             <TribeHeader
@@ -73,13 +75,9 @@ const Member: React.FC = () => {
                 title={member !== null ? member.twitterName : ""}
                 showBackButton={true}
             />
-            < TribeContent fullscreen >
-                <IonRefresher slot='fixed' onIonRefresh={() => {
+            < TribeContent fullscreen color={bgColor} >
 
-                }}>
-                    <IonRefresherContent />
-                </IonRefresher>
-                <IonCard color='light'>
+                <IonCard color={bgColor}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
                         <IonText color='medium'>
                             {member?.bio}
@@ -89,20 +87,16 @@ const Member: React.FC = () => {
                         </IonText>
                         <img style={{ width: 70, height: 70, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
-                    <IonCardContent><IonItem lines='none' color='light' className='ion-text-center'>
+                    <IonCardContent>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton style={{ margin: 'auto', marginRight: 0 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
                                 Boost
+                                <BuyPriceBadge address={member?.address} />
                             </IonButton>
                             {balance ? (
-                                <IonChip style={{ margin: 4 }}>
-                                    <IonAvatar>
-                                        <IonImg src='/favicon.png' />
-                                    </IonAvatar>
-                                    <IonText>
-                                        {formatUnits(balance, 0)}
-                                    </IonText>
-                                </IonChip>
+                                <div style={{ margin: 5 }}>
+
+                                </div>
                             ) : null}
 
                             {((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ? (
@@ -111,7 +105,6 @@ const Member: React.FC = () => {
                                 </IonButton>
                             ) : null}
                         </div>
-                    </IonItem>
 
                     </IonCardContent>
                 </IonCard>
@@ -119,13 +112,6 @@ const Member: React.FC = () => {
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
-                <IonFab slot='fixed' horizontal='start' vertical='bottom'>
-                    <IonRouterLink href={'javascript:void(0)'}>
-                        {member && !trade && !member.type && <BuyPriceBadge onClick={() => {
-                            setTrade(true);
-                        }} address={member.address} />}
-                    </IonRouterLink>
-                </IonFab>
 
 
 
@@ -133,23 +119,31 @@ const Member: React.FC = () => {
                 {<>
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
-                {member && !member.type && <IonItem>
-                    <IonSegment mode='md' value={segment}>
-                        <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
-                            Posts
-                        </IonSegmentButton>
-                        <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
-                            Tribe
-                        </IonSegmentButton>
-                        {<IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
-                            Chart
-                        </IonSegmentButton>}
-                    </IonSegment>
-                </IonItem>}
+                {member && <>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                <IonSegment mode='md' value={segment}>
+                                    <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
+                                        Posts
+                                    </IonSegmentButton>
+                                    <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
+                                        Tribe
+                                    </IonSegmentButton>
+                                    {<IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
+                                        Chart
+                                    </IonSegmentButton>}
+                                </IonSegment>
+                            </IonCol>
+                        </IonRow>
+
+                    </IonGrid>
+                </>
+                }
                 <IonModal initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
 
                     <IonCard>
-                        <IonItem lines='none'>
+                        <IonItem lines='none' color={bgColor}>
                             <IonAvatar>
                                 <IonImg src={member?.twitterPfp} />
                             </IonAvatar>
@@ -190,7 +184,7 @@ const Member: React.FC = () => {
 
                     </IonCard>
                 </IonModal>
-                {member != null && member.type && member?.symbol &&
+                {member != null && member?.symbol &&
 
                     <TradingViewWidget symbol={member?.symbol} />
                 }
@@ -208,31 +202,42 @@ const Member: React.FC = () => {
                                 </IonCol></IonRow></IonGrid>
                     }
                     {
-                        segment === 'tribe' && typeof boosters !== 'undefined' && boosters !== null && <> {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
-                            <MemberBadge address={holder} />
-                            <IonButtons slot='end'>
-                                <IonChip>
-                                    <IonAvatar>
-                                        <IonImg src='/favicon.png' />
-                                    </IonAvatar>
-                                    <IonText>
-                                        {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
-                                    </IonText>
+                        segment === 'tribe' && typeof boosters !== 'undefined' && boosters !== null && <>
+                            <IonGrid>
+                                <IonRow>
+                                    <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
 
-                                </IonChip>
+                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
+                                            <MemberBadge address={holder} />
+                                            <IonButtons slot='end'>
+                                                <IonChip>
+                                                    <IonAvatar>
+                                                        <IonImg src='/favicon.png' />
+                                                    </IonAvatar>
+                                                    <IonText>
+                                                        {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
+                                                    </IonText>
 
-                            </IonButtons>
-                        </IonItem>)
-                        }
-                            {uniq(holding?.users || []).map((holder) =>
-                                <FriendTechPortfolioChip held={holder.balance} key={holder.address} address={holder.address} name={holder.twitterName} pfp={holder.twitterPfpUrl} />
-                            )}
+                                                </IonChip>
 
+                                            </IonButtons>
+                                        </IonItem>)
+
+                                        }
+                                        {uniq(holding?.users || []).map((holder) =>
+                                            <FriendTechPortfolioChip held={holder.balance} key={holder.address} address={holder.address} name={holder.twitterName} pfp={holder.twitterPfpUrl} />
+                                        )}
+                                    </IonCol></IonRow></IonGrid>
                         </>}
 
-                    {segment === 'chart' ? <><IonRow>
-                        {member && <MemberGraph address={member?.address} />}
-                    </IonRow>
+                    {segment === 'chart' ? <>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                    <IonCard>
+                                        {member && <MemberGraph address={member?.address} />}
+                                    </IonCard>
+                                </IonCol></IonRow></IonGrid>
                     </> : <></>
                     }
                 </div>

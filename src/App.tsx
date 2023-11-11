@@ -86,6 +86,7 @@ export const noopStorage = {
 import Posts from './pages/Posts';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 import { NotificationsProvider } from './components/NotificationsProvider';
+import { ShowMemberModalProvider } from './components/ShowMemberModalProvider';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -255,6 +256,7 @@ const App: React.FC = () => {
           <DeepLinkProvider />
           <WriteMessageModalProvider />
           <IonReactHashRouter >
+            <ShowMemberModalProvider />
             <NotificationsProvider />
 
             <IonTabs onIonTabsWillChange={(e) => {

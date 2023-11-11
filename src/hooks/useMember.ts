@@ -16,8 +16,7 @@ export interface Member {
     address: string;
     privyAddress: string;
     friendTechAddress?: string
-    type?: string
-    lp?: string
+
 }
 interface FriendStore {
     friendCache: Record<string, Member | undefined>;
@@ -25,8 +24,10 @@ interface FriendStore {
     watching: Record<string, boolean>;
     error: Record<string, string | null>;
     me: Member | null
+    highlight: Member | null
     setFriendData: (address: string, data: Member) => void;
     setFriendsData: (data: Member[]) => void;
+    setHighlight: (address: string | null) => void;
     getCurrentUser: () => Member | null
     isLoading: (address: string | undefined) => boolean;
     isWatching: (address: string | undefined) => boolean;
@@ -44,6 +45,14 @@ export const useMember = create<FriendStore>((set, store) => ({
     watching: {},
     error: {},
     me: null,
+    highlight: null,
+    setHighlight: (address) => {
+        if (address === null) {
+            set({ highlight: null })
+        } else {
+            set({ highlight: store().friendCache[address] })
+        }
+    },
     setCurrentUser: (me) => {
         set({ me, friendCache: { ...store().friendCache, [me.address]: me } })
     },

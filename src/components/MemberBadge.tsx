@@ -9,9 +9,7 @@ import { timeAgo } from './TradeItem';
 import { ReactElement } from 'react';
 export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
-    const { push } = useHistory();
     return member && member !== null ? <IonChip onMouseDown={() => {
-        push('/member/' + address);
     }} color={color}>
         <IonAvatar>
             <IonImg onError={() => {
@@ -28,7 +26,7 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
 
 export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
     const member = useMember(x => x.getFriend(address));
-
+    const setHighlight = useMember(x => x.setHighlight);
     let pfpStyle = {};
     switch (size) {
         case 'smol':
@@ -38,7 +36,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 };
             break;
         case 'big':
         default:
@@ -46,9 +44,11 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             break;
     }
 
-    return <IonRouterLink style={{ ...style, ...pfpStyle }} routerLink={'/member/' + address} routerDirection='none'>
+    return <div onMouseDown={() => {
+        setHighlight(member!.address)
+    }} style={{ ...style, ...pfpStyle }} >
         <img src={member?.twitterPfp || personOutline} style={pfpStyle} />
-    </IonRouterLink>
+    </div>
 }
 
 export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
@@ -99,17 +99,21 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
 
 export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
     const member = useMember(x => x.getFriend(address))
-    return <IonText style={{ margin: 0, padding: 0 }} color='dark'>
+    const setHighlight = useMember(x => x.setHighlight);
+
+    return <IonText onMouseDown={() => { setHighlight(member!.address) }}
+        style={{ margin: 0, padding: 0 }} color='dark'>
         {member?.twitterName}
     </IonText>
 }
 export const MemberToolbar: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
+    const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonItem color='paper' lines='none' detail={false} routerLink={'/member/' + address}>
+    return <IonItem color='paper' lines='none' detail={false} >
 
         <IonAvatar>
-            <IonImg src={member?.twitterPfp || personOutline} />
+            <IonImg onMouseDown={() => { setHighlight(member!.address) }} src={member?.twitterPfp || personOutline} />
         </IonAvatar>
         <IonGrid fixed>
 
@@ -132,12 +136,12 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
 
 export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
     const member = useMember(x => x.getFriend(address))
-    const { push } = useHistory();
+    const setHighlight = useMember(x => x.setHighlight);
     return <IonRow>
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow >
                 <IonText onMouseDown={() => {
-                    push('/member/' + member!.address);
+                    member && setHighlight(member.address);
                 }} color='medium' className='medium alias' style={{ fontSize: '11px', margin: 0, padding: 0 }}>
                     @{member?.twitterUsername}
                 </IonText>
@@ -151,9 +155,11 @@ export const MemberCardHeader: React.FC<{ address: string, color?: string, conte
 
 export const MemberBubble: React.FC<{ address: string, color?: string, message: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
+    const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonRouterLink routerLink={'/member/' + address}>
-        {member && member !== null ? <IonChip color={color}>
+    return <>
+        {member && member !== null ? <IonChip onMouseDown={() => { setHighlight(member!.address) }}
+            color={color}>
             <IonAvatar>
                 <IonImg onError={() => {
 
@@ -164,14 +170,17 @@ export const MemberBubble: React.FC<{ address: string, color?: string, message: 
             </IonText>
         </IonChip> : <IonChip>
             {address.slice(0, 4) + '...' + address.slice(38, 42)}
-        </IonChip>}</IonRouterLink>
+        </IonChip>}</>
 }
 export const MemberChip: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     if (!address) {
         return <></>
     }
+    const setHighlight = useMember(x => x.setHighlight);
     const member = useMember(x => x.getFriend(address.toLowerCase()))
-    return <IonChip color={color}>
+    return <IonChip color={color} onMouseDown={() => {
+        setHighlight(member!.address)
+    }}>
         <IonAvatar>
             <IonImg src={member?.twitterPfp || personOutline} />
         </IonAvatar>

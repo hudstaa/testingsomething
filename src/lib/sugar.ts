@@ -49,7 +49,6 @@ export function nativeAuth() {
 }
 export function hideTabs() {
     const tabsEl = document.querySelector('ion-tab-bar');
-    console.log(tabsEl?.style.display);
     if (tabsEl) {
         tabsEl.style.display = 'none'; // Slide out
     }
@@ -59,5 +58,20 @@ export function showTabs() {
     const tabsEl = document.querySelector('ion-tab-bar');
     if (tabsEl) {
         tabsEl.style.display = ''; // Slide in
+    }
+}
+export function slideTabOut() {
+    const tabsEl = document.querySelector('ion-tab-bar');
+    if (tabsEl) {
+        // Slide out - move the element down by its own height
+        tabsEl.style.transform = `translateY(${tabsEl.clientHeight}px)`;
+    }
+}
+
+export function slideTabIn() {
+    const tabsEl = document.querySelector('ion-tab-bar');
+    if (tabsEl) {
+        // Slide in - move the element back to its original position
+        tabsEl.style.transform = 'translateY(0)';
     }
 }

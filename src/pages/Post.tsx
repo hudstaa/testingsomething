@@ -9,8 +9,8 @@ import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
-import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { hideTabs, nativeAuth, showTabs, slideTabIn, slideTabOut } from '../lib/sugar';
+import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
@@ -29,7 +29,7 @@ const Post: React.FC = () => {
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'paper' : 'light';
+    const bgColor = darkmode ? undefined : 'light';
 
     useEffect(() => {
         id && !post && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
@@ -41,11 +41,19 @@ const Post: React.FC = () => {
             setVoteCache(postDoc.data()?.vote || null);
         })
     }, [id, uid])
+
+
     useIonViewDidEnter(() => {
         hideTabs();
     })
     useIonViewDidLeave(() => {
         showTabs();
+    })
+    useIonViewWillEnter(() => {
+        slideTabOut();
+    })
+    useIonViewWillLeave(() => {
+        slideTabIn();
     })
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
