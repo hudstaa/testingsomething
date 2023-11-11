@@ -96,13 +96,10 @@ const Member: React.FC = () => {
                         </div>
                     </IonItem>
                     </IonCardContent>
-                        <IonText color='medium' style={{ opacity: 0.75, paddingTop: 5, fontSize: 16, fontWeight: 450 }}>
-                            @{member?.twitterUsername}
-                        </IonText>
                         <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600, letterSpacing: -1}}>
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 100, height: 100, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
+                        <img style={{ width: 64, height: 64, borderRadius: '15px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
                     
                 </IonCard>
