@@ -9,6 +9,7 @@ import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory } from "react-router"
+import { lightTheme } from "@uniswap/widgets"
 
 
 
@@ -28,7 +29,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 3, paddingTop: 5, marginRight: 0 }}>
             <IonBadge color='paper' style={{ position: 'absolute', right: 8, top: 10 }}>
-                <IonText color='tribel' className="medium" style={{ fontSize: '11px', letterSpacing: '-.25px' }}>
+                <IonText color='tribel' className='medium' style={{ fontSize: '11px', letterSpacing: '-.25px' }}>
                     {sent && timeAgo(new Date(sent.seconds * 1000))}
                 </IonText>
             </IonBadge>
@@ -37,7 +38,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
                 <IonRouterLink routerDirection="root" routerLink={'/post/' + id}>
-                    <IonText color='dark' className='medium' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+                    <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
                     }} >
                         {content}
                     </IonText>
@@ -55,8 +56,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
                 push('/post/' + id);
             }}>
-                <IonIcon color={'medium'} icon={'/icons/bubblechat.svg'} style={{ height: 28, width: 28, marginLeft: '-10px' }} />
-                <IonText color={'medium'} className="regular" style={{ fontSize: 15 }}>
+                <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
+                <IonText color={'medium'} className='header' style={{ fontSize: 16, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
                     {commentCount || 0}
                 </IonText>
             </IonButton>}
@@ -65,7 +66,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 
-                <IonIcon color={'medium'} icon={'/icons/paper-plane.svg'} style={{ height: 28, width: 28, marginLeft: '-10px', filter: darkmode ? 'invert(100%)' : undefined }} />
+                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton>
 
 

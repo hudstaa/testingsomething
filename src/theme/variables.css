@@ -41,6 +41,10 @@ http://ionicframework.com/docs/theming/ */
   font-family: 'Avenir Demi', sans-serif !important;
 }
 
+.bold {
+  font-family: 'Avenir Demi', sans-serif !important;
+}
+
 .semi {
   font-family: 'Avenir Demi', sans-serif !important;
 }
@@ -50,7 +54,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .medium {
-  font-family: 'Avenir Demi', sans-serif !important;
+  font-family: 'Avenir Bold', sans-serif !important;
 }
 
 .bottom-start-container {
@@ -221,12 +225,20 @@ ion-footer ion-toolbar {
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
-  --ion-color-medium: #A2A2A2;
+  --ion-color-medium: #888888;
   --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
   --ion-color-medium-shade: #808289;
   --ion-color-medium-tint: #9d9fa6;
+
+  /** soft **/
+  --ion-color-soft: #AAAAAA;
+  --ion-color-soft-rgb: rgb(171, 171, 171);
+  --ion-color-soft-contrast: #ffffff;
+  --ion-color-soft-contrast-rgb: 255, 255, 255;
+  --ion-color-soft-shade: #808289;
+  --ion-color-soft-tint: #9d9fa6;
 
   /** light **/
   --ion-color-light: #f4f5f8;
@@ -293,12 +305,19 @@ ion-footer ion-toolbar {
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
 
-    --ion-color-medium: #A2A2A2;
-    --ion-color-medium-rgb: 162, 162, 162;
+    --ion-color-medium: #888888;
+    --ion-color-medium-rgb: rgb(135, 135, 135);
     --ion-color-medium-contrast: #000000;
     --ion-color-medium-contrast-rgb: 0, 0, 0;
     --ion-color-medium-shade: #86888f;
     --ion-color-medium-tint: #a2a4ab;
+
+    --ion-color-soft: #AAAAAA;
+    --ion-color-soft-rgb: rgb(171, 171, 171);
+    --ion-color-soft-contrast: #000000;
+    --ion-color-soft-contrast-rgb: 0, 0, 0;
+    --ion-color-soft-shade: #86888f;
+    --ion-color-soft-tint: #a2a4ab;
 
     --ion-color-light: #222428;
     --ion-color-light-rgb: 34, 36, 40;
