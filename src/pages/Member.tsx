@@ -69,7 +69,7 @@ const Member: React.FC = () => {
         <TribePage page='member'>
             <TribeHeader
                 color='tertiary'
-                title={member !== null ? member.twitterName : ""}
+                title={""}
                 showBackButton={true}
             />
             < TribeContent fullscreen >
