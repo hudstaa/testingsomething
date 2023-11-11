@@ -99,10 +99,10 @@ const Member: React.FC = () => {
                         <IonText color='medium' style={{ paddingTop: 5, fontSize: 12}}>
                             @{member?.twitterUsername}
                         </IonText>
-                        <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600}}>
+                        <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600, letterSpacing: -1}}>
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 100, height: 100, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
+                        <img style={{ width: 80, height: 80, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
                     
                 </IonCard>
