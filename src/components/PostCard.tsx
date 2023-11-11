@@ -34,7 +34,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonText>
             </IonBadge>
                 <IonRow style={{marginTop: 5, marginBottom: 10}}>
-                    <img style={{ width: 28, height: 28, borderRadius: '6px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
+                    <img style={{ width: 25, height: 25, borderRadius: '100px', marginRight: 5 }} src={member?.twitterPfp || personOutline} />
                     <MemberCardHeader address={author} />
                 </IonRow>
         </IonCardHeader>
