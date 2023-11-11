@@ -78,35 +78,16 @@ const Member: React.FC = () => {
                 }}>
                     <IonRefresherContent />
                 </IonRefresher>
-                <IonCard color='light'>
+                <IonCard color='black'>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
-                        <IonText color='medium' style={{ paddingTop: 10 }}>
+                        <IonText color='medium' style={{ paddingTop: 0 }}>
                             {member?.bio}
                         </IonText>
-                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 12}}>
-                            @{member?.twitterUsername}
-                        </IonText>
-                        <IonText style={{ paddingTop: 10, fontSize: 24}}>
-                            {member?.twitterName}
-                        </IonText>
-                        <img style={{ width: 80, height: 80, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
-                    </IonCardHeader>
-                    <IonCardContent><IonItem lines='none' color='light' className='ion-text-center'>
+                        <IonCardContent style={{padding: 5}}><IonItem lines='none' color='black' className='ion-text-center'>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton style={{ margin: 'auto', marginRight: 0 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
+                            <IonButton style={{ margin: 0, marginRight: 5 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
                                 Boost
                             </IonButton>
-                            {balance ? (
-                                <IonChip style={{ margin: 4 }}>
-                                    <IonAvatar>
-                                        <IonImg src='/favicon.png' />
-                                    </IonAvatar>
-                                    <IonText>
-                                        {formatUnits(balance, 0)}
-                                    </IonText>
-                                </IonChip>
-                            ) : null}
-
                             {((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ? (
                                 <IonButton style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                     <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
@@ -114,8 +95,16 @@ const Member: React.FC = () => {
                             ) : null}
                         </div>
                     </IonItem>
-
                     </IonCardContent>
+                        <IonText color='medium' style={{ paddingTop: 5, fontSize: 12}}>
+                            @{member?.twitterUsername}
+                        </IonText>
+                        <IonText style={{ paddingTop: 10, fontSize: 24, fontWeight: 600}}>
+                            {member?.twitterName}
+                        </IonText>
+                        <img style={{ width: 100, height: 100, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
+                    </IonCardHeader>
+                    
                 </IonCard>
 
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
