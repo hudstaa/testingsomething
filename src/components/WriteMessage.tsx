@@ -44,7 +44,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
               id={isModal ? 'modal-write-message' : undefined}
               ref={textRef}
               autoGrow
-              style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 0, marginBottom: -18}} /* flex: 1 allows the textarea to grow and fill available space */
+              style={{ 'Avenir Demi': 'sans-serif', flex: 1, paddingTop: 0, marginBottom: -18}} /* flex: 1 allows the textarea to grow and fill available space */
               value={content}
               placeholder={placeHolder}
               onKeyUp={(e) => {
