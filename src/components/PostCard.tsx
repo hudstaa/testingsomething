@@ -64,7 +64,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 
-                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
+                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 1, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton>
 
 
