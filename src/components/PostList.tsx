@@ -90,27 +90,21 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
         })
     }, [posts])
     const infiniteRef = useRef<HTMLIonInfiniteScrollElement>(null)
+    useEffect(() => {
+        if (currentMax === posts.length) {
+            infiniteRef.current?.complete();
+        }
+    }, [currentMax, posts.length])
     return <>
-        <IonRefresher style={{ "--background": 'blue' }} slot="fixed" onIonRefresh={(event) => {
-            setTimeout(() => {
-                event.detail.complete();
-            }, 1000)
-        }}>
-            <IonRefresherContent refreshingSpinner={'circular'} />
-        </IonRefresher>
 
         {useMemo(() => posts.map((post) => (
             <PostCard hideComments key={post.id} {...post} handleVote={handleVote} makeComment={makeComment} voted={voted[post.id]} uid={auth.currentUser?.uid} />
         )), [type, posts, voted])}
         <IonInfiniteScroll ref={infiniteRef} onIonInfinite={(event) => {
             setMax(currentMax + 10);
-            setTimeout(() => {
-                infiniteRef.current?.complete()
-            }, 1000)
         }}>
 
-            <IonInfiniteScrollContent loadingSpinner={undefined}>
-            </IonInfiniteScrollContent>
+            <IonInfiniteScrollContent loadingSpinner={"crescent"} />
         </IonInfiniteScroll>
     </>
 }
