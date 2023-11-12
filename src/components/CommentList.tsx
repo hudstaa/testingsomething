@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { app } from "../App";
 import { uniqId } from "../lib/sugar";
 import { Message } from "../models/Message";
-import { MemberPfp } from "./MemberBadge";
+import { MemberAlias, MemberPfp } from "./MemberBadge";
 import Voter from "./Voter";
 type CommentListProps = {
     postId: string;
@@ -63,31 +63,36 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
         <IonList style={{ marginTop: -40 }}>
             <IonItem lines='none' />
             {comments.map((comment, i) => (
-                <>                <IonItem key={i} color={'paper'} lines="none">
-                    <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
-                        <MemberPfp size='smol' address={comment.author} />
-                    </IonButtons>
-                    <IonText style={{ whitespace: 'pre-wrap' }} color={'medium'}>
+                <>
+                    <IonItem key={i} color={'paper'} lines="none">
+                        <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
+                            <MemberPfp size='smol' address={comment.author} />
+                        </IonButtons>
 
-                        {comment.content}
+                        <IonText style={{ whitespace: 'pre-wrap' }} color={'medium'}>
 
-                    </IonText>
-                    <IonButtons slot='end'>
-                        <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
-                            const db = getFirestore(app);
-                            const uid = getAuth().currentUser!.uid;
-                            const postRef = doc(db, 'post', postId);
-                            const commentRef = doc(postRef, 'comments', comment.id);
-                            const voteRef = doc(commentRef, 'votes', uid);
-                            const vote = upvote ? 1 : -1;
-                            setDoc(voteRef, ({ vote }))
-                        }} />
+                            {comment.content}
+                            <IonText color='medium' style={{ fontSize: 8, position: 'absolute', left: 0, right: 0, width: 1000, top: 5 }}>
+                                <MemberAlias color='medium' address={comment.author} />
+                            </IonText>
 
-                    </IonButtons>
-                </IonItem>
+                        </IonText>
+                        <IonButtons slot='end'>
+                            <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
+                                const db = getFirestore(app);
+                                const uid = getAuth().currentUser!.uid;
+                                const postRef = doc(db, 'post', postId);
+                                const commentRef = doc(postRef, 'comments', comment.id);
+                                const voteRef = doc(commentRef, 'votes', uid);
+                                const vote = upvote ? 1 : -1;
+                                setDoc(voteRef, ({ vote }))
+                            }} />
+
+                        </IonButtons>
+                    </IonItem>
                     {comment.media &&
-                        <IonItem lines="none">
-                            <IonImg style={{ height: 200 }} src={comment.media.src} />
+                        <IonItem lines="none" color='paper'>
+                            <img style={{ borderRadius: 20 }} src={comment.media.src} />
                         </IonItem>
                     }
                 </>))

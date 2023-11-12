@@ -17,7 +17,6 @@ import useTabs from "../hooks/useTabVisibility";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
-    const { setTab } = useTabs();
     const modalRef = useRef<HTMLIonModalElement>(null)
     const auth = nativeAuth();
     const fireUser = auth.currentUser;

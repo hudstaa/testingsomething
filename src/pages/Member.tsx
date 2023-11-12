@@ -44,16 +44,11 @@ const Member: React.FC = () => {
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
     const [trade, setTrade] = useState<boolean>(false);
     const uid = nativeAuth().currentUser?.uid;
-    const { setTab } = useTabs()
     const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
     const { wallets } = useWallets();
     const modalRef = useRef<HTMLIonModalElement>(null)
     useIonViewWillEnter(() => {
         setTrade(false);
-        setTab('member')
-    })
-    useIonViewDidEnter(() => {
-        setTab('member');
     })
 
     useIonViewDidLeave(() => {
@@ -80,7 +75,9 @@ const Member: React.FC = () => {
                 <IonCard color={bgColor}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            𝕏 {member?.twitterUsername}
+                            <IonText color='medium'>
+                                𝕏 {member?.twitterUsername}
+                            </IonText>
                         </IonRouterLink>
                         <IonText color='medium'>
                             {member?.bio}
@@ -125,7 +122,7 @@ const Member: React.FC = () => {
                 {member && <>
                     <IonGrid>
                         <IonRow>
-                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
                                 <IonSegment mode='md' value={segment}>
                                     <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         Posts

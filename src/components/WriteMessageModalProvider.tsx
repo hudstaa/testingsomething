@@ -22,7 +22,6 @@ export const WriteMessageModalProvider: React.FC = () => {
         }}>
             <>
                 <IonList>
-
                     <IonItem lines="none" color='tribe'>
                         <IonButtons slot='end'>
                             <IonButton fill="clear" color='dark' onClick={() => {
@@ -31,6 +30,9 @@ export const WriteMessageModalProvider: React.FC = () => {
                             }}>
                                 <IonIcon icon={close} />
                             </IonButton>
+                        </IonButtons>
+                        <IonButtons slot={'start'}>
+                            New Content
                         </IonButtons>
                     </IonItem>
 

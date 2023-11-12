@@ -62,10 +62,6 @@ const Chat: React.FC = () => {
             });
 
     }, [me])
-    const { setTab } = useTabs()
-    useIonViewDidEnter(() => {
-        setTab('chat')
-    })
     const { user } = usePrivy();
     const [hits, setHits] = useState<Member[]>([])
 

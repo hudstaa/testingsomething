@@ -41,7 +41,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                             setCurrentUser(snap.data() as any);
                         })
                     }).catch((e) => {
-                        alert("Un expected error");
+                        console.log(e);
                     })
                 } else {
                     setCurrentUser(snap.data() as any);

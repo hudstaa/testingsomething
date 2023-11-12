@@ -28,10 +28,6 @@ import useTabs from '../hooks/useTabVisibility';
 
 
 const Posts: React.FC = () => {
-    const { setTab } = useTabs();
-    useIonViewDidEnter(() => {
-        setTab('post');
-    })
     const [postType, setPostType] = useState<'top' | 'recent'>('top')
     const auth = nativeAuth();
     const me = useMember(x => x.getCurrentUser());

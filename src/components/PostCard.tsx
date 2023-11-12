@@ -8,19 +8,20 @@ import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline, personOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
-import { useHistory } from "react-router"
+import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
+    const { open } = useWriteMessage();
     const { localCommentCount } = useNotifications()
     const member = useMember(x => x.getFriend(author));
     const [notif, setNotif] = useState<string | null>(null);
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'paper' : 'white';
-
+    const { pathname } = useLocation()
     return <IonCard onMouseDown={(e) => {
         if ((e.target as any).nodeName != 'ION-BUTTON' && !(e.target as any).classList.contains('alias')) {
             push('/post/' + id);
@@ -42,7 +43,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonRouterLink>
                 {media && (
                     <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
-                        <IonImg src={media.src} />
+                        <img style={{ maxHeight: 1000, borderRadius: 10 }} src={media.src} />
                     </div>
                 )}
             </IonCardContent>
@@ -51,7 +52,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
-                push('/post/' + id);
+                if (pathname === '/post/' + id) {
+                    open((message) => {
+                        makeComment(id, message as any)
+                    }, "", "Comment")
+                } else {
+                    push('/post/' + id);
+                }
             }}>
                 <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
                 <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>

@@ -35,11 +35,9 @@ const Member: React.FC = () => {
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
     const [trade, setTrade] = useState<boolean>(true);
     const uid = nativeAuth().currentUser?.uid;
-    const { setTab } = useTabs()
 
     useIonViewWillEnter(() => {
         setTrade(false);
-        setTab('member')
     })
     return (
         <TribePage page='member'>

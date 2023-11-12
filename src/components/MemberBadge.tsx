@@ -101,8 +101,8 @@ export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'sm
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText onMouseDown={() => { setHighlight(member!.address) }}
-        style={{ margin: 0, padding: 0 }} color='dark'>
+    return <IonText color={color} onMouseDown={() => { setHighlight(member!.address) }}
+        style={{ margin: 0, padding: 0 }} >
         {member?.twitterName}
     </IonText>
 }

@@ -105,14 +105,10 @@ const Account: React.FC = () => {
                     setCurrentUser(snap.data() as any);
                 })
             }).catch((e) => {
-                alert("Un expected error");
+                console.log(e);
             })
         }
     }, [ready, user, me])
-    const { setTab } = useTabs();
-    useIonViewDidEnter(() => {
-        setTab('account')
-    })
 
     if (!me) {
         return <TribePage page='account'><></></TribePage>

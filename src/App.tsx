@@ -10,7 +10,7 @@ import {
 } from '@ionic/react';
 import { IonReactHashRouter } from '@ionic/react-router';
 import { PrivyWagmiConnector, usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -52,7 +52,7 @@ import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } fro
 import axios from 'axios';
 import { initializeApp } from "firebase/app";
 import { signInWithCustomToken } from 'firebase/auth';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNotifications } from './hooks/useNotifications';
 import useTabs from './hooks/useTabVisibility';
 import { nativeAuth } from './lib/sugar';
@@ -247,7 +247,7 @@ const NotifBadge: React.FC = () => {
 }
 
 const App: React.FC = () => {
-  const { tab, setTab } = useTabs();
+  const { tab } = useTabs();
   const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   return <IonApp>
     <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ defaultChain: baseGoerli, appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
@@ -259,9 +259,7 @@ const App: React.FC = () => {
             <ShowMemberModalProvider />
             <NotificationsProvider />
 
-            <IonTabs onIonTabsWillChange={(e) => {
-              setTab(e.detail.tab as any);
-            }}>
+            <IonTabs>
               <IonRouterOutlet animated={true}>
                 <Route exact path="/channel">
                   <Chat />
@@ -304,21 +302,23 @@ const App: React.FC = () => {
                 </Route>
               </IonRouterOutlet>
 
-              <IonTabBar style={{ border: '0' }} slot="bottom">
-                <IonTabButton style={tab === 'post' ? { border: '0', display: 'none!important' } : {}} tab="post" href="/post">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="member" href="/member">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="chat" href="/channel">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'chat' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="account" href="/account">
-                  <NotifBadge />
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
-                </IonTabButton>
-              </IonTabBar>
+              {useMemo(() => {
+                return <IonTabBar style={{ border: '0' }} slot="bottom">
+                  {tab}
+                  <IonTabButton tab="post" href="/post">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="member" href="/member">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="channel" href="/channel">
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
+                  </IonTabButton>
+                  <IonTabButton tab="account" href="/account">
+                    <NotifBadge />
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
+                  </IonTabButton></IonTabBar>
+              }, [tab])}
             </IonTabs>
 
           </IonReactHashRouter>
