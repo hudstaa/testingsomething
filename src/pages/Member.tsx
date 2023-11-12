@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -79,6 +79,9 @@ const Member: React.FC = () => {
 
                 <IonCard color={bgColor}>
                     <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
+                        <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
+                            𝕏 {member?.twitterUsername}
+                        </IonRouterLink>
                         <IonText color='medium'>
                             {member?.bio}
                         </IonText>
@@ -141,20 +144,31 @@ const Member: React.FC = () => {
                 </>
                 }
                 <IonModal initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
-
-                    <IonCard>
+                    <IonHeader>
                         <IonItem lines='none' color={bgColor}>
                             <IonAvatar>
                                 <IonImg src={member?.twitterPfp} />
                             </IonAvatar>
-
-                            {member?.twitterName}
+                            <IonGrid>
+                                <IonRow>
+                                    <IonText>
+                                        {member?.twitterName}
+                                    </IonText>
+                                </IonRow>
+                                <IonRow>
+                                    <IonText color='medium'>
+                                        {member?.twitterUsername}
+                                    </IonText>
+                                </IonRow>
+                            </IonGrid>
                             <IonButtons slot='end'>
                                 <IonButton color='danger' onClick={() => {
                                     modalRef.current?.dismiss();
                                 }}><IonIcon icon={close} /></IonButton>
                             </IonButtons>
                         </IonItem>
+                    </IonHeader>
+                    <IonContent>
                         <IonRow>
                             <IonCol size='6'>
                                 {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
@@ -182,7 +196,8 @@ const Member: React.FC = () => {
 
                         </IonRow>
 
-                    </IonCard>
+                    </IonContent>
+
                 </IonModal>
                 {member != null && member?.symbol &&
 

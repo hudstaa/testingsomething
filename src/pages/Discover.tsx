@@ -51,8 +51,7 @@ const Discover: React.FC = () => {
                 </IonAvatar>
               </IonButtons>
               {x.twitterName}
-              {x.type}
-              {typeof x.type === 'undefined' && <BuyPriceBadge address={x?.address} />}
+              <BuyPriceBadge address={x?.address} />
             </IonItem>)}
 
           </IonList>
@@ -71,9 +70,10 @@ const Discover: React.FC = () => {
                       {member?.twitterName}
                     </IonBadge>
 
-                    {typeof member?.type === 'undefined' && <BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />}
+                    {<BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />}
                     {/* <MemberGraph address={member!.address} /> */}
-                  </IonCard></IonCol>)}
+                  </IonCard>
+                </IonCol>)}
               </IonRow>
             </IonCol>
             <IonCol>

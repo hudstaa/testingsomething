@@ -63,7 +63,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
         <IonList style={{ marginTop: -40 }}>
             <IonItem lines='none' />
             {comments.map((comment, i) => (
-                <IonItem key={i} color={'paper'} lines="none">
+                <>                <IonItem key={i} color={'paper'} lines="none">
                     <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
                         <MemberPfp size='smol' address={comment.author} />
                     </IonButtons>
@@ -72,9 +72,6 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                         {comment.content}
 
                     </IonText>
-                    {comment.media &&
-                        <IonImg style={{ height: 50 }} src={comment.media.src} />
-                    }
                     <IonButtons slot='end'>
                         <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                             const db = getFirestore(app);
@@ -87,7 +84,13 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                         }} />
 
                     </IonButtons>
-                </IonItem>))
+                </IonItem>
+                    {comment.media &&
+                        <IonItem lines="none">
+                            <IonImg style={{ height: 200 }} src={comment.media.src} />
+                        </IonItem>
+                    }
+                </>))
             }
         </IonList >
     );

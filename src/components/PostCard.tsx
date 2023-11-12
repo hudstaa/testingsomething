@@ -59,7 +59,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonText>
             </IonButton>}
             <IonButton fill='clear' onMouseDown={() => {
-                setNotif("Copied to clipboard")
+                setNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 

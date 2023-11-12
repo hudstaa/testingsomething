@@ -88,7 +88,6 @@ const Chat: React.FC = () => {
                                 </IonAvatar>
                             </IonButtons>
                             {x.twitterName}
-                            {x.type}
                         </IonItem>)}
 
                     </IonList>

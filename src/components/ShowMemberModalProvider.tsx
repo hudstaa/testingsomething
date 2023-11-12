@@ -10,9 +10,11 @@ import { Address } from "viem";
 import useBuyPass from "../hooks/useBuyPass";
 import useSellPass from "../hooks/useSellPass";
 import { formatEth } from "../lib/sugar";
+import { useBalance } from "wagmi";
 
 export const ShowMemberModalProvider: React.FC = () => {
     const { highlight, setHighlight } = useMember();
+    const me = useMember(x => x.getCurrentUser())
     const isOpen = highlight !== null;
     const modalRef = useRef<HTMLIonModalElement>(null);
     const { push } = useHistory();
@@ -29,7 +31,7 @@ export const ShowMemberModalProvider: React.FC = () => {
 
     const { buyPass, buyPrice, status: buyStatus } = useBuyPass(highlight?.address as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(highlight?.address as Address, 1n)
-
+    const balance = useBalance(me?.address as any)
     return <>
         <IonModal initialBreakpoint={0.4} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
@@ -43,26 +45,35 @@ export const ShowMemberModalProvider: React.FC = () => {
                         {highlight?.twitterName}
                     </IonText>
                     <img style={{ width: 70, height: 70, borderRadius: '10px', }} src={highlight?.twitterPfp || personOutline} />
+
                 </IonCardHeader>
-                <IonCardContent>
-                    <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                        <IonButton style={{ marginRight: 0, marginLeft: 'auto' }} color='tribe' onMouseDown={() => {
-                            push('/member/' + highlight?.address)
-                            setHighlight(null);
-                        }}>
-                            Profile
-                        </IonButton>
-                        <IonButton style={{ marginLeft: 0, marginRight: 0 }} color='danger' onClick={sellPass}>
-                            Sell {formatEth(sellPrice as any)}
-                        </IonButton>
-                        <IonButton style={{ marginLeft: 0, marginRight: 'auto' }} color='success' onClick={buyPass}>
-                            Buy {formatEth(buyPrice)}
-                        </IonButton>
-                    </div>
-                </IonCardContent>
+
 
             </IonHeader>
             <IonContent>
+
+                <IonCardContent>
+                    <IonList>
+
+                        <IonItem>
+                            <IonButton style={{ margin: 'auto', padding: -10 }} color='tribe' onMouseDown={() => {
+                                push('/member/' + highlight?.address)
+                                setHighlight(null);
+                            }}>
+                                Profile
+                            </IonButton>
+                        </IonItem>
+                        <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton disabled={!sellPass} style={{ marginLeft: 'auto', marginRight: 0 }} color='danger' onClick={sellPass}>
+                                Sell {formatEth(sellPrice as any)}
+                            </IonButton>
+                            <IonButton disabled={!buyPass} style={{ marginLeft: 0, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                                Buy {formatEth(buyPrice)}
+                            </IonButton>
+                        </div>
+                    </IonList>
+
+                </IonCardContent>
             </IonContent>
             <IonFooter>
                 NICE

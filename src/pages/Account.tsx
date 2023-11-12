@@ -200,7 +200,7 @@ const Account: React.FC = () => {
                                         <IonToast
                                             position='top'
                                             isOpen={showToast}
-                                            message="Copied to clipboard"
+                                            message="Copied address to clipboard"
                                             onDidDismiss={() => setShowToast(false)}
                                             duration={5000}
                                         ></IonToast>
