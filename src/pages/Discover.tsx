@@ -62,7 +62,7 @@ const Discover: React.FC = () => {
           <IonRow>
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               <IonRow>
-                {Object.values(members).map((member, i) => <IonCol size='6' key={i}>
+                {Object.values(members).filter(x => x?.address !== '0x0000000000000000000000000000000000000000').filter(x => x?.twitterPfp).map((member, i) => <IonCol size='6' key={i}>
                   <IonCard routerLink={'/member/' + member?.address} style={{ aspectRatio: 1 }}>
                     <IonImg style={{ position: 'absolute' }} src={member?.twitterPfp || personOutline} />
 
