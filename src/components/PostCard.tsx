@@ -64,7 +64,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             }}>
                 <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
                 <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
-                    {typeof commentCount !== 'undefined' ? commentCount + newComments : commentCount}
+                    {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>}
             <IonButton fill='clear' onMouseDown={() => {
