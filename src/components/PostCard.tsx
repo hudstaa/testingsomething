@@ -23,15 +23,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const bgColor = darkmode ? 'paper' : 'white';
     const { pathname } = useLocation()
     return <IonCard onMouseDown={(e) => {
-        if ((e.target as any).nodeName != 'ION-BUTTON' && !(e.target as any).classList.contains('alias')) {
+        if ((e.target as any).nodeName != 'ION-BUTTON') {
             push('/post/' + id);
         }
     }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
-        <IonCardHeader style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
-            <MemberCardHeader address={author} />
+        <IonCardHeader style={{ cursor: 'pointer!important', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
+            <MemberCardHeader clickable={showComments} address={author} content={<>{timeAgo(new Date(sent.seconds * 1000))}</>} />
         </IonCardHeader>
         <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
@@ -50,7 +50,11 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem detail={false} routerLink={"/post/" + id} color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
+        {<IonItem onMouseDown={(e) => {
+            if ((e.target as any).nodeName != 'ION-BUTTON' && !(e.target as any).classList.contains('alias')) {
+                push('/post/' + id);
+            }
+        }} color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
                 if (pathname === '/post/' + id) {
                     open((message) => {

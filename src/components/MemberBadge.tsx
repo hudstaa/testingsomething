@@ -3,7 +3,7 @@ import { Trade } from '../models/Trade';
 import { formatUnits, formatEther } from 'viem'
 import { useMember } from '../hooks/useMember';
 import { useHistory } from 'react-router';
-import { arrowDownCircle, person, personOutline, returnDownBack } from 'ionicons/icons';
+import { arrowDownCircle, person, personOutline, returnDownBack, trendingUp } from 'ionicons/icons';
 import { Timestamp } from 'firebase/firestore';
 import { timeAgo } from './TradeItem';
 import { ReactElement } from 'react';
@@ -97,11 +97,13 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     return <img src={member?.twitterPfp || personOutline} style={{ ...style, ...pfpStyle }} />
 }
 
-export const MemberAlias: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big' }) => {
+export const MemberAlias: React.FC<{ clickable: boolean, address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big', clickable = true }) => {
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} onMouseDown={() => { setHighlight(member!.address) }}
+    return <IonText color={color} onMouseDown={() => {
+        clickable && setHighlight(member!.address)
+    }}
         style={{ margin: 0, padding: 0 }} >
         {member?.twitterName}
     </IonText>
@@ -134,20 +136,20 @@ export const MemberToolbar: React.FC<{ address: string, color?: string, content?
     </IonItem>
 }
 
-export const MemberCardHeader: React.FC<{ address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content }) => {
+export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, color?: string, content?: ReactElement[] | ReactElement }> = ({ address, color = undefined, content, clickable = true }) => {
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
-    return <IonRow>
+    return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
-            <IonRow >
+            <IonRow  >
                 <IonText onMouseDown={() => {
-                    member && setHighlight(member.address);
-                }} color='medium' className='medium alias' style={{ fontSize: '11px', margin: 0, padding: 0 }}>
+                    clickable && member && setHighlight(member.address);
+                }} color='medium' className='medium alias' style={{ cursor: 'pointer!important', fontSize: '11px', margin: 0, padding: 0 }}>
                     @{member?.twitterUsername}
                 </IonText>
-            </IonRow>
-            <IonRow>
-                {content ? content : <></>}
+                <IonText color='medium' style={{ cursor: 'pointer!important', fontSize: '11px', margin: 0, padding: 0, right: 12, position: 'absolute' }}>
+                    {content ? content : <></>}
+                </IonText>
             </IonRow>
         </IonGrid>
     </IonRow>

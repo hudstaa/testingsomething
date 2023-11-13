@@ -211,9 +211,6 @@ const DeepLinkProvider: React.FC = () => {
     })
   }, [wallets, activeWallet]);
   useEffect(() => {
-    activeWallet && activeWallet.switchChain(baseGoerli.id);
-  }, [activeWallet, wagmiReady])
-  useEffect(() => {
     activeWallet?.connectorType == 'embedded' && switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
   }, [chainId, activeWallet])
   useEffect(() => {
