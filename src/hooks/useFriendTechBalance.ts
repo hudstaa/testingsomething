@@ -15,7 +15,7 @@ export default function useFriendTechBalance(friendTechWallet: Address | string 
     const [balance, setBalance] = useState<bigint | undefined>();
     const { ready } = usePrivy()
     useEffect(() => {
-        if (!friendTechWallet || !channel || !ready) {
+        if (!friendTechWallet || !channel || !ready || channel === '0x0000000000000000000000000000000000000000') {
             return;
         }
 

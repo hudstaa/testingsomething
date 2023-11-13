@@ -19,7 +19,7 @@ export default function useBoosters(wallet: Address | string | undefined, channe
     });
 
     useEffect(() => {
-        if (!balance || !wallet || !channel) {
+        if (!balance || !wallet || !channel || channel === '0x0000000000000000000000000000000000000000') {
             return;
         }
         const balanceInfo = balance as [string[], bigint[]];

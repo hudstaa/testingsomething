@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonFab, IonGrid, IonIcon, IonImg, IonItem, IonList, IonModal, IonRouterOutlet, IonHeader, IonContent, IonFooter } from "@ionic/react"
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCardHeader, IonFab, IonGrid, IonIcon, IonImg, IonItem, IonList, IonModal, IonRouterOutlet, IonHeader, IonContent, IonFooter, IonToolbar } from "@ionic/react"
 import { WriteMessage } from "./WriteMessage"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { useMember } from "../hooks/useMember";
@@ -24,7 +24,7 @@ export const WriteMessageModalProvider: React.FC = () => {
             setIsOpen(false);
         }}>
             <IonHeader>
-                <IonItem lines="none" color='tribe'>
+                <IonToolbar color='tribe'>
                     <IonButtons slot='end'>
                         <IonButton fill="clear" color='dark' onClick={() => {
                             dismiss(false)
@@ -36,22 +36,22 @@ export const WriteMessageModalProvider: React.FC = () => {
                     <IonButtons slot={'start'}>
                         {postId ? 'Comments' : "New Post"}
                     </IonButtons>
-                </IonItem>
+                </IonToolbar>
 
             </IonHeader>
             <IonContent>
                 {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
-
-                {/* {message && message.media !== null && <IonButton onClick={() => {
-                    setMedia(undefined as any)
-                }} fill='clear'><IonIcon icon={close} /></IonButton>} */}
+                {!postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
+                    setContent(message.content)
+                    dismiss(true);
+                }} />}
             </IonContent>
             <IonFooter>
                 {message && message.media?.src && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
-                <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
+                {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);
-                }} />
+                }} />}
 
             </IonFooter>
         </IonModal>

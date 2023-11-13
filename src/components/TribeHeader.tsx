@@ -1,4 +1,4 @@
-import { IonBackButton, IonAvatar, IonBadge, IonButton, IonButtons, IonCardHeader, IonCardSubtitle, IonCardTitle, IonHeader, IonImg, IonModal, IonRouterLink, IonText, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonAvatar, IonBadge, IonButton, IonButtons, IonCardHeader, IonCardSubtitle, IonCardTitle, IonHeader, IonImg, IonModal, IonRouterLink, IonText, IonTitle, IonToolbar, IonIcon } from "@ionic/react";
 import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 import axios from "axios";
@@ -14,6 +14,7 @@ import { getFirestore, query, collection, where, getDocs, Timestamp, onSnapshot 
 import { MemberPfp } from "./MemberBadge";
 import { useNotifications } from "../hooks/useNotifications";
 import useTabs from "../hooks/useTabVisibility";
+import { chevronBack } from "ionicons/icons";
 
 export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode, sticky?: boolean, color?: string, content?: ReactElement, hide?: boolean, showBackButton?: boolean }> = ({ title, sticky = true, color, hide, image, content, showBackButton = false }) => {
     const { user, ready } = usePrivy()
@@ -32,7 +33,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     const toolbar = !hide ? (
         <IonToolbar>
             <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                {showBackButton ? <IonButton onClick={goBack} color="dark" >〱{title}</IonButton>
+                {showBackButton ? <IonButton onClick={goBack} color="dark" ><IonIcon icon={chevronBack} />{title}</IonButton>
                     : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                         {title as any}
                     </IonText>}

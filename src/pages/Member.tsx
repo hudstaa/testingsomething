@@ -33,30 +33,21 @@ const Member: React.FC = () => {
     const { address } = useParams<{ address: string }>();
     const { user } = usePrivy()
     const me = useMember(x => x.getCurrentUser());
+    const highlight = useMember(x => x.setHighlight)
     const balance: bigint | undefined = usePassBalance((me?.address) as Address, (address) as Address) as any;
     const ercBalance: bigint | undefined = useERCBalance((address) as Address, 1) as any;
     const { buyPass, buyPrice, status: buyStatus } = useBuyPass(address as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus } = useSellPass(address as Address, 1n)
     const member = useMember(x => x.getFriend(address));
     const holding = useFriendTechHolders(x => x.getHolding(member?.friendTechAddress, member?.friendTechAddress as any))
-    const [segment, setSegment] = useState<'posts' | 'tribe' | 'holders' | 'chart'>('posts')
+    const [segment, setSegment] = useState<'posts' | 'tribe' | 'holders' | 'chart'>(address !== '0x0000000000000000000000000000000000000000' ? 'posts' : 'tribe')
     const { balance: boosters, syncing } = useBoosters(user?.wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
-    const [trade, setTrade] = useState<boolean>(false);
-    const uid = nativeAuth().currentUser?.uid;
-    const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
-    const { wallets } = useWallets();
-    const modalRef = useRef<HTMLIonModalElement>(null)
-    useIonViewWillEnter(() => {
-        setTrade(false);
-    })
-
     useIonViewDidLeave(() => {
-        document.title = 'Tribe Alpha';
+        document.title = 'Tribe Beta';
     })
     useEffect(() => {
         if (member && member.twitterName) {
-
             document.title = member.twitterName;
         }
     }, [member]);
@@ -89,10 +80,10 @@ const Member: React.FC = () => {
                     </IonCardHeader>
                     <IonCardContent>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton style={{ margin: 'auto', marginRight: 0 }} color='tribe' onMouseDown={() => { setTrade(true); }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} style={{ margin: 'auto', marginRight: 3 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 Boost
                                 <BuyPriceBadge address={member?.address} />
-                            </IonButton>
+                            </IonButton>}
                             {balance ? (
                                 <div style={{ margin: 5 }}>
 
@@ -100,9 +91,11 @@ const Member: React.FC = () => {
                             ) : null}
 
 
-                            <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ margin: 'auto', marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton>}
                         </div>
 
                     </IonCardContent>
@@ -123,13 +116,13 @@ const Member: React.FC = () => {
                         <IonRow>
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
                                 <IonSegment mode='md' value={segment}>
-                                    <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
+                                    {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         Posts
-                                    </IonSegmentButton>
+                                    </IonSegmentButton>}
                                     <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
                                         Tribe
                                     </IonSegmentButton>
-                                    {<IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
+                                    {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
                                         Chart
                                     </IonSegmentButton>}
                                 </IonSegment>
@@ -139,62 +132,6 @@ const Member: React.FC = () => {
                     </IonGrid>
                 </>
                 }
-                <IonModal initialBreakpoint={0.25} breakpoints={[0, 0.25, 0.5, 0.75]} ref={modalRef} isOpen={trade} onDidDismiss={() => setTrade(false)}>
-                    <IonHeader>
-                        <IonItem lines='none' color={bgColor}>
-                            <IonAvatar>
-                                <IonImg src={member?.twitterPfp} />
-                            </IonAvatar>
-                            <IonGrid>
-                                <IonRow>
-                                    <IonText>
-                                        {member?.twitterName}
-                                    </IonText>
-                                </IonRow>
-                                <IonRow>
-                                    <IonText color='medium'>
-                                        {member?.twitterUsername}
-                                    </IonText>
-                                </IonRow>
-                            </IonGrid>
-                            <IonButtons slot='end'>
-                                <IonButton color='danger' onClick={() => {
-                                    modalRef.current?.dismiss();
-                                }}><IonIcon icon={close} /></IonButton>
-                            </IonButtons>
-                        </IonItem>
-                    </IonHeader>
-                    <IonContent>
-                        <IonRow>
-                            <IonCol size='6'>
-                                {trade && <IonButton disabled={typeof sellPass === 'undefined' || sellStatus === 'transacting'} color={'danger'} onClick={() => {
-                                    sellPass && sellPass();
-                                    modalRef.current?.dismiss();
-                                }}>
-
-                                    <IonText>
-
-                                        Sell                      {typeof sellPrice !== 'undefined' && formatEth(sellPrice as bigint)}
-                                    </IonText>
-                                </IonButton>}
-                            </IonCol>
-                            <IonCol size='6'>
-
-                                {trade && <IonButton style={{ position: 'absolute', right: 0 }} disabled={typeof buyPass === 'undefined' || buyStatus === 'transacting'} onClick={() => {
-                                    // sendTransaction({ chainId: baseGoerli.id, value: 100n, to:})
-                                    buyPass && buyPass();
-                                    modalRef.current?.dismiss();
-                                }} color='success'>
-                                    Buy
-                                    {typeof buyPrice !== 'undefined' && formatEth(buyPrice as bigint)}
-                                </IonButton>}
-                            </IonCol>
-
-                        </IonRow>
-
-                    </IonContent>
-
-                </IonModal>
                 {member != null && member?.symbol &&
 
                     <TradingViewWidget symbol={member?.symbol} />
@@ -217,7 +154,6 @@ const Member: React.FC = () => {
                             <IonGrid>
                                 <IonRow>
                                     <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-
                                         {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
                                             <MemberBadge address={holder} />
                                             <IonButtons slot='end'>

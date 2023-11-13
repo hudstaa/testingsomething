@@ -207,12 +207,16 @@ const DeepLinkProvider: React.FC = () => {
     wallets.forEach((wallet) => {
       if (wallet.connectorType === 'embedded') {
         setActiveWallet(wallet);
+        switchNetwork && switchNetwork(baseGoerli.id);
       }
     })
   }, [wallets, activeWallet]);
   useEffect(() => {
     activeWallet?.connectorType == 'embedded' && switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
   }, [chainId, activeWallet])
+  useEffect(() => {
+    activeWallet && activeWallet.switchChain(baseGoerli.id);
+  }, [activeWallet, wagmiReady]);
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();

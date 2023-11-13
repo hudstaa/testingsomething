@@ -22,6 +22,29 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const { setMedia } = useWriteMessage();
+
+    const handleUpload = async (file: File) => {
+        onDrop([file]);
+    };
+    const handlePaste = useCallback((event: ClipboardEvent) => {
+        const clipboardItems = event.clipboardData?.items;
+        if (clipboardItems) {
+            const imageItem = Array.from(clipboardItems).find(item => item.type.includes('image'));
+            if (imageItem) {
+                const file = imageItem.getAsFile();
+                if (file) {
+                    handleUpload(file);
+                }
+            }
+        }
+    }, [handleUpload]);
+    useEffect(() => {
+        window.addEventListener('paste', handlePaste);
+        return () => {
+            window.removeEventListener('paste', handlePaste);
+        };
+    }, [handlePaste]);
+
     const onDrop = useCallback(async (acceptedFiles: File[]) => {
         if (acceptedFiles.length !== 1) {
             console.error('Only one file should be uploaded at a time.');

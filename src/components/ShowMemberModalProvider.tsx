@@ -3,7 +3,7 @@ import { WriteMessage } from "./WriteMessage"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { useMember } from "../hooks/useMember";
 import { close, personOutline } from "ionicons/icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import { BuyPriceBadge } from "../pages/Discover";
 import { Address } from "viem";
@@ -31,8 +31,9 @@ export const ShowMemberModalProvider: React.FC = () => {
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? undefined : 'light';
 
-    const { buyPass, buyPrice, status: buyStatus } = useBuyPass(highlight?.address as Address, 1n)
-    const { sellPass, sellPrice, status: sellStatus } = useSellPass(highlight?.address as Address, 1n)
+    const highlightAddress = highlight?.address || null
+    const { buyPass, buyPrice, status: buyStatus } = useBuyPass(highlightAddress as Address, 1n)
+    const { sellPass, sellPrice, status: sellStatus } = useSellPass(highlightAddress as Address, 1n)
     const balance = useBalance(me?.address as any)
     const { setTab } = useTabs()
 
@@ -40,7 +41,7 @@ export const ShowMemberModalProvider: React.FC = () => {
         setTab(pathname.split("/")[1] as any)
     }, [pathname])
     return <>
-        <IonModal initialBreakpoint={0.5} breakpoints={[0, 0.5, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal initialBreakpoint={0.75} breakpoints={[0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
             <IonHeader>
@@ -70,14 +71,15 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 Profile
                             </IonButton>
                         </IonItem>
-                        <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton disabled={!sellPass} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
+
+                        {useMemo(() => <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
                                 Sell {formatEth(sellPrice as any)}
                             </IonButton>
-                            <IonButton disabled={!buyPass} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                            <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
-                        </div>
+                        </div>, [sellPass, buyPass])}
                     </IonList>
 
                 </IonCardContent>

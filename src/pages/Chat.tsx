@@ -1,4 +1,4 @@
-import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter, useIonViewDidEnter } from '@ionic/react';
+import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter, useIonViewDidEnter, IonButton, IonLoading } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
@@ -15,6 +15,7 @@ import useERCBalance from '../hooks/useERCBalance';
 import { usePrivy } from '@privy-io/react-auth';
 import algoliasearch from 'algoliasearch';
 import { Message } from '../models/Message';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 
 const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb20');
@@ -63,14 +64,32 @@ const Chat: React.FC = () => {
 
     }, [me])
     const { user } = usePrivy();
+    const [joining, setJoining] = useState<boolean>(false);
     return (
         <TribePage page='chat'>
             <TribeHeader title='Chats' color='primary' />
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
+                        <IonLoading isOpen={joining} />
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
+                                {members && !members.map(x => x.address).includes("0x0000000000000000000000000000000000000000") && <IonItem>
+                                    Join Tribe Alpha
+                                    <IonButtons slot='end' >
+                                        <IonButton color='tribe' fill='solid' onMouseDown={() => {
+                                            const joinTribe = httpsCallable(getFunctions(app), 'joinBeta');
+                                            setJoining(true);
+                                            joinTribe().then(() => {
+                                                setJoining(false);
+                                                setMembers([{ "address": "0x0000000000000000000000000000000000000000" }, ...members] as any)
+                                            })
+                                        }}>
+                                            Join
+                                        </IonButton>
+
+                                    </IonButtons>
+                                </IonItem>}
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
                                     <IonItem routerDirection='forward' lines='none' routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />
