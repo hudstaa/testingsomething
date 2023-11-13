@@ -97,7 +97,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     return <img src={member?.twitterPfp || personOutline} style={{ ...style, ...pfpStyle }} />
 }
 
-export const MemberAlias: React.FC<{ clickable: boolean, address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big', clickable = true }) => {
+export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big', clickable = true }) => {
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 

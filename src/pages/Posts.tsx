@@ -2,8 +2,11 @@ import {
     IonButtons,
     IonCardTitle,
     IonCol,
+    IonContent,
     IonFab,
     IonGrid,
+    IonHeader,
+    IonModal,
     IonRow,
     IonSegment, IonSegmentButton, useIonViewDidEnter
 } from '@ionic/react';
@@ -24,6 +27,8 @@ import { nativeAuth } from '../lib/sugar';
 import { OnBoarding } from './OnBoarding';
 import { TribePage } from './TribePage';
 import useTabs from '../hooks/useTabVisibility';
+import { CommentList } from '../components/CommentList';
+import { usePost } from '../hooks/usePosts';
 
 
 
@@ -33,6 +38,7 @@ const Posts: React.FC = () => {
     const me = useMember(x => x.getCurrentUser());
     const [isNewPosting, setIsNew] = useState(false)
     const { open } = useWriteMessage();
+    const { highlightPost } = usePost();
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? undefined : 'light';
@@ -104,6 +110,7 @@ const Posts: React.FC = () => {
                         +
                     </div>}
                 </IonFab>
+
             </TribeContent >
             <TribeFooter page='posts' />
         </TribePage >

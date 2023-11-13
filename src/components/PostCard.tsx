@@ -10,12 +10,14 @@ import { paperPlane, share, shareOutline, shareSocialOutline, personOutline } fr
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
+import { usePost } from "../hooks/usePosts"
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
-    const { localCommentCount } = useNotifications()
+    const { localCommentCount, commentAdded } = useNotifications()
+    const newComments = localCommentCount[id] || 0;
     const member = useMember(x => x.getFriend(author));
     const [notif, setNotif] = useState<string | null>(null);
     const { push } = useHistory();
@@ -31,7 +33,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }}>
 
         <IonCardHeader style={{ cursor: 'pointer!important', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
-            <MemberCardHeader clickable={showComments} address={author} content={<>{timeAgo(new Date(sent.seconds * 1000))}</>} />
+            <MemberCardHeader clickable={showComments} address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
         </IonCardHeader>
         <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
             <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
@@ -43,7 +45,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonRouterLink>
                 {media && (
                     <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
-                        <img style={{ maxHeight: 1000, borderRadius: 10 }} src={media.src} />
+                        <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} />
                     </div>
                 )}
             </IonCardContent>
@@ -56,17 +58,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             }
         }} color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
-                if (pathname === '/post/' + id) {
-                    open((message) => {
-                        makeComment(id, message as any)
-                    }, "", "Comment")
-                } else {
-                    push('/post/' + id);
-                }
+                open((message) => {
+                    makeComment(id, message as any)
+                }, "", "Comment", id)
             }}>
                 <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
                 <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
-                    {commentCount || 0}
+                    {typeof commentCount !== 'undefined' ? commentCount + newComments : commentCount}
                 </IonText>
             </IonButton>}
             <IonButton fill='clear' onMouseDown={() => {

@@ -15,7 +15,8 @@ export type WriteMessageHook = {
     placeholder?: string
     send?: MessageFunction
     author: string
-    open: (callback: MessageFunction, author: string, placeHolder: string) => void
+    postId?: string
+    open: (callback: MessageFunction, author: string, placeHolder: string, postId?: string,) => void
     setMedia: (media: { src: string, type: string }) => void
     removeMedia: () => void
     setContent: (content: string) => void
@@ -37,8 +38,8 @@ export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
         }
         set({ isOpen: false, message: { author: "", id: "", sent: null } })
     },
-    open: (send, author, placeholder) => {
-        set({ send, author, isOpen: true, placeholder })
+    open: (send, author, placeholder, postId) => {
+        set({ postId, send, author, isOpen: true, placeholder })
     },
     setMedia(media) {
         set({ message: { author: store().author, media: media, ...store().message, content: store().message?.content, sent: null, id: '' } });

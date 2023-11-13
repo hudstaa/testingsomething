@@ -61,7 +61,7 @@ const Posts: React.FC = () => {
             <TribeHeader color='success' title={'New Post'} />
             <TribeContent fullscreen>
                 {me && <IonItem color='paper'>
-                    <MemberPfp size='smol' address={me.address} /><MemberAlias address={me.address} />
+                    <MemberPfp size='smol' address={me.address} /><MemberAlias clickable address={me.address} />
                 </IonItem>}
                 {me && <WriteMessage address={me!.address} placeHolder="What's on your mind?" sendMessage={(message) => addPost(me!.address, message)} />}
                 <IonItem color='paper'>
