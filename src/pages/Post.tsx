@@ -49,12 +49,6 @@ const Post: React.FC = () => {
     useIonViewDidLeave(() => {
         showTabs();
     })
-    useIonViewWillEnter(() => {
-        slideTabOut();
-    })
-    useIonViewWillLeave(() => {
-        slideTabIn();
-    })
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);

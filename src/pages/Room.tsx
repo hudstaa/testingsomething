@@ -66,7 +66,6 @@ const Room: React.FC = () => {
         setFocus(true);
 
     }, []);
-    console.log(info)
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
     const footerMemo = useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
         <MemberPfp size='smol' address={replyingToMessage.author} />
@@ -99,9 +98,9 @@ const Room: React.FC = () => {
                                 {(channelOwner?.twitterName) || address}
                             </IonRow>
                             <IonRow>
-                                <IonText color='medium'>
+                                {info ? <IonText color='medium'>
                                     {Object.keys(info?.holders || {}).length} members
-                                </IonText>
+                                </IonText> : <IonSpinner />}
                             </IonRow>
                         </IonGrid>
                     </IonButton>

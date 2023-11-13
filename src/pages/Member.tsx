@@ -99,11 +99,10 @@ const Member: React.FC = () => {
                                 </div>
                             ) : null}
 
-                            {((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n) ? (
-                                <IonButton style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
-                                    <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                                </IonButton>
-                            ) : null}
+
+                            <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton>
                         </div>
 
                     </IonCardContent>
@@ -210,7 +209,7 @@ const Member: React.FC = () => {
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
 
-                                    <PostList type={'top'} max={3} from={member?.address} />
+                                    <PostList type={'top'} max={10} from={member?.address} />
                                 </IonCol></IonRow></IonGrid>
                     }
                     {

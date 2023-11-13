@@ -50,7 +50,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
+        {<IonItem detail={false} routerLink={"/post/" + id} color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
             {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
                 if (pathname === '/post/' + id) {
                     open((message) => {

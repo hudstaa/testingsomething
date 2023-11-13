@@ -63,18 +63,16 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
         <IonList style={{ marginTop: -40 }}>
             <IonItem lines='none' />
             {comments.map((comment, i) => (
-                <>
-                    <IonItem key={i} color={'paper'} lines="none">
+                < div key={i}>
+                    <IonItem color={'paper'} >
                         <IonButtons style={{ paddingRight: 0, marginRight: 3, marginBottom: -2 }} slot='start'>
                             <MemberPfp size='smol' address={comment.author} />
                         </IonButtons>
-
-                        <IonText style={{ whitespace: 'pre-wrap' }} color={'medium'}>
-
+                        {comment.content && comment.content?.length < 300 && <IonText color='medium' style={{ fontSize: 8, position: 'absolute', left: 0, right: 0, width: 1000, top: 5 }}>
+                            <MemberAlias color='medium' address={comment.author} />
+                        </IonText>}
+                        <IonText style={{ whitespace: 'pre-wrap', marginTop: 5 }} color={'medium'}>
                             {comment.content}
-                            <IonText color='medium' style={{ fontSize: 8, position: 'absolute', left: 0, right: 0, width: 1000, top: 5 }}>
-                                <MemberAlias color='medium' address={comment.author} />
-                            </IonText>
 
                         </IonText>
                         <IonButtons slot='end'>
@@ -95,7 +93,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                             <img style={{ borderRadius: 20 }} src={comment.media.src} />
                         </IonItem>
                     }
-                </>))
+                </div>))
             }
         </IonList >
     );

@@ -63,32 +63,9 @@ const Chat: React.FC = () => {
 
     }, [me])
     const { user } = usePrivy();
-    const [hits, setHits] = useState<Member[]>([])
-
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chats' color='primary' content={
-                <>
-                    <IonSearchbar class="custom" onIonInput={(event) => {
-                        event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
-                            setHits((res.results[0] as any).hits || [])
-                        })
-                    }} />
-                    <IonList>
-                        {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
-                            setHits([])
-                        }} routerLink={'/member/' + x.address}>
-                            <IonButtons slot='start'>
-                                <IonAvatar>
-                                    <IonImg src={x.twitterPfp} />
-                                </IonAvatar>
-                            </IonButtons>
-                            {x.twitterName}
-                        </IonItem>)}
-
-                    </IonList>
-                </>
-            } />
+            <TribeHeader title='Chats' color='primary' />
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>

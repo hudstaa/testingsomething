@@ -37,7 +37,6 @@ export const ShowMemberModalProvider: React.FC = () => {
     const { setTab } = useTabs()
 
     useEffect(() => {
-        console.log(pathname, "PATH")
         setTab(pathname.split("/")[1] as any)
     }, [pathname])
     return <>
@@ -72,10 +71,10 @@ export const ShowMemberModalProvider: React.FC = () => {
                             </IonButton>
                         </IonItem>
                         <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton disabled={!sellPass} style={{ marginLeft: 'auto', marginRight: 0 }} color='danger' onClick={sellPass}>
+                            <IonButton disabled={!sellPass} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
                                 Sell {formatEth(sellPrice as any)}
                             </IonButton>
-                            <IonButton disabled={!buyPass} style={{ marginLeft: 0, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                            <IonButton disabled={!buyPass} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
                         </div>

@@ -260,7 +260,7 @@ const App: React.FC = () => {
             <NotificationsProvider />
 
             <IonTabs>
-              <IonRouterOutlet animated={true}>
+              <IonRouterOutlet animated={false}>
                 <Route exact path="/channel">
                   <Chat />
                 </Route>
@@ -302,23 +302,24 @@ const App: React.FC = () => {
                 </Route>
               </IonRouterOutlet>
 
-              {useMemo(() => {
-                return <IonTabBar style={{ border: '0' }} slot="bottom">
-                  {tab}
-                  <IonTabButton tab="post" href="/post">
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'post' ? '/icons/home-solid.svg' : '/icons/home-outline.svg'} />
-                  </IonTabButton>
-                  <IonTabButton tab="member" href="/member">
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
-                  </IonTabButton>
-                  <IonTabButton tab="channel" href="/channel">
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
-                  </IonTabButton>
-                  <IonTabButton tab="account" href="/account">
-                    <NotifBadge />
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
-                  </IonTabButton></IonTabBar>
-              }, [tab])}
+              <IonTabBar style={{ border: '0' }} slot="bottom">
+                <IonTabButton tab="post" href="/post">
+                  {tab === 'post' ?
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/home-solid.svg'} />
+                    : <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/home-outline.svg'} />
+                  }
+                </IonTabButton>
+                <IonTabButton tab="member" href="/member">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
+                </IonTabButton>
+                <IonTabButton tab="channel" href="/channel">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
+                </IonTabButton>
+                <IonTabButton tab="account" href="/account">
+                  <NotifBadge />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
+                </IonTabButton></IonTabBar>
+
             </IonTabs>
 
           </IonReactHashRouter>

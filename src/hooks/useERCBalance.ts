@@ -21,7 +21,7 @@ export default function useERCBalance(contractAddress: Address | string | undefi
         }
 
         const fetchData = async () => {
-            if (syncing) {
+            if (syncing || !ready || !accountAddress) {
                 return;
             }
             const client = createPublicClient({
@@ -29,6 +29,7 @@ export default function useERCBalance(contractAddress: Address | string | undefi
                 transport: chainRPC[chainId]
             });
             console.log("FETCHING ERC20 BALANCE DAYA", { client, chainId, contractAddress, accountAddress })
+
             const blockChainBalance = await client.readContract({
                 ...balanceOfContract,
                 address: contractAddress as Address,

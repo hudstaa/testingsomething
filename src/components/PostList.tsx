@@ -104,7 +104,7 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
             setMax(currentMax + 10);
         }}>
 
-            <IonInfiniteScrollContent loadingSpinner={"crescent"} />
+            <IonInfiniteScrollContent loadingSpinner={undefined} />
         </IonInfiniteScroll>
     </>
 }

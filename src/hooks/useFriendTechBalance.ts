@@ -8,13 +8,14 @@ import { createPublicClient, http } from 'viem';
 import { base } from 'viem/chains';
 import { app } from '../App';
 import { friendTechCcontract } from '../lib/constants';
+import { usePrivy } from '@privy-io/react-auth';
 
 export default function useFriendTechBalance(friendTechWallet: Address | string | undefined, friendTechChannel: Address | string | undefined, channel: Address | string | undefined) {
     const [syncing, setSyncing] = useState<boolean | null>(null);
     const [balance, setBalance] = useState<bigint | undefined>();
-
+    const { ready } = usePrivy()
     useEffect(() => {
-        if (!friendTechWallet || !channel) {
+        if (!friendTechWallet || !channel || !ready) {
             return;
         }
 

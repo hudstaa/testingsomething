@@ -145,7 +145,6 @@ export const useMember = create<FriendStore>((set, store) => ({
             const db = getFirestore(app);
 
             const memberQuery = query(collection(db, "member"), where("address", "==", address));
-            console.log("NICE", address);
             if (watch) {
                 onSnapshot(memberQuery, (snapshot) => {
                     if (!snapshot.empty) {
