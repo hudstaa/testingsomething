@@ -58,7 +58,6 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         const ext = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
         if (!allowedExtensions.includes('.' + ext)) {
             console.error('Invalid file extension.');
-            alert("Invalid file extension");
             setPreviewUrl(null);
             onUpload(null as any);
             return;

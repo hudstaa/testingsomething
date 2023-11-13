@@ -20,7 +20,7 @@ export const WriteMessageModalProvider: React.FC = () => {
         }
     }, [isOpen])
     return <>
-        <IonModal ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal breakpoints={[0.99]} initialBreakpoint={0.99} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
             <IonHeader>
