@@ -13,6 +13,7 @@ import { formatEth } from "../lib/sugar";
 import { useBalance } from "wagmi";
 import useTabs from "../hooks/useTabVisibility";
 import { useNotifications } from "../hooks/useNotifications";
+import useBoosters from "../hooks/useBoosters";
 
 export const ShowMemberModalProvider: React.FC = () => {
     const { highlight, setHighlight } = useMember();
@@ -33,10 +34,10 @@ export const ShowMemberModalProvider: React.FC = () => {
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? undefined : 'light';
 
-    const highlightAddress = highlight?.address || null
+    const highlightAddress = highlight?.address || "0x000000000000000000000000000000000000dead"
     const { buyPass, buyPrice, status: buyStatus, error: buyError } = useBuyPass(highlightAddress as Address, 1n)
     const { sellPass, sellPrice, status: sellStatus, error: sellError } = useSellPass(highlightAddress as Address, 1n)
-    const balance = useBalance(me?.address as any)
+    const { balance } = useBoosters(me?.address, highlightAddress)
     const { setTab } = useTabs()
     const [presenter, setPresenter] = useState();
     useEffect(() => {
@@ -67,7 +68,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <IonCardContent>
                     <IonList>
 
-                        <IonItem>
+                        <IonItem lines="none">
                             <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
                                 push('/member/' + highlight?.address)
                                 setHighlight(null);
@@ -93,7 +94,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
-                        <IonItem>
+                        <IonItem lines="none">
                             <IonText color='warning'>
                                 {buyError?.message}
                                 {sellError?.message}

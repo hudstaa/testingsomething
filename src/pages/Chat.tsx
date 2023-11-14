@@ -1,4 +1,4 @@
-import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter, useIonViewDidEnter, IonButton, IonLoading } from '@ionic/react';
+import { IonBadge, IonList, IonButtons, IonAvatar, IonImg, IonSearchbar, IonCard, IonCol, IonGrid, IonInput, IonItem, IonRow, IonSpinner, IonTitle, useIonViewWillEnter, useIonViewDidEnter, IonButton, IonLoading, IonHeader, IonToolbar } from '@ionic/react';
 import { Timestamp, collection, doc, getDocs, getFirestore, limit, or, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
 import { app } from '../App';
@@ -67,7 +67,13 @@ const Chat: React.FC = () => {
     const [joining, setJoining] = useState<boolean>(false);
     return (
         <TribePage page='chat'>
-            <TribeHeader title='Chats' color='primary' />
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>
+                        Chats
+                    </IonTitle>
+                </IonToolbar>
+            </IonHeader>
             <TribeContent >
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>

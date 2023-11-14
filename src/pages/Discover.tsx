@@ -1,4 +1,4 @@
-import { IonAvatar, IonBadge, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonImg, IonItem, IonList, IonListHeader, IonRow, IonSearchbar, IonText, IonTitle } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonList, IonListHeader, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import { personOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Address, formatEther } from 'viem';
@@ -12,6 +12,9 @@ import { useTitle } from '../hooks/useTitle';
 import { TribePage } from './TribePage';
 import { MemberGraph } from '../components/MemberGraph';
 import algoliasearch from 'algoliasearch';
+import { collection, getFirestore, where, query, getDocs, orderBy, limit } from 'firebase/firestore';
+import { app } from '../App';
+import { uniqByProp } from '../lib/sugar';
 
 const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb20');
 
@@ -24,17 +27,47 @@ export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any,
 
 const Discover: React.FC = () => {
   const discoverStats = useDiscover(x => x.stats());
-  const members = useMember(x => x.friendCache)
-  const { loadCache } = useMember()
+  const [channels, setChannels] = useState<{ address: string, holders: Record<string, number> }[]>([]);
   const { setTitle } = useTitle();
+  const me = useMember(x => x.getCurrentUser())
   useEffect(() => {
     setTitle('discover')
-    loadCache();
   }, [])
   const [hits, setHits] = useState<Member[]>([])
+  const { getFriend } = useMember()
+
+  useEffect(() => {
+    const address = me?.address;
+    if (typeof address === 'undefined') {
+      return;
+    }
+    const channelsRef = collection(getFirestore(app), "channel");
+    const conditions = [
+      where(`boosts`, '>', 0), orderBy('boosts', 'desc'), limit(10)
+    ];
+
+    const q = query(channelsRef, ...conditions);
+    console.log("NICE");
+    getDocs(q)
+      .then(querySnapshot => {
+        if (!querySnapshot.empty) {
+          const result = querySnapshot.docs.map(doc => ({ ...doc.data(), address: doc.id }));
+          console.log(result, "RESULT");
+          setChannels(result as any);
+        }
+      })
+      .catch(error => {
+      });
+
+  }, [me])
   return (
     <TribePage page='discover'>
-      <TribeHeader title='Discover' color='primary' content={
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>
+            Discover
+          </IonTitle>
+        </IonToolbar>
         <>
           <IonSearchbar class="custom" onIonInput={(event) => {
             event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
@@ -56,25 +89,38 @@ const Discover: React.FC = () => {
 
           </IonList>
         </>
-      } />
+      </IonHeader>
       <TribeContent>
         <IonGrid>
           <IonRow>
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
-              <IonRow>
-                {Object.values(members).filter(x => x?.address !== '0x0000000000000000000000000000000000000000').filter(x => x?.twitterPfp).map((member, i) => <IonCol size='6' key={i}>
-                  <IonCard routerLink={'/member/' + member?.address} style={{ aspectRatio: 1 }}>
-                    <IonImg style={{ position: 'absolute' }} src={member?.twitterPfp || personOutline} />
+              {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
+                const member = getFriend(channel.address);
+                return <IonItem routerLink={'/member/' + member!.address} >
+                  <IonAvatar>
+                    <IonImg src={member?.twitterPfp || personOutline} />
+                  </IonAvatar>
 
-                    <IonBadge color='light' style={{ position: 'absolute', bottom: 5, left: 5 }}>
+                  <IonGrid>
+                    <IonRow>
+                    </IonRow>
+                    <IonBadge color='light' >
                       {member?.twitterName}
                     </IonBadge>
+                    <IonRow>
+                      {<BuyPriceBadge address={member?.address} />}
 
-                    {<BuyPriceBadge address={member?.address} style={{ position: 'absolute', top: 5, right: 5 }} />}
-                    {/* <MemberGraph address={member!.address} /> */}
-                  </IonCard>
-                </IonCol>)}
-              </IonRow>
+                    </IonRow>
+                  </IonGrid>
+                  <IonButtons slot='end'>
+                    {typeof channel.holders[me!.address] === 'undefined' && <IonButton color='tribe' fill='solid'>
+                      Join
+                    </IonButton>}
+                  </IonButtons>
+                  {/* <MemberGraph address={member!.address} /> */}
+                </IonItem>
+              }
+              )}
             </IonCol>
             <IonCol>
             </IonCol>

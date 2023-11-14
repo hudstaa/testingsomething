@@ -46,7 +46,10 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     }
     if (user && user.wallet && typeof user.wallet.address === 'undefined') {
         return <IonHeader>
-            {user?.twitter?.name}
+            <IonToolbar>
+
+                {user?.twitter?.name}
+            </IonToolbar>
         </IonHeader>
     }
 
