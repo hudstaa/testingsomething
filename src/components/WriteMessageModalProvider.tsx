@@ -8,7 +8,7 @@ import { CommentList } from "./CommentList";
 import { nativeAuth } from "../lib/sugar";
 
 export const WriteMessageModalProvider: React.FC = () => {
-    const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId } = useWriteMessage();
+    const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId, presentingElement } = useWriteMessage();
     const me = useMember(x => x.getCurrentUser());
     const uid = nativeAuth().currentUser?.uid
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -20,7 +20,7 @@ export const WriteMessageModalProvider: React.FC = () => {
         }
     }, [isOpen])
     return <>
-        <IonModal breakpoints={[0.99]} initialBreakpoint={0.99} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presentingElement as any} style={{ height: '90vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
             <IonHeader>
@@ -47,12 +47,12 @@ export const WriteMessageModalProvider: React.FC = () => {
                 }} />}
             </IonContent>
             <IonFooter>
+
                 {message && message.media?.src && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
                 {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);
                 }} />}
-
             </IonFooter>
         </IonModal>
     </>

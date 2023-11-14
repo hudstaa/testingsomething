@@ -60,8 +60,10 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
     }, [postId]);
 
     return (
-        <IonList style={{ marginTop: -40 }}>
-            <IonItem lines='none' />
+        <IonList>
+            <div style={{ height: 5 }}>
+
+            </div>
             {comments.map((comment, i) => (
                 < div key={i}>
                     <IonItem color={'paper'} >

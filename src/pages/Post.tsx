@@ -10,7 +10,7 @@ import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
 import { hideTabs, nativeAuth, showTabs, slideTabIn, slideTabOut } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
@@ -18,6 +18,7 @@ import { useNotifications } from '../hooks/useNotifications';
 import { MemberAlias } from '../components/MemberBadge';
 import { timeAgo } from '../components/TradeItem';
 import { usePost } from '../hooks/usePosts';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
 
@@ -42,9 +43,12 @@ const Post: React.FC = () => {
         })
     }, [id, uid])
 
+    const { setPresentingElement } = useWriteMessage()
+    const pageRef = useRef<any>(null)
 
     useIonViewDidEnter(() => {
         hideTabs();
+        setPresentingElement(pageRef.current)
     })
     useIonViewDidLeave(() => {
         showTabs();
@@ -96,7 +100,7 @@ const Post: React.FC = () => {
     if (me === null) {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
-    return <TribePage page='post'>
+    return <IonPage ref={pageRef}>
         <TribeHeader showBackButton={true} title={'Post from ' + post?.sent?.toDate().toDateString()} />
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
@@ -115,7 +119,7 @@ const Post: React.FC = () => {
                 })
             }} placeHolder={'Write a comment'} address={me.address} />
         </IonFooter>
-    </TribePage>
+    </IonPage>
 };
 
 

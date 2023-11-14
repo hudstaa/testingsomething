@@ -2,17 +2,15 @@ import {
     IonButtons,
     IonCardTitle,
     IonCol,
-    IonContent,
     IonFab,
     IonGrid,
-    IonHeader,
-    IonModal,
+    IonPage,
     IonRow,
-    IonSegment, IonSegmentButton, useIonViewDidEnter
+    IonSegment, IonSegmentButton, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
@@ -21,14 +19,11 @@ import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
-import { useNotifications } from '../hooks/useNotifications';
+import { usePost } from '../hooks/usePosts';
 import { useWriteMessage } from '../hooks/useWriteMessage';
 import { nativeAuth } from '../lib/sugar';
 import { OnBoarding } from './OnBoarding';
 import { TribePage } from './TribePage';
-import useTabs from '../hooks/useTabVisibility';
-import { CommentList } from '../components/CommentList';
-import { usePost } from '../hooks/usePosts';
 
 
 
@@ -42,6 +37,11 @@ const Posts: React.FC = () => {
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? undefined : 'light';
+    const { setPresentingElement } = useWriteMessage()
+    const pageRef = useRef<any>(null)
+    useIonViewDidEnter(() => {
+        setPresentingElement(pageRef.current)
+    })
 
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
@@ -64,7 +64,7 @@ const Posts: React.FC = () => {
         });
     }
     return (
-        <TribePage page='posts'>
+        <IonPage ref={pageRef}>
             <TribeHeader title={'posts'}
                 hide
                 content={!isNewPosting ? <>
@@ -113,7 +113,7 @@ const Posts: React.FC = () => {
 
             </TribeContent >
             <TribeFooter page='posts' />
-        </TribePage >
+        </IonPage >
     );
 };
 
