@@ -1,5 +1,5 @@
 import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCardHeader, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonLoading, IonPage, IonRoute, IonRow, IonSpinner, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
-import { close } from 'ionicons/icons';
+import { chevronBack, close } from 'ionicons/icons';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { MemberPfp } from '../components/MemberBadge';
@@ -89,7 +89,7 @@ const Room: React.FC = () => {
 
                         goBack()
                     }}>
-                        〱
+                        <IonIcon icon={chevronBack} />
                         <IonAvatar>
                             <IonImg src={channelOwner?.twitterPfp} />
                         </IonAvatar>

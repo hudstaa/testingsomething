@@ -5,6 +5,7 @@ import { app } from '../App'
 import { PushNotifications } from '@capacitor/push-notifications'
 import { Message } from '../models/Message'
 import { serverTimestamp } from 'firebase/firestore'
+import { Ref } from 'react'
 
 export type MessageFunction = (message: Message) => void;
 
@@ -16,16 +17,22 @@ export type WriteMessageHook = {
     send?: MessageFunction
     author: string
     postId?: string
+    presentingElement: Ref<HTMLIonContentElement>
     open: (callback: MessageFunction, author: string, placeHolder: string, postId?: string,) => void
     setMedia: (media: { src: string, type: string }) => void
     removeMedia: () => void
     setContent: (content: string) => void
+    setPresentingElement: (ref: any) => void
     dismiss: (shouldSend: boolean) => void
     setIsOpen: (open: boolean) => void
 }
 
 export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
     isOpen: false,
+    setPresentingElement: (presentingElement) => {
+        set({ presentingElement })
+    },
+    presentingElement: null,
     author: '',
     setIsOpen: (isOpen) => {
         set({ isOpen })

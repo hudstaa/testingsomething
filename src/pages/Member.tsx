@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonPage, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -27,6 +27,7 @@ import { BuyPriceBadge } from './Discover';
 import useERCBalance from '../hooks/useERCBalance';
 import { createChart } from 'lightweight-charts';
 import { TradingViewWidget } from '../components/Erc20Chart';
+import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
 const Member: React.FC = () => {
@@ -43,6 +44,7 @@ const Member: React.FC = () => {
     const [segment, setSegment] = useState<'posts' | 'tribe' | 'holders' | 'chart'>(address !== '0x0000000000000000000000000000000000000000' ? 'posts' : 'tribe')
     const { balance: boosters, syncing } = useBoosters(user?.wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
+
     useIonViewDidLeave(() => {
         document.title = 'Tribe Beta';
     })
@@ -53,9 +55,15 @@ const Member: React.FC = () => {
     }, [member]);
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? undefined : 'light';
+    const { setPresentingElement } = useWriteMessage()
+    const pageRef = useRef<any>(null)
+
+    useIonViewDidEnter(() => {
+        setPresentingElement(pageRef.current)
+    })
 
     return (
-        <TribePage page='member'>
+        <IonPage ref={pageRef}>
             <TribeHeader
                 color='tertiary'
                 title={member !== null ? member.twitterName : ""}
@@ -190,7 +198,7 @@ const Member: React.FC = () => {
                 </div>
 
             </TribeContent >
-        </ TribePage >
+        </ IonPage >
 
     );
 };

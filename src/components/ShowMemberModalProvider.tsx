@@ -12,9 +12,11 @@ import useSellPass from "../hooks/useSellPass";
 import { formatEth } from "../lib/sugar";
 import { useBalance } from "wagmi";
 import useTabs from "../hooks/useTabVisibility";
+import { useNotifications } from "../hooks/useNotifications";
 
 export const ShowMemberModalProvider: React.FC = () => {
     const { highlight, setHighlight } = useMember();
+    const { dismiss } = useWriteMessage()
     const me = useMember(x => x.getCurrentUser())
     const isOpen = highlight !== null;
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -32,16 +34,18 @@ export const ShowMemberModalProvider: React.FC = () => {
     const bgColor = darkmode ? undefined : 'light';
 
     const highlightAddress = highlight?.address || null
-    const { buyPass, buyPrice, status: buyStatus } = useBuyPass(highlightAddress as Address, 1n)
-    const { sellPass, sellPrice, status: sellStatus } = useSellPass(highlightAddress as Address, 1n)
+    const { buyPass, buyPrice, status: buyStatus, error: buyError } = useBuyPass(highlightAddress as Address, 1n)
+    const { sellPass, sellPrice, status: sellStatus, error: sellError } = useSellPass(highlightAddress as Address, 1n)
     const balance = useBalance(me?.address as any)
     const { setTab } = useTabs()
-
+    const [presenter, setPresenter] = useState();
     useEffect(() => {
         setTab(pathname.split("/")[1] as any)
+        setPresenter(document.querySelector("ion-page") as any)
+
     }, [pathname])
     return <>
-        <IonModal initialBreakpoint={0.75} breakpoints={[0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presenter} initialBreakpoint={0.75} breakpoints={[0, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
             <IonHeader>
@@ -64,12 +68,21 @@ export const ShowMemberModalProvider: React.FC = () => {
                     <IonList>
 
                         <IonItem>
-                            <IonButton style={{ margin: 'auto', padding: -10 }} color='tribe' onMouseDown={() => {
+                            <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
                                 push('/member/' + highlight?.address)
                                 setHighlight(null);
+                                dismiss(false);
                             }}>
                                 Profile
                             </IonButton>
+                            <IonButton style={{ margin: 'auto', marginLeft: 5, padding: -10 }} color='tribe' onMouseDown={() => {
+                                setHighlight(null);
+                                dismiss(false);
+                                push('/channel/' + highlight?.address)
+                            }}>
+                                chat
+                            </IonButton>
+
                         </IonItem>
 
                         {useMemo(() => <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
@@ -80,6 +93,12 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
+                        <IonItem>
+                            <IonText color='warning'>
+                                {buyError?.message}
+                                {sellError?.message}
+                            </IonText>
+                        </IonItem>
                     </IonList>
 
                 </IonCardContent>

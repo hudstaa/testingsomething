@@ -15,18 +15,32 @@ export default function useBuyPass(subject: Address, shares: bigint) {
     const [error, setError] = useState<any>();
     const [status, setStatus] = useState<any>();
     const [transactionHash, setTransactionHash] = useState<any>();
+
     const onError = useCallback((e: unknown) => {
         setError(e);
         setStatus('error');
+        setTimeout(() => {
+            setError(undefined);
+            setStatus("init");
+        }, 3000)
+
     }, [])
 
-    const me = useMember(x => x.getCurrentUser())
+    let me: any = useMember(x => x.getCurrentUser())
+    let subjectAddress = subject;
+    if (!subject || subject === null) {
+        subjectAddress = '0x0x000000000000000000000000000000000000dead';
+    }
+    if (!me || subject === null) {
+        me = { address: '0x0x000000000000000000000000000000000000dead' } as any
+    }
+
     const { data: buyPrice } = useContractRead({
         ...tribePassesContract,
-        account: me?.address as Address,
+        account: me.address as Address,
         chainId: baseGoerli.id,
         functionName: 'getBuyPriceAfterFee',
-        args: [subject, shares],
+        args: [subjectAddress, shares],
         watch: true
     })
 
@@ -34,7 +48,7 @@ export default function useBuyPass(subject: Address, shares: bigint) {
         ...tribePassesContract,
         functionName: 'buyBoosts',
         chainId: baseGoerli.id,
-        args: [subject, shares, '0xCc879Ab4DE63FC7Be6aAca522285D6F5d816278e'],
+        args: [subjectAddress, shares, '0xCc879Ab4DE63FC7Be6aAca522285D6F5d816278e'],
         value: buyPrice as bigint
     })
     const { write: buyPass, data: writeData, error: testError, } = useContractWrite({
@@ -52,5 +66,5 @@ export default function useBuyPass(subject: Address, shares: bigint) {
             setStatus("success")
         },
     })
-    return { buyPrice: (buyPrice as bigint) || 0n, buyPass, status, transactionHash }
+    return { buyPrice: (buyPrice as bigint) || 0n, buyPass, status, transactionHash, error }
 }

@@ -9,6 +9,7 @@ import {
     useWaitForTransaction,
 } from 'wagmi';
 import { tribePassesContract } from '../lib/constants';
+import { useMember } from './useMember';
 
 export default function useSellPass(subject: Address, shares: bigint) {
     const [error, setError] = useState<any>();
@@ -16,14 +17,26 @@ export default function useSellPass(subject: Address, shares: bigint) {
     const onError = useCallback((e: unknown) => {
         setStatus('error')
         setError(e);
+        setTimeout(() => {
+            setError(undefined);
+            setStatus("init");
+        }, 3000)
     }, [])
 
-    const { wallet } = usePrivyWagmi()
+    let me: any = useMember(x => x.getCurrentUser())
+    let subjectAddress = subject;
+    if (!subject || subject === null) {
+        subjectAddress = '0x0x000000000000000000000000000000000000dead';
+    }
+    if (!me || subject === null) {
+        me = { address: '0x0x000000000000000000000000000000000000dead' } as any
+    }
+
 
     const { data: sellPrice } = useContractRead({
         ...tribePassesContract,
         chainId: baseGoerli.id,
-        account: wallet?.address as Address,
+        account: me.address as Address,
         functionName: 'getSellPriceAfterFee',
         args: [subject, shares],
         watch: true
@@ -55,5 +68,5 @@ export default function useSellPass(subject: Address, shares: bigint) {
         },
     })
 
-    return { sellPass, sellPrice, status }
+    return { sellPass, sellPrice, status, error }
 }
