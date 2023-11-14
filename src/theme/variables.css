@@ -10,11 +10,15 @@ http://ionicframework.com/docs/theming/ */
   --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
 } */
 
-/* @font-face {
+@font-face {
   font-family: 'AvenirBold';
-  src: url("/fonts/AvenirNextLTPro-Bold.otf") format("opentype");
-} */
+  src: url("/fonts/bold.otf") format("opentype");
+} 
 
+@font-face {
+  font-family: 'AvenirText';
+  src: url("/fonts/demi.otf") format("opentype");
+} 
 
 
 @font-face {
@@ -43,7 +47,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .heavy {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'AvenirBold', sans-serif !important;
   font-weight: 700;
   /* Bold weight, assuming 'heavy' is bolder than 'bold' */
 }
@@ -51,6 +55,11 @@ http://ionicframework.com/docs/theming/ */
 .semi {
   font-family: 'Rubik', sans-serif !important;
   font-weight: 475;
+  /* Semi-bold weight */
+}
+
+.text {
+  font-family: 'AvenirText', sans-serif !important;
   /* Semi-bold weight */
 }
 
