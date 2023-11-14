@@ -96,7 +96,7 @@ const Discover: React.FC = () => {
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
                 const member = getFriend(channel.address);
-                return <IonItem routerLink={'/member/' + member!.address} >
+                return <IonItem routerLink={'/member/' + member?.address} >
                   <IonAvatar>
                     <IonImg src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
