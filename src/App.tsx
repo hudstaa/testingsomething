@@ -87,6 +87,7 @@ import Posts from './pages/Posts';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 import { NotificationsProvider } from './components/NotificationsProvider';
 import { ShowMemberModalProvider } from './components/ShowMemberModalProvider';
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -164,11 +165,11 @@ registerNotifications();
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-// initializeFirestore(app,
-//   {
-//     localCache:
-//       persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-//   });
+initializeFirestore(app,
+  {
+    localCache:
+      persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+  });
 // getToken(messaging, { vapidKey: 'BBRZkbpicNkmzSp3m0eSVw2mavWY47hDhEFnq7A0H2xCU7oLxBFcVTV0Ratuwq7MBJEZbA_FdeaVh0SnX_Mdtq0' }).then((currentToken) => {
 //   if (currentToken) {
 //     // Send the token to your server and update the UI if necessary
