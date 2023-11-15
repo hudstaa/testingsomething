@@ -69,7 +69,7 @@ const Posts: React.FC = () => {
                 hide
                 content={!isNewPosting ? <>
                     <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                        <IonCardTitle style={{ color: 'white', paddingTop: 5, letterSpacing: '-1px', fontFamily: 'Avenir Bold' }} >
+                        <IonCardTitle class='heavy' style={{ color: 'white', paddingTop: 5, letterSpacing: '-1.5px', fontWeight: 700, fontFamily: 'AvenirBold' }} >
                             tribe
                         </IonCardTitle>
                     </IonButtons>
