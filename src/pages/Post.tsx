@@ -10,7 +10,7 @@ import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { TribePage } from './TribePage';
 import { hideTabs, nativeAuth, showTabs, slideTabIn, slideTabOut } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
@@ -43,7 +43,7 @@ const Post: React.FC = () => {
         })
     }, [id, uid])
 
-    const { setPresentingElement } = useWriteMessage()
+    const { setPresentingElement, commentPath } = useWriteMessage()
     const pageRef = useRef<any>(null)
 
     useIonViewDidEnter(() => {
@@ -113,6 +113,9 @@ const Post: React.FC = () => {
             </IonGrid>
         </IonContent>
         <IonFooter>
+            {commentPath && <IonItem>
+                {commentPath}
+            </IonItem>}
             <WriteMessage sendMessage={(message) => {
                 makeComment(id, message).then(() => {
                     contentRef.current?.scrollToBottom(500);

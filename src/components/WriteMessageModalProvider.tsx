@@ -6,9 +6,10 @@ import { close } from "ionicons/icons";
 import { useEffect, useRef } from "react";
 import { CommentList } from "./CommentList";
 import { nativeAuth } from "../lib/sugar";
+import { MemberAlias } from "./MemberBadge";
 
 export const WriteMessageModalProvider: React.FC = () => {
-    const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId, presentingElement } = useWriteMessage();
+    const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId, presentingElement, commentPath } = useWriteMessage();
     const me = useMember(x => x.getCurrentUser());
     const uid = nativeAuth().currentUser?.uid
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -47,7 +48,9 @@ export const WriteMessageModalProvider: React.FC = () => {
                 }} />}
             </IonContent>
             <IonFooter>
-
+                {commentPath && <IonItem>
+                    {commentPath}
+                </IonItem>}
                 {message && message.media?.src && <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} />}
                 {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)

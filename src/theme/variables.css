@@ -661,3 +661,20 @@ ion-tab-bar {
   --ion-color-shade: var(--ion-color-white-shade);
   --ion-color-tint: var(--ion-color-white-tint);
 }
+
+.vote-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-container {
+  width: 20px;
+  /* Fixed width */
+  text-align: center;
+}
+
+.score-label {
+  text-overflow: clip;
+  /* Score label styles, if any */
+}

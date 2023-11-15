@@ -4,6 +4,7 @@ import { formatUnits, formatEther, getAddress } from 'viem'
 import { useMember } from '../hooks/useMember';
 import { MemberBadge } from './MemberBadge';
 import { formatEth } from '../lib/sugar';
+import { Timestamp } from 'firebase/firestore';
 
 
 
@@ -31,7 +32,9 @@ export function timeAgo(input: Date) {
         }
     }
 }
-
+export function timestampAgo(timestamp: Timestamp | null) {
+    return timestamp === null ? "just now" : timeAgo(new Date(timestamp.seconds * 1000))
+}
 export function timesAgo(input: Date) {
     if (input == null) {
         return "now"

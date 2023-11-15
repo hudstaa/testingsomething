@@ -1,11 +1,6 @@
-import { create } from 'zustand'
-import { Trade } from '../models/Trade'
-import { httpsCallable, getFunctions } from 'firebase/functions'
-import { app } from '../App'
-import { PushNotifications } from '@capacitor/push-notifications'
-import { Message } from '../models/Message'
-import { serverTimestamp } from 'firebase/firestore'
 import { Ref } from 'react'
+import { create } from 'zustand'
+import { Message } from '../models/Message'
 
 export type MessageFunction = (message: Message) => void;
 
@@ -17,11 +12,13 @@ export type WriteMessageHook = {
     send?: MessageFunction
     author: string
     postId?: string
+    commentPath?: string
     presentingElement: Ref<HTMLIonContentElement>
-    open: (callback: MessageFunction, author: string, placeHolder: string, postId?: string,) => void
+    open: (callback: MessageFunction, author: string, placeHolder: string, postId?: string, commentPath?: string) => void
     setMedia: (media: { src: string, type: string }) => void
     removeMedia: () => void
     setContent: (content: string) => void
+    setCommentPath: (commentPath: string) => void
     setPresentingElement: (ref: any) => void
     dismiss: (shouldSend: boolean) => void
     setIsOpen: (open: boolean) => void
@@ -29,6 +26,9 @@ export type WriteMessageHook = {
 
 export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
     isOpen: false,
+    setCommentPath: (commentPath) => {
+        set({ commentPath })
+    },
     setPresentingElement: (presentingElement) => {
         set({ presentingElement })
     },
@@ -45,8 +45,8 @@ export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
         }
         set({ isOpen: false, message: { author: "", id: "", sent: null } })
     },
-    open: (send, author, placeholder, postId) => {
-        set({ postId, send, author, isOpen: true, placeholder })
+    open: (send, author, placeholder, postId, commentPath) => {
+        set({ postId, send, author, isOpen: true, placeholder, commentPath })
     },
     setMedia(media) {
         set({ message: { author: store().author, media: media, ...store().message, content: store().message?.content, sent: null, id: '' } });
