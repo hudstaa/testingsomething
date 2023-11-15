@@ -25,7 +25,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const bgColor = darkmode ? 'paper' : 'white';
     const { pathname } = useLocation()
     return <IonCard onMouseDown={(e) => {
-        if ((e.target as any).nodeName != 'ION-BUTTON' && (e.target as any).parent.nodeName !== 'ION-BUTTON') {
+        if ((e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parent?.nodeName !== 'ION-BUTTON') {
             push('/post/' + id);
         }
     }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
@@ -45,7 +45,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonRouterLink>
                 {media && (
                     <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
-                        <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} />
+                        {media.type.includes("image") ?
+                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src} />}
                     </div>
                 )}
             </IonCardContent>

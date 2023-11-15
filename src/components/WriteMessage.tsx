@@ -1,6 +1,6 @@
 import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText } from "@ionic/react";
 import { close, imageOutline, paperPlane, text } from "ionicons/icons";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
 import { getAuth } from "firebase/auth";
 import { useWriteMessage } from "../hooks/useWriteMessage";
@@ -9,14 +9,17 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const [content, setNewNote] = useState<string | undefined>(undefined)
   const [image, setImage] = useState<string | undefined>(undefined)
   const [sent, setSent] = useState<boolean>(false);
-  const { isOpen, removeMedia } = useWriteMessage();
-  const makeComment = () => {
-    const message = typeof image === 'undefined' ? { content: content || "" } : { content: content || "", media: { src: image, type: 'image' } }
+  const { isOpen, removeMedia, message: messageFromHook, setContent, setMedia } = useWriteMessage();
+  const makeComment = useCallback(() => {
+
+    const message = typeof image === 'undefined' ? { content: content || "" } : { content: content || "", media: messageFromHook?.media }
     sendMessage(message);
+    setMedia(undefined as any);
+    setContent(undefined as any)
     setNewNote(undefined);
     setSent(true);
     setImage(undefined);
-  }
+  }, [messageFromHook])
   const uid = getAuth().currentUser?.uid;
 
   useEffect(() => {
@@ -62,7 +65,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         {image &&
           <IonChip onMouseDown={() => { setImage(undefined); removeMedia() }}>
             <IonAvatar>
-              <IonImg src={image} />
+
+              {messageFromHook?.media?.type.includes('image') ? <IonImg src={image} /> :
+                <video controls style={{ borderRadius: 20, margin: 'auto', width: "100%", marginTop: 5, marginLeft: 4 }} src={image} />}
             </IonAvatar>
             <IonText color='danger'>
               <IonIcon icon={close} />

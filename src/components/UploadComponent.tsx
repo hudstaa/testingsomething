@@ -54,7 +54,7 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         const file = acceptedFiles[0];
         setPreviewUrl(URL.createObjectURL(file));
 
-        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.mov', '.mp4'];
         const ext = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
         if (!allowedExtensions.includes('.' + ext)) {
             console.error('Invalid file extension.');
@@ -70,7 +70,7 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
             await uploadBytes(userPfpRef, file);
             console.log('Uploaded successfully!');
             const path = await getDownloadURL(userPfpRef);
-            setMedia({ src: path, type: 'image' })
+            setMedia({ src: path, type: file.type })
             onUpload(path);
         } catch (error) {
             console.error('Error uploading file:', error);

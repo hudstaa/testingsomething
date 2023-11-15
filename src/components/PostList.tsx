@@ -7,6 +7,7 @@ import { PostCard } from "./PostCard";
 import { IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRefresher, IonRefresherContent } from "@ionic/react";
 import { useNotifications } from "../hooks/useNotifications";
 import { Post, usePost } from "../hooks/usePosts";
+import { useWriteMessage } from "../hooks/useWriteMessage";
 
 export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: string }> = ({ type, max, from }) => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -16,7 +17,6 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
     const auth = nativeAuth();
     const me = useMember(x => x.getCurrentUser())
     const { commentAdded } = useNotifications();
-
     useEffect(() => {
         if (!auth.currentUser) {
             return;

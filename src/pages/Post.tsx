@@ -1,24 +1,19 @@
-import { getAuth } from 'firebase/auth';
+import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import 'firebase/firestore';
-import { Timestamp, addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
-import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
-import { useMember } from '../hooks/useMember';
-import { TribePage } from './TribePage';
-import { hideTabs, nativeAuth, showTabs, slideTabIn, slideTabOut } from '../lib/sugar';
-import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
-import NewPost from './NewPost';
-import { OnBoarding } from './OnBoarding';
 import { WriteMessage } from '../components/WriteMessage';
+import { useMember } from '../hooks/useMember';
 import { useNotifications } from '../hooks/useNotifications';
-import { MemberAlias } from '../components/MemberBadge';
-import { timeAgo } from '../components/TradeItem';
 import { usePost } from '../hooks/usePosts';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
+import NewPost from './NewPost';
+import { OnBoarding } from './OnBoarding';
 
 
 
@@ -43,7 +38,7 @@ const Post: React.FC = () => {
         })
     }, [id, uid])
 
-    const { setPresentingElement, commentPath } = useWriteMessage()
+    const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)
 
     useIonViewDidEnter(() => {
@@ -88,6 +83,7 @@ const Post: React.FC = () => {
         commentAdded(postId)
 
         try {
+            alert(newMessage.media?.type);
             await addDoc(commentCol, newMessage);
         } catch (error) {
             console.error("Error sending message: ", error);
