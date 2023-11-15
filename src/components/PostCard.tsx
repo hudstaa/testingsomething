@@ -19,13 +19,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { localCommentCount, commentAdded } = useNotifications()
     const newComments = localCommentCount[id] || 0;
     const member = useMember(x => x.getFriend(author));
-    const [notif, setNotif] = useState<string | null>(null);
+    const { localNotif, setLocalNotif } = useNotifications()
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'paper' : 'white';
     const { pathname } = useLocation()
     return <IonCard onMouseDown={(e) => {
-        if ((e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parent?.nodeName !== 'ION-BUTTON') {
+        console.log(e.target)
+        const isAlias = Array.from((e.target as any).classList).includes('alias')
+        if ((e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
     }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
@@ -46,7 +48,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 {media && (
                     <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
                         {media.type.includes("image") ?
-                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src} />}
+                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video autoPlay muted style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src} />}
                     </div>
                 )}
             </IonCardContent>
@@ -65,7 +67,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </IonText>
             </IonButton>}
             <IonButton fill='clear' onMouseDown={() => {
-                setNotif("Copied to share link to clipboard")
+                setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
 
@@ -73,8 +75,6 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButton>
 
 
-            <IonToast onDidDismiss={() => { setNotif(null) }} position="top" isOpen={notif !== null} duration={1000} message={notif || ""}>
-            </IonToast>
             <IonButtons slot='end'>
                 <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 28, width: 28 }} />

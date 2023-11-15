@@ -90,9 +90,8 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                     {
                         comment.media &&
                         <IonItem lines="none" color='paper'>
-                            {comment.media.type}
                             {comment.media.type.includes("image") ?
-                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} />}
+                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} />}
                         </IonItem>
                     }
                 </div>))

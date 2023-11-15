@@ -10,8 +10,7 @@ import { useHistory, useLocation } from "react-router";
 
 export const NotificationsProvider: React.FC = () => {
 
-    const { setNotifications, notifications } = useNotifications();
-    const auth = nativeAuth();
+    const { setNotifications, notifications, localNotif, setLocalNotif } = useNotifications();
     const me = useMember(x => x.getCurrentUser());
     const { push } = useHistory()
     useEffect(() => {
@@ -27,6 +26,8 @@ export const NotificationsProvider: React.FC = () => {
 
     }, [me]);
     return <>
+        <IonToast onDidDismiss={() => { setLocalNotif(null) }} position="top" isOpen={localNotif !== null} duration={1000} message={localNotif || ""} />
+
         {notifications.slice(0, 1).map(({ from, ref, timestamp, to, id, message }: any) =>
             <IonToast
                 position='top'

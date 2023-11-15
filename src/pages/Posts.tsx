@@ -10,8 +10,8 @@ import {
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
-import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
 import { PostList } from '../components/PostList';
@@ -28,8 +28,28 @@ import { TribePage } from './TribePage';
 
 
 const Posts: React.FC = () => {
-    const [postType, setPostType] = useState<'top' | 'recent'>('top')
     const auth = nativeAuth();
+    const location = useLocation();
+    // Function to get the post type from URL
+    const getPostTypeFromURL = () => {
+        const params = new URLSearchParams(location.search);
+        return params.get('type') === 'recent' ? 'recent' : 'top';
+    };
+    const [postType, setPostType] = useState<'top' | 'recent'>(getPostTypeFromURL());
+    const history = useHistory();
+
+    const handleSegmentChange = (newValue: 'top' | 'recent') => {
+        setPostType(newValue);
+        const params = new URLSearchParams(location.search);
+        params.set('type', newValue);
+        history.push({ search: params.toString() });
+    };
+
+    // Sync state with URL changes
+    useEffect(() => {
+        setPostType(getPostTypeFromURL());
+    }, [location.search]);
+
     const me = useMember(x => x.getCurrentUser());
     const [isNewPosting, setIsNew] = useState(false)
     const { open } = useWriteMessage();
@@ -77,7 +97,7 @@ const Posts: React.FC = () => {
                         onIonChange={(e) => {
                             const newValue = e.detail.value;
                             if (newValue === 'top' || newValue === 'recent') {
-                                setPostType(newValue);
+                                handleSegmentChange(newValue);
                             }
                         }}
                         value={postType}

@@ -11,13 +11,20 @@ export type ActivityHook = {
     setNotifications: ({ }) => void
     subscribe: (topic: string) => void
     token: string | null
+    localNotif: string | null
     localCommentCount: Record<string, number>
     setToken: (token: string) => void
     commentAdded: (id: string) => void
+    setLocalNotif: (localNotif: string | null) => void
 }
 
 export const useNotifications = create<ActivityHook>((set, store) => ({
     localCommentCount: {},
+    localNotif: null,
+    setLocalNotif: (localNotif: string | null) => {
+        set({ localNotif })
+    },
+
     commentAdded: (id) => {
         set({ localCommentCount: { ...store().localCommentCount, [id]: (store().localCommentCount[id] || 0) + 1 } })
     },

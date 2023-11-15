@@ -6,20 +6,15 @@ import { getAuth } from "firebase/auth";
 import { useWriteMessage } from "../hooks/useWriteMessage";
 
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
-  const [content, setNewNote] = useState<string | undefined>(undefined)
-  const [image, setImage] = useState<string | undefined>(undefined)
   const [sent, setSent] = useState<boolean>(false);
-  const { isOpen, removeMedia, message: messageFromHook, setContent, setMedia } = useWriteMessage();
+  const { isOpen, removeMedia, message, setContent, setMedia } = useWriteMessage();
   const makeComment = useCallback(() => {
 
-    const message = typeof image === 'undefined' ? { content: content || "" } : { content: content || "", media: messageFromHook?.media }
-    sendMessage(message);
+    message && sendMessage(message as any);
     setMedia(undefined as any);
     setContent(undefined as any)
-    setNewNote(undefined);
     setSent(true);
-    setImage(undefined);
-  }, [messageFromHook])
+  }, [message])
   const uid = getAuth().currentUser?.uid;
 
   useEffect(() => {
@@ -53,21 +48,20 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
   })
   const textRef = useRef<HTMLIonTextareaElement>(null);
-  const strippedLength = content ? content.replaceAll(' ', '').replaceAll('\n', '').length : 0
+  const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
     <IonToolbar style={{ padding: 5, border: 0 }} >
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
-          setImage(path);
         }} />}
 
-        {image &&
-          <IonChip onMouseDown={() => { setImage(undefined); removeMedia() }}>
+        {message?.media &&
+          <IonChip onMouseDown={() => { removeMedia() }}>
             <IonAvatar>
 
-              {messageFromHook?.media?.type.includes('image') ? <IonImg src={image} /> :
-                <video controls style={{ borderRadius: 20, margin: 'auto', width: "100%", marginTop: 5, marginLeft: 4 }} src={image} />}
+              {message?.media?.type.includes('image') ? <IonImg src={message.media.src} /> :
+                <video controls style={{ borderRadius: 20, margin: 'auto', width: "100%", marginTop: 5, marginLeft: 4 }} src={message.media.src} />}
             </IonAvatar>
             <IonText color='danger'>
               <IonIcon icon={close} />
@@ -81,7 +75,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         ref={textRef}
         autoGrow
         style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
-        value={content}
+        value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
           if (e.key === 'Enter' && !e.shiftKey && strippedLength > 0) {
@@ -89,14 +83,14 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           }
         }}
         onIonInput={(e) => {
-          setNewNote(e.detail.value!)
+          setContent(e.detail.value!)
         }}
       />
       <IonButtons slot='end'>
         <IonButton disabled={strippedLength < 1} onClick={async () => {
           makeComment();
         }}>
-          <IonIcon color={(typeof content !== 'undefined' && content.length > 0) && image !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
+          <IonIcon color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
         </IonButton>
       </IonButtons>
     </IonToolbar>

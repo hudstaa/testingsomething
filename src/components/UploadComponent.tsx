@@ -4,6 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { IonButton, IonIcon, IonSpinner } from '@ionic/react';
 import { imageOutline } from 'ionicons/icons';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { useNotifications } from '../hooks/useNotifications';
 
 interface PfpUploaderProps {
     userId: string;
@@ -22,7 +23,7 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const { setMedia } = useWriteMessage();
-
+    const { localNotif, setLocalNotif } = useNotifications();
     const handleUpload = async (file: File) => {
         onDrop([file]);
     };
@@ -54,10 +55,10 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         const file = acceptedFiles[0];
         setPreviewUrl(URL.createObjectURL(file));
 
-        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.mov', '.mp4'];
+        const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.mov', '.mp4', '.webm', '.webp'];
         const ext = file.name.slice(((file.name.lastIndexOf(".") - 1) >>> 0) + 2);
         if (!allowedExtensions.includes('.' + ext)) {
-            console.error('Invalid file extension.');
+            setLocalNotif("Invalid file extension")
             setPreviewUrl(null);
             onUpload(null as any);
             return;
@@ -68,11 +69,12 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
         const userPfpRef = ref(storage, `users/${userId}/${imageId()}.${ext}`);
         try {
             await uploadBytes(userPfpRef, file);
-            console.log('Uploaded successfully!');
+            setLocalNotif("Upload success")
             const path = await getDownloadURL(userPfpRef);
             setMedia({ src: path, type: file.type })
             onUpload(path);
         } catch (error) {
+            setLocalNotif("Error uploading file ")
             console.error('Error uploading file:', error);
         } finally {
             setIsUploading(false);
