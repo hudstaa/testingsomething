@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
 import { TribeHeader } from '../components/TribeHeader';
-import { WriteMessage } from '../components/WriteMessage';
+import { WriteMessage, removeUndefinedProperties } from '../components/WriteMessage';
 import { useMember } from '../hooks/useMember';
 import { useNotifications } from '../hooks/useNotifications';
 import { usePost } from '../hooks/usePosts';
@@ -83,7 +83,7 @@ const Post: React.FC = () => {
         commentAdded(postId)
 
         try {
-            await addDoc(commentCol, newMessage);
+            await addDoc(commentCol, removeUndefinedProperties(newMessage));
         } catch (error) {
             console.error("Error sending message: ", error);
         }
@@ -102,7 +102,8 @@ const Post: React.FC = () => {
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                         {post !== null ? <PostCard id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} /> : <IonSkeletonText />}
-                    </IonCol></IonRow>
+                    </IonCol>
+                </IonRow>
 
 
             </IonGrid>

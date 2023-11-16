@@ -27,7 +27,7 @@ import { PostList } from '../components/PostList';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { WriteMessage } from '../components/WriteMessage';
+import { WriteMessage, removeUndefinedProperties } from '../components/WriteMessage';
 import { useMember } from '../hooks/useMember';
 import { nativeAuth } from '../lib/sugar';
 import Post from './Post';
@@ -51,7 +51,7 @@ const Posts: React.FC = () => {
         if (message.media) {
             newPost['media'] = message.media;
         }
-        addDoc(collection(db, 'post'), newPost).then((doc) => {
+        addDoc(collection(db, 'post'), removeUndefinedProperties(newPost)).then((doc) => {
             push('/post/' + doc.id);
         });
     }

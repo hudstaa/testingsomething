@@ -34,6 +34,7 @@ import { TribePage } from './TribePage';
 import { chevronDown, chevronUp, listCircle, notifications } from 'ionicons/icons';
 import { MemberPfp, MemberPfpImg } from '../components/MemberBadge';
 import { useNotifications } from '../hooks/useNotifications';
+import { removeUndefinedProperties } from '../components/WriteMessage';
 
 
 
@@ -84,7 +85,7 @@ const Posts: React.FC = () => {
         if (message.media) {
             newPost['media'] = message.media;
         }
-        addDoc(collection(db, 'post'), newPost).then((doc) => {
+        addDoc(collection(db, 'post'), removeUndefinedProperties(newPost)).then((doc) => {
             push('/post/' + doc.id);
         });
     }

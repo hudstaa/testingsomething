@@ -9,7 +9,7 @@ import { useMember } from '../hooks/useMember';
 
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp } from "firebase/firestore";
 import { app } from '../App';
-import { WriteMessage } from '../components/WriteMessage';
+import { WriteMessage, removeUndefinedProperties } from '../components/WriteMessage';
 import { Message } from '../models/Message';
 import { TribePage } from './TribePage';
 import VirtuosoRoom from './VirtuosoRoom';
@@ -55,7 +55,7 @@ const Room: React.FC = () => {
         const messagesCol = collection(db, "channel", channel, "messages");
         setReplyingToMessageId(null);
         try {
-            await addDoc(messagesCol, newMessage);
+            await addDoc(messagesCol, removeUndefinedProperties(newMessage));
         } catch (error) {
             console.error("Error sending message: ", error);
         }

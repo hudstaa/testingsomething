@@ -8,6 +8,7 @@ import { IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRef
 import { useNotifications } from "../hooks/useNotifications";
 import { Post, usePost } from "../hooks/usePosts";
 import { useWriteMessage } from "../hooks/useWriteMessage";
+import { removeUndefinedProperties } from "./WriteMessage";
 
 export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: string }> = ({ type, max, from }) => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -63,7 +64,7 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
         const commentCol = collection(db, "post", postId, "comments");
 
         try {
-            await addDoc(commentCol, newMessage);
+            await addDoc(commentCol, removeUndefinedProperties(newMessage));
             commentAdded(postId)
         } catch (error) {
             console.error("Error sending message: ", error);

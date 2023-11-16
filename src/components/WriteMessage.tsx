@@ -4,13 +4,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
 import { getAuth } from "firebase/auth";
 import { useWriteMessage } from "../hooks/useWriteMessage";
-
+export function removeUndefinedProperties(obj: any) {
+  Object.keys(obj).forEach(key => {
+    if (obj[key] === undefined) {
+      delete obj[key];
+    }
+  });
+  return obj;
+}
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
   const { isOpen, removeMedia, message, setContent, setMedia } = useWriteMessage();
   const makeComment = useCallback(() => {
-
-    message && sendMessage(message as any);
+    const content = textRef.current?.value!;
+    sendMessage(removeUndefinedProperties({ ...message, content }));
     setMedia(undefined as any);
     setContent(undefined as any)
     setSent(true);
