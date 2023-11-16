@@ -19,11 +19,11 @@ function formatNumber(num: number) {
     if (absoluteNum < 1000) {
         shorthand = absoluteNum.toString();
     } else if (absoluteNum < 1000000) {
-        shorthand = (absoluteNum / 1000).toFixed(1) + 'k';
+        shorthand = (absoluteNum / 1000).toFixed(0) + 'k';
     } else if (absoluteNum < 1000000000) {
-        shorthand = (absoluteNum / 1000000).toFixed(1) + 'm';
+        shorthand = (absoluteNum / 1000000).toFixed(0) + 'm';
     } else {
-        shorthand = (absoluteNum / 1000000000).toFixed(1) + 'b';
+        shorthand = (absoluteNum / 1000000000).toFixed(0) + 'b';
     }
 
     return isNegative ? '-' + shorthand : shorthand;

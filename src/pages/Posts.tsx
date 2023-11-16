@@ -1,12 +1,19 @@
 import {
+    IonAvatar,
+    IonBadge,
+    IonButton,
     IonButtons,
     IonCardTitle,
     IonCol,
+    IonContent,
     IonFab,
     IonGrid,
+    IonHeader,
+    IonIcon,
+    IonImg,
     IonPage,
     IonRow,
-    IonSegment, IonSegmentButton, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
+    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -24,6 +31,9 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { nativeAuth } from '../lib/sugar';
 import { OnBoarding } from './OnBoarding';
 import { TribePage } from './TribePage';
+import { chevronDown, chevronUp, listCircle, notifications } from 'ionicons/icons';
+import { MemberPfp, MemberPfpImg } from '../components/MemberBadge';
+import { useNotifications } from '../hooks/useNotifications';
 
 
 
@@ -63,11 +73,6 @@ const Posts: React.FC = () => {
         setPresentingElement(pageRef.current)
     })
 
-    if (!me) {
-        return <OnBoarding me={me} dismiss={function (): void {
-
-        }} />
-    }
     const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
         const db = getFirestore(app);
         const newPost: any = {
@@ -83,39 +88,63 @@ const Posts: React.FC = () => {
             push('/post/' + doc.id);
         });
     }
+    const { show: showNotifications } = useNotifications();
+    const notifs = useNotifications(x => x.notifications.length);
+    const [hideToolbar, setHideToolbar] = useState<boolean>(false)
+    if (!me) {
+        return <OnBoarding me={me} dismiss={function (): void {
+
+        }} />
+    }
     return (
         <IonPage ref={pageRef}>
-            <TribeHeader title={'posts'}
-                hide
-                content={!isNewPosting ? <>
-                    <IonButtons slot='start' style={{ marginLeft: 12 }}>
-                        <IonCardTitle class='heavy' style={{ color: 'white', paddingTop: 5, letterSpacing: '-1.5px', fontWeight: 700, fontFamily: 'AvenirBold' }} >
-                            tribe
-                        </IonCardTitle>
+            <IonHeader>
+                {!hideToolbar ? <IonToolbar color='tribe'>
+                    <IonButtons slot='start'>
+                        <IonSelect interface='popover' toggleIcon={chevronDown} color='light'
+                            onIonChange={(e) => {
+                                const newValue = e.detail.value;
+                                if (newValue === 'top' || newValue === 'recent') {
+                                    handleSegmentChange(newValue);
+                                }
+                            }}
+                            value={postType}                    >
+                            <IonSelectOption value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                                Top
+                            </IonSelectOption>
+                            <IonSelectOption value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
+                                New
+                            </IonSelectOption>
+                        </IonSelect>
                     </IonButtons>
-                    <IonSegment
-                        onIonChange={(e) => {
-                            const newValue = e.detail.value;
-                            if (newValue === 'top' || newValue === 'recent') {
-                                handleSegmentChange(newValue);
-                            }
-                        }}
-                        value={postType}
-                        style={{ position: 'absolute', right: 15, top: 5 }}
-                        swipeGesture={true}
-                    >
-                        <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
-                            Top
-                        </IonSegmentButton>
-                        <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                            New
-                        </IonSegmentButton>
-                    </IonSegment>
-                </> : <></>
-                }
-            />
 
-            < TribeContent color={bgColor} fullscreen page='posts'>
+                    <IonButtons slot='end'>
+                        <IonButton onClick={() => {
+                            showNotifications()
+                        }}>
+                            <IonBadge color='light'>
+                                <IonText color='tribe'>
+                                    {notifs}
+                                </IonText>
+                                <IonIcon color='tribe' icon={notifications} />
+                            </IonBadge>
+                        </IonButton>
+                        <IonButton onMouseDown={() => {
+                            push('/account')
+                        }}>
+                            <MemberPfpImg size='smol' address={me.address} />
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar> : <IonToolbar style={{ height: 5 }} color='tribe' />}
+            </IonHeader>
+            < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
+                console.log(e.detail.velocityY)
+                if (e.detail.velocityY > 0) {
+                    !hideToolbar && setHideToolbar(true)
+                } else {
+                    hideToolbar && setHideToolbar(false);
+                }
+            }} scrollEvents>
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
@@ -131,7 +160,7 @@ const Posts: React.FC = () => {
                     </div>}
                 </IonFab>
 
-            </TribeContent >
+            </IonContent >
             <TribeFooter page='posts' />
         </IonPage >
     );

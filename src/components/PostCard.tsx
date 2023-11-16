@@ -6,7 +6,7 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { paperPlane, share, shareOutline, shareSocialOutline, personOutline } from "ionicons/icons"
+import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
@@ -30,7 +30,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
 
@@ -48,49 +48,50 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 {media && (
                     <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
                         {media.type.includes("image") ?
-                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video autoPlay muted style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src} />}
+                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                     </div>
                 )}
             </IonCardContent>
         </IonRouterLink>
 
 
-        {<IonItem color='paper' lines="inset" style={{ marginRight: '-10px', marginLeft: '-6px' }}>
-            {<IonButton style={{ margin: 0 }} routerDirection="root" color='white' fill="clear" onMouseDown={() => {
+        {<IonRow >
+            {<IonButton style={{ margin: 0 }} routerDirection="root" color='medium' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
             }}>
-                <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} />
+                {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
                 <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
-                    {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
+                    {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
-            <IonButton fill='clear' onMouseDown={() => {
+            <IonButton color='medium' fill='clear' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
+                <IonIcon icon={shareOutline} />
+                <IonText style={{ fontSize: 14 }}>
+                    Share
 
-                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
+                </IonText>
+                {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
 
+        </IonRow>}
+        <div style={{ position: 'absolute', height: 120, width: 55, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
 
-            <IonButtons slot='end'>
-                <IonButton style={{ position: 'absolute', right: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} style={{ height: 28, width: 28 }} />
-                </IonButton>
-
-                <IonLabel style={{ position: 'absolute', marginTop: 1, paddingLeft: 1, right: 40, paddingRight: 4 }} >
-                    <IonText className='header'>{score} </IonText>
-                </IonLabel>
-
-                <IonButton style={{ position: 'absolute', right: 0 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} style={{ height: 28, width: 28 }} />
-                </IonButton>
-
-            </IonButtons>
-        </IonItem>}
-        {showComments && <CommentList total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
+        </div>
+        <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
+            <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'} style={{ height: 28, width: 28 }} />
+        </IonButton>
+        <IonLabel style={{ position: 'absolute', right: 20, top: 48 }} >
+            <IonText className='header'>{score} </IonText>
+        </IonLabel>
+        <IonButton style={{ position: 'absolute', right: -10, top: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
+            <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} style={{ height: 28, width: 28 }} />
+        </IonButton>
+        {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
     </IonCard>
 }

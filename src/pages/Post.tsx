@@ -83,7 +83,6 @@ const Post: React.FC = () => {
         commentAdded(postId)
 
         try {
-            alert(newMessage.media?.type);
             await addDoc(commentCol, newMessage);
         } catch (error) {
             console.error("Error sending message: ", error);

@@ -14,10 +14,11 @@ type CommentListProps = {
     uid: string
     amount: number | undefined
     total: number
+    offset?: boolean
 };
 
 
-export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid }) => {
+export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, offset = false }) => {
     const [comments, setComments] = useState<Message[]>([]);
     const { setCommentPath } = useWriteMessage();
     useEffect(() => {
@@ -51,7 +52,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
     }, [postId]);
 
     return (
-        <IonList style={{ backgroundColor: 'var(--ion-color-paper)' }} color='paper'>
+        <IonList style={{ backgroundColor: 'var(--ion-color-paper)', marginRight: offset ? -35 : undefined }} color='paper'>
             <div style={{ height: 5 }}>
 
             </div>
@@ -91,7 +92,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid })
                         comment.media &&
                         <IonItem lines="none" color='paper'>
                             {comment.media.type.includes("image") ?
-                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video autoPlay muted controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} />}
+                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
                 </div>))

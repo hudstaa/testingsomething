@@ -13,12 +13,12 @@ http://ionicframework.com/docs/theming/ */
 @font-face {
   font-family: 'AvenirBold';
   src: url("/fonts/bold.otf") format("opentype");
-} 
+}
 
 @font-face {
   font-family: 'AvenirText';
   src: url("/fonts/demi.otf") format("opentype");
-} 
+}
 
 
 @font-face {
@@ -480,7 +480,7 @@ ion-segment-button {
 
 /* New tribe Color */
 :root {
-  --ion-color-tribe: #FF813B;
+  --ion-color-tribe: #F45000;
   --ion-color-tribe-rgb: 255, 87, 0;
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
@@ -669,6 +669,11 @@ ion-tab-bar {
   --ion-color-contrast-rgb: var(--ion-color-white-contrast-rgb);
   --ion-color-shade: var(--ion-color-white-shade);
   --ion-color-tint: var(--ion-color-white-tint);
+}
+
+ion-select::part(icon) {
+  color: white;
+  opacity: 1;
 }
 
 .vote-toolbar {

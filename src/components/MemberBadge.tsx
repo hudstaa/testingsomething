@@ -3,7 +3,7 @@ import { Trade } from '../models/Trade';
 import { formatUnits, formatEther } from 'viem'
 import { useMember } from '../hooks/useMember';
 import { useHistory } from 'react-router';
-import { arrowDownCircle, person, personOutline, returnDownBack, trendingUp } from 'ionicons/icons';
+import { arrowDownCircle, bodyOutline, person, personOutline, returnDownBack, trendingUp } from 'ionicons/icons';
 import { Timestamp } from 'firebase/firestore';
 import { timeAgo } from './TradeItem';
 import { ReactElement } from 'react';
@@ -71,7 +71,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             break;
     }
 
-    return <img src={member?.twitterPfp || personOutline} style={pfpStyle} />
+    return <img src={member?.twitterPfp || bodyOutline} style={pfpStyle} />
 }
 
 export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
@@ -94,7 +94,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             break;
     }
 
-    return <img src={member?.twitterPfp || personOutline} style={{ ...style, ...pfpStyle }} />
+    return <img src={member?.twitterPfp} style={{ ...style, ...pfpStyle }} />
 }
 
 export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big', clickable = true }) => {
@@ -158,7 +158,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                 }} color='medium' className='medium alias' style={{ cursor: 'pointer!important', fontSize: '11px', margin: 0, padding: 0 }}>
                     @{member?.twitterUsername}
                 </IonText>
-                <IonText color='medium' style={{ cursor: 'pointer!important', fontSize: '11px', margin: 0, padding: 0, right: 12, position: 'absolute' }}>
+                <IonText color='medium' style={{ padding: 2, fontSize: 9 }}>
                     {content ? content : <></>}
                 </IonText>
             </IonRow>

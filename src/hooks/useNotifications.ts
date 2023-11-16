@@ -8,6 +8,8 @@ import { PushNotifications } from '@capacitor/push-notifications'
 
 export type ActivityHook = {
     notifications: any[]
+    show: () => void
+    isOpen: boolean
     setNotifications: ({ }) => void
     subscribe: (topic: string) => void
     token: string | null
@@ -15,12 +17,18 @@ export type ActivityHook = {
     localCommentCount: Record<string, number>
     setToken: (token: string) => void
     commentAdded: (id: string) => void
+    hide: () => void
     setLocalNotif: (localNotif: string | null) => void
 }
 
 export const useNotifications = create<ActivityHook>((set, store) => ({
+    hide: () => {
+        set({ isOpen: false })
+    },
     localCommentCount: {},
+    isOpen: false,
     localNotif: null,
+    show: () => { set({ isOpen: true }) },
     setLocalNotif: (localNotif: string | null) => {
         set({ localNotif })
     },

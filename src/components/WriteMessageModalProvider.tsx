@@ -48,10 +48,11 @@ export const WriteMessageModalProvider: React.FC = () => {
                 }} />}
             </IonContent>
             <IonFooter>
-                {commentPath && <IonItem>
+                {commentPath !== null && typeof commentPath !== 'undefined' && <IonItem>
                     {commentPath}
                 </IonItem>}
-                {message && message.media?.src && message.media.type.includes("image") ? <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} /> : <video style={{ height: '100px' }} src={message?.media?.src} />}
+
+                {message && message.media?.src && message.media.type.includes("image") ? <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} /> : message?.media?.src ? <video preload="none" style={{ height: '100px' }} src={message?.media?.src} /> : <></>}
                 {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);
