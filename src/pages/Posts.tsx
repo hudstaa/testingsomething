@@ -138,7 +138,18 @@ const Posts: React.FC = () => {
                 </IonToolbar> : <IonToolbar style={{ height: 5 }} color='tribe' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
-                console.log(e.detail.velocityY)
+                console.log(e.detail.scrollTop)
+                const isCloseToTop = e.detail.scrollTop < 100;
+                const isCloseToBottom =
+                    e.detail.scrollTop + e.target.clientHeight >=
+                    e.target.scrollEl.height - 500;
+                if (isCloseToTop) {
+                    !hideToolbar && setHideToolbar(false)
+                    return;
+                }
+                if (isCloseToBottom) {
+                    return;
+                }
                 if (e.detail.velocityY > 0) {
                     !hideToolbar && setHideToolbar(true)
                 } else {

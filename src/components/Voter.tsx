@@ -89,7 +89,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                 <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} />
             </IonButton>
             <IonLabel style={{ position: 'absolute', right }}>
-                <IonText style={{ fontSize, font: 'courier-new!important' }} >{score === null ? <></> : totalScore}</IonText>
+                <IonText style={{ fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
             </IonLabel>
             <IonButton fill="clear" onPointerDown={() => {
                 setVoteCache(1)

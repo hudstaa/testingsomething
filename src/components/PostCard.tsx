@@ -82,14 +82,16 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <div style={{ position: 'absolute', height: 120, width: 55, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
 
         </div>
-        <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'}>
-            <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'success' : 'medium'} style={{ height: 28, width: 28 }} />
+        <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
+            <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
-        <IonLabel style={{ position: 'absolute', right: 20, top: 48 }} >
-            <IonText className='header'>{score} </IonText>
+        <IonLabel style={{
+            position: 'absolute', right: 19, top: 48, fontSize: 15, fontVariantNumeric: 'tabular-nums'
+        }} >
+            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='header ion-text-center'>{score} </IonText>
         </IonLabel>
-        <IonButton style={{ position: 'absolute', right: -10, top: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} >
-            <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'danger' : 'medium'} style={{ height: 28, width: 28 }} />
+        <IonButton style={{ position: 'absolute', right: -10, top: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
+            <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
