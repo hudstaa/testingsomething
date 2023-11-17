@@ -76,7 +76,6 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           </IonChip>}
       </IonButtons>
       <IonTextarea
-
         autoFocus={isModal || focused}
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}

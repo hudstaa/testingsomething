@@ -11,6 +11,7 @@ import {
     IonHeader,
     IonIcon,
     IonImg,
+    IonItem,
     IonPage,
     IonRow,
     IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
@@ -99,7 +100,7 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader>
+            <IonHeader style={{ position: 'absolute' }}>
                 {!hideToolbar ? <IonToolbar color='tribe'>
                     <IonButtons slot='start'>
                         <IonSelect interface='popover' toggleIcon={chevronDown} color='light'
@@ -139,7 +140,6 @@ const Posts: React.FC = () => {
                 </IonToolbar> : <IonToolbar style={{ height: 5 }} color='tribe' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
-                console.log(e.detail.scrollTop)
                 const isCloseToTop = e.detail.scrollTop < 100;
                 const isCloseToBottom =
                     e.detail.scrollTop + e.target.clientHeight >=
@@ -151,12 +151,20 @@ const Posts: React.FC = () => {
                 if (isCloseToBottom) {
                     return;
                 }
-                if (e.detail.velocityY > 0) {
-                    !hideToolbar && setHideToolbar(true)
-                } else {
+                console.log(e.detail.velocityY)
+                if (e.detail.velocityY < -0.5) {
                     hideToolbar && setHideToolbar(false);
                 }
+                if (e.detail.velocityY > 0.5) {
+                    !hideToolbar && setHideToolbar(true)
+                }
             }} scrollEvents>
+                <IonHeader>
+                    <IonToolbar />
+                    <div style={{ height: 12 }}>
+
+                    </div>
+                </IonHeader>
                 <IonGrid style={{ padding: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>

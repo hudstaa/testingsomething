@@ -27,7 +27,11 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     return <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
-        if ((e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
+        if ((e.target as any)?.nodeName === "VIDEO") {
+
+            return;
+        }
+        if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
     }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
@@ -37,22 +41,18 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonCardHeader style={{ cursor: 'pointer!important', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
         </IonCardHeader>
-        <IonRouterLink routerDirection="root" routerLink={"/post/" + id}>
-            <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
-                <IonRouterLink routerDirection="root" routerLink={'/post/' + id}>
-                    <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
-                    }} >
-                        {content}
-                    </IonText>
-                </IonRouterLink>
-                {media && (
-                    <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
-                        {media.type.includes("image") ?
-                            <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
-                    </div>
-                )}
-            </IonCardContent>
-        </IonRouterLink>
+        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
+            <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+            }} >
+                {content}
+            </IonText>
+            {media && (
+                <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
+                    {media.type.includes("image") ?
+                        <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                </div>
+            )}
+        </IonCardContent>
 
 
         {<IonRow >
