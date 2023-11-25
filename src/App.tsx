@@ -88,6 +88,7 @@ import { WriteMessageModalProvider } from './components/WriteMessageModalProvide
 import { NotificationsProvider } from './components/NotificationsProvider';
 import { ShowMemberModalProvider } from './components/ShowMemberModalProvider';
 import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
+import { TradeMobile } from './components/Trade';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -285,6 +286,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/account" exact>
                   <Account />
+                </Route>
+                <Route path="/buy/:address">
+                  <TradeMobile />
                 </Route>
                 <Route path="/post/" exact>
                   <Posts />

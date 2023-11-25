@@ -22,7 +22,7 @@ import useTabs from '../hooks/useTabVisibility';
 import { formatEth, nativeAuth, uniq } from '../lib/sugar';
 import { TribePage } from './TribePage';
 
-const Member: React.FC = () => {
+const Trade: React.FC = () => {
     const { address } = useParams<{ address: string }>();
     const { user } = usePrivy()
     const me = useMember(x => x.getCurrentUser());
@@ -133,4 +133,4 @@ const Member: React.FC = () => {
     );
 };
 
-export default Member;
+export default Trade;
