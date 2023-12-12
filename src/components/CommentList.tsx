@@ -61,7 +61,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                     <IonItem color={'paper'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingBottom: 5 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 7, fontSize: 12, opacity: '75%' }}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 2, fontSize: 12, opacity: '75%' }}>
                         <MemberUsername color='dark' address={comment.author} />
                         <IonText color={'dark'} style={{ marginLeft: 7, bottom: 1, fontSize: 12 }}>
                             {timestampAgo(comment.sent)}
@@ -70,9 +70,9 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
                         </IonButtons>
-                        <div><MemberPfp color='dark' size="smol" address={comment.author} />
+                        <div><MemberPfp color='dark' size="smol" style={{position: 'absolute', top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='dark' style={{ whitespace: 'pre-wrap', marginTop: 25, marginLeft: 10, marginBottom: 10}} >
+                        <IonText className='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 10, marginBottom: 10}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
