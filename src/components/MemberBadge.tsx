@@ -159,7 +159,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                     @{member?.twitterUsername}
                 </IonText>
                 {/* Bullet Point */}
-                <IonText color='dark' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 12, paddingTop: 3 }}>
+                <IonText color='dark' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 12, paddingTop: 3, opacity: '75%' }}>
                     •
                 </IonText>
                 <IonText color='dark' className='semi' style={{ opacity: '75%', paddingTop: '2.25px', fontSize: 11 }}>
