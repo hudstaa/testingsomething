@@ -450,6 +450,11 @@ ion-footer ion-toolbar {
 
 }
 
+.ion-profile {
+  --ion-card-background: transparent;
+
+}
+
 /* Remove shadow from buttons */
 ion-button {
   --box-shadow: none !important;
