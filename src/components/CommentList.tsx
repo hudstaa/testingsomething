@@ -60,16 +60,16 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                 < div key={i}>
 
                     <IonItem color={'paper'} style={{ marginTop: 5, marginBottom: 10, paddingBottom: 10 }} >
-                        <IonText color={'medium'} style={{ position: 'absolute', bottom: 0, fontSize: 11 }}>
+                        <IonText color={'dark'} style={{ position: 'absolute', bottom: 0, fontSize: 11 }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
                         <IonButtons slot='start' style={{ position: 'absolute', top: -3, fontSize: 11 }}>
-                            <MemberUsername color='medium' address={comment.author} />
+                            <MemberUsername color='dark' address={comment.author} />
                         </IonButtons>
-                        <IonText className='medium' style={{ whitespace: 'pre-wrap', marginTop: 18, marginBottom: 20 }} >
+                        <IonText className='dark' style={{ whitespace: 'pre-wrap', marginTop: 18, marginBottom: 20 }} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
