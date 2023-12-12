@@ -59,22 +59,22 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem color={'paper'} style={{ marginTop: 5, marginLeft: -3, marginBottom: 10, paddingBottom: 10 }} >
-                        <IonText color={'dark'} style={{ position: 'absolute', paddingLeft: 55, bottom: -2, fontSize: 11, opacity: '75%' }}>
+                    <IonItem color={'paper'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingBottom: 5 }} >
+
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 7, fontSize: 12, opacity: '75%' }}>
+                        <MemberUsername color='dark' address={comment.author} />
+                        <IonText color={'dark'} style={{ marginLeft: 7, bottom: 1, fontSize: 12 }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 55, top: -3, fontSize: 11, opacity: '75%' }}>
-                            <MemberUsername color='dark' address={comment.author} />
                         </IonButtons>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <MemberPfp color='dark' size="double-smol" address={comment.author} />
-                            <IonText className='dark' style={{ whitespace: 'pre-wrap', marginLeft: 10 }} >
-                                {comment.content}
-                            </IonText>
+                        <div><MemberPfp color='dark' size="smol" address={comment.author} />
                         </div>
+                        <IonText className='dark' style={{ whitespace: 'pre-wrap', marginTop: 25, marginLeft: 10, marginBottom: 10}} >
+                            {comment.content}
+                        </IonText>
                         <IonButtons slot='end'>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                                 const db = getFirestore(app);
