@@ -59,7 +59,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem color={'paper'} style={{ marginTop: 5, marginBottom: 10, paddingBottom: 10 }} >
+                    <IonItem color={'paper'} style={{ marginTop: 5, marginLeft: -3, marginBottom: 10, paddingBottom: 10 }} >
                         <IonText color={'dark'} style={{ position: 'absolute', bottom: 0, fontSize: 11, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
