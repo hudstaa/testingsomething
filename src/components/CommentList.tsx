@@ -60,18 +60,21 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                 < div key={i}>
 
                     <IonItem color={'paper'} style={{ marginTop: 5, marginLeft: -3, marginBottom: 10, paddingBottom: 10 }} >
-                        <IonText color={'dark'} style={{ position: 'absolute', bottom: 0, fontSize: 11, opacity: '75%' }}>
+                        <IonText color={'dark'} style={{ position: 'absolute', paddingLeft: 55, bottom: -2, fontSize: 11, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
-                        <IonButtons slot='start' style={{ position: 'absolute', top: -3, fontSize: 11, opacity: '75%' }}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 55, top: -3, fontSize: 11, opacity: '75%' }}>
                             <MemberUsername color='dark' address={comment.author} />
                         </IonButtons>
-                        <IonText className='dark' style={{ whitespace: 'pre-wrap', marginTop: 18, marginBottom: 20 }} >
-                            {comment.content}
-                        </IonText>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <MemberPfp color='dark' size="double-smol" address={comment.author} />
+                            <IonText className='dark' style={{ whitespace: 'pre-wrap', marginLeft: 10 }} >
+                                {comment.content}
+                            </IonText>
+                        </div>
                         <IonButtons slot='end'>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                                 const db = getFirestore(app);
