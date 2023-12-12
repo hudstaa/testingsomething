@@ -45,8 +45,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, margin: 0 }}  >
-            <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
+            <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '18px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
             }} >
                 {content}
             </IonText>
@@ -60,7 +60,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ margin: 0, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ margin: 0, marginTop: -5, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
@@ -75,7 +75,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='semi' style={{ paddingLeft: 3, fontSize: 12, marginTop: 3 }}>
+                <IonText className='semi' style={{ paddingLeft: 3, fontSize: 12, marginTop:0 }}>
                     Share
 
                 </IonText>
