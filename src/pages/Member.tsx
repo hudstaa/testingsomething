@@ -78,7 +78,7 @@ const Member: React.FC = () => {
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='tribe' className='heavy' style={{fontSize: 12}}>
+                            <IonText color='tribe' className='semi' style={{fontSize: 12}}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
@@ -86,7 +86,7 @@ const Member: React.FC = () => {
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-27.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 Boost
                                 <BuyPriceBadge address={member?.address} />
                             </IonButton>}
