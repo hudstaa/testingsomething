@@ -124,11 +124,11 @@ const Posts: React.FC = () => {
                         <IonButton onClick={() => {
                             showNotifications()
                         }}>
-                            <IonBadge color='light'>
-                                <IonText color='tribe'>
+                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
                                     {notifs}
                                 </IonText>
-                                <IonIcon color='tribe' icon={notifications} />
+                                <IonIcon color='dark' size="small" icon={notifications} />
                             </IonBadge>
                         </IonButton>
                         <IonButton onMouseDown={() => {
