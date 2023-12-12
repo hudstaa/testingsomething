@@ -68,7 +68,9 @@ const Room: React.FC = () => {
     }, []);
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
     const footerMemo = useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
+<IonButtons slot='start'>
         <MemberPfp size='smol' address={replyingToMessage.author} />
+    </IonButtons>
         {replyingToMessage.content}
         {replyingToMessage.media && <IonAvatar>
             <IonImg src={replyingToMessage.media.src} />

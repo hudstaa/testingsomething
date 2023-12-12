@@ -10,14 +10,16 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const messageContainerStyle: React.CSSProperties = {
         display: 'flex',
+        overflowWrap: 'break-word',
         flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
         alignItems: 'flex-end', // Align items to the end (bottom for row layout)
         maxWidth: '70%', // Set a max width for the message container
+
     };
 
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
-
+        overflowWrap: 'break-word',
         paddingLeft: '10px',
         paddingRight: '10px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
@@ -31,9 +33,12 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     
 const contentBubble = (
-    <div style={{ 
+    <div onClick={()=>{
+        !isMe&&reply(message.id);
+    }} style={{ 
         marginBottom: isMe ? 0 : -30, 
         paddingLeft: isMe ? 0 : 40, 
+        overflowWrap: 'break-word',
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: isMe ? 'flex-end' : 'flex-start' 
@@ -50,8 +55,7 @@ const contentBubble = (
 
     const replyButton = !isMe && (
         <button
-            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 5, marginTop: 'auto', marginBottom: 'auto', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
-            onMouseDown={() => reply(message.id)}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 10  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             color='primary'
 
         >
@@ -64,6 +68,7 @@ const contentBubble = (
             display: 'flex',
             flexDirection: 'column', // This will align the items horizontally
             fontSize: '12px',
+            overflowWrap: 'break-word',
         }}>
             {!isMe && (
                 <ChatMemberPfp
@@ -86,7 +91,7 @@ const contentBubble = (
     const combinedBubble = (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
             {contentBubble}
-            {replyButton}
+            {/* {replyButton} */}
         </div>
     );
     
@@ -94,6 +99,7 @@ const contentBubble = (
         <div className="message-container" key={message.id} style={{
             display: 'flex',
             flexDirection: 'column',
+            overflowWrap: 'break-word',
             alignItems: isMe ? 'flex-end' : 'flex-start',
         }}>
             {/* Render the reply if present */}
@@ -102,7 +108,7 @@ const contentBubble = (
             {/* Render the message content */}
             <div style={messageContainerStyle}>
                 {contentBubble}
-                {replyButton}
+                {/* {replyButton} */}
 
             </div>
 

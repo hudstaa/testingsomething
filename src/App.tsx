@@ -261,7 +261,6 @@ const App: React.FC = () => {
           <IonReactHashRouter >
             <ShowMemberModalProvider />
             <NotificationsProvider />
-
             <IonTabs>
               <IonRouterOutlet animated={false}>
                 <Route exact path="/channel">

@@ -14,13 +14,14 @@ export function removeUndefinedProperties(obj: any) {
 }
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
-  const { isOpen, removeMedia, message, setContent, setMedia } = useWriteMessage();
+  const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
     const content = textRef.current?.value!;
     sendMessage(removeUndefinedProperties({ ...message, content }));
-    setMedia(undefined as any);
+    setMedia('');
     setContent(undefined as any)
     setSent(true);
+    clearMessage();
   }, [message])
   const uid = getAuth().currentUser?.uid;
 
