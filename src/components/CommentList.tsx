@@ -59,17 +59,20 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem color={'paper'} style={{ marginTop: 5, marginBottom: 10, paddingBottom: 10 }} >
-                        <IonText color={'medium'} style={{ position: 'absolute', bottom: 0, fontSize: 11 }}>
+                    <IonItem color={'paper'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingBottom: 5 }} >
+
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 0, fontSize: 12, opacity: '75%' }}>
+                        <MemberAlias color='dark' address={comment.author} />
+                        <IonText color={'dark'} className='semi' style={{ marginLeft: 5, bottom: 1, fontSize: 10 }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
-                        <IonButtons slot='start' style={{ position: 'absolute', top: -3, fontSize: 11 }}>
-                            <MemberUsername color='medium' address={comment.author} />
                         </IonButtons>
-                        <IonText style={{ whitespace: 'pre-wrap', marginTop: 18, marginBottom: 20 }} >
+                        <div><MemberPfp color='dark' size="smol" style={{position: 'absolute', top: 0}}address={comment.author} />
+                        </div>
+                        <IonText className='semi' color='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 20, marginLeft: 10, marginBottom: 10}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>

@@ -100,10 +100,10 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute' }}>
+            <IonHeader style={{ paddingLeft: 10, position: 'absolute' }}>
                 {!hideToolbar ? <IonToolbar>
                     <IonButtons slot='start'>
-                        <IonSelect interface='popover' toggleIcon={chevronDown} color='light'
+                        <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='light'
                             onIonChange={(e) => {
                                 const newValue = e.detail.value;
                                 if (newValue === 'top' || newValue === 'recent') {
@@ -124,11 +124,11 @@ const Posts: React.FC = () => {
                         <IonButton onClick={() => {
                             showNotifications()
                         }}>
-                            <IonBadge color='light'>
-                                <IonText color='tribe'>
+                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
                                     {notifs}
                                 </IonText>
-                                <IonIcon color='tribe' icon={notifications} />
+                                <IonIcon color='dark' size="small" icon={notifications} />
                             </IonBadge>
                         </IonButton>
                         <IonButton onMouseDown={() => {
@@ -165,7 +165,7 @@ const Posts: React.FC = () => {
 
                     </div>
                 </IonHeader>
-                <IonGrid style={{ padding: 0 }}>
+                <IonGrid style={{ padding: 10, paddingTop: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />

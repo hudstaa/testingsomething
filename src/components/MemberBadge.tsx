@@ -30,7 +30,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
@@ -57,7 +57,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
@@ -80,7 +80,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
@@ -101,7 +101,7 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} onMouseDown={() => {
+    return <IonText color={color} className='semi'onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
         style={{ margin: 0, padding: 0 }} >
@@ -155,14 +155,14 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
             <IonRow>
                 <IonText onMouseDown={() => {
                     clickable && member && setHighlight(member.address);
-                }} color='medium' className='medium' style={{ cursor: 'pointer!important', fontSize: '12px', margin: 0, padding: 0 }}>
-                    @{member?.twitterUsername}
+                }} color='dark' className='semi' style={{ cursor: 'pointer!important', opacity: '75%', fontSize: '14px', margin: 0, padding: 0 }}>
+                    {member?.twitterName}
                 </IonText>
                 {/* Bullet Point */}
-                <IonText color='medium' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 2 }}>
+                <IonText color='dark' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 12, paddingTop: 3, opacity: '75%' }}>
                     •
                 </IonText>
-                <IonText color='medium' style={{ fontSize: 12 }}>
+                <IonText color='dark' className='semi' style={{ opacity: '75%', paddingTop: '2.25px', fontSize: 11 }}>
                     {content ? content : <></>}
                 </IonText>
             </IonRow>

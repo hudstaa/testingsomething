@@ -77,6 +77,8 @@ http://ionicframework.com/docs/theming/ */
 
 .semi {
   font-family: 'TribeSemi', sans-serif !important;
+  font-weight: 500;
+
 }
 
 .text {
@@ -91,9 +93,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .medium {
-  font-family: 'TribeMed', sans-serif !important;
-  font-weight: 500;
-  /* Medium weight */
+  font-family: 'TribeReg', sans-serif !important;
 }
 
 .bottom-start-container {
@@ -399,7 +399,7 @@ ion-footer ion-toolbar {
 
   .ios ion-modal {
     --ion-background-color: var(--ion-color-step-50);
-    --ion-toolbar-background: var(--ion-color-step-150);
+    --ion-toolbar-background: var(--ion-color-paper);
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
@@ -447,6 +447,11 @@ ion-footer ion-toolbar {
     --ion-card-background: #1e1e1e;
   }
 
+
+}
+
+.ion-profile {
+  --ion-card-background: transparent;
 
 }
 
@@ -587,7 +592,7 @@ ion-icon {
 }
 
 ion-card {
-  border-radius: 12.5px;
+  border-radius: 17.5px;
   /* Adjust the value to your desired border radius */
 }
 

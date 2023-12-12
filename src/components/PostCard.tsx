@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
-import { MemberCardHeader } from "./MemberBadge"
+import { MemberCardHeader, MemberPfp } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp } from "ionicons/icons"
@@ -37,17 +37,21 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-
-        <IonCardHeader style={{ cursor: 'pointer!important', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
-            <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <MemberPfp color='dark' size="veru-smol" address={author}/>
+                <div style={{ marginLeft: 5 }}>
+                    <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
+                </div>
+            </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, margin: 0 }}  >
-            <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
+            <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
             }} >
                 {content}
             </IonText>
             {media && (
-                <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
+                <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
                         <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls={showComments} onClick={()=>{
                             !showComments&&            push('/post/' + id);
@@ -59,22 +63,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ margin: 0 }} routerDirection="root" color='medium' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ margin: 0, marginTop: -5, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='med' style={{ fontSize: 12, marginTop: 3, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='semi' style={{ fontSize: 14, marginTop: 3, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
-            <IonButton color='medium' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ margin: 0, opacity: '75%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='medium' style={{ fontSize: 12, marginTop: 3 }}>
+                <IonText className='semi' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
                     Share
 
                 </IonText>
