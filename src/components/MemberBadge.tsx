@@ -101,7 +101,7 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} onMouseDown={() => {
+    return <IonText color={color} className='semi'onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
         style={{ margin: 0, padding: 0 }} >
