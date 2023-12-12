@@ -71,7 +71,7 @@ const Member: React.FC = () => {
             />
             < TribeContent fullscreen color={bgColor} >
 
-                <IonCard className='ion-profile' color={bgColor}>
+                <IonCard className='ion-profile' style={{margin: 10}} color={bgColor}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
                             <IonText color='medium'>
