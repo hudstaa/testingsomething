@@ -1,11 +1,31 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonPage, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { close, personOutline, ticketOutline } from 'ionicons/icons';
+import {
+    IonAvatar,
+    IonButtons,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonChip,
+    IonCol,
+    IonGrid,
+    IonImg,
+    IonItem,
+    IonPage,
+    IonProgressBar,
+    IonRouterLink,
+    IonRow,
+    IonSegment,
+    IonSegmentButton,
+    IonText,
+    useIonViewDidEnter,
+    useIonViewDidLeave,
+} from '@ionic/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams, useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { Address, formatUnits } from 'viem';
+import { TradingViewWidget } from '../components/Erc20Chart';
 import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
-import { MemberBadge, MemberCardHeader } from '../components/MemberBadge';
+import { MemberBadge } from '../components/MemberBadge';
 import { MemberGraph } from '../components/MemberGraph';
 import { PostList } from '../components/PostList';
 import SubscribeButton from '../components/SubscribeButton';
@@ -13,21 +33,15 @@ import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import useBoosters from '../hooks/useBoosters';
 import useBuyPass from '../hooks/useBuyPass';
+import useERCBalance from '../hooks/useERCBalance';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
 import { useMember } from '../hooks/useMember';
 import usePassBalance from '../hooks/usePassBalance';
 import useSellPass from '../hooks/useSellPass';
-import useTabs from '../hooks/useTabVisibility';
-import { formatEth, nativeAuth, uniq } from '../lib/sugar';
-import { TribePage } from './TribePage';
-import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { OnBoarding } from './OnBoarding';
-import { BuyPriceBadge, BuyPriceText } from './Discover';
-import useERCBalance from '../hooks/useERCBalance';
-import { createChart } from 'lightweight-charts';
-import { TradingViewWidget } from '../components/Erc20Chart';
 import { useWriteMessage } from '../hooks/useWriteMessage';
+import { nativeAuth, uniq } from '../lib/sugar';
+import { BuyPriceText } from './Discover';
 
 
 const Member: React.FC = () => {
@@ -72,7 +86,7 @@ const Member: React.FC = () => {
             < TribeContent fullscreen color={bgColor} >
 
                 <IonCard color={bgColor}>
-                    <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
+                    <IonCardContent className='ion-image-center' style={{ boderBottom: 0 }}>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
                             <IonText color='medium'>
                                 𝕏 {member?.twitterUsername}
@@ -85,11 +99,11 @@ const Member: React.FC = () => {
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-27.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                            {member && <button  disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ height:42,padding:4,backgroundColor:'#F45000',borderRadius:100, margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                            {member && 
+                            <button  disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ height:42,padding:4,backgroundColor:'#F45000',borderRadius:100, margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
         <IonText color='white' style={{fontSize:19,margin:'auto',padding:10,fontWeight:'bold',paddingBottom:10}}>
             Boost                                <BuyPriceText address={member?.address} />
-
-            </IonText>
+                        </IonText>
                             </button>}
                             {balance ? (
                                 <div style={{ margin: 5 }}>
