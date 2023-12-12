@@ -57,7 +57,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 10 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
@@ -80,7 +80,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 7 };
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 10 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
@@ -152,13 +152,17 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     const setHighlight = useMember(x => x.setHighlight);
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
-            <IonRow  >
+            <IonRow>
                 <IonText onMouseDown={() => {
                     clickable && member && setHighlight(member.address);
-                }} color='medium' className='medium alias' style={{ cursor: 'pointer!important', fontSize: '11px', margin: 0, padding: 0 }}>
+                }} color='medium' className='medium' style={{ cursor: 'pointer!important', fontSize: '12px', margin: 0, padding: 0 }}>
                     @{member?.twitterUsername}
                 </IonText>
-                <IonText color='medium' style={{ padding: 2, fontSize: 9 }}>
+                {/* Bullet Point */}
+                <IonText color='medium' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 2 }}>
+                    •
+                </IonText>
+                <IonText color='medium' style={{ fontSize: 12 }}>
                     {content ? content : <></>}
                 </IonText>
             </IonRow>

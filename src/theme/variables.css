@@ -20,6 +20,31 @@ http://ionicframework.com/docs/theming/ */
   src: url("/fonts/demi.otf") format("opentype");
 }
 
+@font-face {
+  font-family: 'TribeChat';
+  src: url("/fonts/chat.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'TribeBold';
+  src: url("/fonts/tribebold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'TribeReg';
+  src: url("/fonts/tribereg.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'TribeMed';
+  src: url("/fonts/tribemed.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'TribeSemi';
+  src: url("/fonts/tribesemi.woff2") format("woff2");
+}
+
 
 @font-face {
   font-family: 'Rubik';
@@ -31,46 +56,42 @@ http://ionicframework.com/docs/theming/ */
 /* Remove the individual @font-face rules for SF Bold, SF Medium, etc. */
 
 * {
-  font-family: 'Rubik', sans-serif !important;
-  font-weight: 500;
-  /* Regular weight */
+  font-family: 'TribeMed', sans-serif !important;
 }
 
 .header {
-  font-family: 'Rubik' !important;
+  font-family: 'TribeBold' !important;
 }
 
 .regular {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'TribeChat', sans-serif !important;
   font-weight: 500;
   /* Regular weight */
 }
 
 .heavy {
-  font-family: 'AvenirBold', sans-serif !important;
+  font-family: 'TribeBold', sans-serif !important;
   font-weight: 700;
   /* Bold weight, assuming 'heavy' is bolder than 'bold' */
 }
 
 .semi {
-  font-family: 'Rubik', sans-serif !important;
-  font-weight: 475;
-  /* Semi-bold weight */
+  font-family: 'TribeSemi', sans-serif !important;
 }
 
 .text {
-  font-family: 'AvenirText', sans-serif !important;
+  font-family: 'TribeSemi', sans-serif !important;
   /* Semi-bold weight */
 }
 
 .light {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'TribeReg', sans-serif !important;
   font-weight: 300;
   /* Semi-bold weight */
 }
 
 .medium {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'TribeMed', sans-serif !important;
   font-weight: 500;
   /* Medium weight */
 }
@@ -583,10 +604,13 @@ ion-tab-bar {
 .msg {
   margin: 0px !important;
   padding: 10px;
-  border-radius: 20px;
+  padding-top: 6px;
+  padding-bottom: 10px;
+  border-radius: 15px;
   display: block;
   clear: both;
   font-weight: 400;
+  font-size: 14px;
   white-space: pre-wrap !important;
 
 }
@@ -606,7 +630,6 @@ ion-footer {
   float: right;
   color: var(--ion-color-primary-contrast);
   background: var(--ion-color-primary);
-  border-bottom-right-radius: 7px;
 }
 
 
@@ -614,7 +637,6 @@ ion-footer {
   margin: 0px !important;
   color: var(--ion-color-light-contrast);
   background: var(--ion-color-light-tint);
-  border-bottom-left-radius: 5px;
 }
 
 .reply {

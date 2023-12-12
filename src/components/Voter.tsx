@@ -86,7 +86,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                 setVoteCache(-1)
                 handleVote(false)
             }} slot="start">
-                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downvote-box-red.svg' : '/icons/downvote-box.svg'} />
+            <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 18, width: 18 }} />
             </IonButton>
             <IonLabel style={{ position: 'absolute', right }}>
                 <IonText style={{ fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
@@ -95,7 +95,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                 setVoteCache(1)
                 handleVote(true)
             }} slot="end">
-                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upvote-box-green.svg' : '/icons/upvote-box.svg'} />
+            <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 18, width: 18 }} />
             </IonButton>
 
         </>

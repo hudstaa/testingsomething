@@ -41,7 +41,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonCardHeader style={{ cursor: 'pointer!important', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 1, margin: 0 }}  >
+        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 5, margin: 0 }}  >
             <IonText color='dark' className='text' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
             }} >
                 {content}
@@ -62,16 +62,16 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='header' style={{ fontSize: 14, marginTop: 3, paddingLeft: 5, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='med' style={{ fontSize: 12, marginTop: 3, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
-            <IonButton color='medium' fill='clear' onMouseDown={() => {
+            <IonButton color='medium' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText style={{ fontSize: 14 }}>
+                <IonText className='med' style={{ fontSize: 12, marginTop: 3 }}>
                     Share
 
                 </IonText>
@@ -79,7 +79,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButton>
 
         </IonRow>}
-        <div style={{ position: 'absolute', height: 120, width: 55, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
+        <div style={{ position: 'absolute', height: 120, width: 35, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
 
         </div>
         <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>

@@ -17,9 +17,9 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
-        padding: '10px', // Padding around text
-        paddingLeft: '15px',
-        paddingRight: '15px',
+
+        paddingLeft: '10px',
+        paddingRight: '10px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
     };
 
@@ -29,16 +29,24 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         // Additional styles as needed
     };
 
-    const contentBubble = (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMe ? 'flex-end' : 'flex-start' }}>
-            {message.media && (
-                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
-            )}
-            <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
-                {message.content}
-            </div>
+    
+const contentBubble = (
+    <div style={{ 
+        marginBottom: isMe ? 0 : -30, 
+        paddingLeft: isMe ? 0 : 40, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: isMe ? 'flex-end' : 'flex-start' 
+    }}>
+        {message.media && (
+            <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
+        )}
+        <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
+            {message.content}
         </div>
-    );
+    </div>
+);
+
 
     const replyButton = !isMe && (
         <button
@@ -54,19 +62,18 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const profileAndAlias = (
         <div style={{
             display: 'flex',
-            flexDirection: 'row', // This will align the items horizontally
-            alignItems: 'center', // This will center the items vertically within the row
+            flexDirection: 'column', // This will align the items horizontally
             fontSize: '12px',
         }}>
             {!isMe && (
                 <ChatMemberPfp
-                    size="veru-smol"
+                    size="smol"
                     address={message.author}
-                    style={{ marginRight: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
+                    style={{ marginLeft: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
                 />
             )}
             {!isMe && (
-                <div style={{ lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                <div style={{ opacity: '75%', paddingLeft: 5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
                     <MemberAlias address={message.author} size='veru-smol' />
                     <span style={{ paddingLeft: 10 }}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
@@ -76,6 +83,13 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         </div>
     );
 
+    const combinedBubble = (
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {contentBubble}
+            {replyButton}
+        </div>
+    );
+    
     return (
         <div className="message-container" key={message.id} style={{
             display: 'flex',

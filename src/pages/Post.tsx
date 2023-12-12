@@ -96,7 +96,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage ref={pageRef}>
-        <TribeHeader showBackButton={true} title={'Post from ' + post?.sent?.toDate().toDateString()} />
+        <TribeHeader showBackButton={true} />
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
