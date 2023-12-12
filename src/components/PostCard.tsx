@@ -71,7 +71,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='med' style={{ fontSize: 12, marginTop: 3 }}>
+                <IonText className='medium' style={{ fontSize: 12, marginTop: 3 }}>
                     Share
 
                 </IonText>
