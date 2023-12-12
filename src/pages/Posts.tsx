@@ -103,7 +103,7 @@ const Posts: React.FC = () => {
             <IonHeader style={{ paddingLeft: 10, position: 'absolute' }}>
                 {!hideToolbar ? <IonToolbar>
                     <IonButtons slot='start'>
-                        <IonSelect interface='popover' toggleIcon={chevronDown} color='light'
+                        <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='light'
                             onIonChange={(e) => {
                                 const newValue = e.detail.value;
                                 if (newValue === 'top' || newValue === 'recent') {
