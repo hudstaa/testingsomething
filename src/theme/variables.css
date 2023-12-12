@@ -77,6 +77,8 @@ http://ionicframework.com/docs/theming/ */
 
 .semi {
   font-family: 'TribeSemi', sans-serif !important;
+  font-weight: 600;
+
 }
 
 .text {
