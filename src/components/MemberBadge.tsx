@@ -162,7 +162,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                 <IonText color='medium' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 2 }}>
                     •
                 </IonText>
-                <IonText color='medium' style={{ fontSize: 12 }}>
+                <IonText color='medium' className='semi' style={{ fontSize: 12 }}>
                     {content ? content : <></>}
                 </IonText>
             </IonRow>
