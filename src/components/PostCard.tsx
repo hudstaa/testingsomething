@@ -56,7 +56,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ margin: 0 }} routerDirection="root" color='medium' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ margin: 0 }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
@@ -66,7 +66,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
-            <IonButton color='medium' fill='clear' size='small' onMouseDown={() => {
+            <IonButton color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
