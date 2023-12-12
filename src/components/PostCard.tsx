@@ -47,7 +47,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 {content}
             </IonText>
             {media && (
-                <div style={{ marginTop: 10, marginBottom: 0, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
+                <div style={{ marginTop: 10, marginBottom: -10, marginRight: -8, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
                         <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
