@@ -229,7 +229,7 @@ const Account: React.FC = () => {
                                         </IonText>
                                     </IonItem>
 
-                                    {user ? <IonItem>
+                                    {user ? <IonRow>
                                         {user && typeof (user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address === 'undefined' ? <IonButton fill='clear' onClick={linkWallet}>
                                             Link Browser wallet
                                         </IonButton> : <IonChip color='medium'>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
@@ -248,7 +248,7 @@ const Account: React.FC = () => {
                                             <IonText>
                                                 {user?.google?.name}
                                             </IonText></IonChip>}
-                                    </IonItem> : <IonButton onClick={login}>
+                                    </IonRow> : <IonButton onClick={login}>
                                         Login</IonButton>}
                                 </IonCardContent>
                             </IonCard>
