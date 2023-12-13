@@ -63,7 +63,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 0, fontSize: 14}}>
                         <MemberAlias color='dark' address={comment.author} />
-                        <IonText color={'dark'} className='semi' style={{ marginLeft: 5, bottom: 1, fontSize: 10, opacity: '75%' }}>
+                        <IonText color={'dark'} className='semi' style={{ paddingBottom: 0, marginLeft: 5, bottom: 1, fontSize: 10, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
