@@ -66,7 +66,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='semi' style={{ fontSize: 14, marginTop: 3, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='semi' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
