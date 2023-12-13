@@ -41,7 +41,7 @@ const contentBubble = (
         {message.media && (
             <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
         )}
-        <div className={(isMe ? "send" : "recieve") + ' msg medium'} style={textBubbleStyle}>
+        <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
             {message.content}
         </div>
     </div>
