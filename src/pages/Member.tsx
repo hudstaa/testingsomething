@@ -118,7 +118,7 @@ const Member: React.FC = () => {
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
                 {member && <>
-                    <IonGrid>
+                    <IonGrid style={{ padding: 0 }}>
                         <IonRow>
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
                                 <IonSegment mode='md' value={segment}>
@@ -148,7 +148,7 @@ const Member: React.FC = () => {
                     {
                         segment === 'posts' &&
 
-                        <IonGrid>
+                        <IonGrid style={{ padding: 0 }}>
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
 
