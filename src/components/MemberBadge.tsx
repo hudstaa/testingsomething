@@ -162,7 +162,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                 <IonText color='dark' className='reg' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 4, opacity: '75%' }}>
                     •
                 </IonText>
-                <IonText color='dark' className='reg' style={{ opacity: '75%', paddingTop: 3, fontSize: 11 }}>
+                <IonText color='dark' className='reg' style={{ opacity: '75%', paddingTop: 2, fontSize: 11 }}>
                     {content ? content : <></>}
                 </IonText>
             </IonRow>
