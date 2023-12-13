@@ -33,7 +33,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 25, height: 25, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 };
@@ -60,7 +60,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 25, height: 25, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
@@ -83,7 +83,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
+            pfpStyle = { width: 25, height: 25, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
@@ -159,7 +159,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                     {member?.twitterName}
                 </IonText>
                 {/* Bullet Point */}
-                <IonText color='dark' className='semi' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 4, opacity: '75%' }}>
+                <IonText color='dark' className='reg' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 10, paddingTop: 4, opacity: '75%' }}>
                     •
                 </IonText>
                 <IonText color='dark' className='semi' style={{ opacity: '75%', fontSize: 16 }}>
