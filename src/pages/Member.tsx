@@ -1,31 +1,11 @@
-import {
-    IonAvatar,
-    IonButtons,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonChip,
-    IonCol,
-    IonGrid,
-    IonImg,
-    IonItem,
-    IonPage,
-    IonProgressBar,
-    IonRouterLink,
-    IonRow,
-    IonSegment,
-    IonSegmentButton,
-    IonText,
-    useIonViewDidEnter,
-    useIonViewDidLeave,
-} from '@ionic/react';
-import { usePrivy } from '@privy-io/react-auth';
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonChip, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonListHeader, IonModal, IonPage, IonProgressBar, IonRefresher, IonRefresherContent, IonRouterLink, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillEnter } from '@ionic/react';
+import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Address, formatUnits } from 'viem';
-import { TradingViewWidget } from '../components/Erc20Chart';
 import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
-import { MemberBadge } from '../components/MemberBadge';
+import { MemberBadge, MemberCardHeader } from '../components/MemberBadge';
 import { MemberGraph } from '../components/MemberGraph';
 import { PostList } from '../components/PostList';
 import SubscribeButton from '../components/SubscribeButton';
@@ -33,15 +13,21 @@ import { TribeContent } from '../components/TribeContent';
 import { TribeHeader } from '../components/TribeHeader';
 import useBoosters from '../hooks/useBoosters';
 import useBuyPass from '../hooks/useBuyPass';
-import useERCBalance from '../hooks/useERCBalance';
 import useFriendTechBalance from '../hooks/useFriendTechBalance';
 import { useFriendTechHolders } from '../hooks/useFriendTechHolders';
 import { useMember } from '../hooks/useMember';
 import usePassBalance from '../hooks/usePassBalance';
 import useSellPass from '../hooks/useSellPass';
+import useTabs from '../hooks/useTabVisibility';
+import { formatEth, nativeAuth, uniq } from '../lib/sugar';
+import { TribePage } from './TribePage';
+import { usePrivyWagmi } from '@privy-io/wagmi-connector';
+import { OnBoarding } from './OnBoarding';
+import { BuyPriceBadge } from './Discover';
+import useERCBalance from '../hooks/useERCBalance';
+import { createChart } from 'lightweight-charts';
+import { TradingViewWidget } from '../components/Erc20Chart';
 import { useWriteMessage } from '../hooks/useWriteMessage';
-import { nativeAuth, uniq } from '../lib/sugar';
-import { BuyPriceText } from './Discover';
 
 
 const Member: React.FC = () => {
@@ -58,7 +44,7 @@ const Member: React.FC = () => {
     const [segment, setSegment] = useState<'posts' | 'tribe' | 'holders' | 'chart'>(address !== '0x0000000000000000000000000000000000000000' ? 'posts' : 'tribe')
     const { balance: boosters, syncing } = useBoosters(user?.wallet?.address, address)
     const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
-    const {push}=useHistory();
+
     useIonViewDidLeave(() => {
         document.title = 'Tribe Beta';
     })
@@ -85,26 +71,25 @@ const Member: React.FC = () => {
             />
             < TribeContent fullscreen color={bgColor} >
 
-                <IonCard color={bgColor}>
-                    <IonCardContent className='ion-image-center' style={{ boderBottom: 0 }}>
-                        <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='medium'>
-                                𝕏 {member?.twitterUsername}
-                            </IonText>
-                        </IonRouterLink>
-                        <IonText color='medium'>
+                <IonCard className='ion-profile' style={{margin: 10}} color={bgColor}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
+                        
+                        <IonText style={{paddingTop: 10, paddingBottom: 0}} color='medium' className='medium' >
                             {member?.bio}
                         </IonText>
-                        <IonText >
+                        <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
+                            <IonText color='tribe' className='semi' style={{fontSize: 12}}>
+                                @{member?.twitterUsername}
+                            </IonText>
+                        </IonRouterLink>
+                        <IonText className='heavy' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 5, fontSize: 20, letterSpacing: '-.75px'}} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-27.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                            {member && 
-                            <button  disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ height:42,padding:4,backgroundColor:'#F45000',borderRadius:100, margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-        <IonText color='white' style={{fontSize:19,margin:'auto',padding:10,fontWeight:'bold',paddingBottom:10}}>
-            Boost                                <BuyPriceText address={member?.address} />
-                        </IonText>
-                            </button>}
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                                Boost
+                                <BuyPriceBadge address={member?.address} />
+                            </IonButton>}
                             {balance ? (
                                 <div style={{ margin: 5 }}>
 
@@ -112,14 +97,14 @@ const Member: React.FC = () => {
                             ) : null}
 
 
-                            {address === "0x0000000000000000000000000000000000000000" ? <button color='tribe' style={{  height:42, marginTop: 0, marginLeft: 0,padding:10,backgroundColor:'#F45000',borderRadius:50, margin: '0', }} onMouseDown={()=>push('/channel/' + address)}>
-                                <img style={{ filter: 'invert(100%)' ,height:24}} src={'/icons/chat-solid.svg'} />
-                            </button> : <button disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))}  style={{ height:42,margin: '0', marginLeft: 0,padding:10,backgroundColor:'#F45000',borderRadius:50 }} routerDirection='none' color='tribe'  onMouseDown={()=>push('/channel/' + address)}>
-                                <img style={{ filter: 'invert(100%)',height:24,padding:0,margin:0 }} src={'/icons/chat-solid.svg'} />
-                            </button>}
+                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{   marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton>}
                         </div>
-
-                    </IonCardContent>
+                        <img style={{ width: 64, height: 64, borderRadius: '100px' }} src={member?.twitterPfp || personOutline} />
+                    </IonCardHeader>
                 </IonCard>
 
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
