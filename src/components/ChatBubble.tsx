@@ -17,8 +17,8 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
-        paddingLeft: '12.5px',
-        paddingRight: '12.5px',
+        paddingLeft: '11px',
+        paddingRight: '11px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
     };
 
