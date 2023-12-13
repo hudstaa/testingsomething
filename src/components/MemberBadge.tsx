@@ -155,7 +155,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
             <IonRow>
                 <IonText onMouseDown={() => {
                     clickable && member && setHighlight(member.address);
-                }} color='dark' className='semi' style={{ cursor: 'pointer!important', opacity: '75%', fontSize: '14px', margin: 0, padding: 0 }}>
+                }} color='dark' className='heavy' style={{ cursor: 'pointer!important', fontSize: '16px', margin: 0, padding: 0 }}>
                     {member?.twitterName}
                 </IonText>
                 {/* Bullet Point */}

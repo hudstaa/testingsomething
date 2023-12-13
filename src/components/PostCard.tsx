@@ -46,7 +46,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </div>
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
-            <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+            <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '16px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
             }} >
                 {content}
             </IonText>

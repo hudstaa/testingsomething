@@ -59,11 +59,11 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem color={'paper'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingBottom: 5 }} >
+                    <IonItem color={'paper'} style={{  borderTop: '1px solid var(--ion-color-paper-tint)', marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 10, paddingBottom: 10 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 0, fontSize: 12, opacity: '75%' }}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 0, fontSize: 14}}>
                         <MemberAlias color='dark' address={comment.author} />
-                        <IonText color={'dark'} className='semi' style={{ marginLeft: 5, bottom: 1, fontSize: 10 }}>
+                        <IonText color={'dark'} className='semi' style={{ marginLeft: 5, bottom: 1, fontSize: 10, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
@@ -72,7 +72,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div><MemberPfp color='dark' size="smol" style={{position: 'absolute', top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='semi' color='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 20, marginLeft: 10, marginBottom: 10}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 20, marginLeft: 10, marginBottom: 10, fontSize: 14, letterSpacing: '-.3px'}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
