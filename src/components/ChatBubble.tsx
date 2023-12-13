@@ -12,14 +12,14 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         display: 'flex',
         flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
         alignItems: 'flex-end', // Align items to the end (bottom for row layout)
-        maxWidth: '70%', // Set a max width for the message container
+        maxWidth: '50%', // Set a max width for the message container
     };
 
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
 
-        paddingLeft: '10px',
-        paddingRight: '10px',
+        paddingLeft: '12.5px',
+        paddingRight: '12.5px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
     };
 
@@ -41,7 +41,7 @@ const contentBubble = (
         {message.media && (
             <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
         )}
-        <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
+        <div className={(isMe ? "send" : "recieve") + ' msg medium'} style={textBubbleStyle}>
             {message.content}
         </div>
     </div>
@@ -73,7 +73,7 @@ const contentBubble = (
                 />
             )}
             {!isMe && (
-                <div style={{ opacity: '75%', paddingLeft: 5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                <div style={{ opacity: '75%', paddingLeft: 45, marginTop: -5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
                     <MemberAlias address={message.author} size='veru-smol' />
                     <span style={{ paddingLeft: 10 }}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
@@ -132,7 +132,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     if (!isReplyToMe) {
         items.reverse();
     }
-    return <div style={{ margin: '0px!important', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
+    return <div style={{ margin: '0px!important', maxWidth: '50%', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
         {items}
     </div>
 }

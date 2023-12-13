@@ -241,7 +241,7 @@ ion-footer ion-toolbar {
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-tint: #ffffff;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -305,7 +305,7 @@ ion-footer ion-toolbar {
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --ion-color-light-tint: #E9E8EB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -320,7 +320,7 @@ ion-footer ion-toolbar {
     --ion-color-primary-contrast: #000000;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-tint: #ffffff;
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80, 200, 255;
@@ -376,7 +376,7 @@ ion-footer ion-toolbar {
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
     --ion-color-light-shade: #1e2023;
-    --ion-color-light-tint: #383a3e;
+    --ion-color-light-tint: #26262B;
   }
 
   /*
@@ -641,12 +641,11 @@ ion-tab-bar {
 .msg {
   margin: 0px !important;
   padding: 10px;
-  padding-top: 6px;
+  padding-top: 8px;
   padding-bottom: 10px;
-  border-radius: 15px;
+  border-radius: 17px;
   display: block;
   clear: both;
-  font-weight: 400;
   font-size: 14px;
   white-space: pre-wrap !important;
 
@@ -663,9 +662,9 @@ ion-footer {
 
 
 .send {
-  margin: 0px !important;
+  margin-left: 0px !important;
   float: right;
-  color: var(--ion-color-primary);
+  color: var(--ion-color-primary-tint);
   background: var(--ion-color-primary-shade);
 }
 
