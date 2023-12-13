@@ -100,10 +100,10 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute'}}>
+            <IonHeader style={{ position: 'absolute', paddingLeft: 10 }}>
                 {!hideToolbar ? <IonToolbar color="paper">
                     <IonButtons slot='start'>
-                        <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='paper'
+                        <IonSelect interface='popover' className='heavy' toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
                                 const newValue = e.detail.value;
                                 if (newValue === 'top' || newValue === 'recent') {
