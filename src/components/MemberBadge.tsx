@@ -104,8 +104,8 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     return <IonText color={color} className='regular'onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0, marginRight: -5}} >
-        {member?.twitterName} •
+        style={{ margin: 0, padding: 0}} >
+        {member?.twitterName}
     </IonText>
 }
 export const MemberUsername: React.FC<{ clickable?: boolean, address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' }> = ({ address, color = undefined, size = 'big', clickable = true }) => {
