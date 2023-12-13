@@ -18,7 +18,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const makeComment = useCallback(() => {
     const content = textRef.current?.value!;
     sendMessage(removeUndefinedProperties({ ...message, content }));
-    setMedia('');
+    setMedia(undefined as any);
     setContent(undefined as any)
     setSent(true);
     clearMessage();
