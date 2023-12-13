@@ -96,12 +96,20 @@ http://ionicframework.com/docs/theming/ */
   font-family: 'SF Pro Heavy' !important;
 }
 
+.black {
+  font-family: 'SF Pro Black' !important;
+}
+
 .regular {
   font-family: 'SF Pro Regular', sans-serif !important;
 }
 
 .heavy {
   font-family: 'SF Pro Heavy', sans-serif !important;
+}
+
+.bold {
+  font-family: 'SF Pro Bold', sans-serif !important;
 }
 
 .semi {

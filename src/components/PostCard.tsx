@@ -66,7 +66,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='semi' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='regular' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
@@ -75,7 +75,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='semi' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
+                <IonText className='regular' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
                     Share
 
                 </IonText>
@@ -90,9 +90,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
         <IonLabel style={{
-            position: 'absolute', right: 19, top: 48, fontSize: 15, fontVariantNumeric: 'tabular-nums'
+            position: 'absolute', right: 18, top: 48, fontSize: 15, fontVariantNumeric: 'tabular-nums'
         }} >
-            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='header ion-text-center'>{score} </IonText>
+            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
         </IonLabel>
         <IonButton style={{ position: 'absolute', right: -10, top: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
             <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
