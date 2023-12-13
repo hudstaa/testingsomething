@@ -63,7 +63,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 2, fontSize: 14}}>
                         <MemberAlias color='dark' address={comment.author} />
-                        <IonText color={'dark'} className='semi' style={{ paddingBottom: 0, marginLeft: 5, bottom: 1, fontSize: 10, opacity: '75%' }}>
+                        <IonText color={'dark'} className='semi' style={{ paddingBottom: 0, marginLeft: 5, bottom: 0, fontSize: 10, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
@@ -72,7 +72,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div><MemberPfp color='dark' size="smol" style={{position: 'absolute', top: 5}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 23, marginLeft: 10, marginBottom: 10, fontSize: 14, letterSpacing: '-.3px'}} >
+                        <IonText className='semi' color='dark' style={{ paddingLeft: 35, whitespace: 'pre-wrap', marginTop: 23, marginLeft: 10, marginBottom: 10, fontSize: 14, letterSpacing: '-.3px'}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
