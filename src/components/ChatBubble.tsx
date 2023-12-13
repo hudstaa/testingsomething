@@ -12,12 +12,11 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         display: 'flex',
         flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
         alignItems: 'flex-end', // Align items to the end (bottom for row layout)
-        maxWidth: '50%', // Set a max width for the message container
+        maxWidth: '75%', // Set a max width for the message container
     };
 
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
-
         paddingLeft: '12.5px',
         paddingRight: '12.5px',
         wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
