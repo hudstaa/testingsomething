@@ -71,7 +71,7 @@ http://ionicframework.com/docs/theming/ */
 
 .heavy {
   font-family: 'TribeBold', sans-serif !important;
-  font-weight: 700;
+  font-weight: 600;
   /* Bold weight, assuming 'heavy' is bolder than 'bold' */
 }
 
