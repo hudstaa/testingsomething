@@ -665,8 +665,8 @@ ion-footer {
 .send {
   margin: 0px !important;
   float: right;
-  color: var(--ion-color-primary-contrast);
-  background: var(--ion-color-primary);
+  color: var(--ion-color-primary);
+  background: var(--ion-color-primary-shade);
 }
 
 
