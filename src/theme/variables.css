@@ -268,7 +268,7 @@ ion-footer ion-toolbar {
   --ion-color-medium-tint: #9d9fa6;
 
   /** light **/
-  --ion-color-light: #f7f7f7;
+  --ion-color-light: #FFFFFF;
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
@@ -383,16 +383,16 @@ ion-footer ion-toolbar {
 
     --ion-card-background: #1c1c1d;
 
-    --ion-color-paper: #151515;
+    --ion-color-paper: #000000;
     /* Dark Gray */
     --ion-color-paper-rgb: 46, 46, 46;
     --ion-color-paper-contrast: #ffffff;
     /* Contrast to be easily visible on dark gray */
     --ion-color-paper-contrast-rgb: 255, 255, 255;
-    --ion-color-paper-shade: #00000000;
+    --ion-color-paper-shade: #000000;
     /* modal color */
     /* A bit darker shade */
-    --ion-color-paper-tint: #3f3f3f;
+    --ion-color-paper-tint: #171717;
     /* A bit lighter tint */
 
   }
@@ -568,18 +568,17 @@ ion-icon {
 
 /* Light Mode: Paper Color */
 :root {
-  --ion-color-paper: #fffff;
+  --ion-color-paper: #FFFFFF;
   /* Pale Whitish-Gray */
-  --ion-color-paper-rgb: 245, 245, 245;
+  --ion-color-paper-rgb: 255, 255, 255;
   --ion-color-paper-contrast: #000000;
   /* Contrast to be easily visible on pale gray */
   --ion-color-paper-contrast-rgb: 0, 0, 0;
   --ion-color-paper-shade: #ffffff;
   /* A bit darker shade */
-  --ion-color-paper-tint: #f8f8f8;
+  --ion-color-paper-tint: #f1f1f1;
   /* A bit lighter tint */
 }
-
 
 /* Color Usage */
 .ion-color-paper {
@@ -592,7 +591,8 @@ ion-icon {
 }
 
 ion-card {
-  border-radius: 17.5px;
+
+  border-radius: 0px;
   /* Adjust the value to your desired border radius */
 }
 
@@ -685,10 +685,12 @@ ion-tab-bar {
   --ion-color-white-rgb: 255, 255, 255;
   --ion-color-white-contrast: #000000;
   --ion-color-white-contrast-rgb: 0, 0, 0;
-  --ion-color-white-shade: #e0e0e0;
   --ion-color-white-tint: #ffffff;
 }
 
+.transparent{
+  --background: var(--ion-color-paper) !important;
+}
 .ion-color-white {
   --ion-color-base: var(--ion-color-white);
   --ion-color-base-rgb: var(--ion-color-white-rgb);
@@ -702,6 +704,8 @@ ion-select::part(icon) {
   color: white;
   opacity: 1;
 }
+
+
 
 .vote-toolbar {
   display: flex;

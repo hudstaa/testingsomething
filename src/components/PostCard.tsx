@@ -24,7 +24,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'paper' : 'white';
     const { pathname } = useLocation()
-    return <IonCard onMouseDown={(e) => {
+    return <div style={{ borderTop: '1px solid var(--ion-color-paper-tint)' }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -34,7 +34,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
@@ -99,5 +99,5 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonButton>
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
-    </IonCard>
+    </IonCard></div>
 }

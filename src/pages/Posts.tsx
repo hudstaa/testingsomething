@@ -101,9 +101,9 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ paddingLeft: 10, position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar>
+                {!hideToolbar ? <IonToolbar color="transaprent">
                     <IonButtons slot='start'>
-                        <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='light'
+                        <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
                                 const newValue = e.detail.value;
                                 if (newValue === 'top' || newValue === 'recent') {
@@ -137,7 +137,7 @@ const Posts: React.FC = () => {
                             <MemberPfpImg size='smol' address={me.address} />
                         </IonButton>
                     </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 5 }} color='tribe' />}
+                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='tribe' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
@@ -160,12 +160,9 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar />
-                    <div style={{ height: 12 }}>
-
-                    </div>
+                    <IonToolbar  className='transparent'/>
                 </IonHeader>
-                <IonGrid style={{ padding: 10, paddingTop: 0 }}>
+                <IonGrid style={{ padding: 0, paddingTop: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />
