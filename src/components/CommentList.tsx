@@ -92,7 +92,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         comment.media &&
                         <IonItem lines="none" color='paper'>
                             {comment.media.type.includes("image") ?
-                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
+                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video webkit-playsinline playsinline preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
                 </div>))
