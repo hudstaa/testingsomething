@@ -137,7 +137,7 @@ const Posts: React.FC = () => {
                             <MemberPfpImg size='smol' address={me.address} />
                         </IonButton>
                     </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='tribe' />}
+                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
