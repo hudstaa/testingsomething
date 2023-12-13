@@ -100,7 +100,7 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ paddingLeft: 10, position: 'absolute' }}>
+            <IonHeader style={{ position: 'absolute'}}>
                 {!hideToolbar ? <IonToolbar color="paper">
                     <IonButtons slot='start'>
                         <IonSelect interface='popover' className='semi' toggleIcon={chevronDown} color='paper'
@@ -160,9 +160,9 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar  className='transparent'/>
+                    <IonToolbar className='transparent'/>
                 </IonHeader>
-                <IonGrid style={{ padding: 0, paddingTop: 0 }}>
+                <IonGrid style={{ padding: 0, paddingTop:10 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />
