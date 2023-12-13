@@ -40,7 +40,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <MemberPfp color='dark' size="veru-smol" address={author}/>
-                <div style={{ marginLeft: 5 }}>
+                <div style={{ marginLeft: 6 }}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
