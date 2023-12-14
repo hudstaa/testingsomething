@@ -71,7 +71,7 @@ const Member: React.FC = () => {
             />
             < TribeContent fullscreen color={bgColor} >
 
-                <IonCard className='ion-profile' style={{margin: 10}} color={bgColor}>
+                <IonCard className='ion-profile' style={{margin: 0, padding: 10, borderRadius: 0}} color="card">
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 10, paddingBottom: 0}} color='dark' className='medium' >
                             {member?.bio}
@@ -119,7 +119,7 @@ const Member: React.FC = () => {
                 {member && <>
                     <IonGrid style={{ padding: 0 }}>
                         <IonRow>
-                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
+                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' >
                                 <IonSegment color={"tribe"} mode='ios' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         <span className='bold'>Posts</span>
