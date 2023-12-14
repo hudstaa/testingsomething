@@ -722,6 +722,7 @@ ion-tab-bar {
 .transparent{
   --background: var(--ion-color-paper) !important;
 }
+
 .ion-color-white {
   --ion-color-base: var(--ion-color-white);
   --ion-color-base-rgb: var(--ion-color-white-rgb);

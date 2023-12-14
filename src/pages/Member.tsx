@@ -184,10 +184,10 @@ const Member: React.FC = () => {
                         </>}
 
                     {segment === 'chart' ? <>
-                        <IonGrid>
+                        <IonGrid style={{padding: 0}}>
                             <IonRow>
-                                <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                    <IonCard>
+                                <IonCol style={{padding: 0}} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                    <IonCard className='transparent' style={{margin: 0}}>
                                         {member && <MemberGraph address={member?.address} />}
                                     </IonCard>
                                 </IonCol></IonRow></IonGrid>
