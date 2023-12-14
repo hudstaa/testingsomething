@@ -61,7 +61,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                     <IonItem color={'paper'} style={{  borderTop: '1px solid var(--ion-color-paper-tint)', marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 5, paddingBottom: 5 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 2, fontSize: 12}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 3, fontSize: 12}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <MemberUsername color='medium' address={comment.author}/>
                         <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginTop: -1, marginLeft: 5, bottom: 0, fontSize: 10, opacity: '75%' }}>
@@ -73,7 +73,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div style={{borderRadius: 100, border: '1px solid var(--ion-color-medium)'}}><MemberPfp color='dark' size="smol" style={{position: 'relative', top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:8, whitespace: 'pre-wrap', marginTop: 23, marginLeft: 0, marginBottom: 10, fontSize: 14, letterSpacing: '-.3px'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:8, whitespace: 'pre-wrap', marginTop: 20, marginLeft: 0, marginBottom: 5, fontSize: 14, letterSpacing: '-.3px'}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
