@@ -91,9 +91,9 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     </IonItem>
                     {
                         comment.media &&
-                        <IonItem lines="none" color='light'>
+                        <IonItem lines="none" color='light' >
                             {comment.media.type.includes("image") ?
-                                <img style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
+                                <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 20, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
                 </div>))
