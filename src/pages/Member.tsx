@@ -85,12 +85,12 @@ const Member: React.FC = () => {
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-35.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "4px solid #F45000", borderRadius: 20, margin: '0', marginRight: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-                                Boost
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginRight: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                                <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
                                 <BuyPriceBadge address={member?.address} />
                             </IonButton>}
                             {balance ? (
-                                <div style={{ margin: 5 }}>
+                                <div className="heavy" style={{ margin: 5, fontSize: 14.5}}>
 
                                 </div>
                             ) : null}
