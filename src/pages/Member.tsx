@@ -81,7 +81,7 @@ const Member: React.FC = () => {
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: 20, letterSpacing: '-.75px'}} >
+                        <IonText className='heavy' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: 21, letterSpacing: '-.75px'}} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-27.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
