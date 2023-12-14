@@ -120,7 +120,7 @@ const Member: React.FC = () => {
                     <IonGrid style={{ padding: 0 }}>
                         <IonRow>
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
-                                <IonSegment mode='md' value={segment}>
+                                <IonSegment color={"tribe"} mode='ios' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         Posts
                                     </IonSegmentButton>}
