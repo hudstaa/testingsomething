@@ -27,7 +27,7 @@ export const WriteMessageModalProvider: React.FC = () => {
             <IonHeader>
                 <IonToolbar color='light'>
                     <IonButtons slot='end'>
-                        <IonButton fill="clear" color='dark' onClick={() => {
+                        <IonButton style={{position: "absolute", right: 0}}fill="clear" color='dark' onClick={() => {
                             dismiss(false)
                             setMedia(undefined as any)
                         }}>
@@ -35,7 +35,7 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        {postId ? 'Comments' : "New Post"}
+                        <div >{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
