@@ -153,13 +153,13 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
         <IonRow>
-            <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '15px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
                 <IonText onMouseDown={() => {
                     clickable && member && setHighlight(member.address);
                 }} color='dark' className='bold'>
                     {member?.twitterName}
                 </IonText>
-                <IonText color='dark' className='regular' style={{ fontSize: 13, opacity: '75%' }}>
+                <IonText color='dark' className='regular' style={{ fontSize: 14, opacity: '75%' }}>
                     @{member?.twitterUsername}
                 </IonText>
             </div>
