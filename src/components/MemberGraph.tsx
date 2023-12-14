@@ -45,13 +45,14 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const trades = parseTrades(data?.trades);
 
     const graph = useMemo(() => {
-        return <IonGrid className='transparent' style={{ marginLeft: -70, marginRight:-10, padding: 0, height: window.innerHeight / 3 }}>
+        return <IonGrid className='transparent' style={{ marginLeft: -70, marginRight: -10,padding: 0, height: window.innerHeight / 3 }}>
             {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
                 <AreaChart data={trades}>
                     <CartesianGrid stroke="" />
-                    <YAxis dataKey="price" scale="auto" domain={[0, 'auto']} type="number"tickMargin={-60}orientation="left"axisLine={false} tickLine={false} interval="preserveEnd" minTickGap={80} yAxisId={0}/>
+                    <XAxis dataKey="blockTimestamp" tickFormatter={dateFormatter} tickLine={false} axisLine={false} interval="preserveEnd" tickMargin={14} minTickGap={10} dx={-15}/>
+                    <YAxis dataKey="price" scale="auto" domain={[0, 'auto']} type="number"tickMargin={-60}orientation="left"axisLine={false} tickLine={false} interval="preserveEnd" minTickGap={80} yAxisId={0} />
                     <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>
                     <Area type="monotone" dataKey="price" stroke="#F45000" fillOpacity={0.3} fill="#3B1400" />
                 </AreaChart>
