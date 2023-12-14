@@ -51,7 +51,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
                 <AreaChart data={trades}>
                     <CartesianGrid stroke="" />
-                    <YAxis dataKey="price" scale="auto" domain={[0, 'auto']} type="number"tickMargin={-60}orientation="left"axisLine={false} tickLine={false} interval="preserveEnd" minTickGap={80} yAxisId={0} />
+                    <YAxis dataKey="price" scale="auto" domain={[0, 'auto']} type="number"tickMargin={-60}orientation="left"axisLine={false} tickLine={false} interval="preserveEnd" minTickGap={80} yAxisId={0}/>
                     <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>
                     <Area type="monotone" dataKey="price" stroke="#F45000" fillOpacity={0.3} fill="#3B1400" />
                 </AreaChart>

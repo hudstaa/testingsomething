@@ -89,7 +89,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 * {
-  font-family: 'SF Pro Regular', sans-serif !important;
+  font-family: 'SF Pro Medium', sans-serif !important;
 }
 
 .header {
@@ -435,6 +435,9 @@ ion-footer ion-toolbar {
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
+  .recharts-text {
+    font-family: 'SF Pro Bold' !important;
+  }
 
   /*
    * Material Design Dark Theme
