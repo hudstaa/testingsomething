@@ -312,7 +312,7 @@ ion-footer ion-toolbar {
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-shade: #d7d8da00;
   --ion-color-light-tint: #E9E8EB;
 }
 
@@ -391,7 +391,7 @@ ion-footer ion-toolbar {
     --ion-color-light-rgb: 34, 36, 40;
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
-    --ion-color-light-shade: #1e2023;
+    --ion-color-light-shade: #1e202300;
     --ion-color-light-tint: #26262B;
   }
 

@@ -52,7 +52,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
     }, [postId]);
 
     return (
-        <IonList style={{ backgroundColor: 'var(--ion-color-light)', marginRight: offset ? -35 : undefined }} color='paper'>
+        <IonList style={{ backgroundColor: 'var(--ion-color-light)', marginRight: offset ? -35 : undefined }}>
             <div style={{ height: 5 }}>
 
             </div>
@@ -64,7 +64,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 45, top: 3, fontSize: 14}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <MemberUsername color='medium' address={comment.author}/>
-                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginTop: -1, marginLeft: 5, bottom: 0, fontSize: 10, opacity: '75%' }}>
+                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginTop: 0, marginLeft: 5, bottom: 0, fontSize: 10, opacity: '75%' }}>
                             {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
