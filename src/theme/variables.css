@@ -299,6 +299,14 @@ ion-footer ion-toolbar {
   --ion-color-medium-shade: #808289;
   --ion-color-medium-tint: #9d9fa6;
 
+  /** card **/
+  --ion-color-card: #868686;
+  --ion-color-card-rgb: 162, 162, 162;
+  --ion-color-card-contrast: #ffffff;
+  --ion-color-card-contrast-rgb: 255, 255, 255;
+  --ion-color-card-shade: #808289;
+  --ion-color-card-tint: #9d9fa6;
+
   /** light **/
   --ion-color-light: #FFFFFF;
   --ion-color-light-rgb: 244, 245, 248;
@@ -370,6 +378,14 @@ ion-footer ion-toolbar {
     --ion-color-medium-contrast-rgb: 0, 0, 0;
     --ion-color-medium-shade: #86888f;
     --ion-color-medium-tint: #a2a4ab;
+
+      /** card **/
+    --ion-color-card: #868686;
+    --ion-color-card-rgb: 162, 162, 162;
+    --ion-color-card-contrast: #ffffff;
+    --ion-color-card-contrast-rgb: 255, 255, 255;
+    --ion-color-card-shade: #808289;
+    --ion-color-card-tint: #9d9fa6;
 
     --ion-color-light: #222428;
     --ion-color-light-rgb: 34, 36, 40;
@@ -627,7 +643,7 @@ ion-icon {
 
 ion-card {
 
-  border-radius: 0px;
+  border-radius: 10px;
   /* Adjust the value to your desired border radius */
 }
 

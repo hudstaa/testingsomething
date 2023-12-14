@@ -22,9 +22,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { localNotif, setLocalNotif } = useNotifications()
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'paper' : 'white';
+    const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <div style={{ borderTop: '1px solid var(--ion-color-paper-tint)' }}> <IonCard onMouseDown={(e) => {
+    return <div style={{ paddingTop: 5 }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -83,9 +83,6 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButton>
 
         </IonRow>}
-        <div style={{ position: 'absolute', height: 120, width: 35, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
-
-        </div>
         <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
             <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
