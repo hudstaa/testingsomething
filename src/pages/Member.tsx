@@ -84,7 +84,7 @@ const Member: React.FC = () => {
                         <IonText className='heavy' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: 21, letterSpacing: '-.75px'}} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-35.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
+                        <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginRight: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
                                 <BuyPriceBadge address={member?.address} />
@@ -98,7 +98,7 @@ const Member: React.FC = () => {
 
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{   marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "5px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
                             </IonButton>}
                         </div>
