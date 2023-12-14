@@ -195,6 +195,7 @@ const Member: React.FC = () => {
                 </div>
 
             </TribeContent >
+            
         </ IonPage >
 
     );

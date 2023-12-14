@@ -112,10 +112,10 @@ export const MemberUsername: React.FC<{ clickable?: boolean, address: string, co
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} onMouseDown={() => {
+    return <IonText className="regular" color="dark" onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0 }} >
+        style={{ margin: 0, padding: 0, opacity: "75%" }} >
         @{member?.twitterUsername}
     </IonText>
 }
