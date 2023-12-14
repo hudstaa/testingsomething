@@ -152,19 +152,22 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     const setHighlight = useMember(x => x.setHighlight);
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
-        <IonRow>
-            <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
-                <IonText onMouseDown={() => {
-                    clickable && member && setHighlight(member.address);
-                }} color='dark' className='bold'>
-                    {member?.twitterName}
-                </IonText>
-                <IonText color='dark' className='regular' style={{ fontSize: 14, paddingLeft: 2, paddingTop: 1, opacity: '75%' }}>
-                    @{member?.twitterUsername}
-                </IonText>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}></div>
-        </IonRow>
+            <IonRow>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+                        <IonText onMouseDown={() => {
+                            clickable && member && setHighlight(member.address);
+                        }} color='dark' className='bold'>
+                            {member?.twitterName}
+                        </IonText>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: 14, paddingLeft: 0, paddingTop: 1, opacity: '75%' }}>
+                            @{member?.twitterUsername}
+                        </IonText>
+                    </div>
+                </div>
+            </IonRow>
         </IonGrid>
     </IonRow>
 }
