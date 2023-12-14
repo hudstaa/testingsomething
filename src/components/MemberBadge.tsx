@@ -33,7 +33,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 32, height: 32, padding: 0, borderRadius: 8 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 };
@@ -60,7 +60,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 32, height: 32, padding: 0, borderRadius: 8 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
@@ -83,7 +83,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 32, height: 32, padding: 0, borderRadius: 8 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
