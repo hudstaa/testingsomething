@@ -77,11 +77,11 @@ const Member: React.FC = () => {
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='medium' className='regular' style={{fontSize: 14}}>
+                            <IonText color='dark' className='regular' style={{opacity: 0.75, fontSize: 14}}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='heavy' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: 21, letterSpacing: '-.75px'}} >
+                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: 21}} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
