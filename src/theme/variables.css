@@ -216,7 +216,7 @@ ion-segment {
 }
 
 ion-segment-button::part(indicator-background) {
-  background: var(--ion-color-dark);
+  background: var(--ion-color-tribe);
 }
 
 /* Material Design styles */
