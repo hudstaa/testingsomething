@@ -212,20 +212,20 @@ ion-header ion-toolbar {
 }
 
 ion-segment-button::part(indicator-background) {
-  background: var(--ion-color-tribe);
+  background: var(--ion-color-dark);
 }
 
 /* Material Design styles */
 ion-segment-button.md::part(native) {
-  color: #000;
+  color:var(--ion-color-medium);
 }
 
 .segment-button-checked.md::part(native) {
-  color: var(--ion-color-tribe);
+  color: var(--ion-color-dark);
 }
 
 ion-segment-button.md::part(indicator-background) {
-  height: 4px;
+  height: 2px;
 }
 
 /* iOS styles */
