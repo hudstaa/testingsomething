@@ -317,7 +317,7 @@ ion-footer ion-toolbar {
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
-  --ion-color-medium: #868686;
+  --ion-color-medium: #c3c3c3;
   --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
@@ -414,7 +414,7 @@ ion-footer ion-toolbar {
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
 
-    --ion-color-medium: #A2A2A2;
+    --ion-color-medium: #454545;
     --ion-color-medium-rgb: 162, 162, 162;
     --ion-color-medium-contrast: #000000;
     --ion-color-medium-contrast-rgb: 0, 0, 0;
@@ -662,7 +662,9 @@ ion-icon {
   /* For Ionic 4+ */
   --background-hover: transparent;
   /* For Ionic 4+ */
+  
 }
+
 
 /* New tribel Color */
 :root {
