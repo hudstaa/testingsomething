@@ -162,7 +162,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                         </IonText>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
-                    <IonText color='dark' className='regular' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '50%' }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '70%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>
