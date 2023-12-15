@@ -153,7 +153,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
@@ -162,7 +162,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                         </IonText>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
-                    <IonText color='dark' className='medium' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '75%' }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '50%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>
