@@ -77,7 +77,7 @@ const Member: React.FC = () => {
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='dark' className='regular' style={{opacity: 0.75, fontSize: '1rem'}}>
+                            <IonText color='dark' className='regular' style={{opacity: 0.75, fontSize: '.95rem'}}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
