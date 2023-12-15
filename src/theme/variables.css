@@ -211,6 +211,10 @@ ion-header ion-toolbar {
   box-shadow: none !important;
 }
 
+ion-segment {
+  --background: var(--ion-color-dark-contrast); /* Replace with your desired color */
+}
+
 ion-segment-button::part(indicator-background) {
   background: var(--ion-color-dark);
 }
