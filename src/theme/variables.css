@@ -339,6 +339,14 @@ ion-footer ion-toolbar {
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da00;
   --ion-color-light-tint: #E9E8EB;
+
+    /** lightt **/
+  --ion-color-lightt: #FFFFFF;
+  --ion-color-lightt-rgb: 244, 245, 248;
+  --ion-color-lightt-contrast: #000000;
+  --ion-color-lightt-contrast-rgb: 0, 0, 0;
+  --ion-color-lightt-shade: #d7d8da00;
+  --ion-color-lightt-tint: #E9E8EB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -418,6 +426,14 @@ ion-footer ion-toolbar {
     --ion-color-light-contrast-rgb: 255, 255, 255;
     --ion-color-light-shade: #1e202300;
     --ion-color-light-tint: #26262B;
+
+        /** lightt **/
+    --ion-color-lightt: #0c0c0d;
+    --ion-color-lightt-rgb: 34, 36, 40;
+    --ion-color-lightt-contrast: 255, 255, 255;
+    --ion-color-lightt-contrast-rgb: 0, 0, 0;
+    --ion-color-lightt-shade: #1e202300;
+    --ion-color-lightt-tint: #26262B;
   }
 
   /*
@@ -529,6 +545,10 @@ ion-footer ion-toolbar {
 .ion-profile {
   --ion-card-background: transparent;
 
+}
+
+.profilecard {
+  --background-color: var(--ion-color-paper) !important;
 }
 
 /* Remove shadow from buttons */

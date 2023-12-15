@@ -71,7 +71,7 @@ const Member: React.FC = () => {
             />
             < TribeContent fullscreen color={bgColor} >
 
-                <IonCard className='ion-profile' style={{margin: 0, padding: 10, borderRadius: 0}} color="card">
+                <IonCard className='profilecard' style={{margin: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 10, paddingBottom: 0}} color='dark' className='medium' >
                             {member?.bio}
