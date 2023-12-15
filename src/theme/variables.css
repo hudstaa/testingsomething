@@ -356,6 +356,14 @@ ion-footer ion-toolbar {
   --ion-color-lightt-contrast-rgb: 0, 0, 0;
   --ion-color-lightt-shade: #d7d8da00;
   --ion-color-lightt-tint: #E9E8EB;
+
+    /** tabblur **/
+  --ion-color-tabblur: #ffffff88;
+  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.533);
+  --ion-color-tabblur-contrast: #000000;
+  --ion-color-tabblur-contrast-rgb: 0, 0, 0;
+  --ion-color-tabblur-shade: #d7d8da00;
+  --ion-color-tabblur-tint: #E9E8EB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -453,6 +461,14 @@ ion-footer ion-toolbar {
     --ion-color-lightt-contrast-rgb: 0, 0, 0;
     --ion-color-lightt-shade: #1e202300;
     --ion-color-lightt-tint: #26262B;
+
+        /** tabblur **/
+    --ion-color-tabblur: #00000088;
+    --ion-color-tabblur-rgb: rgba(0, 0, 0, 0.533);
+    --ion-color-tabblur-contrast: #000000;
+    --ion-color-tabblur-contrast-rgb: 0, 0, 0;
+    --ion-color-tabblur-shade: #d7d8da00;
+    --ion-color-tabblur-tint: #E9E8EB;
   }
 
   /*
@@ -708,8 +724,13 @@ ion-card {
 ion-tab-bar {
   --border-width: 0 0 0 0;
   --box-shadow: none;
-}
 
+  /* Set the background to a translucent color */
+  background: rgba(255, 255, 255, 0.5); /* Here, '0.5' is the alpha value for 50% transparency */
+
+  /* Add the blur effect */
+  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
+}
 
 .message-container {
   padding: 1px;
@@ -783,9 +804,19 @@ ion-content::part(scroll) {
   /* Firefox */
 }
 
+ion-tab-button {
+  background-color: transparent;
+}
+
 ion-tab-bar {
-  transition: transform 0.5s ease-in-out;
-  /* Adjust duration and easing as needed */
+  --border-width: 0 0 0 0;
+  --box-shadow: none;
+
+  /* Set the background to a translucent color */
+  background: var(--ion-color-tabblur); /* Here, '0.5' is the alpha value for 50% transparency */
+
+  /* Add the blur effect */
+  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
 }
 
 :root {
