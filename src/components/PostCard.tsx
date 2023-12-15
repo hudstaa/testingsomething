@@ -39,7 +39,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{borderRadius: 100, border: '1px solid var(--ion-color-medium)'}}><MemberPfp color='dark' size="veru-smol" address={author}/></div>
+                <div style={{borderRadius: 100, padding: 2,border: '1px solid var(--ion-color-medium)'}}><MemberPfp color='dark' size="veru-smol" address={author}/></div>
                 <div style={{ marginLeft: 6 }}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>

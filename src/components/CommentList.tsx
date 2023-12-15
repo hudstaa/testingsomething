@@ -71,7 +71,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
                         </IonButtons>
-                        <div style={{position: 'absolute', top: 3, borderRadius: 100, border: '1px solid var(--ion-color-medium)'}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
+                        <div style={{position: 'absolute', top: 3, borderRadius: 100, padding: 2, border: '1px solid var(--ion-color-medium)'}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
                         <IonText className='regular' color='dark' style={{ paddingLeft:45, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 0, marginBottom: 5, fontSize: 15, letterSpacing: '-.3px'}} >
                             {comment.content}
