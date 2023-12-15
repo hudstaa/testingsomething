@@ -24,7 +24,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <div style={{ paddingTop: 5 }}> <IonCard onMouseDown={(e) => {
+    return <div style={{ paddingBottom: 5 }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
