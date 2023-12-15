@@ -325,7 +325,7 @@ ion-footer ion-toolbar {
   --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #808289;
+  --ion-color-medium-shade: #d4d4d4;
   --ion-color-medium-tint: #9d9fa6;
 
   /** card **/
@@ -362,7 +362,7 @@ ion-footer ion-toolbar {
   --ion-color-lightt-tint: #E9E8EB;
 
     /** tabblur **/
-  --ion-color-tabblur: #ffffff88;
+  --ion-color-tabblur: #ffffffc0;
   --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.533);
   --ion-color-tabblur-contrast: #000000;
   --ion-color-tabblur-contrast-rgb: 0, 0, 0;
@@ -430,7 +430,7 @@ ion-footer ion-toolbar {
     --ion-color-medium-rgb: 162, 162, 162;
     --ion-color-medium-contrast: #000000;
     --ion-color-medium-contrast-rgb: 0, 0, 0;
-    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-shade: #222222;
     --ion-color-medium-tint: #a2a4ab;
 
       /** card **/
@@ -467,7 +467,7 @@ ion-footer ion-toolbar {
     --ion-color-lightt-tint: #26262B;
 
         /** tabblur **/
-    --ion-color-tabblur: #00000088;
+    --ion-color-tabblur: #000000c0;
     --ion-color-tabblur-rgb: rgba(0, 0, 0, 0.533);
     --ion-color-tabblur-contrast: #000000;
     --ion-color-tabblur-contrast-rgb: 0, 0, 0;
@@ -813,9 +813,10 @@ ion-tab-button {
 }
 
 ion-tab-bar {
-  --border-width: 0 0 0 0;
   --box-shadow: none;
 
+  /* Set the border-top with 1px and use ion-color-medium variable for the color */
+  border-top: 1px solid var(--ion-color-medium-shade) !important;
   /* Set the background to a translucent color */
   background: var(--ion-color-tabblur); /* Here, '0.5' is the alpha value for 50% transparency */
 
