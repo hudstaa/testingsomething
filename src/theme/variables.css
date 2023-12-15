@@ -640,6 +640,7 @@ ion-segment-button .bold {
   text-transform: none; /* This will make the text appear in normal casing */
   margin-bottom: -5px; /* Reduces the bottom margin */
   padding-bottom: 0; /* Reduces the bottom padding */
+  letter-spacing: normal;
 }
 
 /* Remove shadow from any other possible elements */
