@@ -312,18 +312,18 @@ const App: React.FC = () => {
                 <IonTabButton tab="post" href="/post">
                   {tab === 'post' ?
                     <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/hme.svg'} />
-                    : <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/hme.svg'} />
+                    : <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/hme2.svg'} />
                   }
                 </IonTabButton>
                 <IonTabButton tab="member" href="/member">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/disco.svg' : '/icons/disco.svg'} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/disco.svg' : '/icons/disco2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="channel" href="/channel">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg.svg'} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
                   <NotifBadge />
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr.svg'} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
                 </IonTabButton></IonTabBar>
 
             </IonTabs>
