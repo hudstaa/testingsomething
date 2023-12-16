@@ -119,13 +119,13 @@ const Member: React.FC = () => {
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{padding:'0px'}}>
                                 <IonSegment color={"tribe"} mode='md' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
-                                        <span className='bold'>Posts</span>
+                                        <span className='bold' style={{fontSize: '1rem'}}>Posts</span>
                                     </IonSegmentButton>}
                                     <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
-                                        <span className='bold'>Tribe</span>
+                                        <span className='bold' style={{fontSize: '1rem'}}>Tribe</span>
                                     </IonSegmentButton>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
-                                        <span className='bold'>Chart</span>
+                                        <span className='bold' style={{fontSize: '1rem'}}>Chart</span>
                                     </IonSegmentButton>}
                                 </IonSegment>
                             </IonCol>
