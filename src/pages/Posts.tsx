@@ -128,7 +128,7 @@ const Posts: React.FC = () => {
                                 <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
                                     {notifs}
                                 </IonText>
-                                <IonIcon color='dark' size="small" icon={notifications} />
+                                <IonIcon color='dark' size="small" icon={'/icons/noti.svg'} />
                             </IonBadge>
                         </IonButton>
                         <IonButton onMouseDown={() => {
