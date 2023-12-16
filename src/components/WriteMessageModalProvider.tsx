@@ -25,7 +25,7 @@ export const WriteMessageModalProvider: React.FC = () => {
             setIsOpen(false);
         }}>
             <IonHeader>
-                <IonToolbar color='tribe'>
+                <IonToolbar color='paper'>
                     <IonButtons slot='end'>
                         <IonButton fill="clear" color='dark' onClick={() => {
                             dismiss(false)

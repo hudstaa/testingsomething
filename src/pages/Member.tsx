@@ -71,24 +71,21 @@ const Member: React.FC = () => {
             />
             < TribeContent fullscreen color={bgColor} >
 
-                <IonCard color={bgColor}>
-                    <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
+                <IonCard className='ion-profile' color={bgColor}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
                             <IonText color='medium'>
                                 𝕏 {member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText color='medium'>
+                        <IonText style={{paddingTop: 10, paddingBottom: 7.5}} color='medium'>
                             {member?.bio}
                         </IonText>
-                        <IonText >
+                        <IonText className='header' style={{marginTop: -10, paddingTop: 10, fontSize: 16}} >
                             {member?.twitterName}
                         </IonText>
-                        <img style={{ width: 70, height: 70, borderRadius: '10px', }} src={member?.twitterPfp || personOutline} />
-                    </IonCardHeader>
-                    <IonCardContent>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} style={{ margin: 'auto', marginRight: 3 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} style={{ margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 Boost
                                 <BuyPriceBadge address={member?.address} />
                             </IonButton>}
@@ -99,14 +96,14 @@ const Member: React.FC = () => {
                             ) : null}
 
 
-                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ margin: 'auto', marginLeft: 0 }} routerLink={'/channel/' + address}>
+                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{  marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: 'auto', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
                             </IonButton>}
                         </div>
-
-                    </IonCardContent>
+                        <img style={{ width: 64, height: 64, borderRadius: '100px', }} src={member?.twitterPfp || personOutline} />
+                    </IonCardHeader>
                 </IonCard>
 
                 {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
