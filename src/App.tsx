@@ -8,6 +8,7 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
+import {swapHorizontal} from 'ionicons/icons'
 import { IonReactHashRouter } from '@ionic/react-router';
 import { PrivyWagmiConnector, usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { Redirect, Route, useLocation } from 'react-router-dom';
@@ -59,6 +60,7 @@ import { nativeAuth } from './lib/sugar';
 import Account from './pages/Account';
 import { MobileAuth } from './pages/MobileAuth';
 import Post from './pages/Post';
+import Swap from './pages/Swap';
 import Trade from './pages/Trade';
 
 
@@ -292,6 +294,9 @@ const App: React.FC = () => {
                 <Route path="/post/" exact>
                   <Posts />
                 </Route>
+                <Route path="/swap" exact>
+                  <Swap />
+                </Route>
                 <Route path="/member/:address/trade" exact>
                   <Trade />
                 </Route>
@@ -323,7 +328,11 @@ const App: React.FC = () => {
                 <IonTabButton tab="account" href="/account">
                   <NotifBadge />
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
-                </IonTabButton></IonTabBar>
+                </IonTabButton>
+                <IonTabButton tab="swap" href="/swap">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? swapHorizontal : swapHorizontal} />
+                </IonTabButton>
+                </IonTabBar>
 
             </IonTabs>
 
