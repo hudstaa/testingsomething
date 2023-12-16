@@ -33,7 +33,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 };
@@ -60,7 +60,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
@@ -83,7 +83,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 15, height: 15, padding: 0, borderRadius: 15 };
+            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
@@ -101,10 +101,10 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} className='semi'onMouseDown={() => {
+    return <IonText color={color} className='bold'onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0 }} >
+        style={{ margin: 0, paddingRight: 4}} >
         {member?.twitterName}
     </IonText>
 }
@@ -112,10 +112,10 @@ export const MemberUsername: React.FC<{ clickable?: boolean, address: string, co
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} onMouseDown={() => {
+    return <IonText className="regular" color="dark" onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0 }} >
+        style={{ margin: 0, padding: 0, opacity: "75%" }} >
         @{member?.twitterUsername}
     </IonText>
 }
@@ -153,18 +153,20 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow>
-                <IonText onMouseDown={() => {
-                    clickable && member && setHighlight(member.address);
-                }} color='dark' className='semi' style={{ cursor: 'pointer!important', opacity: '75%', fontSize: '14px', margin: 0, padding: 0 }}>
-                    {member?.twitterName}
-                </IonText>
-                {/* Bullet Point */}
-                <IonText color='dark' style={{ paddingLeft: 4, paddingRight: 4, fontSize: 12, paddingTop: 3, opacity: '75%' }}>
-                    •
-                </IonText>
-                <IonText color='dark' className='semi' style={{ opacity: '75%', paddingTop: '2.25px', fontSize: 11 }}>
-                    {content ? content : <></>}
-                </IonText>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0 }}>
+                    <div>
+                        <IonText onMouseDown={() => {
+                            clickable && member && setHighlight(member.address);
+                        }} color='dark' className='bold'>
+                            {member?.twitterName}
+                        </IonText>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '75%' }}>
+                            @{member?.twitterUsername}
+                        </IonText>
+                    </div>
+                </div>
             </IonRow>
         </IonGrid>
     </IonRow>

@@ -22,9 +22,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { localNotif, setLocalNotif } = useNotifications()
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'paper' : 'white';
+    const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <IonCard onMouseDown={(e) => {
+    return <div style={{ paddingBottom: 3 }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -34,29 +34,26 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 5, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ marginTop: 0, margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-                <MemberPfp color='dark' size="veru-smol" address={author}/>
-                <div style={{ marginLeft: 5 }}>
+                <div style={{borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" address={author}/></div>
+                <div style={{ marginLeft: 6 }}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
-            <IonText color='dark' className='semi' style={{ whiteSpace: 'pre-wrap', fontSize: '20px', lineHeight: '1', letterSpacing: '-0.0135em' }} onClick={() => {
+            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '.95rem', lineHeight: '1' }} onClick={() => {
             }} >
                 {content}
             </IonText>
             {media && (
                 <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
-                        <img style={{ minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video  webkit-playsinline playsInline preload="metadata" autoPlay={showComments} style={{ minHeight: '100%', width: '100%', borderRadius: 10 }} controls={showComments} onClick={()=>{
-                            !showComments&&            push('/post/' + id);
-
-                        }} src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                        <img style={{ border: '1px solid var(--ion-color-light-tint)', minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
             )}
         </IonCardContent>
@@ -69,7 +66,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='semi' style={{ fontSize: 14, marginTop: 3, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
@@ -78,7 +75,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='semi' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
+                <IonText className='medium' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
                     Share
 
                 </IonText>
@@ -86,21 +83,18 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </IonButton>
 
         </IonRow>}
-        <div style={{ position: 'absolute', height: 120, width: 35, backgroundColor: 'var(--ion-color-paper)', borderRadius: 20, top: -5, right: -5 }}>
-
-        </div>
         <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
             <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
         <IonLabel style={{
-            position: 'absolute', right: 19, top: 48, fontSize: 15, fontVariantNumeric: 'tabular-nums'
+            position: 'absolute', right: 18, top: 48, fontSize: 15, fontVariantNumeric: 'tabular-nums'
         }} >
-            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='header ion-text-center'>{score} </IonText>
+            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
         </IonLabel>
         <IonButton style={{ position: 'absolute', right: -10, top: 55 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
             <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 28, width: 28 }} />
         </IonButton>
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
-    </IonCard>
+    </IonCard></div>
 }

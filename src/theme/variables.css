@@ -53,47 +53,79 @@ http://ionicframework.com/docs/theming/ */
   /* Define the range of font-weight Rubik supports */
 }
 
-/* Remove the individual @font-face rules for SF Bold, SF Medium, etc. */
+@font-face {
+  font-family: 'SF Pro Black';
+  src: url("/fonts/SF-Pro-Text-Black.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Bold';
+  src: url("/fonts/SF-Pro-Text-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Heavy';
+  src: url("/fonts/SF-Pro-Text-Heavy.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Light';
+  src: url("/fonts/SF-Pro-Text-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Medium';
+  src: url("/fonts/SF-Pro-Text-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Regular';
+  src: url("/fonts/SF-Pro-Text-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'SF Pro Semibold';
+  src: url("/fonts/SF-Pro-Text-Semibold.otf") format("opentype");
+}
 
 * {
-  font-family: 'TribeMed', sans-serif !important;
+  font-family: 'SF Pro Medium', sans-serif !important;
 }
 
 .header {
-  font-family: 'TribeBold' !important;
+  font-family: 'SF Pro Heavy' !important;
+}
+
+.black {
+  font-family: 'SF Pro Black' !important;
 }
 
 .regular {
-  font-family: 'TribeChat', sans-serif !important;
-  font-weight: 500;
-  /* Regular weight */
+  font-family: 'SF Pro Regular', sans-serif !important;
 }
 
 .heavy {
-  font-family: 'TribeBold', sans-serif !important;
-  font-weight: 700;
-  /* Bold weight, assuming 'heavy' is bolder than 'bold' */
+  font-family: 'SF Pro Heavy', sans-serif !important;
+}
+
+.bold {
+  font-family: 'SF Pro Bold', sans-serif !important;
 }
 
 .semi {
-  font-family: 'TribeSemi', sans-serif !important;
-  font-weight: 500;
-
+  font-family: 'SF Pro Semibold', sans-serif !important;
 }
 
 .text {
-  font-family: 'TribeSemi', sans-serif !important;
-  /* Semi-bold weight */
+  font-family: 'SF Pro Regular', sans-serif !important;
 }
 
 .light {
-  font-family: 'TribeReg', sans-serif !important;
-  font-weight: 300;
-  /* Semi-bold weight */
+  font-family: 'SF Pro Light', sans-serif !important;
 }
 
 .medium {
-  font-family: 'TribeReg', sans-serif !important;
+  font-family: 'SF Pro Medium', sans-serif !important;
 }
 
 .bottom-start-container {
@@ -180,8 +212,37 @@ ion-header ion-toolbar {
 }
 
 ion-segment {
-  --background-checked: rgba(255, 255, 255, 0.5);
-  --color-checked: rgba(0, 0, 0, 0.5);
+  --background: var(--ion-color-dark-contrast); /* Replace with your desired color */
+}
+
+ion-segment-button::part(indicator-background) {
+  background: var(--ion-color-tribe);
+}
+
+/* Material Design styles */
+ion-segment-button.md::part(native) {
+  color:var(--ion-color-medium);
+}
+
+.segment-button-checked.md::part(native) {
+  color: var(--ion-color-dark);
+}
+
+ion-segment-button.md::part(indicator-background) {
+  height: 3px;
+}
+
+/* iOS styles */
+ion-segment-button.ios::part(native) {
+  color: var(--ion-color-dark);
+}
+
+.segment-button-checked.ios::part(native) {
+  color: #fff;
+}
+
+ion-segment-button.ios::part(indicator-background) {
+  border-radius: 20px;
 }
 
 ion-footer,
@@ -208,8 +269,8 @@ ion-footer ion-toolbar {
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #037BFE;
+  --ion-color-primary-tint: #ffffff;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -260,20 +321,53 @@ ion-footer ion-toolbar {
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
-  --ion-color-medium: #A2A2A2;
+  --ion-color-medium: #c3c3c3;
   --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #808289;
+  --ion-color-medium-shade: #e5e5e5;
   --ion-color-medium-tint: #9d9fa6;
 
+  /** card **/
+  --ion-color-card: #ffffff;
+  --ion-color-card-rgb: 162, 162, 162;
+  --ion-color-card-contrast: #ffffff;
+  --ion-color-card-contrast-rgb: 255, 255, 255;
+  --ion-color-card-shade: #808289;
+  --ion-color-card-tint: #9d9fa6;
+
+
+  /** postcard **/
+  --ion-color-postcard: #ffffff;
+  --ion-color-postcard-rgb: 162, 162, 162;
+  --ion-color-postcard-contrast: #ffffff;
+  --ion-color-postcard-contrast-rgb: 255, 255, 255;
+  --ion-color-postcard-shade: #808289;
+  --ion-color-postcard-tint: #9d9fa6;
+
   /** light **/
-  --ion-color-light: #f7f7f7;
+  --ion-color-light: #f5f5f5;
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --ion-color-light-shade: #d7d8da00;
+  --ion-color-light-tint: #E9E8EB;
+
+    /** lightt **/
+  --ion-color-lightt: #FFFFFF;
+  --ion-color-lightt-rgb: 244, 245, 248;
+  --ion-color-lightt-contrast: #000000;
+  --ion-color-lightt-contrast-rgb: 0, 0, 0;
+  --ion-color-lightt-shade: #d7d8da00;
+  --ion-color-lightt-tint: #E9E8EB;
+
+    /** tabblur **/
+  --ion-color-tabblur: #ffffffc0;
+  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.533);
+  --ion-color-tabblur-contrast: #000000;
+  --ion-color-tabblur-contrast-rgb: 0, 0, 0;
+  --ion-color-tabblur-shade: #d7d8da00;
+  --ion-color-tabblur-tint: #E9E8EB;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -287,8 +381,8 @@ ion-footer ion-toolbar {
     --ion-color-primary-rgb: 66, 140, 255;
     --ion-color-primary-contrast: #000000;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-shade: #037BFE;
+    --ion-color-primary-tint: #ffffff;
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80, 200, 255;
@@ -332,19 +426,53 @@ ion-footer ion-toolbar {
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
 
-    --ion-color-medium: #A2A2A2;
+    --ion-color-medium: #454545;
     --ion-color-medium-rgb: 162, 162, 162;
     --ion-color-medium-contrast: #000000;
     --ion-color-medium-contrast-rgb: 0, 0, 0;
-    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-shade: #121212;
     --ion-color-medium-tint: #a2a4ab;
 
-    --ion-color-light: #222428;
+      /** card **/
+    --ion-color-card: #0d0d0d;
+    --ion-color-card-rgb: 162, 162, 162;
+    --ion-color-card-contrast: #ffffff;
+    --ion-color-card-contrast-rgb: 255, 255, 255;
+    --ion-color-card-shade: #808289;
+    --ion-color-card-tint: #9d9fa6;
+
+
+      /** postcard **/
+    --ion-color-postcard: #0d0d0d;
+    --ion-color-postcard-rgb: 162, 162, 162;
+    --ion-color-postcard-contrast: #ffffff;
+    --ion-color-postcard-contrast-rgb: 255, 255, 255;
+    --ion-color-postcard-shade: #808289;
+    --ion-color-postcard-tint: #9d9fa6;
+  
+
+    --ion-color-light: #0c0c0d;
     --ion-color-light-rgb: 34, 36, 40;
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
-    --ion-color-light-shade: #1e2023;
-    --ion-color-light-tint: #383a3e;
+    --ion-color-light-shade: #1e202300;
+    --ion-color-light-tint: #26262B;
+
+        /** lightt **/
+    --ion-color-lightt: #0c0c0d;
+    --ion-color-lightt-rgb: 34, 36, 40;
+    --ion-color-lightt-contrast: 255, 255, 255;
+    --ion-color-lightt-contrast-rgb: 0, 0, 0;
+    --ion-color-lightt-shade: #1e202300;
+    --ion-color-lightt-tint: #26262B;
+
+        /** tabblur **/
+    --ion-color-tabblur: #000000c0;
+    --ion-color-tabblur-rgb: rgba(0, 0, 0, 0.533);
+    --ion-color-tabblur-contrast: #000000;
+    --ion-color-tabblur-contrast-rgb: 0, 0, 0;
+    --ion-color-tabblur-shade: #d7d8da00;
+    --ion-color-tabblur-tint: #E9E8EB;
   }
 
   /*
@@ -381,28 +509,30 @@ ion-footer ion-toolbar {
 
     --ion-item-background: #000000;
 
-    --ion-card-background: #1c1c1d;
 
-    --ion-color-paper: #151515;
+    --ion-color-paper: #000000;
     /* Dark Gray */
     --ion-color-paper-rgb: 46, 46, 46;
     --ion-color-paper-contrast: #ffffff;
     /* Contrast to be easily visible on dark gray */
     --ion-color-paper-contrast-rgb: 255, 255, 255;
-    --ion-color-paper-shade: #00000000;
+    --ion-color-paper-shade: #000000;
     /* modal color */
     /* A bit darker shade */
-    --ion-color-paper-tint: #3f3f3f;
+    --ion-color-paper-tint: #222222;
     /* A bit lighter tint */
 
   }
 
   .ios ion-modal {
     --ion-background-color: var(--ion-color-step-50);
-    --ion-toolbar-background: var(--ion-color-paper);
+    --ion-toolbar-background: var(--ion-color-tabblur);
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
+  .recharts-text {
+    font-family: 'SF Pro Bold' !important;
+  }
 
   /*
    * Material Design Dark Theme
@@ -443,8 +573,6 @@ ion-footer ion-toolbar {
     --ion-toolbar-background: #1f1f1f;
 
     --ion-tab-bar-background: #1f1f1f;
-
-    --ion-card-background: #1e1e1e;
   }
 
 
@@ -499,6 +627,22 @@ ion-segment-button {
   --box-shadow: none !important;
 }
 
+ion-segment-button::part(indicator) {
+  width: 40%; /* Adjust this value to set the desired width */
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+/* Change the text style to not be all capitals */
+ion-segment-button .bold {
+  text-transform: none; /* This will make the text appear in normal casing */
+  margin-bottom: -5px; /* Reduces the bottom margin */
+  padding-bottom: 0; /* Reduces the bottom padding */
+  letter-spacing: normal;
+}
+
 /* Remove shadow from any other possible elements */
 * {
   box-shadow: none !important;
@@ -526,7 +670,7 @@ ion-segment-button {
 
 /* New tribe Color */
 :root {
-  --ion-color-tribe: #ff6000;
+  --ion-color-tribe: #F45000;
   --ion-color-tribe-rgb: 255, 87, 0;
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
@@ -554,7 +698,9 @@ ion-icon {
   /* For Ionic 4+ */
   --background-hover: transparent;
   /* For Ionic 4+ */
+  
 }
+
 
 /* New tribel Color */
 :root {
@@ -568,18 +714,17 @@ ion-icon {
 
 /* Light Mode: Paper Color */
 :root {
-  --ion-color-paper: #fffff;
+  --ion-color-paper: #FFFFFF;
   /* Pale Whitish-Gray */
-  --ion-color-paper-rgb: 245, 245, 245;
+  --ion-color-paper-rgb: 255, 255, 255;
   --ion-color-paper-contrast: #000000;
   /* Contrast to be easily visible on pale gray */
   --ion-color-paper-contrast-rgb: 0, 0, 0;
   --ion-color-paper-shade: #ffffff;
   /* A bit darker shade */
-  --ion-color-paper-tint: #f8f8f8;
+  --ion-color-paper-tint: #f1f1f1;
   /* A bit lighter tint */
 }
-
 
 /* Color Usage */
 .ion-color-paper {
@@ -592,15 +737,20 @@ ion-icon {
 }
 
 ion-card {
-  border-radius: 17.5px;
+  border-radius: 7x;
   /* Adjust the value to your desired border radius */
 }
 
 ion-tab-bar {
   --border-width: 0 0 0 0;
   --box-shadow: none;
-}
 
+  /* Set the background to a translucent color */
+  background: rgba(255, 255, 255, 0.5); /* Here, '0.5' is the alpha value for 50% transparency */
+
+  /* Add the blur effect */
+  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
+}
 
 .message-container {
   padding: 1px;
@@ -609,13 +759,12 @@ ion-tab-bar {
 .msg {
   margin: 0px !important;
   padding: 10px;
-  padding-top: 6px;
-  padding-bottom: 10px;
-  border-radius: 15px;
+  padding-top: 5px;
+  padding-bottom: 8px;
+  border-radius: 17px;
   display: block;
   clear: both;
-  font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   white-space: pre-wrap !important;
 
 }
@@ -631,10 +780,10 @@ ion-footer {
 
 
 .send {
-  margin: 0px !important;
+  margin-left: 0px !important;
   float: right;
-  color: var(--ion-color-primary-contrast);
-  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-tint);
+  background: var(--ion-color-primary-shade);
 }
 
 
@@ -675,9 +824,20 @@ ion-content::part(scroll) {
   /* Firefox */
 }
 
+ion-tab-button {
+  background-color: transparent;
+}
+
 ion-tab-bar {
-  transition: transform 0.5s ease-in-out;
-  /* Adjust duration and easing as needed */
+  --box-shadow: none;
+
+  /* Set the border-top with 1px and use ion-color-medium variable for the color */
+  border-top: 1px solid var(--ion-color-medium-shade) !important;
+  /* Set the background to a translucent color */
+  background: var(--ion-color-tabblur); /* Here, '0.5' is the alpha value for 50% transparency */
+
+  /* Add the blur effect */
+  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
 }
 
 :root {
@@ -685,8 +845,11 @@ ion-tab-bar {
   --ion-color-white-rgb: 255, 255, 255;
   --ion-color-white-contrast: #000000;
   --ion-color-white-contrast-rgb: 0, 0, 0;
-  --ion-color-white-shade: #e0e0e0;
   --ion-color-white-tint: #ffffff;
+}
+
+.transparent{
+  --background: var(--ion-color-paper) !important;
 }
 
 .ion-color-white {
@@ -702,6 +865,8 @@ ion-select::part(icon) {
   color: white;
   opacity: 1;
 }
+
+
 
 .vote-toolbar {
   display: flex;

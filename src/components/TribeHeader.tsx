@@ -31,14 +31,14 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
 
     const { location, goBack } = useHistory();
     const toolbar = !hide ? (
-        <IonToolbar>
+        <IonToolbar color='tabblur' >
             <IonButtons slot='start' style={{ marginLeft: 0 }}>
                 {showBackButton ? <IonButton onClick={goBack} color="dark" ><IonIcon icon={chevronBack} />{title}</IonButton>
                     : <IonText style={{ fontWeight: 600, fontSize: '18px', letterSpacing: '-1px' }}>
                         {title as any}
                     </IonText>}
             </IonButtons>
-        </IonToolbar>) : <IonToolbar color='tribe'>
+        </IonToolbar>) : <IonToolbar color='paper'>
         {content}
     </IonToolbar>
     if (!sticky) {
@@ -53,7 +53,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
         </IonHeader>
     }
 
-    return <IonHeader color="tribe" style={{ border: 0 }}>
+    return <IonHeader color="paper" style={{ border: 0 }}>
         {toolbar}
         {!hide && content}
     </IonHeader>

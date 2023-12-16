@@ -13,8 +13,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         overflowWrap: 'break-word',
         flexDirection: isMe ? 'row-reverse' : 'row', // Layout direction based on the sender
         alignItems: 'flex-end', // Align items to the end (bottom for row layout)
-        maxWidth: '70%', // Set a max width for the message container
-
+        maxWidth: '75%', // Set a max width for the message container
     };
 
     const textBubbleStyle: React.CSSProperties = {
@@ -78,7 +77,7 @@ const contentBubble = (
                 />
             )}
             {!isMe && (
-                <div style={{ opacity: '75%', paddingLeft: 5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                <div style={{ opacity: '75%', paddingLeft: 45, marginTop: -5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
                     <MemberAlias address={message.author} size='veru-smol' />
                     <span style={{ paddingLeft: 10 }}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
@@ -138,7 +137,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     if (!isReplyToMe) {
         items.reverse();
     }
-    return <div style={{ margin: '0px!important', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
+    return <div style={{ margin: '0px!important', maxWidth: '50%', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
         {items}
     </div>
 }

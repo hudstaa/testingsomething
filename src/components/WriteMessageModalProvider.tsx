@@ -25,9 +25,9 @@ export const WriteMessageModalProvider: React.FC = () => {
             setIsOpen(false);
         }}>
             <IonHeader>
-                <IonToolbar color='paper'>
+                <IonToolbar color='light'>
                     <IonButtons slot='end'>
-                        <IonButton fill="clear" color='dark' onClick={() => {
+                        <IonButton style={{position: "absolute", right: 0}}fill="clear" color='dark' onClick={() => {
                             dismiss(false)
                             setMedia(undefined as any)
                         }}>
@@ -35,12 +35,12 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        {postId ? 'Comments' : "New Post"}
+                        <div >{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
             </IonHeader>
-            <IonContent>
+            <IonContent color="light">
                 {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
                 {!postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
