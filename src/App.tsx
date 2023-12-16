@@ -8,6 +8,7 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
+import {swapHorizontal} from 'ionicons/icons'
 import { IonReactHashRouter } from '@ionic/react-router';
 import { PrivyWagmiConnector, usePrivyWagmi } from '@privy-io/wagmi-connector';
 import { Redirect, Route, useLocation } from 'react-router-dom';
@@ -59,6 +60,7 @@ import { nativeAuth } from './lib/sugar';
 import Account from './pages/Account';
 import { MobileAuth } from './pages/MobileAuth';
 import Post from './pages/Post';
+import Swap from './pages/Swap';
 import Trade from './pages/Trade';
 
 
@@ -261,7 +263,6 @@ const App: React.FC = () => {
           <IonReactHashRouter >
             <ShowMemberModalProvider />
             <NotificationsProvider />
-
             <IonTabs>
               <IonRouterOutlet animated={false}>
                 <Route exact path="/channel">
@@ -293,6 +294,9 @@ const App: React.FC = () => {
                 <Route path="/post/" exact>
                   <Posts />
                 </Route>
+                <Route path="/swap" exact>
+                  <Swap />
+                </Route>
                 <Route path="/member/:address/trade" exact>
                   <Trade />
                 </Route>
@@ -311,20 +315,24 @@ const App: React.FC = () => {
               <IonTabBar style={{ border: '0' }} slot="bottom">
                 <IonTabButton tab="post" href="/post">
                   {tab === 'post' ?
-                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/home-solid.svg'} />
-                    : <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/home-outline.svg'} />
+                    <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/hme.svg'} />
+                    : <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={'/icons/hme2.svg'} />
                   }
                 </IonTabButton>
                 <IonTabButton tab="member" href="/member">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/explore-solid.svg' : '/icons/explore-outline.svg'} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/disco.svg' : '/icons/disco2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="channel" href="/channel">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/chat-solid.svg' : '/icons/chat-outline.svg'} />
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
                   <NotifBadge />
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/profile-solid.svg' : '/icons/profile-outline.svg'} />
-                </IonTabButton></IonTabBar>
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
+                </IonTabButton>
+                <IonTabButton tab="swap" href="/swap">
+                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? swapHorizontal : swapHorizontal} />
+                </IonTabButton>
+                </IonTabBar>
 
             </IonTabs>
 

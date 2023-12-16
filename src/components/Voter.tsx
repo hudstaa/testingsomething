@@ -89,7 +89,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
             <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 18, width: 18 }} />
             </IonButton>
             <IonLabel style={{ position: 'absolute', right }}>
-                <IonText style={{ fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
+                <IonText className="bold" style={{ fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
             </IonLabel>
             <IonButton fill="clear" onPointerDown={() => {
                 setVoteCache(1)

@@ -6,9 +6,6 @@ const Splash: React.FC = () => {
     return (
         <TribePage page='splash'>
             <TribeHeader />
-            <TribeContent fullscreen>
-
-            </TribeContent>
         </TribePage>
     );
 };

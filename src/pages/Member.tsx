@@ -66,43 +66,42 @@ const Member: React.FC = () => {
         <IonPage ref={pageRef}>
             <TribeHeader
                 color='tertiary'
-                title={member !== null ? member.twitterName : ""}
+                title=""
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-
-                <IonCard className='ion-profile' color={bgColor}>
+                <IonCard color="tribe" style={{height: 115, margin: 0, borderRadius: "35px 35px 0 0", marginTop: -45}}></IonCard>
+                <IonCard className='postcard' color="#00000000" style={{marginTop: -45, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='medium'>
-                                𝕏 {member?.twitterUsername}
-                            </IonText>
-                        </IonRouterLink>
-                        <IonText style={{paddingTop: 10, paddingBottom: 7.5}} color='medium'>
+                        <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
-                        <IonText className='header' style={{marginTop: -10, paddingTop: 10, fontSize: 16}} >
+                        <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
+                            <IonText color='dark' className='regular' style={{opacity: 0.75, fontSize: '.95rem'}}>
+                                @{member?.twitterUsername}
+                            </IonText>
+                        </IonRouterLink>
+                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem'}} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} style={{ margin: '0', marginRight: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-                                Boost
+                        <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
+                        {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{   marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "5px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
+                            </IonButton>}
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                                <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
                                 <BuyPriceBadge address={member?.address} />
                             </IonButton>}
                             {balance ? (
-                                <div style={{ margin: 5 }}>
-
+                                <div className="heavy" style={{ margin: 5, fontSize: 14.5}}>
                                 </div>
                             ) : null}
-
-
-                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{  marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
-                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} style={{ margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
-                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton>}
                         </div>
-                        <img style={{ width: 64, height: 64, borderRadius: '100px', }} src={member?.twitterPfp || personOutline} />
+                        <div style={{marginLeft: -3,padding:3}}>
+                            <img style={{ width: 72, height: 72, borderRadius: '100px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
+                        </div>
                     </IonCardHeader>
                 </IonCard>
 
@@ -117,18 +116,18 @@ const Member: React.FC = () => {
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
                 {member && <>
-                    <IonGrid>
+                    <IonGrid style={{ padding: 0, borderBottom: '1px solid var(--ion-color-medium-shade' }}>
                         <IonRow>
-                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12'>
-                                <IonSegment mode='md' value={segment}>
+                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{padding:'0px'}}>
+                                <IonSegment color={"tribe"} mode='md' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
-                                        Posts
+                                        <span className='bold' style={{fontSize: '1rem'}}>Posts</span>
                                     </IonSegmentButton>}
                                     <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
-                                        Tribe
+                                        <span className='bold' style={{fontSize: '1rem'}}>Tribe</span>
                                     </IonSegmentButton>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
-                                        Chart
+                                        <span className='bold' style={{fontSize: '1rem'}}>Chart</span>
                                     </IonSegmentButton>}
                                 </IonSegment>
                             </IonCol>
@@ -147,7 +146,7 @@ const Member: React.FC = () => {
                     {
                         segment === 'posts' &&
 
-                        <IonGrid>
+                        <IonGrid style={{ padding: 0 }}>
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
 
@@ -183,10 +182,10 @@ const Member: React.FC = () => {
                         </>}
 
                     {segment === 'chart' ? <>
-                        <IonGrid>
+                        <IonGrid style={{padding: 0}}>
                             <IonRow>
-                                <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                    <IonCard>
+                                <IonCol style={{padding: 0}} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                    <IonCard className='transparent' style={{margin: 0}}>
                                         {member && <MemberGraph address={member?.address} />}
                                     </IonCard>
                                 </IonCol></IonRow></IonGrid>
@@ -195,6 +194,7 @@ const Member: React.FC = () => {
                 </div>
 
             </TribeContent >
+            
         </ IonPage >
 
     );

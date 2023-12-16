@@ -101,9 +101,9 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar>
+                {!hideToolbar ? <IonToolbar color="paper" style={{ paddingLeft: 10}}>
                     <IonButtons slot='start'>
-                        <IonSelect interface='popover' toggleIcon={chevronDown} color='light'
+                        <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
                                 const newValue = e.detail.value;
                                 if (newValue === 'top' || newValue === 'recent') {
@@ -111,7 +111,7 @@ const Posts: React.FC = () => {
                                 }
                             }}
                             value={postType}                    >
-                            <IonSelectOption value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                            <IonSelectOption value={'top'} color={postType === 'top' ? 'medium' : 'paper'} >
                                 Top
                             </IonSelectOption>
                             <IonSelectOption value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
@@ -124,11 +124,11 @@ const Posts: React.FC = () => {
                         <IonButton onClick={() => {
                             showNotifications()
                         }}>
-                            <IonBadge color='light'>
-                                <IonText color='tribe'>
+                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
                                     {notifs}
                                 </IonText>
-                                <IonIcon color='tribe' icon={notifications} />
+                                <IonIcon color='dark' size="small" icon={'/icons/noti.svg'} />
                             </IonBadge>
                         </IonButton>
                         <IonButton onMouseDown={() => {
@@ -137,7 +137,7 @@ const Posts: React.FC = () => {
                             <MemberPfpImg size='smol' address={me.address} />
                         </IonButton>
                     </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 5 }} color='tribe' />}
+                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
@@ -160,12 +160,9 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar />
-                    <div style={{ height: 12 }}>
-
-                    </div>
+                    <IonToolbar className='transparent'/>
                 </IonHeader>
-                <IonGrid style={{ padding: 0 }}>
+                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:10 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />
@@ -175,7 +172,7 @@ const Posts: React.FC = () => {
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     {me && <div onClick={() => {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 3, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', fontWeight: 'bold', }}>
+                    }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 5, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontFamily: 'SF Pro Medium', }}>
                         +
                     </div>}
                 </IonFab>

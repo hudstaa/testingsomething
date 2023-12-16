@@ -25,9 +25,9 @@ export const WriteMessageModalProvider: React.FC = () => {
             setIsOpen(false);
         }}>
             <IonHeader>
-                <IonToolbar color='paper'>
+                <IonToolbar color='light'>
                     <IonButtons slot='end'>
-                        <IonButton fill="clear" color='dark' onClick={() => {
+                        <IonButton style={{position: "absolute", right: 0}}fill="clear" color='dark' onClick={() => {
                             dismiss(false)
                             setMedia(undefined as any)
                         }}>
@@ -35,12 +35,12 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        {postId ? 'Comments' : "New Post"}
+                        <div >{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
             </IonHeader>
-            <IonContent>
+            <IonContent color="light">
                 {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
                 {!postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
@@ -52,7 +52,7 @@ export const WriteMessageModalProvider: React.FC = () => {
                     {commentPath}
                 </IonItem>}
 
-                {message && message.media?.src && message.media.type.includes("image") ? <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} /> : message?.media?.src ? <video preload="none" style={{ height: '100px' }} src={message?.media?.src} /> : <></>}
+                {message && message.media?.src && message.media.type.includes("image") ? <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} /> : message?.media?.src ? <video webkit-playsinline playsInline preload="none" style={{ height: '100px' }} src={message?.media?.src} /> : <></>}
                 {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);

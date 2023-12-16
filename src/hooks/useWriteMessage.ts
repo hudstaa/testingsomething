@@ -22,6 +22,7 @@ export type WriteMessageHook = {
     setPresentingElement: (ref: any) => void
     dismiss: (shouldSend: boolean) => void
     setIsOpen: (open: boolean) => void
+    clearMessage:()=>void
 }
 
 export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
@@ -58,6 +59,9 @@ export const useWriteMessage = create<WriteMessageHook>((set, store) => ({
     },
     setContent(content: string) {
         set({ message: { author: store().author, ...store().message, content, sent: null, id: '' } });
+    },
+    clearMessage() {
+        set({ message: undefined});
     },
 
 }))

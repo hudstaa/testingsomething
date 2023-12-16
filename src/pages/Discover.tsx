@@ -20,9 +20,11 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge color='tribe' style={style} onClick={onClick}>
-    {formatEther(buyPrice)}
-  </IonBadge>
+  return <IonBadge color='tribe'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+}
+export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
+  const { buyPrice } = useBuyPass(address as Address, 1n);
+  return formatEther(buyPrice)+'Ξ'
 }
 
 const Discover: React.FC = () => {
@@ -75,19 +77,25 @@ const Discover: React.FC = () => {
             })
           }} />
           <IonList>
-            {hits.map(x => <IonItem detail={false} lines='none' color='light' onClick={() => {
-              setHits([])
-            }} routerLink={'/member/' + x.address}>
-              <IonButtons slot='start'>
+    {hits.map(x => (
+        <IonItem 
+            detail={false} 
+            lines="none" 
+            color='transparent' 
+            onClick={() => setHits([])} 
+            routerLink={'/member/' + x.address}
+            style={{ display: 'flex', alignItems: 'center' }} // Added flex styles here
+        >
+            <IonButtons slot='start'>
                 <IonAvatar>
-                  <IonImg src={x.twitterPfp} />
+                    <IonImg src={x.twitterPfp} style={{ marginTop: 8, width: 35, height: 35 }} />
                 </IonAvatar>
-              </IonButtons>
-              {x.twitterName}
-              <BuyPriceBadge address={x?.address} />
-            </IonItem>)}
-
-          </IonList>
+            </IonButtons>
+              <IonText className='semi' style={{ marginLeft: 0 }}>{x.twitterName}</IonText> {/* Added IonText for better control */}
+            <BuyPriceBadge address={x?.address} />
+        </IonItem>
+    ))}
+</IonList>
         </>
       </IonHeader>
       <TribeContent>
