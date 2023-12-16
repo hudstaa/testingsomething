@@ -70,8 +70,8 @@ const Member: React.FC = () => {
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-
-                <IonCard className='postcard' style={{margin: 0, padding: 10, borderRadius: 0}}>
+                <IonCard color="tribe" style={{height: 115, margin: 0, borderRadius: 0, marginTop: -50}}></IonCard>
+                <IonCard className='postcard' color="#00000000" style={{marginTop: -45, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}
@@ -81,7 +81,7 @@ const Member: React.FC = () => {
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: '1.15rem'}} >
+                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem'}} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
@@ -99,7 +99,9 @@ const Member: React.FC = () => {
                                 </div>
                             ) : null}
                         </div>
-                        <img style={{ width: 64, height: 64, borderRadius: '100px' }} src={member?.twitterPfp || personOutline} />
+                        <div style={{marginLeft: -3,padding:3}}>
+                            <img style={{ width: 72, height: 72, borderRadius: '100px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
+                        </div>
                     </IonCardHeader>
                 </IonCard>
 
