@@ -52,7 +52,7 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
                 <AreaChart data={trades}>
                     <CartesianGrid stroke="" />
                     <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>
-                    <Area type="monotone" dataKey="price" strokeWidth="2px" stroke="#F45000" fillOpacity={0.3} fill="#3B1400" />
+                    <Area type="monotone" dataKey="price" strokeWidth="2px" stroke="#F45000" fillOpacity={0.3} fill="#F45000" />
                 </AreaChart>
             </ResponsiveContainer>}
         </IonGrid >

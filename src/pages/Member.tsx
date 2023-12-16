@@ -73,7 +73,7 @@ const Member: React.FC = () => {
 
                 <IonCard className='postcard' style={{margin: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonText style={{paddingTop: 10, paddingBottom: 0, fontSize: '1rem'}} color='dark' className='regular' >
+                        <IonText style={{paddingTop: 10, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
@@ -81,7 +81,7 @@ const Member: React.FC = () => {
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: '1.2rem'}} >
+                        <IonText className='bold' color='dark' style={{marginTop: 5, paddingTop: 10, paddingBottom: 3, fontSize: '1.15rem'}} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
