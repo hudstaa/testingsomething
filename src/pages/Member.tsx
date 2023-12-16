@@ -73,7 +73,7 @@ const Member: React.FC = () => {
 
                 <IonCard className='postcard' style={{margin: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonText style={{paddingTop: 10, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
+                        <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
