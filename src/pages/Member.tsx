@@ -85,22 +85,19 @@ const Member: React.FC = () => {
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%'}}>
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginRight: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                        {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{   marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "5px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
+                            </IonButton>}
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
                                 <BuyPriceBadge address={member?.address} />
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5}}>
-
                                 </div>
                             ) : null}
-
-
-                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{   marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
-                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "5px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
-                                <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/chat-solid.svg'} />
-                            </IonButton>}
                         </div>
                         <img style={{ width: 64, height: 64, borderRadius: '100px' }} src={member?.twitterPfp || personOutline} />
                     </IonCardHeader>
