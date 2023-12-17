@@ -33,7 +33,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 44, height: 44, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 100 };
@@ -153,7 +153,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, paddingBottom: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '1rem', margin: 0, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
@@ -161,8 +161,8 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                             {member?.twitterName}
                         </IonText>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, marginTop: -1, paddingBottom: 0 }}>
-                    <IonText color='dark' className='regular' style={{ fontSize: ".9rem", paddingLeft: 0, paddingTop: 0, opacity: '75%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, paddingBottom: 0 }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 4, paddingTop: 0, opacity: '75%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>
