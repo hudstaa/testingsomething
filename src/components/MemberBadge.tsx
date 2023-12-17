@@ -36,7 +36,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 100 };
             break;
         case 'big':
         default:
@@ -63,7 +63,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 100 };
             break;
         case 'big':
         default:
@@ -86,7 +86,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 10 };
+            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 100 };
             break;
         case 'big':
         default:
@@ -104,7 +104,7 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     return <IonText color={color} className='bold'onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, paddingRight: 4}} >
+        style={{ margin: 0, fontSize: ".9rem", paddingRight: 4}} >
         {member?.twitterName}
     </IonText>
 }
@@ -153,7 +153,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
@@ -161,8 +161,8 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                             {member?.twitterName}
                         </IonText>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '16px', margin: 0, paddingBottom: 0, letterSpacing: '-0.0235em' }}>
-                    <IonText color='dark' className='regular' style={{ fontSize: 12, paddingLeft: 0, paddingTop: 1, opacity: '75%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, marginTop: -1, paddingBottom: 0 }}>
+                    <IonText color='dark' className='regular' style={{ fontSize: ".9rem", paddingLeft: 0, paddingTop: 0, opacity: '75%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>

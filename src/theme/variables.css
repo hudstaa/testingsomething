@@ -26,23 +26,23 @@ http://ionicframework.com/docs/theming/ */
 }
 
 @font-face {
-  font-family: 'TribeBold';
-  src: url("/fonts/tribebold.woff2") format("woff2");
+  font-family: 'TribeBlack';
+  src: url("/fonts/GTblack.otf") format("opentype");
 }
 
 @font-face {
   font-family: 'TribeReg';
-  src: url("/fonts/tribereg.woff2") format("woff2");
+  src: url("/fonts/GTregular.otf") format("opentype");
 }
 
 @font-face {
   font-family: 'TribeMed';
-  src: url("/fonts/tribemed.woff2") format("woff2");
+  src: url("/fonts/GTmedium.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeSemi';
-  src: url("/fonts/tribesemi.woff2") format("woff2");
+  font-family: 'TribeBold';
+  src: url("/fonts/GTbold.otf") format("opentype");
 }
 
 
@@ -89,27 +89,27 @@ http://ionicframework.com/docs/theming/ */
 }
 
 * {
-  font-family: 'SF Pro Medium', sans-serif !important;
+  font-family: 'TribeReg', sans-serif !important;
 }
 
 .header {
-  font-family: 'SF Pro Heavy' !important;
+  font-family: 'TribeBlack', sans-serif !important;
 }
 
 .black {
-  font-family: 'SF Pro Black' !important;
+  font-family: 'TribeBlack', sans-serif !important;
 }
 
 .regular {
-  font-family: 'SF Pro Regular', sans-serif !important;
+  font-family: 'TribeReg', sans-serif !important;
 }
 
 .heavy {
-  font-family: 'SF Pro Heavy', sans-serif !important;
+  font-family: 'TribeBlack', sans-serif !important;
 }
 
 .bold {
-  font-family: 'SF Pro Bold', sans-serif !important;
+  font-family: 'TribeBold', sans-serif !important;
 }
 
 .semi {
@@ -125,7 +125,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .medium {
-  font-family: 'SF Pro Medium', sans-serif !important;
+  font-family: 'TribeMed', sans-serif !important;
 }
 
 .bottom-start-container {
