@@ -24,7 +24,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <div style={{ paddingBottom: 3 }}> <IonCard onMouseDown={(e) => {
+    return <div style={{ borderBottom: '1px solid var(--ion-color-medium-shade)'  }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -37,7 +37,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }} color={bgColor} key={id} style={{ marginTop: 0, margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 12, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
                 <div style={{borderRadius: 100, marginTop: 4, position: "absolute"}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
