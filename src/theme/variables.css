@@ -362,8 +362,8 @@ ion-footer ion-toolbar {
   --ion-color-lightt-tint: #E9E8EB;
 
     /** tabblur **/
-  --ion-color-tabblur: #ffffffc0;
-  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.533);
+  --ion-color-tabblur: #ffffffd5;
+  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.704);
   --ion-color-tabblur-contrast: #000000;
   --ion-color-tabblur-contrast-rgb: 0, 0, 0;
   --ion-color-tabblur-shade: #d7d8da00;
@@ -749,7 +749,7 @@ ion-tab-bar {
   background: rgba(255, 255, 255, 0.5); /* Here, '0.5' is the alpha value for 50% transparency */
 
   /* Add the blur effect */
-  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
+  backdrop-filter: blur(25px); /* Adjust the px value to increase or decrease the blur */
 }
 
 .message-container {
