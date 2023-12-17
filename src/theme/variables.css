@@ -69,8 +69,8 @@ http://ionicframework.com/docs/theming/ */
 }
 
 @font-face {
-  font-family: 'SF Pro Light';
-  src: url("/fonts/SF-Pro-Text-Light.otf") format("opentype");
+  font-family: 'TribeLight';
+  src: url("/fonts/GTlight.otf") format("opentype");
 }
 
 @font-face {
@@ -130,7 +130,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .light {
-  font-family: 'SF Pro Light', sans-serif !important;
+  font-family: 'TribeLight', sans-serif !important;
 }
 
 .medium {
