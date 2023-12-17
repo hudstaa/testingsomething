@@ -24,7 +24,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <div style={{ paddingBottom: 3 }}> <IonCard onMouseDown={(e) => {
+    return <div style={{ borderBottom: '1px solid var(--ion-color-medium-shade)'  }}> <IonCard onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -37,16 +37,18 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }} color={bgColor} key={id} style={{ marginTop: 0, margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" address={author}/></div>
-                <div style={{ marginLeft: 6 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 8, marginRight: 0 }}>
+            <div style={{ display: 'flex' }}>
+                <div style={{borderRadius: 100, marginTop: 4, position: "absolute"}}>
+                    <MemberPfp color='dark' size="veru-smol" address={author}/>
+                </div>
+                <div style={{ marginLeft: 53}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
-            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '.95rem', lineHeight: '1' }} onClick={() => {
+        <IonCardContent style={{ paddingLeft: 62, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
+            <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 {content}
             </IonText>
@@ -66,7 +68,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 45, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}

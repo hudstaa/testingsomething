@@ -26,23 +26,23 @@ http://ionicframework.com/docs/theming/ */
 }
 
 @font-face {
-  font-family: 'TribeBold';
-  src: url("/fonts/tribebold.woff2") format("woff2");
+  font-family: 'TribeBlack';
+  src: url("/fonts/GTblack.otf") format("opentype");
 }
 
 @font-face {
   font-family: 'TribeReg';
-  src: url("/fonts/tribereg.woff2") format("woff2");
+  src: url("/fonts/GTregular.otf") format("opentype");
 }
 
 @font-face {
   font-family: 'TribeMed';
-  src: url("/fonts/tribemed.woff2") format("woff2");
+  src: url("/fonts/GTmedium.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeSemi';
-  src: url("/fonts/tribesemi.woff2") format("woff2");
+  font-family: 'TribeBold';
+  src: url("/fonts/GTbold.otf") format("opentype");
 }
 
 
@@ -69,8 +69,13 @@ http://ionicframework.com/docs/theming/ */
 }
 
 @font-face {
-  font-family: 'SF Pro Light';
-  src: url("/fonts/SF-Pro-Text-Light.otf") format("opentype");
+  font-family: 'TribeLight';
+  src: url("/fonts/GTlight.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'OH';
+  src: url("/fonts/heavyheader.otf") format("opentype");
 }
 
 @font-face {
@@ -89,27 +94,31 @@ http://ionicframework.com/docs/theming/ */
 }
 
 * {
-  font-family: 'SF Pro Medium', sans-serif !important;
+  font-family: 'TribeReg', sans-serif !important;
 }
 
 .header {
-  font-family: 'SF Pro Heavy' !important;
+  font-family: 'TribeBlack', sans-serif !important;
 }
 
 .black {
-  font-family: 'SF Pro Black' !important;
+  font-family: 'TribeBlack', sans-serif !important;
 }
 
 .regular {
-  font-family: 'SF Pro Regular', sans-serif !important;
+  font-family: 'TribeReg', sans-serif !important;
 }
 
 .heavy {
-  font-family: 'SF Pro Heavy', sans-serif !important;
+  font-family: 'TribeBlack', sans-serif !important;
+}
+
+.heavyhead {
+  font-family: 'OH', sans-serif !important;
 }
 
 .bold {
-  font-family: 'SF Pro Bold', sans-serif !important;
+  font-family: 'TribeBold', sans-serif !important;
 }
 
 .semi {
@@ -121,11 +130,11 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .light {
-  font-family: 'SF Pro Light', sans-serif !important;
+  font-family: 'TribeLight', sans-serif !important;
 }
 
 .medium {
-  font-family: 'SF Pro Medium', sans-serif !important;
+  font-family: 'TribeMed', sans-serif !important;
 }
 
 .bottom-start-container {
@@ -362,8 +371,8 @@ ion-footer ion-toolbar {
   --ion-color-lightt-tint: #E9E8EB;
 
     /** tabblur **/
-  --ion-color-tabblur: #ffffffc0;
-  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.533);
+  --ion-color-tabblur: #ffffffd5;
+  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.704);
   --ion-color-tabblur-contrast: #000000;
   --ion-color-tabblur-contrast-rgb: 0, 0, 0;
   --ion-color-tabblur-shade: #d7d8da00;
@@ -451,7 +460,7 @@ ion-footer ion-toolbar {
     --ion-color-postcard-tint: #9d9fa6;
   
 
-    --ion-color-light: #0c0c0d;
+    --ion-color-light: #000000;
     --ion-color-light-rgb: 34, 36, 40;
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
@@ -459,7 +468,7 @@ ion-footer ion-toolbar {
     --ion-color-light-tint: #26262B;
 
         /** lightt **/
-    --ion-color-lightt: #0c0c0d;
+    --ion-color-lightt: #171717;
     --ion-color-lightt-rgb: 34, 36, 40;
     --ion-color-lightt-contrast: 255, 255, 255;
     --ion-color-lightt-contrast-rgb: 0, 0, 0;
@@ -749,7 +758,7 @@ ion-tab-bar {
   background: rgba(255, 255, 255, 0.5); /* Here, '0.5' is the alpha value for 50% transparency */
 
   /* Add the blur effect */
-  backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
+  backdrop-filter: blur(25px); /* Adjust the px value to increase or decrease the blur */
 }
 
 .message-container {
