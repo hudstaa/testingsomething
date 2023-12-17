@@ -73,7 +73,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div style={{position: 'absolute', top: 3, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:45, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-.3px'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:45, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
                             {comment.content}
                         </IonText>
                         <IonButtons slot='end'>
