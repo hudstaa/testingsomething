@@ -70,7 +70,7 @@ const Member: React.FC = () => {
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard color="tribe" style={{height: 115, margin: 0, borderRadius: "35px 35px 0 0", marginTop: -45}}></IonCard>
+                <IonCard color="tribe" style={{height: 115, margin: 0, borderRadius: "25px 25px 0 0", marginTop: -45}}></IonCard>
                 <IonCard className='postcard' color="#00000000" style={{marginTop: -45, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
