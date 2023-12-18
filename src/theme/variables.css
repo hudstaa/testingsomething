@@ -896,6 +896,6 @@ ion-select::part(icon) {
 
 a {
   color: var(--ion-color-tribe);
-  font-family: 'TribeBold' !important;
+  font-family: 'TribeMed' !important;
   text-decoration: none !important;
 }

@@ -42,7 +42,7 @@ export const TwitterNameLink: React.FC<{ twitterName: string }> = ({ twitterName
     return member && member !== null ? <IonChip style={{backgroundColor: 'transparent', padding: 0, margin: 0, minHeight: "20px", fontSize: "1rem", paddingBottom: 2 }} onClick={() => {
         push('/member/' + member?.address)
     }}>
-        <IonText className='bold' color="tribe" style={{fontSize: "1rem"}}>
+        <IonText className='medium' color="tribe" style={{fontSize: "1rem"}}>
             @{twitterName}
         </IonText>
     </IonChip> : <IonRouterLink href={'x.com/'+twitterName}><IonChip>
