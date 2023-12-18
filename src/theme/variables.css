@@ -429,7 +429,7 @@ ion-footer ion-toolbar {
     --ion-color-danger-tint: #ff5b71;
 
     --ion-color-dark: #e7e9ea;
-    --ion-color-dark-rgb: 244, 245, 248;
+    --ion-color-dark-rgb: rgb(231, 233, 234);
     --ion-color-dark-contrast: #000000;
     --ion-color-dark-contrast-rgb: 0, 0, 0;
     --ion-color-dark-shade: #d7d8da;
