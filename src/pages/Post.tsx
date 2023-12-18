@@ -1,4 +1,4 @@
-import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonTitle, IonHeader, IonToolbar, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -96,7 +96,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage ref={pageRef}>
-        <TribeHeader showBackButton={true} />
+        <TribeHeader showBackButton={true} title='Post'/>
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
