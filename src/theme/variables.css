@@ -893,3 +893,9 @@ ion-select::part(icon) {
   text-overflow: clip;
   /* Score label styles, if any */
 }
+
+a {
+  color: var(--ion-color-tribe);
+  font-family: 'TribeBold' !important;
+  text-decoration: none !important;
+}

@@ -59,7 +59,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                             if(!info){
                                 return <a {...attributes}>{content}</a>
                             }
-                            return <a {...attributes}>{info.emoji}{content}</a>
+                            return <a {...attributes}>{content}{info.emoji}</a>
                         }else if(content.startsWith("@")){
                             return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
                         }
