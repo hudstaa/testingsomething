@@ -43,6 +43,8 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     <IonText color="dark" style={{ 
         fontWeight: 600, 
         top: 12,
+        left: 0,
+        right: 0,
         fontSize: '18px', 
         textAlign: 'center',
         width: '100%',
