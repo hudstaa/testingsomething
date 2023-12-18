@@ -746,7 +746,7 @@ ion-icon {
 }
 
 ion-card {
-  border-radius: 7x;
+  border-radius: 0px;
   /* Adjust the value to your desired border radius */
 }
 
