@@ -40,7 +40,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
                 }
             </IonButtons>
 
-            <IonText color="dark" style={{ 
+            <IonText className="bold" color="dark" style={{ 
                 fontWeight: 600, 
                 top: 12,
                 left: 0,
