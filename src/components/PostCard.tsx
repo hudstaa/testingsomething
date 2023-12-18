@@ -50,7 +50,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </div>
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
-            <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
+            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
                     render:({attributes,content,eventListeners,tagName})=>{
