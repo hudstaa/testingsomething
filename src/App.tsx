@@ -334,7 +334,7 @@ const App: React.FC = () => {
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="swap" href="/swap">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? swapHorizontal : swapHorizontal} />
+                  <IonIcon icon={tab === 'account' ? swapHorizontal : swapHorizontal} />
                 </IonTabButton>
                 </IonTabBar>
 
