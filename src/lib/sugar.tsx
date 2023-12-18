@@ -134,7 +134,15 @@ const CashtagToken = linkifyjs.createTokenClass('cashtag', {
         emoji:'🏕️',
         swap:'https://swap.tribe.computer'
     },
+    bonk:{
+        emoji:'<img src="https://cdn3.emoji.gg/emojis/3416-bonk.png"/>',
+        swap:'https://jup.ag/swap/Bonk-USDC'
+    },
+    mog:{
+emoji:'🕶️',
+swap:'https://swap.tribe.computer/#/?outputCurrency=0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a&chain=ethereum'
+    },
     pepe:{emoji:'🐸',swap:'https://swap.tribe.computer/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=ethereum&inputCurrency=ETH'},
-    wif:{emoji:'👒',swap:'https://swap.tribe.computer/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=ethereum&inputCurrency=ETH'},
+    wif:{emoji:'👒',swap:'https://jup.ag/swap/EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm-USDC'},
     bitcoin:{emoji:'🦔',swap:'https://swap.tribe.computer/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=ethereum&inputCurrency=ETH'}
 }
