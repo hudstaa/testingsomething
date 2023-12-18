@@ -1,7 +1,14 @@
 import { IonPage, IonContent } from '@ionic/react';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 const Swap:React.FC=()=>{
+const {push,location}=useHistory()
+useEffect(()=>{
+    if(location.pathname==='/swap'){
+    (window as any).location=("https://swap.tribe.computer")
+}
+},[location])
 return <IonPage>
-    <object style={{  overflow: 'hidden',width:"100%",height:"100%",border:'none'}} type="text/html" data='https://swap.tribe.computer'/>
         </IonPage>
 }
 export default Swap;
