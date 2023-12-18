@@ -184,7 +184,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
-                        }} color='dark' className='bold'>
+                        }} color='dark' className='medium'>
                             {member?.twitterName}
                         </IonText>
                     </div>
