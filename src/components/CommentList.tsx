@@ -9,6 +9,7 @@ import { MemberAlias, MemberPfp, MemberUsername } from "./MemberBadge";
 import Voter from "./Voter";
 import { timestampAgo } from "./TradeItem";
 import { useWriteMessage } from "../hooks/useWriteMessage";
+import Linkify from "linkify-react";
 type CommentListProps = {
     postId: string;
     uid: string
@@ -74,7 +75,9 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         <div style={{position: 'absolute', top: 3, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
                         <IonText className='regular' color='dark' style={{ paddingLeft:45, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
-                            {comment.content}
+                            <Linkify>
+                                {comment.content}
+                            </Linkify>
                         </IonText>
                         <IonButtons slot='end'>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {

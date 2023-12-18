@@ -1,12 +1,13 @@
 import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonLabel, IonRouterLink, IonRow, IonText, IonTitle } from '@ionic/react';
 import { Trade } from '../models/Trade';
 import { formatUnits, formatEther } from 'viem'
-import { useMember } from '../hooks/useMember';
+import { Member, useMember } from '../hooks/useMember';
 import { useHistory } from 'react-router';
 import { arrowDownCircle, bodyOutline, person, personOutline, returnDownBack, trendingUp } from 'ionicons/icons';
-import { Timestamp } from 'firebase/firestore';
+import { Query, Timestamp, collection, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore';
 import { timeAgo } from './TradeItem';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
+import { getApp } from 'firebase/app';
 export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ address, color = undefined }) => {
     const member = useMember(x => x.getFriend(address))
     return member && member !== null ? <IonChip onMouseDown={() => {
@@ -23,6 +24,36 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
         {address.slice(0, 4) + '...' + address.slice(38, 42)}
     </IonChip>
 }
+
+export const TwitterNameLink: React.FC<{ twitterName: string }> = ({ twitterName }) => {
+    const [member, setMember] = useState<any | undefined>();
+    const { push } = useHistory();
+    useEffect(() => {
+        const db = getFirestore(getApp())
+        const coll = collection(db, "member");
+        const q = query(coll, where("twitterUsername", "==", twitterName.toLowerCase()));
+        getDocs(q).then((res) => {
+            if (!res.empty) {
+                setMember({ ...res.docs[0].data(), id: res.docs[0].id })
+
+            }
+        })
+    }, [])
+    return member && member !== null ? <IonChip onClick={() => {
+        push('/member/' + member?.address)
+    }} color={'tribe'}>
+        <IonAvatar>
+            <IonImg onError={() => {
+            }} src={member?.twitterPfp || personOutline} />
+        </IonAvatar>
+        <IonText>
+            {twitterName}
+        </IonText>
+    </IonChip> : <IonRouterLink href={'x.com/'+twitterName}><IonChip>
+        {twitterName}
+    </IonChip></IonRouterLink>
+}
+
 
 export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol' | 'big' | 'veru-smol' | 'double-smol', style?: any }> = ({ address, color = undefined, size = 'big', style }) => {
     const member = useMember(x => x.getFriend(address));
@@ -101,10 +132,10 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     const member = useMember(x => x.getFriend(address))
     const setHighlight = useMember(x => x.setHighlight);
 
-    return <IonText color={color} className='bold'onMouseDown={() => {
+    return <IonText color={color} className='bold' onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, fontSize: ".9rem", paddingRight: 4}} >
+        style={{ margin: 0, fontSize: ".9rem", paddingRight: 4 }} >
         {member?.twitterName}
     </IonText>
 }
@@ -162,7 +193,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                         </IonText>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, paddingBottom: 0 }}>
-                    <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 4, paddingTop: 0, opacity: '75%' }}>
+                        <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 4, paddingTop: 0, opacity: '75%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>

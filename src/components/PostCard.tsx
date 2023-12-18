@@ -3,14 +3,16 @@ import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
-import { MemberCardHeader, MemberPfp } from "./MemberBadge"
+import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
-import { usePost } from "../hooks/usePosts"
+import Linkify from "linkify-react"
+import * as sugar from '../lib/sugar'
+import 'linkify-plugin-mention';
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
@@ -50,8 +52,26 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         <IonCardContent style={{ paddingLeft: 62, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
             <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
+                <Linkify options={{
+                    render:({attributes,content,eventListeners,tagName})=>{
+                        if(content.startsWith("$")){
+                            const info = sugar.known_pairs[content.toLowerCase().slice(1)];
+                            if(!info){
+                                return <a {...attributes}>{content}</a>
+                            }
+                            return <a {...attributes}>{info.emoji}{content}</a>
+                        }else if(content.startsWith("@")){
+                            return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
+                        }
+                    }                    ,
+                    formatHref:
+                {                    
+                    mention: (href) => "https://beta.tribe.computer/member/" + href.substring(1),
+                }}}>
                 {content}
-            </IonText>
+                </Linkify>
+                
+                            </IonText>
             {media && (
                 <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
