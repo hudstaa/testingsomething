@@ -3,14 +3,16 @@ import { Timestamp } from "firebase/firestore"
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
-import { MemberCardHeader, MemberPfp } from "./MemberBadge"
+import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
 import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
-import { usePost } from "../hooks/usePosts"
+import Linkify from "linkify-react"
+import * as sugar from '../lib/sugar'
+import 'linkify-plugin-mention';
 
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
@@ -24,7 +26,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return <div style={{ paddingBottom: 3 }}> <IonCard onMouseDown={(e) => {
+    return  <IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -34,22 +36,42 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ marginTop: 0, margin: 0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, marginBottom: 0, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ marginTop: 3,marginBottom:3, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 1, paddingTop: 5, marginRight: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" address={author}/></div>
-                <div style={{ marginLeft: 6 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 8, marginRight: 0 }}>
+            <div style={{ display: 'flex' }}>
+                <div style={{borderRadius: 100, marginTop: 4, position: "absolute"}}>
+                    <MemberPfp color='dark' size="veru-smol" address={author}/>
+                </div>
+                <div style={{ marginLeft: 53}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 7, margin: 0 }}  >
-            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '.95rem', lineHeight: '1' }} onClick={() => {
+        <IonCardContent style={{ paddingLeft: 62, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
+            <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
+                <Linkify options={{
+                    render:({attributes,content,eventListeners,tagName})=>{
+                        if(content.startsWith("$")){
+                            const info = sugar.known_pairs[content.toLowerCase().slice(1)];
+                            if(!info){
+                                return <a {...attributes}>{content}</a>
+                            }
+                            return <a {...attributes}>{info.emoji}{content}</a>
+                        }else if(content.startsWith("@")){
+                            return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
+                        }
+                    }                    ,
+                    formatHref:
+                {                    
+                    mention: (href) => "https://beta.tribe.computer/member/" + href.substring(1),
+                }}}>
                 {content}
-            </IonText>
+                </Linkify>
+                
+                            </IonText>
             {media && (
                 <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
@@ -66,7 +88,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: -4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 45, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
@@ -96,5 +118,5 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonButton>
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
-    </IonCard></div>
+    </IonCard>
 }

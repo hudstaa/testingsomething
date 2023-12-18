@@ -2,7 +2,7 @@ import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeade
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { close, personOutline, ticketOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import { Address, formatUnits } from 'viem';
 import { FriendTechPortfolioChip } from '../components/FriendPortfolioChip';
 import { MemberBadge, MemberCardHeader } from '../components/MemberBadge';
@@ -61,17 +61,19 @@ const Member: React.FC = () => {
     useIonViewDidEnter(() => {
         setPresentingElement(pageRef.current)
     })
-
+    if(address==='undefined'){
+        return <Redirect to={'/member'}/>
+    }
     return (
         <IonPage ref={pageRef}>
-            <TribeHeader
-                color='tertiary'
+            <TribeHeader 
+                color='tribe'
                 title=""
+                sticky
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard color="tribe" style={{height: 115, margin: 0, borderRadius: "35px 35px 0 0", marginTop: -45}}></IonCard>
-                <IonCard className='postcard' color="#00000000" style={{marginTop: -45, marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
+                <IonCard className='postcard' color="#00000000" style={{ marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}

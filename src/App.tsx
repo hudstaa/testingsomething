@@ -271,6 +271,9 @@ const App: React.FC = () => {
                 <Route path="/channel/:address">
                   <Room />
                 </Route>
+                <Route path="/channel/undefined">
+                  <Redirect to="/channel"/>
+                </Route>
                 <Route path="/post/:id" exact>
                   <Post />
                 </Route>
@@ -304,6 +307,7 @@ const App: React.FC = () => {
                 <Route path="/member/:address" exact>
                   <Member />
                 </Route>
+
                 <Route path="/auth" exact>
                   <MobileAuth />
                 </Route>
@@ -330,10 +334,9 @@ const App: React.FC = () => {
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="swap" href="/swap">
-                  <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? swapHorizontal : swapHorizontal} />
+                <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/swap.svg' : '/icons/swap.svg'} />
                 </IonTabButton>
                 </IonTabBar>
-
             </IonTabs>
 
           </IonReactHashRouter>

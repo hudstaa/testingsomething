@@ -101,7 +101,7 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar color="paper" style={{ paddingLeft: 10}}>
+                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 8}}>
                     <IonButtons slot='start'>
                         <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
@@ -162,7 +162,7 @@ const Posts: React.FC = () => {
                 <IonHeader>
                     <IonToolbar className='transparent'/>
                 </IonHeader>
-                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:10 }}>
+                <IonGrid style={{ borderTop: '1px solid var(--ion-color-medium-shade)', paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 10 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />

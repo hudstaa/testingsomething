@@ -46,14 +46,10 @@ const Account: React.FC = () => {
         }
         const db = getFirestore(app);
 
-        const coll = collection(db, "post");
-        const q = query(coll, where("author", "==", me!.address));
+        const coll = collection(db, "member");
+        const q = query(coll, where("referrer", "==", me!.twitterUsername));
         getCountFromServer(q).then((snap) => {
-            const coll2 = collection(db, "channel", me!.address, 'messages');
-            const q2 = query(coll2, where("author", "==", me!.address));
-            getCountFromServer(q2).then((snap2) => {
-                setCount(snap2.data().count + snap.data().count);
-            })
+                setCount(snap.data().count);
         })
     }, [me]);
     useEffect(() => {
@@ -174,14 +170,13 @@ const Account: React.FC = () => {
                                         <IonButtons slot='end'>
                                             <IonBadge color='light'>
                                                 <IonText color='dark'>
-                                                    earned:
+                                                    invites:
                                                 </IonText>
                                                 <IonCardTitle>
                                                     <IonText color='tribe'>
-                                                        {count === null ? <IonSpinner name='dots' /> : count * 10}
+                                                        {count === null ? <IonSpinner name='dots' /> : count }
                                                     </IonText>
                                                 </IonCardTitle>
-                                                <IonText>tribe</IonText>
                                             </IonBadge>
                                         </IonButtons>
                                     </IonItem>
