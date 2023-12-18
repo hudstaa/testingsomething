@@ -271,6 +271,9 @@ const App: React.FC = () => {
                 <Route path="/channel/:address">
                   <Room />
                 </Route>
+                <Route path="/channel/undefined">
+                  <Redirect to="/channel"/>
+                </Route>
                 <Route path="/post/:id" exact>
                   <Post />
                 </Route>
@@ -304,6 +307,7 @@ const App: React.FC = () => {
                 <Route path="/member/:address" exact>
                   <Member />
                 </Route>
+
                 <Route path="/auth" exact>
                   <MobileAuth />
                 </Route>
