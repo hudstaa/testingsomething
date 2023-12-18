@@ -39,17 +39,17 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }} color={bgColor} key={id} style={{ borderTop: '1px solid var(--ion-color-medium-shade)', marginTop: 3,marginBottom:3, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 12, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
-                <div style={{borderRadius: 100, marginTop: 4, position: "absolute"}}>
+                <div style={{borderRadius: 100, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 53}}>
+                <div style={{ marginLeft: 8}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 62, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
+        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
             <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
@@ -82,13 +82,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ margin: 0, marginTop: -5, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ marginLeft: -5, marginTop: -5, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 45, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 0, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
