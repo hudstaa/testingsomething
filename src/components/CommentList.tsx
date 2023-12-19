@@ -73,7 +73,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div style={{position: 'absolute', top: 0, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 40, marginLeft: 1, marginBottom: 5, fontSize: "1.1rem", letterSpacing: '-0.0135em'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 42, marginLeft: 1, marginBottom: 0, fontSize: "1.1rem", letterSpacing: '-0.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
@@ -93,7 +93,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     </IonItem>
                     {
                         comment.media &&
-                        <IonItem lines="none" color='lightt' style={{ marginLeft: 45, marginRight: 85, paddingBottom: 12}} >
+                        <IonItem lines="none" color='lightt' style={{ marginLeft: 0, marginRight: 85, paddingBottom: 12}} >
                             {comment.media.type.includes("image") ?
                                 <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
