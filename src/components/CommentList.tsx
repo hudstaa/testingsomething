@@ -60,7 +60,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
                     <div style={{backgroundColor: "var(--ion-color-light"}}>
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 12, paddingBottom: 12, paddingRight: 24 }} >
+                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 28, top: -2.5, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         </IonButtons>
@@ -72,19 +72,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                                 {comment.content}
                             </Linkify>
                         </IonText>
-                        <div style={{paddingTop: 8, display: "flex", flexDirection: "row"}}>
-                        <IonButtons slot='start 'style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
-                        <IonText>
-                        <span className="medium" onMouseDown={() => {
-                                setCommentPath(comment.id);
-                            }}>Reply</span>
-                        </IonText>
-                        </IonButtons>
-                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 4, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
-                            • {timestampAgo(comment.sent)}
-                            
-                        </IonText>
-                        </div>
+                        
                         </div>
                         <IonButtons slot='end'>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
@@ -102,11 +90,26 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     </IonItem>
                     {
                         comment.media &&
-                        <IonItem lines="none" color='lightt' style={{ marginLeft: 0, marginRight: 85, paddingBottom: 12}} >
+                        <IonItem lines="none" color='lightt' style={{ marginLeft: 0, marginRight: 85, paddingBottom: 4, paddingTop: 8}} >
                             {comment.media.type.includes("image") ?
                                 <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
+                    <IonItem color={'lightt'}>
+                    <div style={{paddingTop: 0, marginTop: 0, display: "flex", flexDirection: "row"}}>
+                        <IonButtons slot='start 'style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
+                        <IonText>
+                        <span className="medium" onMouseDown={() => {
+                                setCommentPath(comment.id);
+                            }}>Reply</span>
+                        </IonText>
+                        </IonButtons>
+                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 4, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
+                            • {timestampAgo(comment.sent)}
+                            
+                        </IonText>
+                        </div>
+                        </IonItem>
                 </div>
                 </div>))
             }
