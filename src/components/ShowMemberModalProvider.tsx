@@ -92,10 +92,10 @@ export const ShowMemberModalProvider: React.FC = () => {
 
                 </IonCardContent>
                     <div style={{  display: 'flex', flexDirection: 'column'}}>
-                        <div style={{ marginTop: -30}} >
+                        <div >
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
-                    {useMemo(() => <div className="ion-text-center" style={{  marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    {useMemo(() => <div className="ion-text-center" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                         <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
                             Sell {formatEth(sellPrice as any)}
                         </IonButton>
