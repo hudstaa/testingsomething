@@ -54,30 +54,38 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
     return (
         <IonList style={{ marginRight: offset ? -35 : undefined }}>
-            <div style={{ height: 5 }}>
+            <div style={{ height: 16 }}>
 
             </div>
             {comments.map((comment, i) => (
                 < div key={i}>
                     <div style={{backgroundColor: "var(--ion-color-light"}}>
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8, paddingRight: 24 }} >
-                        
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: -3, fontSize: "1rem"}}>
+                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 12, paddingBottom: 12, paddingRight: 24 }} >
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 28, top: -2.5, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
-                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
-                            • {timestampAgo(comment.sent)}
-                            {/* <span onMouseDown={() => {
-                                setCommentPath(comment.id);
-                            }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
-                        </IonText>
                         </IonButtons>
                         <div style={{position: 'absolute', top: 0, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:36, whitespace: 'pre-wrap', marginTop: 24, marginLeft: 1, marginBottom: 0, fontSize: "1.05rem", letterSpacing: '-0.0135em', lineHeight: "1.135em"}} >
+                        <div style={{display: "flex", flexDirection: "column"}}>
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 32, marginLeft: 0, marginBottom: 0, fontSize: "1.05rem", letterSpacing: '-0.0135em', lineHeight: "1.135em"}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
                         </IonText>
+                        <div style={{paddingTop: 8, display: "flex", flexDirection: "row"}}>
+                        <IonButtons slot='start 'style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
+                        <IonText>
+                        <span className="medium" onMouseDown={() => {
+                                setCommentPath(comment.id);
+                            }}>Reply</span>
+                        </IonText>
+                        </IonButtons>
+                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 4, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
+                            • {timestampAgo(comment.sent)}
+                            
+                        </IonText>
+                        </div>
+                        </div>
                         <IonButtons slot='end'>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                                 const db = getFirestore(app);
@@ -90,6 +98,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                             }} />
 
                         </IonButtons>
+                        
                     </IonItem>
                     {
                         comment.media &&

@@ -57,7 +57,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 28, height: 28, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 100 };
