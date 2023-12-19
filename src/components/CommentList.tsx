@@ -62,7 +62,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                     <IonItem lines="none" color={'lightt'} style={{  borderTop: '1px solid var(--ion-color-medium-shade)', marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 40, top: 2, fontSize: "1rem"}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 40, top: 3, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
                             • {timestampAgo(comment.sent)}
