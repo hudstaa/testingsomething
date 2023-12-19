@@ -39,7 +39,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }} color={bgColor} key={id} style={{ borderBottom: '1px solid var(--ion-color-medium-shade)', marginTop: 0,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 12, paddingBottom: 12, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 16, paddingBottom: 12, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
                 <div style={{borderRadius: 100, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
@@ -49,7 +49,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 12, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
+        <IonCardContent style={{ paddingLeft: 16, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
@@ -82,7 +82,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ marginLeft: -5, marginBottom: 0, marginTop: -5, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop: -5, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)

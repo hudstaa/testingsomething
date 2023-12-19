@@ -32,7 +32,7 @@ export const TribeHeader: React.FC<{ image?: string, title?: string | ReactNode,
     const { location, goBack } = useHistory();
     const toolbar = !hide ? (
         <IonToolbar color={color ? color : 'tabblur'} style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-            <IonButtons slot='start' style={{ zIndex: 3, position: 'absolute', left: 0 }}>
+            <IonButtons slot='start' style={{ zIndex: 3, position: 'absolute', left: 4 }}>
                 {showBackButton && 
                     <IonButton onClick={goBack} color="dark">
                         <IonIcon icon={chevronBack} />

@@ -101,7 +101,7 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 8}}>
+                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 10}}>
                     <IonButtons slot='start'>
                         <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
