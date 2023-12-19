@@ -94,7 +94,6 @@ const Member: React.FC = () => {
                             </IonButton>}
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
-                                <BuyPriceBadge address={member?.address} />
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5}}>
