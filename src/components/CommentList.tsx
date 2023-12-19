@@ -62,7 +62,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     <div style={{backgroundColor: "var(--ion-color-light"}}>
                     <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8, paddingRight: 24 }} >
                         
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: 1, fontSize: "1rem"}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: -3, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
                             • {timestampAgo(comment.sent)}
@@ -73,7 +73,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div style={{position: 'absolute', top: 0, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 36, marginLeft: 1, marginBottom: 0, fontSize: "1.05rem", letterSpacing: '-0.0135em', lineHeight: "1.135em"}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:36, whitespace: 'pre-wrap', marginTop: 24, marginLeft: 1, marginBottom: 0, fontSize: "1.05rem", letterSpacing: '-0.0135em', lineHeight: "1.135em"}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
