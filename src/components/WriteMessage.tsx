@@ -81,7 +81,8 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
         autoGrow
-        style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+        className="regular"
+        style={{ '--placeholder-font-family': 'TribeReg', flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
