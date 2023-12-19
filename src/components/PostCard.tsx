@@ -92,7 +92,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>}
-            <IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop: -5, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: -12, marginBottom: 0, marginTop: -5, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
