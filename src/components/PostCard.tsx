@@ -82,22 +82,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow >
-            {<IonButton style={{ marginLeft: -5, marginBottom: 0, marginTop: -5, opacity: '75%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            {<IonButton style={{ marginLeft: -5, marginBottom: 0, marginTop: -5, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 0, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='regular' style={{ fontSize: 14, marginTop: 5, marginLeft: 0, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
-            <IonButton style={{ margin: 0, opacity: '75%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ margin: 0, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='medium' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
+                <IonText className='regular' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
                     Share
 
                 </IonText>
