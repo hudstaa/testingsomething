@@ -53,19 +53,19 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
     }, [postId]);
 
     return (
-        <IonList style={{ borderTop: '1px solid var(--ion-color-medium-shade)', marginRight: offset ? -35 : undefined }}>
+        <IonList style={{ marginRight: offset ? -35 : undefined }}>
             <div style={{ height: 5 }}>
 
             </div>
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 0, paddingBottom: 8 }} >
+                    <IonItem lines="none" color={'lightt'} style={{  borderTop: '1px solid var(--ion-color-medium-shade)', marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 8, paddingBottom: 8 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 48, top: 3, fontSize: 14}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 48, top: 0, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <MemberUsername color='medium' address={comment.author}/>
-                        <IonText color={'dark'} className='regular' style={{ paddingBottom: 0, marginTop: '.8px', marginLeft: 3, bottom: 0, fontSize: 10, opacity: '75%' }}>
+                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 3, bottom: 0, fontSize: "1rem", opacity: '75%' }}>
                             • {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
@@ -74,7 +74,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonButtons>
                         <div style={{position: 'absolute', top: 3, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:48, whitespace: 'pre-wrap', marginTop: 25, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:48, whitespace: 'pre-wrap', marginTop: 24, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
