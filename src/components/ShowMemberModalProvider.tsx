@@ -14,6 +14,7 @@ import { useBalance } from "wagmi";
 import useTabs from "../hooks/useTabVisibility";
 import { useNotifications } from "../hooks/useNotifications";
 import useBoosters from "../hooks/useBoosters";
+import { MemberGraph } from "./MemberGraph";
 
 export const ShowMemberModalProvider: React.FC = () => {
     const { highlight, setHighlight } = useMember();
@@ -46,7 +47,7 @@ export const ShowMemberModalProvider: React.FC = () => {
 
     }, [pathname])
     return <>
-        <IonModal presentingElement={presenter} initialBreakpoint={0.75} breakpoints={[0, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presenter} initialBreakpoint={0.7} breakpoints={[0, 0.7]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
             <IonHeader>
@@ -63,9 +64,9 @@ export const ShowMemberModalProvider: React.FC = () => {
 
 
             </IonHeader>
-            <IonContent>
+            <IonContent style={{padding: 0}}>
 
-                <IonCardContent>
+                <IonCardContent style={{padding: 0}}>
                     <IonList>
 
                         <IonItem lines="none">
@@ -84,28 +85,33 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 chat
                             </IonButton>
 
+
                         </IonItem>
 
-                        {useMemo(() => <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
-                                Sell {formatEth(sellPrice as any)}
-                            </IonButton>
-                            <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
-                                Buy {formatEth(buyPrice)}
-                            </IonButton>
-                        </div>, [sellPass, buyPass])}
-                        <IonItem lines="none">
-                            <IonText color='warning'>
-                                {buyError?.message}
-                                {sellError?.message}
-                            </IonText>
-                        </IonItem>
                     </IonList>
 
                 </IonCardContent>
+                    <div style={{  display: 'flex', flexDirection: 'column'}}>
+                        <div style={{ marginTop: -30}} >
+                            {highlight && <MemberGraph address={highlight.address} />}
+                        </div>
+                    {useMemo(() => <div className="ion-text-center" style={{  marginTop: 20, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                        <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
+                            Sell {formatEth(sellPrice as any)}
+                        </IonButton>
+                        <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                            Buy {formatEth(buyPrice)}
+                        </IonButton>
+                    </div>, [sellPass, buyPass])}
+                    </div>
+                    <IonItem lines="none">
+                        <IonText color='warning'>
+                            {buyError?.message}
+                            {sellError?.message}
+                        </IonText>
+                    </IonItem>
             </IonContent>
             <IonFooter>
-                NICE
             </IonFooter>
         </IonModal >
     </>

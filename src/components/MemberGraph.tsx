@@ -45,14 +45,14 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const trades = parseTrades(data?.trades);
 
     const graph = useMemo(() => {
-        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 3 }}>
+        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10, height: window.innerHeight / 3 }}>
             {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
                 <AreaChart data={trades}>
                     <CartesianGrid stroke="" />
                     <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>
-                    <Area type="monotone" dataKey="price" strokeWidth="2px" stroke="#F45000" fillOpacity={0.3} fill="#F45000" />
+                    <Area type="monotone" dataKey="price" strokeWidth="4px" stroke="#F45000" fillOpacity={0} fill="#F45000" />
                 </AreaChart>
             </ResponsiveContainer>}
         </IonGrid >
