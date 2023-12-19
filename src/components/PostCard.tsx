@@ -88,7 +88,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 }, "", "Comment", id)
             }}>
                 {/* <IonIcon color={'medium'} icon={'/icons/sq.svg'} style={{ height: 18, width: 18, marginLeft: '-5px' }} /> */}
-                <IonText color={'medium'} className='regular' style={{ fontSize: 14, marginTop: 5, marginLeft: 0, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className='medium' style={{ fontSize: 14, marginTop: 5, marginLeft: 0, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0} Comments
                 </IonText>
             </IonButton>}
@@ -97,7 +97,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='regular' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
+                <IonText className='medium' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
                     Share
 
                 </IonText>
