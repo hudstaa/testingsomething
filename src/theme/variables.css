@@ -459,7 +459,7 @@ ion-footer ion-toolbar {
     --ion-color-postcard-tint: #9d9fa6;
   
 
-    --ion-color-light: #000000;
+    --ion-color-light: #0d0d0d;
     --ion-color-light-rgb: 34, 36, 40;
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
@@ -745,7 +745,7 @@ ion-icon {
 }
 
 ion-card {
-  border-radius: 0px;
+  border-radius: 12px;
   /* Adjust the value to your desired border radius */
 }
 

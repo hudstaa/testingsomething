@@ -59,10 +59,10 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             </div>
             {comments.map((comment, i) => (
                 < div key={i}>
-
-                    <IonItem lines="none" color={'lightt'} style={{  borderTop: '1px solid var(--ion-color-medium-shade)', marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8 }} >
-
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 40, top: 3, fontSize: "1rem"}}>
+                    <div style={{backgroundColor: "var(--ion-color-light"}}>
+                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8, paddingRight: 24 }} >
+                        
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: 1, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
                             • {timestampAgo(comment.sent)}
@@ -98,6 +98,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                                 <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
+                </div>
                 </div>))
             }
         </IonList >

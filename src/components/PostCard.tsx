@@ -36,7 +36,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ borderBottom: '1px solid var(--ion-color-medium-shade)', marginTop: 0,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ marginTop: 12,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 16, paddingBottom: 12, paddingTop: 8, marginRight: 0 }}>
@@ -49,7 +49,8 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </div>
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 16, paddingBottom: 1, paddingTop: 0, margin: 0, marginTop: -4 }}  >
+        <IonCardContent style={{ paddingLeft: 16, paddingBottom: 1, paddingTop: 0, margin: 0,paddingRight: 16,  marginTop: -4 }}  >
+            <div style={{paddingRight: 32}}>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '1.05rem', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
@@ -72,16 +73,17 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 </Linkify>
                 
                             </IonText>
+                            </div>
             {media && (
-                <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
+                <div style={{ marginTop: 16, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
-                        <img style={{ border: '1px solid var(--ion-color-light-tint)', minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
             )}
         </IonCardContent>
 
 
-        {<IonRow >
+        {<IonRow style={{ marginTop: 12, borderTop: '1px solid var(--ion-color-medium-shade)'}}>
             {<IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop: -5, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
