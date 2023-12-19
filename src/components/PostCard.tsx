@@ -125,12 +125,12 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         </IonRow>}
         <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upo.svg' : '/icons/upr.svg'} style={{ height: 28, width: 28 }} />
+            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upr.svg' : '/icons/upo.svg'} style={{ height: 28, width: 28 }} />
         </IonButton>
         <IonLabel style={{
-            position: 'absolute', right: 18.5, top: 40, fontSize: 15, fontVariantNumeric: 'tabular-nums'
+            position: 'absolute', right: 9.5, top: 40, fontSize: 15, width: 28, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
         }} >
-            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
+            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'tribe'} className='black ion-text-center'>{score} </IonText>
         </IonLabel>
         <IonButton style={{ position: 'absolute', right: -10, top: 44 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
             <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downo.svg' : '/icons/downr.svg'} style={{ height: 28, width: 28 }} />
