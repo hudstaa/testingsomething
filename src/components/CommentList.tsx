@@ -53,14 +53,14 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
     }, [postId]);
 
     return (
-        <IonList style={{  marginRight: offset ? -35 : undefined }}>
+        <IonList style={{ borderTop: '1px solid var(--ion-color-medium-shade)', marginRight: offset ? -35 : undefined }}>
             <div style={{ height: 5 }}>
 
             </div>
             {comments.map((comment, i) => (
                 < div key={i}>
 
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 5, paddingBottom: 5 }} >
+                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -3, marginBottom: 0, paddingTop: 0, paddingBottom: 8 }} >
 
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 48, top: 3, fontSize: 14}}>
                         <MemberAlias color='dark' address={comment.author} />
