@@ -62,19 +62,18 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                     <IonItem lines="none" color={'lightt'} style={{  borderTop: '1px solid var(--ion-color-medium-shade)', marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 8, paddingBottom: 8 }} >
 
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 48, top: 0, fontSize: "1rem"}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: 0, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
-                        <MemberUsername color='medium' address={comment.author}/>
-                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 3, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
+                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: "1rem", opacity: '50%' }}>
                             • {timestampAgo(comment.sent)}
                             {/* <span onMouseDown={() => {
                                 setCommentPath(comment.id);
                             }} style={{ margin: 0, padding: 0, paddingLeft: 4, fontSize: 9 }}>Reply</span> */}
                         </IonText>
                         </IonButtons>
-                        <div style={{position: 'absolute', top: 3, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
+                        <div style={{position: 'absolute', top: 0, borderRadius: 100}}><MemberPfp color='dark' size="smol" style={{ top: 0}}address={comment.author} />
                         </div>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:48, whitespace: 'pre-wrap', marginTop: 24, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 36, marginLeft: 0, marginBottom: 5, fontSize: "1rem", letterSpacing: '-0.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
