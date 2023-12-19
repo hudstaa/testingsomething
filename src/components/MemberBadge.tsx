@@ -142,7 +142,7 @@ export const MemberUsername: React.FC<{ clickable?: boolean, address: string, co
     return <IonText className="regular" color="dark" onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0, opacity: "75%" }} >
+        style={{ margin: 0, padding: 0, opacity: "50%" }} >
         @{member?.twitterUsername}
     </IonText>
 }
@@ -189,7 +189,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                         </IonText>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, marginTop: -1, paddingBottom: 0 }}>
-                        <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 0, paddingTop: 0, opacity: '75%' }}>
+                        <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 0, paddingTop: 0, opacity: '50%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>
