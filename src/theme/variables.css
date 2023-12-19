@@ -200,9 +200,8 @@ http://ionicframework.com/docs/theming/ */
 }
 
 textarea {
-  font-family: 'rubik' !important;
-  font-size: 18px !important;
-  font-weight: 400 !important;
+  font-family: 'TribeReg' !important;
+  font-size: '1rem' !important;
 }
 
 .message-card-content {
