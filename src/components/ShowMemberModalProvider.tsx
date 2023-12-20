@@ -98,7 +98,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                                         dismiss(false);
                                         push('/channel/' + highlight?.address)
                                     }}>
-                                        chat
+                                        Chat
                                     </IonButton>
                                 </div>    
 
