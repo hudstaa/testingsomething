@@ -68,7 +68,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                 </IonCardHeader>
             </IonHeader>
                 <IonContent style={{padding: 0}}>
-                    <div style={{   marginTop: 0, display: 'flex', flexDirection: 'column'}}>
+                    <div style={{   marginTop: 24, display: 'flex', flexDirection: 'column'}}>
                         <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
