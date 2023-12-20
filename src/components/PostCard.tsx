@@ -125,15 +125,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
         </IonRow>}
         <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upr.svg' : '/icons/upo.svg'} style={{ height: 28, width: 28 }} />
+            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{ height: 24, width: 24 }} />
         </IonButton>
         <IonLabel style={{
-            position: 'absolute', right: 9.5, top: 40, fontSize: 15, width: 28, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+            position: 'absolute', right: 9, top: 40, fontSize: 15, width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
         }} >
             <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
         </IonLabel>
         <IonButton style={{ position: 'absolute', right: -10, top: 44 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downo.svg' : '/icons/downr.svg'} style={{ height: 28, width: 28 }} />
+            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 24, width: 24 }} />
         </IonButton>
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
