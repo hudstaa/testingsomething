@@ -51,7 +51,7 @@ export const ShowMemberModalProvider: React.FC = () => {
             setHighlight(null);
         }}>
             <IonHeader >
-                <IonCardHeader className='ion-image-left' style={{}}>
+                <IonCardHeader className='ion-image-left' style={{paddingBottom: 0}}>
 
                     <div style={{paddingTop: 4, opacity: '0.5'}}>
                         <IonText className="bold" style={{fontSize: '1.25rem'}}>
