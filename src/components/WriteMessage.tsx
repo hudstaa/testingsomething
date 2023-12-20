@@ -31,13 +31,13 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
       textRef.current!.querySelector('textarea')!.focus();
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 300)
+      }, 0)
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 300)
+      }, 100)
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 300)
+      }, 200)
 
     }
   }, [focused])
@@ -57,6 +57,12 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   })
   const textRef = useRef<HTMLIonTextareaElement>(null);
 
+  const focusInput = () => {
+    if (textRef.current) {
+      textRef.current.setFocus();
+    }
+  };
+  
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
