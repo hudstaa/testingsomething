@@ -170,7 +170,7 @@ const Posts: React.FC = () => {
                     </IonRow>
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    {me && <div onClick={() => {
+                    {me && <div onClick={() =>  {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
                     }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 5, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontFamily: 'SF Pro Medium', }}>
                         +

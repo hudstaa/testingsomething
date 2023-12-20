@@ -370,8 +370,8 @@ ion-footer ion-toolbar {
   --ion-color-lightt-tint: #E9E8EB;
 
     /** tabblur **/
-  --ion-color-tabblur: #ffffffd5;
-  --ion-color-tabblur-rgb: rgba(255, 255, 255, 0.704);
+  --ion-color-tabblur: #ffffff;
+  --ion-color-tabblur-rgb: rgb(255, 255, 255);
   --ion-color-tabblur-contrast: #000000;
   --ion-color-tabblur-contrast-rgb: 0, 0, 0;
   --ion-color-tabblur-shade: #d7d8da00;
@@ -475,8 +475,8 @@ ion-footer ion-toolbar {
     --ion-color-lightt-tint: #26262B;
 
         /** tabblur **/
-    --ion-color-tabblur: #000000c0;
-    --ion-color-tabblur-rgb: rgba(0, 0, 0, 0.533);
+    --ion-color-tabblur: #000000;
+    --ion-color-tabblur-rgb: rgb(0, 0, 0);
     --ion-color-tabblur-contrast: #000000;
     --ion-color-tabblur-contrast-rgb: 0, 0, 0;
     --ion-color-tabblur-shade: #d7d8da00;
