@@ -47,11 +47,11 @@ export const ShowMemberModalProvider: React.FC = () => {
 
     }, [pathname])
     return <>
-        <IonModal presentingElement={presenter} initialBreakpoint={0.6} breakpoints={[0, 0.6]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presenter} initialBreakpoint={0.75} breakpoints={[0, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
             <IonHeader >
-                <IonCardHeader className='ion-image-left' style={{position: 'absolute', top: 0}}>
+                <IonCardHeader className='ion-image-left' style={{}}>
 
                     <div style={{paddingTop: 4, opacity: '0.5'}}>
                         <IonText className="bold" style={{fontSize: '1.25rem'}}>
