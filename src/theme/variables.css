@@ -597,7 +597,19 @@ ion-footer ion-toolbar {
 
 }
 
+.custom {
+  --border-radius: 20px;
+  --background: var(--ion-color-light);
+  
+}
+.sc-ion-searchbar-ios-h {
+  align-items: stretch !important; /* or your desired value */
+}
 
+.searchbar-input-container.sc-ion-searchbar-ios {
+  min-height: 2.5rem !important;
+  max-height: 2.5rem !important;
+}
 ion-button.custombutton::part(native) {
   border-radius: 24px;
   background-color: var(--ion-color-tribe);
