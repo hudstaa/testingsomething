@@ -46,7 +46,6 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
 
     const graph = useMemo(() => {
         return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 3 }}>
-            {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
             {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
             <AreaChart data={trades}>
