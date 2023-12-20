@@ -45,9 +45,9 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const trades = parseTrades(data?.trades);
 
     const graph = useMemo(() => {
-        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 3 }}>
+        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 4 }}>
             {error && <IonChip color='danger'>{error.message}</IonChip>}
-            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
+            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 4} width={'100%'}>
             <AreaChart data={trades}>
                             <defs>
                                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">

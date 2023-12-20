@@ -51,7 +51,7 @@ export const ShowMemberModalProvider: React.FC = () => {
             setHighlight(null);
         }}>
             <IonHeader >
-                <IonCardHeader className='ion-image-left' style={{position: 'absolute', paddingBottom: 0}}>
+                <IonCardHeader className='ion-image-left' style={{ paddingBottom: 0}}>
 
                     <div style={{paddingTop: 4, opacity: '0.5'}}>
                         <IonText className="bold" style={{fontSize: '1.25rem'}}>
@@ -67,8 +67,9 @@ export const ShowMemberModalProvider: React.FC = () => {
 
                 </IonCardHeader>
             </IonHeader>
+            
                 <IonContent style={{padding: 0}}>
-                    <div style={{   marginTop: 44, display: 'flex', flexDirection: 'column'}}>
+                    <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column'}}>
                         <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
