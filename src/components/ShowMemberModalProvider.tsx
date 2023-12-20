@@ -80,7 +80,6 @@ export const ShowMemberModalProvider: React.FC = () => {
                             </IonButton>
                         </div>, [sellPass, buyPass])}
                         <IonCardContent style={{padding: 0}}>
-                            <IonList>
                             <IonItem lines="none" className="no-padding-start">
 
                                 <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
@@ -104,7 +103,6 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 </div>    
 
                                 </IonItem>
-                            </IonList>
                     </IonCardContent>
                     </div>
                     <IonItem lines="none">
