@@ -72,14 +72,39 @@ export const ShowMemberModalProvider: React.FC = () => {
                         <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
-                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
-                                Sell {formatEth(sellPrice as any)}
-                            </IonButton>
-                            <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                        
+                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton  className="custombutton" disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 16, marginRight: 16, width: '100%' }} color='tribe' onClick={buyPass}>
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
+                        <IonCardContent style={{padding: 0}}>
+                            <IonList>
+                            <IonItem lines="none" className="no-padding-start">
+
+                                <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                    <IonButton className="custombutton" style={{ height: 36, margin: 0, marginRight: 2, width: '100%'}} color='tribe' onMouseDown={() => {
+                                        push('/member/' + highlight?.address)
+                                        setHighlight(null);
+                                        dismiss(false);
+                                    }}>
+                                        Profile
+                                    </IonButton>
+                                </div>    
+                                <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+
+                                    <IonButton className="custombutton" style={{ height: 36, margin: 0, marginLeft: 2, width: '100%' }} color='tribe' onMouseDown={() => {
+                                        setHighlight(null);
+                                        dismiss(false);
+                                        push('/channel/' + highlight?.address)
+                                    }}>
+                                        chat
+                                    </IonButton>
+                                </div>    
+
+                                </IonItem>
+                            </IonList>
+                    </IonCardContent>
                     </div>
                     <IonItem lines="none">
                         <IonText color='warning'>
@@ -87,26 +112,6 @@ export const ShowMemberModalProvider: React.FC = () => {
                             {sellError?.message}
                         </IonText>
                     </IonItem>
-                    <IonCardContent style={{padding: 0}}>
-                        <IonList>
-                            <IonItem lines="none">
-                                <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
-                                    push('/member/' + highlight?.address)
-                                    setHighlight(null);
-                                    dismiss(false);
-                                }}>
-                                    Profile
-                                </IonButton>
-                                <IonButton style={{ margin: 'auto', marginLeft: 5, padding: -10 }} color='tribe' onMouseDown={() => {
-                                    setHighlight(null);
-                                    dismiss(false);
-                                    push('/channel/' + highlight?.address)
-                                }}>
-                                    chat
-                                </IonButton>
-                            </IonItem>
-                        </IonList>
-                    </IonCardContent>
                 </IonContent>
             <IonFooter>
             </IonFooter>
