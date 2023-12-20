@@ -26,7 +26,18 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const uid = getAuth().currentUser?.uid;
 
   useEffect(() => {
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 0)
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 10)
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 100)
+  }, [isOpen])
 
+  useEffect(() => {
     if (focused) {
       textRef.current!.querySelector('textarea')!.focus();
       setTimeout(() => {
@@ -41,22 +52,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
     }
   }, [focused])
-  useEffect(() => {
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 0)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 10)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 100)
-  }, [isOpen])
-  useEffect(() => {
 
-  })
   const textRef = useRef<HTMLIonTextareaElement>(null);
-  
+
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
@@ -82,7 +80,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
         autoGrow
-        className="regular"
+        className="textarea"
         style={{ flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}

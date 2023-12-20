@@ -2,7 +2,7 @@ import { IonButton, IonButtons, IonCard, IonCardContent, IonCardTitle, IonCardHe
 import { WriteMessage } from "./WriteMessage"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { useMember } from "../hooks/useMember";
-import { close } from "ionicons/icons";
+import { close, text } from "ionicons/icons";
 import { useEffect, useRef } from "react";
 import { CommentList } from "./CommentList";
 import { nativeAuth } from "../lib/sugar";
@@ -20,6 +20,7 @@ export const WriteMessageModalProvider: React.FC = () => {
 
         }
     }, [isOpen])
+    
     return <>
         <IonModal presentingElement={presentingElement as any} style={{ height: '90vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
