@@ -46,9 +46,8 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
 
     const graph = useMemo(() => {
         return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10, height: window.innerHeight / 3 }}>
-            {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
             {error && <IonChip color='danger'>{error.message}</IonChip>}
-            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
+            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 4} width={'100%'}>
                 <AreaChart data={trades}>
                     <CartesianGrid stroke="" />
                     <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>

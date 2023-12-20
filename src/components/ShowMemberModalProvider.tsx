@@ -50,15 +50,19 @@ export const ShowMemberModalProvider: React.FC = () => {
         <IonModal presentingElement={presenter} initialBreakpoint={0.7} breakpoints={[0, 0.7]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
-            <IonHeader>
-                <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
+            <IonHeader >
+                <IonCardHeader className='ion-image-left' style={{ borderBottom: '1px solid var(--ion-color-light)' }}>
+                    <div style={{paddingTop: 4}}>
                     <IonText color='medium'>
                         {highlight?.bio}
                     </IonText>
-                    <IonText >
+                    </div>
+                    <div style={{paddingTop: 8}}>
+                    <IonText className="medium">
                         {highlight?.twitterName}
                     </IonText>
-                    <img style={{ width: 70, height: 70, borderRadius: '10px', }} src={highlight?.twitterPfp || personOutline} />
+                    </div>
+                    <img style={{ width: 44, height: 44, borderRadius: '100%', }} src={highlight?.twitterPfp || personOutline} />
 
                 </IonCardHeader>
 
@@ -91,11 +95,11 @@ export const ShowMemberModalProvider: React.FC = () => {
                     </IonList>
 
                 </IonCardContent>
-                    <div style={{  display: 'flex', flexDirection: 'column'}}>
-                        <div >
+                    <div style={{   display: 'flex', flexDirection: 'column'}}>
+                        <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
-                    {useMemo(() => <div className="ion-text-center" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                    {useMemo(() => <div className="ion-text-center" style={{paddingTop: 24, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                         <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
                             Sell {formatEth(sellPrice as any)}
                         </IonButton>
