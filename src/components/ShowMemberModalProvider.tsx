@@ -47,66 +47,39 @@ export const ShowMemberModalProvider: React.FC = () => {
 
     }, [pathname])
     return <>
-        <IonModal presentingElement={presenter} initialBreakpoint={0.7} breakpoints={[0, 0.7]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presenter} initialBreakpoint={0.6} breakpoints={[0, 0.6]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
             <IonHeader >
-                <IonCardHeader className='ion-image-left' style={{ borderBottom: '1px solid var(--ion-color-light)' }}>
-                    <div style={{paddingTop: 4}}>
-                    <IonText color='medium'>
-                        {highlight?.bio}
-                    </IonText>
+                <IonCardHeader className='ion-image-left' style={{position: 'absolute', top: 0}}>
+
+                    <div style={{paddingTop: 4, opacity: '0.5'}}>
+                        <IonText className="bold" style={{fontSize: '1.25rem'}}>
+                            {highlight?.twitterName}
+                        </IonText>
                     </div>
                     <div style={{paddingTop: 8}}>
-                    <IonText className="medium">
-                        {highlight?.twitterName}
-                    </IonText>
+                        <IonText className="heavy" style={{fontSize: '1.5rem'}}>
+                            {formatEth(buyPrice)}
+                        </IonText>
                     </div>
                     <img style={{ width: 44, height: 44, borderRadius: '100%', }} src={highlight?.twitterPfp || personOutline} />
 
                 </IonCardHeader>
-
-
             </IonHeader>
-            <IonContent style={{padding: 0}}>
-
-                <IonCardContent style={{padding: 0}}>
-                    <IonList>
-
-                        <IonItem lines="none">
-                            <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
-                                push('/member/' + highlight?.address)
-                                setHighlight(null);
-                                dismiss(false);
-                            }}>
-                                Profile
-                            </IonButton>
-                            <IonButton style={{ margin: 'auto', marginLeft: 5, padding: -10 }} color='tribe' onMouseDown={() => {
-                                setHighlight(null);
-                                dismiss(false);
-                                push('/channel/' + highlight?.address)
-                            }}>
-                                chat
-                            </IonButton>
-
-
-                        </IonItem>
-
-                    </IonList>
-
-                </IonCardContent>
-                    <div style={{   display: 'flex', flexDirection: 'column'}}>
+                <IonContent style={{padding: 0}}>
+                    <div style={{   marginTop: 0, display: 'flex', flexDirection: 'column'}}>
                         <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
                             {highlight && <MemberGraph address={highlight.address} />}
                         </div>
-                    {useMemo(() => <div className="ion-text-center" style={{paddingTop: 24, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                        <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
-                            Sell {formatEth(sellPrice as any)}
-                        </IonButton>
-                        <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
-                            Buy {formatEth(buyPrice)}
-                        </IonButton>
-                    </div>, [sellPass, buyPass])}
+                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
+                                Sell {formatEth(sellPrice as any)}
+                            </IonButton>
+                            <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
+                                Buy {formatEth(buyPrice)}
+                            </IonButton>
+                        </div>, [sellPass, buyPass])}
                     </div>
                     <IonItem lines="none">
                         <IonText color='warning'>
@@ -114,7 +87,27 @@ export const ShowMemberModalProvider: React.FC = () => {
                             {sellError?.message}
                         </IonText>
                     </IonItem>
-            </IonContent>
+                    <IonCardContent style={{padding: 0}}>
+                        <IonList>
+                            <IonItem lines="none">
+                                <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
+                                    push('/member/' + highlight?.address)
+                                    setHighlight(null);
+                                    dismiss(false);
+                                }}>
+                                    Profile
+                                </IonButton>
+                                <IonButton style={{ margin: 'auto', marginLeft: 5, padding: -10 }} color='tribe' onMouseDown={() => {
+                                    setHighlight(null);
+                                    dismiss(false);
+                                    push('/channel/' + highlight?.address)
+                                }}>
+                                    chat
+                                </IonButton>
+                            </IonItem>
+                        </IonList>
+                    </IonCardContent>
+                </IonContent>
             <IonFooter>
             </IonFooter>
         </IonModal >
