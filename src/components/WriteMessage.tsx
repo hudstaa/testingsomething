@@ -57,19 +57,6 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   })
   const textRef = useRef<HTMLIonTextareaElement>(null);
 
-  const focusTextArea = () => {
-    // Directly focus the IonTextarea
-    if (textRef.current) {
-      textRef.current.setFocus(); // Set focus on the IonTextarea
-    }
-  };
-
-  useEffect(() => {
-    if (focused || isOpen) {
-      // Focus the textarea with a slight delay to ensure it's ready
-      setTimeout(focusTextArea, 100); // Adjust the delay as needed
-    }
-  }, [focused, isOpen]);
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
