@@ -31,13 +31,13 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
       textRef.current!.querySelector('textarea')!.focus();
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 0)
+      }, 300)
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 100)
+      }, 300)
       setTimeout(() => {
         textRef.current!.querySelector('textarea')!.focus();
-      }, 200)
+      }, 300)
 
     }
   }, [focused])
