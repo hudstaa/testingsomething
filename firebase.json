@@ -58,6 +58,9 @@
         "source": "/post/**",
         "function": "share"
       },{
+        "source": "/swap**",
+        "function": "share"
+      },{
         "source": "**",
         "destination": "/index.html"
       }

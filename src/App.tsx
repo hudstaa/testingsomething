@@ -115,13 +115,13 @@ export const graphQLclient = new ApolloClient({
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDxF1oqe-dYKjslxJhs49qf8QFl2DhPZW8",
-  authDomain: "tribal-pass.firebaseapp.com",
-  projectId: "tribal-pass",
-  storageBucket: "tribal-pass.appspot.com",
-  messagingSenderId: "1053855163428",
-  appId: "1:1053855163428:web:e27fdb0e300166ac0b24b1",
-  measurementId: "G-CZQ06R7KZ2"
+  apiKey: "AIzaSyD4tUN_elLxbAvXcp8z3E0yCXbs-3icr7c",
+  authDomain: "remilio-tribe.firebaseapp.com",
+  projectId: "remilio-tribe",
+  storageBucket: "remilio-tribe.appspot.com",
+  messagingSenderId: "856843528994",
+  appId: "1:856843528994:web:fe09ef102a85b5fc0e937b",
+  measurementId: "G-PN4YGPMWK5"
 };
 const registerNotifications = async () => {
   if (!Capacitor.isPluginAvailable('PushNotifications')) {
@@ -206,21 +206,15 @@ const DeepLinkProvider: React.FC = () => {
   const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
   const { wallets } = useWallets();
   const chainId = useChainId()
-  const { switchNetwork } = useSwitchNetwork();
-  useEffect(() => {
-    wallets.forEach((wallet) => {
-      if (wallet.connectorType === 'embedded') {
-        setActiveWallet(wallet);
-        switchNetwork && switchNetwork(baseGoerli.id);
-      }
-    })
-  }, [wallets, activeWallet]);
-  useEffect(() => {
-    activeWallet?.connectorType == 'embedded' && switchNetwork && baseGoerli.id !== chainId && wagmiReady && switchNetwork(baseGoerli.id)
-  }, [chainId, activeWallet])
-  useEffect(() => {
-    activeWallet && activeWallet.switchChain(baseGoerli.id);
-  }, [activeWallet, wagmiReady]);
+  // const { switchNetwork } = useSwitchNetwork();
+  // useEffect(() => {
+  //   wallets.forEach((wallet) => {
+  //     if (wallet.connectorType === 'embedded') {
+  //       // setActiveWallet(wallet);
+  //       // switchNetwork && switchNetwork(baseGoerli.id);
+  //     }
+  //   })
+  // }, [wallets, activeWallet]);
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();
@@ -230,7 +224,7 @@ const DeepLinkProvider: React.FC = () => {
       localStorage.setItem('privy:token', params.token);
       localStorage.setItem('privy:refresh_token', params.refresh);
 
-      axios.post('https://us-central1-tribal-pass.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
+      axios.post('https://us-central1-remilio-tribe.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
         signInWithCustomToken(auth, res.data.authToken).then((e) => {
         }).catch((e) => {
           console.log('error', e);

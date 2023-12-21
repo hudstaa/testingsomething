@@ -13,7 +13,19 @@ import { useMember } from "../hooks/useMember"
 import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
-
+export const CashTag:React.FC<{content:string}>=({content})=>{
+const {setTradeUri}=useNotifications(); 
+const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
+const emoji = hit&&hit.emoji;
+const {push}=useHistory()
+return <a href={'#/swap'} onClick={()=>{
+    hit&&setTradeUri(hit.swap);
+    push('/swap');
+}}>
+    {emoji}
+{content}
+</a>
+}
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
@@ -28,9 +40,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { pathname } = useLocation()
     return  <IonCard  onMouseDown={(e) => {
         console.log(e.target)
-        const isAlias = Array.from((e.target as any).classList).includes('alias')
+        const classes=Array.from((e.target as any).classList);
+        console.log(e.target);
+        const isAlias = classes.includes('alias')||classes.includes('cashtag')
         if ((e.target as any)?.nodeName === "VIDEO") {
-
+            return;
+        }
+        if ((e.target as any)?.tagName === "A") {
             return;
         }
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
@@ -55,11 +71,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 <Linkify options={{
                     render:({attributes,content,eventListeners,tagName})=>{
                         if(content.startsWith("$")){
-                            const info = sugar.known_pairs[content.toLowerCase().slice(1)];
-                            if(!info){
-                                return <a {...attributes}>{content}</a>
-                            }
-                            return <a {...attributes}>{info.emoji}{content}</a>
+                            return <CashTag content={content}/>
                         }else if(content.startsWith("@")){
                             return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
                         }
