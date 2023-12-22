@@ -8,10 +8,9 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
-import {swapHorizontal} from 'ionicons/icons'
 import { IonReactHashRouter } from '@ionic/react-router';
 import { PrivyWagmiConnector, usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { Redirect, Route, useLocation } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -33,35 +32,35 @@ import '@ionic/react/css/flex-utils.css';
 /* Theme variables */
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { App as CapacitorApp } from '@capacitor/app';
-import { PrivyProvider, useWallets } from '@privy-io/react-auth';
-import { base, baseGoerli } from 'viem/chains';
-import { configureChains, createConfig, createStorage, useChainId, useSwitchNetwork } from 'wagmi';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import Activity from './pages/Activity';
-import Chat from './pages/Chat';
-import Discover from './pages/Discover';
-import Member from './pages/Member';
-import Room from './pages/Room';
-import Transaction from './pages/Transaction';
-import Watchlist from './pages/Watchlist';
-import './theme/variables.css';
 import { Browser } from '@capacitor/browser';
 import { Capacitor } from '@capacitor/core';
 import { ActionPerformed, PushNotificationSchema, PushNotifications, Token } from '@capacitor/push-notifications';
+import { PrivyProvider, useWallets } from '@privy-io/react-auth';
 import axios from 'axios';
 import { initializeApp } from "firebase/app";
 import { signInWithCustomToken } from 'firebase/auth';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
+import { base, baseGoerli } from 'viem/chains';
+import { configureChains, createConfig, createStorage, useChainId } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { useNotifications } from './hooks/useNotifications';
 import useTabs from './hooks/useTabVisibility';
 import { nativeAuth } from './lib/sugar';
 import Account from './pages/Account';
+import Activity from './pages/Activity';
+import Chat from './pages/Chat';
+import Discover from './pages/Discover';
+import Member from './pages/Member';
 import { MobileAuth } from './pages/MobileAuth';
 import Post from './pages/Post';
+import Room from './pages/Room';
 import Swap from './pages/Swap';
 import Trade from './pages/Trade';
+import Transaction from './pages/Transaction';
+import Watchlist from './pages/Watchlist';
+import './theme/variables.css';
 
 
 setupIonicReact({
@@ -85,12 +84,12 @@ export const noopStorage = {
   removeItem: (_key: any) => null,
 }
 
-import Posts from './pages/Posts';
-import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
 import { NotificationsProvider } from './components/NotificationsProvider';
 import { ShowMemberModalProvider } from './components/ShowMemberModalProvider';
-import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
 import { TradeMobile } from './components/Trade';
+import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
+import Posts from './pages/Posts';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -320,15 +319,15 @@ const App: React.FC = () => {
                 <IonTabButton tab="member" href="/member">
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/disco.svg' : '/icons/disco2.svg'} />
                 </IonTabButton>
+                <IonTabButton tab="swap" href="/swap">
+                <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/swap.svg' : '/icons/swap2.svg'} />
+                </IonTabButton>
                 <IonTabButton tab="channel" href="/channel">
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="account" href="/account">
                   <NotifBadge />
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
-                </IonTabButton>
-                <IonTabButton tab="swap" href="/swap">
-                <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/swap.svg' : '/icons/swap.svg'} />
                 </IonTabButton>
                 </IonTabBar>
             </IonTabs>
