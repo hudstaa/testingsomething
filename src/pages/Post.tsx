@@ -1,8 +1,8 @@
-import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonBadge, IonButton, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonPage, IonRow, IonSelect, IonSelectOption, IonSkeletonText, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
 import { TribeHeader } from '../components/TribeHeader';
@@ -14,6 +14,8 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
+import { chevronBack, chevronDown, push } from 'ionicons/icons';
+import { MemberPfpImg } from '../components/MemberBadge';
 
 
 
@@ -89,6 +91,8 @@ const Post: React.FC = () => {
         }
     }, [me])
     const contentRef = useRef<HTMLIonContentElement>(null)
+    const {push}=useHistory()
+    const {notifications:notifs}=useNotifications()
     if (id === 'new') {
         return <NewPost />
     }
@@ -96,7 +100,39 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage ref={pageRef}>
-        <TribeHeader showBackButton={true} />
+<IonHeader>
+    <IonButton fill='clear' routerLink='/post'><IonIcon icon={chevronBack} />
+    posts
+    </IonButton>
+</IonHeader>
+<IonHeader style={{ position: 'absolute' }}>
+                 <IonToolbar  style={{ paddingLeft: 8}}>
+                    <IonButtons slot='start'>
+                        <IonButton fill='clear' routerLink='/post'>
+                            <IonIcon icon={chevronBack} />
+                        </IonButton>
+                    </IonButtons>
+
+                    <IonButtons slot='end'>
+                        <IonButton onClick={() => {
+                            push('/notifications')
+                        }}>
+                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
+                                    {notifs.length}
+                                </IonText>
+                                <IonIcon color='dark' size="small" icon={'/icons/noti.svg'} />
+                            </IonBadge>
+                        </IonButton>
+                        <IonButton onMouseDown={() => {
+                            push('/account')
+                        }}>
+                            <MemberPfpImg size='smol' address={me.address} />
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupiter Tribe swap</title>
+    <style>
+        #jupiter-terminal>div>div>div>div>div>a>span {
+            display: none;
+        }
+
+        div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
+            display: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+    <!-- Attach the loading script in your <head /> -->
+    <script src='https://terminal.jup.ag/main-v2.js'></script>
+    <script>
+        const interval = setInterval(listenToSearchParams, 1000);
+
+        function listenToSearchParams() {
+            if (typeof window.Jupiter !== 'undefined') {
+                clearInterval(interval);
+                let props = {
+                    displayMode: "integrated",
+                    integratedTargetId: "integrated-terminal",
+                    endpoint: "https://holy-icy-tent.solana-mainnet.quiknode.pro/",
+                }
+                if (params && typeof params.get('outputCurrency') === 'string') {
+                    window.Jupiter.init({
+                        displayMode: "integrated",
+                        formProps:{
+                            initialOutputMint: params.get('outputCurrency'),
+                            fixedOutputMint: true,
+
+                        },
+                        integratedTargetId: "integrated-terminal",
+                        endpoint: "https://holy-icy-tent.solana-mainnet.quiknode.pro/",
+                    }
+                    );
+                } else {
+                    windo.Jupiter.init(props);
+                }
+
+            }
+
+        }
+
+        // Call the function every 5 seconds
+    </script>
+</head>
+
+<body>
+    <div id="integrated-terminal"></div>
+</body>
+
+</html>

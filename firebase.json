@@ -33,7 +33,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "no-cache"
+            "value":  "no-cache, no-store, must-revalidate"
           }
         ]
       },
@@ -58,8 +58,11 @@
         "source": "/post/**",
         "function": "share"
       },{
-        "source": "/swap**",
-        "function": "share"
+        "source": "/swap",
+        "destination": "/swap.html"
+      },{
+        "source": "/jupiter",
+        "destination": "/jupiter.html"
       },{
         "source": "**",
         "destination": "/index.html"

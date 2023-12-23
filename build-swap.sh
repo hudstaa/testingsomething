@@ -16,6 +16,7 @@ git clone $REPO_URL $CLONE_DIR
 if [ -d "$CLONE_DIR" ]; then
     # Copying files to build directory, excluding index.html
     rsync -av --exclude='index.html' $CLONE_DIR/ $BUILD_DIR/
+    cp $CLONE_DIR/index.html $BUILD_DIR/swap.html
 
     # Optional: Remove the cloned repository directory
     rm -rf $CLONE_DIR

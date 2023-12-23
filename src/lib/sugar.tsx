@@ -85,7 +85,8 @@ const CashtagToken = linkifyjs.createTokenClass('cashtag', {
         return window.location.host + '' + known_pairs[this.toString().slice(1).toLowerCase()]?.swap;
     }
 });
-
+const USDCSOLAddress = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+const WSOLAddress = 'So11111111111111111111111111111111111111112'
 /**
  * @type {import('linkifyjs').Plugin}
  */
@@ -125,28 +126,73 @@ function cashtag(_ref: any) {
 }
 
 linkifyjs.registerPlugin('cashtag', cashtag);
-export const known_pairs: Record<string, { swap: string, emoji: string }> = {
+export type currencySwapInfo= { chain: string, inputCurrency?: string, outputCurrency: string };
+export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string }> = {
     nola: {
         emoji: '🐈‍⬛',
-        swap: 'https://' + window.location.host + '/swap/#/?outputCurrency=0xF8388c2B6Edf00E2E27eEF5200B1beFB24cE141d&chain=arbitrum&inputCurrency=ETH'
+        swap: {
+            outputCurrency: '0xF8388c2B6Edf00E2E27eEF5200B1beFB24cE141d',
+            chain: 'arbitrum',
+            inputCurrency: 'ETH'
+        }
     },
     size: {
         emoji: '💪',
-        swap: '/swap/#?outputCurrency=0x939727d85D99d0aC339bF1B76DfE30Ca27C19067&chain=arbitrum&inputCurrency=ETH'
+        swap: {
+            outputCurrency: "0x939727d85D99d0aC339bF1B76DfE30Ca27C19067",
+            chain: "arbitrum",
+            inputCurrency: "ETH"
+        }
     },
     tribe: {
         emoji: '🏕️',
-        swap: 'https://' + window.location.host + '/swap/#/?outputCurrency=0xF8388c2B6Edf00E2E27eEF5200B1beFB24cE141d&chain=arbitrum&inputCurrency=ETH'
+        "swap": {
+            "outputCurrency": "0x0",
+            "chain": "solana",
+            "inputCurrency": "0x0"
+        }
     },
     bonk: {
         emoji: '🏏',
-        swap: 'https://jup.ag/swap/Bonk-USDC'
+        swap: {
+            chain: "solana",
+            outputCurrency: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
+            inputCurrency: USDCSOLAddress,
+        },
+    },
+    merlin: {
+        emoji: '🪄',
+        swap: {
+            inputCurrency: 'ETH',
+            outputCurrency: "0x234F534D322dF1a8a236a2F952d6657bf800F1FA",
+            chain: "arbitrum"
+        }
     },
     mog: {
         emoji: '🕶️',
-        swap: 'https://' + window.location.host + '/swap/#/?outputCurrency=0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a&chain=mainnet&inputCurrency=ETH'
+        swap: {
+            outputCurrency: "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+            chain: "mainnet",
+            inputCurrency: "ETH"
+        }
     },
-    pepe: { emoji: '🐸', swap: 'https://' + window.location.host + '/swap/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=mainnet&inputCurrency=ETH' },
-    wif: { emoji: '👒', swap: 'https://jup.ag/swap/EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm-USDC' },
-    bitcoin: { emoji: '🦔', swap: 'https://' + window.location.host + '/swap/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=mainnet&inputCurrency=ETH' }
+    pepe: {
+        emoji: '🐸',
+        swap: {
+            outputCurrency: '0x6982508145454Ce325dDbE47a25d4ec3d2311933', chain: 'mainnet', inputCurrency: 'ETH'
+        }
+    },
+    wif: {
+        emoji: '👒', swap:
+            { outputCurrency: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', chain: 'solana' }
+    },
+    bitcoin: {
+
+        emoji: '🦔',
+        swap: {
+            outputCurrency: "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9",
+            chain: "mainnet",
+            inputCurrency: "ETH"
+        }
+    }
 }

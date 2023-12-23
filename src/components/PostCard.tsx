@@ -13,18 +13,17 @@ import { useMember } from "../hooks/useMember"
 import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
-export const CashTag:React.FC<{content:string}>=({content})=>{
-const {setTradeUri}=useNotifications(); 
-const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
-const emoji = hit&&hit.emoji;
-const {push}=useHistory()
-return <a href={'#/swap'} onClick={()=>{
-    hit&&setTradeUri(hit.swap);
-    push('/swap');
-}}>
-    {emoji}
-{content}
-</a>
+export const CashTag: React.FC<{ content: string }> = ({ content }) => {
+    const { setTradeUri } = useNotifications();
+    const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
+    const emoji = hit && hit.emoji;
+    const { push } = useHistory()
+    return <a href={'javascript:void(0)'} onClick={() => {
+        push({search:new URLSearchParams(hit.swap).toString(),pathname:'/swap'})
+    }}>
+        {emoji}
+        {content}
+    </a>
 }
 
 export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
@@ -38,11 +37,11 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return  <IonCard  onMouseDown={(e) => {
+    return <IonCard onMouseDown={(e) => {
         console.log(e.target)
-        const classes=Array.from((e.target as any).classList);
+        const classes = Array.from((e.target as any).classList);
         console.log(e.target);
-        const isAlias = classes.includes('alias')||classes.includes('cashtag')
+        const isAlias = classes.includes('alias') || classes.includes('cashtag')
         if ((e.target as any)?.nodeName === "VIDEO") {
             return;
         }
@@ -52,15 +51,15 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
             push('/post/' + id);
         }
-    }} color={bgColor} key={id} style={{ marginTop: 3,marginBottom:3, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
+    }} color={bgColor} key={id} style={{ marginTop: 3, marginBottom: 3, marginLeft: 0, marginRight: 0, paddingRight: 30, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 9, paddingBottom: 1, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
-                <div style={{borderRadius: 100, marginTop: 4, position: "absolute"}}>
-                    <MemberPfp color='dark' size="veru-smol" address={author}/>
+                <div style={{ borderRadius: 100, marginTop: 4, position: "absolute" }}>
+                    <MemberPfp color='dark' size="veru-smol" address={author} />
                 </div>
-                <div style={{ marginLeft: 53}}>
+                <div style={{ marginLeft: 53 }}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
             </div>
@@ -69,21 +68,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             <IonText color='dark' className='light' style={{ whiteSpace: 'pre-wrap', fontSize: '1rem', lineHeight: '1', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
-                    render:({attributes,content,eventListeners,tagName})=>{
-                        if(content.startsWith("$")){
-                            return <CashTag content={content}/>
-                        }else if(content.startsWith("@")){
-                            return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
+                    render: ({ attributes, content, eventListeners, tagName }) => {
+                        if (content.startsWith("$")) {
+                            return <CashTag content={content} />
+                        } else if (content.startsWith("@")) {
+                            return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />
                         }
-                    }                    ,
+                    },
                     formatHref:
-                {                    
-                    mention: (href) => "https://beta.tribe.computer/member/" + href.substring(1),
-                }}}>
-                {content}
+                    {
+                        mention: (href) => "https://tribe.computer/member/" + href.substring(1),
+                    }
+                }}>
+                    {content}
                 </Linkify>
-                
-                            </IonText>
+
+            </IonText>
             {media && (
                 <div style={{ marginTop: 10, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
                     {media.type.includes("image") ?
@@ -109,7 +109,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={shareOutline} />
-                <IonText className='medium' style={{ paddingLeft: 3, fontSize: 14, marginTop:0 }}>
+                <IonText className='medium' style={{ paddingLeft: 3, fontSize: 14, marginTop: 0 }}>
                     Share
 
                 </IonText>

@@ -90,6 +90,7 @@ import { ShowMemberModalProvider } from './components/ShowMemberModalProvider';
 import { TradeMobile } from './components/Trade';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 import Posts from './pages/Posts';
+import { swapHorizontal } from 'ionicons/icons';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -298,7 +299,7 @@ const App: React.FC = () => {
                 </Route>
 
                 <Route path="/member/:address" exact>
-                  <Member />
+                  <Member profile={false} />
                 </Route>
 
                 <Route path="/auth" exact>
@@ -320,7 +321,7 @@ const App: React.FC = () => {
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'member' ? '/icons/disco.svg' : '/icons/disco2.svg'} />
                 </IonTabButton>
                 <IonTabButton tab="swap" href="/swap">
-                <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'account' ? '/icons/swap.svg' : '/icons/swap2.svg'} />
+                  <IonIcon icon={swapHorizontal} />
                 </IonTabButton>
                 <IonTabButton tab="channel" href="/channel">
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : undefined }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg2.svg'} />

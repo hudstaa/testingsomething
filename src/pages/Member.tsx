@@ -30,10 +30,13 @@ import { TradingViewWidget } from '../components/Erc20Chart';
 import { useWriteMessage } from '../hooks/useWriteMessage';
 
 
-const Member: React.FC = () => {
-    const { address } = useParams<{ address: string }>();
+const Member: React.FC<{profile:boolean}> = ({profile}) => {
+    let { address } = useParams<{ address: string }>();
     const { user } = usePrivy()
     const me = useMember(x => x.getCurrentUser());
+    if(profile){
+        address=me?.address as string;
+    }
     const highlight = useMember(x => x.setHighlight)
     const balance: bigint | undefined = usePassBalance((me?.address) as Address, (address) as Address) as any;
     const ercBalance: bigint | undefined = useERCBalance((address) as Address, 1) as any;

@@ -1,29 +1,26 @@
-import { IonAvatar, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonImg, IonItem, IonList, IonListHeader, IonPage, IonRow, IonSpinner, IonText, IonTitle, IonToast, useIonToast, useIonViewDidEnter } from '@ionic/react';
-import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { Capacitor } from '@capacitor/core';
+import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonItem, IonRow, IonSpinner, IonText, IonToast } from '@ionic/react';
+import { usePrivy } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
-import { albumsOutline, chatboxOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, personOutline, wallet } from 'ionicons/icons';
-import { MemberBadge, MemberToolbar } from '../components/MemberBadge';
+import { addDoc, collection, deleteDoc, doc, getCountFromServer, getDoc, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { copy, exit, key, logoDiscord, logoGoogle, notificationsOutline } from 'ionicons/icons';
+import { useEffect, useMemo, useState } from 'react';
+import { useHistory, useLocation } from "react-router-dom";
+import { getAddress } from 'viem';
+import { useBalance } from 'wagmi';
+import { app } from '../App';
+import { MemberBadge } from '../components/MemberBadge';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
 import { TribeHeader } from '../components/TribeHeader';
-import { Member, useMember } from '../hooks/useMember';
-import { formatEth, nativeAuth } from '../lib/sugar';
-import { TribePage } from './TribePage';
-import { useEffect, useMemo, useState } from 'react';
-import { Timestamp, addDoc, collection, deleteDoc, doc, getAggregateFromServer, getCountFromServer, getDoc, getDocs, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
-import { app } from '../App';
-import { get } from 'firebase/database';
-import { OnBoarding } from './OnBoarding';
+import { useMember } from '../hooks/useMember';
 import { useNotifications } from '../hooks/useNotifications';
-import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
-import { Capacitor } from '@capacitor/core';
-import { useBalance, useChainId } from 'wagmi';
-import { usePrivyWagmi } from '@privy-io/wagmi-connector';
-import { getAddress } from 'viem';
 import { useWriteMessage } from '../hooks/useWriteMessage';
-import { httpsCallable, getFunctions } from 'firebase/functions';
-import { useHistory, useLocation } from "react-router-dom";
-import useTabs from '../hooks/useTabVisibility';
+import { formatEth, nativeAuth } from '../lib/sugar';
+import Member from './Member';
+import { TribePage } from './TribePage';
 
 
 
@@ -31,7 +28,7 @@ const Account: React.FC = () => {
     const auth = nativeAuth()
     const { logout, ready } = usePrivy();
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
-    const me = useMember(x => x.getCurrentUser()) as Member;
+    const me = useMember(x => x.getCurrentUser());
     const { setCurrentUser } = useMember();
     const { search } = useLocation();
 
