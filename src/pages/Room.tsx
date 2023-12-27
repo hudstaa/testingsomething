@@ -85,7 +85,8 @@ const Room: React.FC = () => {
     const { goBack } = useHistory();
     return <TribePage page='room'>
         <IonHeader>
-            <IonToolbar >
+            <div style={{ borderBottom: '1px solid var(--ion-color-light)' }}>
+            <IonToolbar  >
                 <IonButtons slot='start'>
                     <IonButton onMouseDown={() => {
 
@@ -113,6 +114,7 @@ const Room: React.FC = () => {
                     </IonButton>}
                 </IonButtons>
             </IonToolbar>
+            </div>
         </IonHeader>
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
         <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
