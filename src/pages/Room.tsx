@@ -31,12 +31,7 @@ const Room: React.FC = () => {
     const [focused, setFocus] = useState<boolean>(false);
     const channel = address;
     const [info, setInfo] = useState<any | undefined>()
-    useIonViewDidEnter(() => {
-        hideTabs();
-    })
-    useIonViewDidLeave(() => {
-        showTabs();
-    })
+    
     useEffect(() => {
         const db = getFirestore(app);
         getDoc(doc(db, "channel", channel)).then((channelSnap) => {
