@@ -1,9 +1,8 @@
-import { Capacitor } from "@capacitor/core"
-import { getAuth, indexedDBLocalPersistence, initializeAuth } from "firebase/auth"
-import { formatEther } from "viem"
-import { app } from "../App"
+import { Capacitor } from "@capacitor/core";
+import { getAuth, initializeAuth } from "firebase/auth";
 import * as linkifyjs from 'linkifyjs';
-import { IonRouterLink } from "@ionic/react";
+import { formatEther } from "viem";
+import { app } from "../App";
 
 export const formatEth = (info: bigint | undefined) => {
     if (typeof info == 'undefined') {
