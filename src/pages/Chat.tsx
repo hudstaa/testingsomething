@@ -76,7 +76,7 @@ const Chat: React.FC = () => {
         <TribePage page='chat'>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>
+                    <IonTitle className='bold' style={{ fontSize: 18}}>
                         Chats
                     </IonTitle>
                 </IonToolbar>

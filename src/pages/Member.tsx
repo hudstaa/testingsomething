@@ -70,13 +70,13 @@ const Member: React.FC<{profile:boolean}> = ({profile}) => {
     return (
         <IonPage ref={pageRef}>
             <TribeHeader 
-                color='tribe'
+                color='transparent'
                 title=""
                 sticky
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard className='postcard' color="#00000000" style={{ marginLeft: 0, marginRight: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
+                <IonCard className='postcard' color="#00000000" style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0}}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{paddingTop: 15, paddingBottom: 0, fontSize: '.95rem'}} color='dark' className='regular' >
                             {member?.bio}
@@ -97,7 +97,6 @@ const Member: React.FC<{profile:boolean}> = ({profile}) => {
                             </IonButton>}
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{  border: "3px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 5}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{fontSize: 14.5}}>Boost</span>
-                                <BuyPriceBadge address={member?.address} />
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5}}>

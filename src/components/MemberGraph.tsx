@@ -45,15 +45,20 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
     const trades = parseTrades(data?.trades);
 
     const graph = useMemo(() => {
-        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 3 }}>
-            {loading && <IonProgressBar color='tertiary' type='indeterminate' />}
+        return <IonGrid className='transparent' style={{ marginLeft: 0, marginRight: -10,padding: 0, height: window.innerHeight / 4 }}>
             {error && <IonChip color='danger'>{error.message}</IonChip>}
-            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 3} width={'100%'}>
-                <AreaChart data={trades}>
-                    <CartesianGrid stroke="" />
-                    <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{padding: '10px 14px',borderRadius: 10,borderColor: 'var(--ion-color-paper)'}}/>
-                    <Area type="monotone" dataKey="price" strokeWidth="2px" stroke="#F45000" fillOpacity={0.3} fill="#F45000" />
-                </AreaChart>
+            {trades.length > 0 && <ResponsiveContainer height={window.innerHeight / 4} width={'100%'}>
+            <AreaChart data={trades}>
+                            <defs>
+                                <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#F45000" stopOpacity={0.8}/>
+                                    <stop offset="100%" stopColor="#F45000" stopOpacity={0}/> {/* Adjust this value as needed */}
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid stroke="" />
+                            <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{ padding: '10px 14px', borderRadius: 10, borderColor: 'var(--ion-color-paper)' }} />
+                            <Area type="monotone" dataKey="price" strokeWidth="3.5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
+                        </AreaChart>
             </ResponsiveContainer>}
         </IonGrid >
     }, [address, trades, data])

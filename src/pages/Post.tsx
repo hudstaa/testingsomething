@@ -1,4 +1,4 @@
-import { IonBadge, IonButton, IonButtons, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonPage, IonRow, IonSelect, IonSelectOption, IonSkeletonText, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonTitle, IonHeader, IonToolbar, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -42,14 +42,6 @@ const Post: React.FC = () => {
 
     const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)
-
-    useIonViewDidEnter(() => {
-        hideTabs();
-        setPresentingElement(pageRef.current)
-    })
-    useIonViewDidLeave(() => {
-        showTabs();
-    })
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
@@ -100,39 +92,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage ref={pageRef}>
-<IonHeader>
-    <IonButton fill='clear' routerLink='/post'><IonIcon icon={chevronBack} />
-    posts
-    </IonButton>
-</IonHeader>
-<IonHeader style={{ position: 'absolute' }}>
-                 <IonToolbar  style={{ paddingLeft: 8}}>
-                    <IonButtons slot='start'>
-                        <IonButton fill='clear' routerLink='/post'>
-                            <IonIcon icon={chevronBack} />
-                        </IonButton>
-                    </IonButtons>
-
-                    <IonButtons slot='end'>
-                        <IonButton onClick={() => {
-                            push('/notifications')
-                        }}>
-                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
-                                    {notifs.length}
-                                </IonText>
-                                <IonIcon color='dark' size="small" icon={'/icons/noti.svg'} />
-                            </IonBadge>
-                        </IonButton>
-                        <IonButton onMouseDown={() => {
-                            push('/account')
-                        }}>
-                            <MemberPfpImg size='smol' address={me.address} />
-                        </IonButton>
-                    </IonButtons>
-                </IonToolbar>
-            </IonHeader>
-
+        <TribeHeader showBackButton={true} title='Post'/>
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>

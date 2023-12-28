@@ -101,7 +101,7 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 8}}>
+                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 10}}>
                     <IonButtons slot='start'>
                         <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
                             onIonChange={(e) => {
@@ -128,7 +128,7 @@ const Posts: React.FC = () => {
                                 <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
                                     {notifs}
                                 </IonText>
-                                <IonIcon color='dark' size="small" icon={'/icons/noti.svg'} />
+                                <IonIcon icon={'/icons/notialt.svg'}  style={{ height: 24, width: 24 }}/>
                             </IonBadge>
                         </IonButton>
                         <IonButton onMouseDown={() => {
@@ -162,7 +162,7 @@ const Posts: React.FC = () => {
                 <IonHeader>
                     <IonToolbar className='transparent'/>
                 </IonHeader>
-                <IonGrid style={{ borderTop: '1px solid var(--ion-color-medium-shade)', paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 10 }}>
+                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 10 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />
@@ -170,7 +170,7 @@ const Posts: React.FC = () => {
                     </IonRow>
                 </IonGrid>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    {me && <div onClick={() => {
+                    {me && <div onClick={() =>  {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
                     }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 5, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontFamily: 'SF Pro Medium', }}>
                         +

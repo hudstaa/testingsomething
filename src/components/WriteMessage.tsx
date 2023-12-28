@@ -26,7 +26,18 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const uid = getAuth().currentUser?.uid;
 
   useEffect(() => {
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 0)
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 10)
+    setTimeout(() => {
+      (document.querySelector("#modal-write-message textarea") as any)?.focus();
+    }, 100)
+  }, [isOpen])
 
+  useEffect(() => {
     if (focused) {
       textRef.current!.querySelector('textarea')!.focus();
       setTimeout(() => {
@@ -41,25 +52,14 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
     }
   }, [focused])
-  useEffect(() => {
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 0)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 10)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 100)
-  }, [isOpen])
-  useEffect(() => {
 
-  })
   const textRef = useRef<HTMLIonTextareaElement>(null);
+
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
-    <IonToolbar style={{ padding: 5, border: 0 }} >
+    <IonToolbar style={{ padding: 8, paddingBottom: 16, border: 0 }} >
+      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 8, borderRadius: '32px', display: 'flex'}}> 
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
         }} />}
@@ -81,7 +81,8 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
         autoGrow
-        style={{ '--placeholder-font-family': 'rubik', flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+        className="regular"
+        style={{ flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
@@ -100,6 +101,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           <IonIcon color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
         </IonButton>
       </IonButtons>
+      </div>
     </IonToolbar>
   );
 }

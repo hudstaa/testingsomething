@@ -14,6 +14,7 @@ import { useBalance } from "wagmi";
 import useTabs from "../hooks/useTabVisibility";
 import { useNotifications } from "../hooks/useNotifications";
 import useBoosters from "../hooks/useBoosters";
+import { MemberGraph } from "./MemberGraph";
 
 export const ShowMemberModalProvider: React.FC = () => {
     const { highlight, setHighlight } = useMember();
@@ -46,66 +47,72 @@ export const ShowMemberModalProvider: React.FC = () => {
 
     }, [pathname])
     return <>
-        <IonModal presentingElement={presenter} initialBreakpoint={0.75} breakpoints={[0, 0.75]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presenter} initialBreakpoint={0.6} breakpoints={[0, 0.6]} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setHighlight(null);
         }}>
-            <IonHeader>
-                <IonCardHeader className='ion-image-center' style={{ boderBottom: 0 }}>
-                    <IonText color='medium'>
-                        {highlight?.bio}
-                    </IonText>
-                    <IonText >
-                        {highlight?.twitterName}
-                    </IonText>
-                    <img style={{ width: 70, height: 70, borderRadius: '10px', }} src={highlight?.twitterPfp || personOutline} />
+            <IonHeader >
+                <IonCardHeader className='ion-image-left' style={{ paddingBottom: 0}}>
+
+                    <div style={{paddingTop: 4, opacity: '0.5'}}>
+                        <IonText className="bold" style={{fontSize: '1.25rem'}}>
+                            {highlight?.twitterName}
+                        </IonText>
+                    </div>
+                    <div style={{paddingTop: 8}}>
+                        <IonText className="heavy" style={{fontSize: '1.5rem'}}>
+                            {formatEth(buyPrice)}
+                        </IonText>
+                    </div>
+                    <img style={{ width: 44, height: 44, borderRadius: '100%', }} src={highlight?.twitterPfp || personOutline} />
 
                 </IonCardHeader>
-
-
             </IonHeader>
-            <IonContent>
-
-                <IonCardContent>
-                    <IonList>
-
-                        <IonItem lines="none">
-                            <IonButton style={{ margin: 'auto', padding: -10, marginRight: 5 }} color='tribe' onMouseDown={() => {
-                                push('/member/' + highlight?.address)
-                                setHighlight(null);
-                                dismiss(false);
-                            }}>
-                                Profile
-                            </IonButton>
-                            <IonButton style={{ margin: 'auto', marginLeft: 5, padding: -10 }} color='tribe' onMouseDown={() => {
-                                setHighlight(null);
-                                dismiss(false);
-                                push('/channel/' + highlight?.address)
-                            }}>
-                                chat
-                            </IonButton>
-
-                        </IonItem>
-
-                        {useMemo(() => <div className="ion-text-center" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                            <IonButton disabled={typeof sellPass === 'undefined'} style={{ marginLeft: 'auto', marginRight: 10 }} color='danger' onClick={sellPass}>
-                                Sell {formatEth(sellPrice as any)}
-                            </IonButton>
-                            <IonButton disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 10, marginRight: 'auto' }} color='success' onClick={buyPass}>
+            
+                <IonContent style={{padding: 0}}>
+                    <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column'}}>
+                        <div style={{borderBottom: '1px solid var(--ion-color-light)'}}>
+                            {highlight && <MemberGraph address={highlight.address} />}
+                        </div>
+                        
+                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton  className="custombutton" disabled={typeof buyPass === 'undefined'} style={{ marginLeft: 16, marginRight: 16, width: '100%' }} color='tribe' onClick={buyPass}>
                                 Buy {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
-                        <IonItem lines="none">
-                            <IonText color='warning'>
-                                {buyError?.message}
-                                {sellError?.message}
-                            </IonText>
-                        </IonItem>
-                    </IonList>
+                        <IonCardContent style={{padding: 0}}>
+                            <IonItem lines="none" className="no-padding-start">
 
-                </IonCardContent>
-            </IonContent>
+                                <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                                    <IonButton className="custombutton" style={{ height: 36, margin: 0, marginRight: 2, width: '100%'}} color='tribe' onMouseDown={() => {
+                                        push('/member/' + highlight?.address)
+                                        setHighlight(null);
+                                        dismiss(false);
+                                    }}>
+                                        Profile
+                                    </IonButton>
+                                </div>    
+                                <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+
+                                    <IonButton className="custombutton" style={{ height: 36, margin: 0, marginLeft: 2, width: '100%' }} color='tribe' onMouseDown={() => {
+                                        setHighlight(null);
+                                        dismiss(false);
+                                        push('/channel/' + highlight?.address)
+                                    }}>
+                                        Chat
+                                    </IonButton>
+                                </div>    
+
+                                </IonItem>
+                    </IonCardContent>
+                    </div>
+                    <IonItem lines="none">
+                        <IonText color='warning'>
+                            {buyError?.message}
+                            {sellError?.message}
+                        </IonText>
+                    </IonItem>
+                </IonContent>
             <IonFooter>
-                NICE
             </IonFooter>
         </IonModal >
     </>

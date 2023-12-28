@@ -39,15 +39,11 @@ export const TwitterNameLink: React.FC<{ twitterName: string }> = ({ twitterName
             }
         })
     }, [])
-    return member && member !== null ? <IonChip onClick={() => {
+    return member && member !== null ? <IonChip style={{backgroundColor: 'transparent', padding: 0, margin: 0, minHeight: "20px", fontSize: "1rem", paddingBottom: 2 }} onClick={() => {
         push('/member/' + member?.address)
-    }} color={'tribe'}>
-        <IonAvatar>
-            <IonImg onError={() => {
-            }} src={member?.twitterPfp || personOutline} />
-        </IonAvatar>
-        <IonText>
-            {twitterName}
+    }}>
+        <IonText className='medium' color="tribe" style={{fontSize: "1rem"}}>
+            @{twitterName}
         </IonText>
     </IonChip> : <IonRouterLink href={'x.com/'+twitterName}><IonChip>
         {twitterName}
@@ -61,10 +57,10 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 44, height: 44, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 100 };
@@ -88,7 +84,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 24, height: 24, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
@@ -111,7 +107,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 28, height: 28, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
@@ -135,7 +131,7 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     return <IonText color={color} className='bold' onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, fontSize: ".9rem", paddingRight: 4 }} >
+        style={{ margin: 0, fontSize: "1rem", paddingRight: 4 }} >
         {member?.twitterName}
     </IonText>
 }
@@ -146,7 +142,7 @@ export const MemberUsername: React.FC<{ clickable?: boolean, address: string, co
     return <IonText className="regular" color="dark" onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, padding: 0, opacity: "75%" }} >
+        style={{ margin: 0, padding: 0, opacity: "50%" }} >
         @{member?.twitterUsername}
     </IonText>
 }
@@ -184,7 +180,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 0 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', fontSize: '1rem', margin: 0, paddingBottom: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, marginTop: -1, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
@@ -192,8 +188,8 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
                             {member?.twitterName}
                         </IonText>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, paddingBottom: 0 }}>
-                        <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 4, paddingTop: 0, opacity: '75%' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', cursor: 'pointer', margin: 0, marginTop: -1, paddingBottom: 0 }}>
+                        <IonText color='dark' className='regular' style={{ fontSize: "1rem", paddingLeft: 0,marginLeft: -1, paddingTop: 0, opacity: '50%' }}>
                             @{member?.twitterUsername}
                         </IonText>
                     </div>
