@@ -58,7 +58,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
-    <IonToolbar style={{ padding: 8, paddingBottom: 16, border: 0 }} >
+    <IonToolbar style={{ padding: 4, border: 0 }} >
       <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 8, borderRadius: '32px', display: 'flex'}}> 
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
