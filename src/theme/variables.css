@@ -73,13 +73,6 @@ http://ionicframework.com/docs/theming/ */
   src: url("/fonts/GTlight.otf") format("opentype");
 }
 
-
-@font-face {
-  font-family: 'bold';
-  src: url("/fonts/bold.otf") format("opentype");
-}
-
-
 @font-face {
   font-family: 'OH';
   src: url("/fonts/heavyheader.otf") format("opentype");
@@ -131,12 +124,6 @@ http://ionicframework.com/docs/theming/ */
 .semi {
   font-family: 'SF Pro Semibold', sans-serif !important;
 }
-
-
-.boldR {
-  font-family: 'bold', sans-serif !important;
-}
-
 
 .text {
   font-family: 'SF Pro Regular', sans-serif !important;
