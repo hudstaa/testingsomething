@@ -26,7 +26,40 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return  <div className="swiper-no-swiping" ><IonCard  onMouseDown={(e) => {
+    const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
+    const [isTap, setIsTap] = useState(true);
+
+    const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+        setTouchStart({
+            x: e.touches[0].clientX,
+            y: e.touches[0].clientY
+        });
+        setIsTap(true); // Assume it's a tap initially
+    };
+
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+        // If the finger moves significantly, consider it a swipe
+        const moveX = e.touches[0].clientX;
+        const moveY = e.touches[0].clientY;
+        if (Math.abs(moveX - touchStart.x) > 10 || Math.abs(moveY - touchStart.y) > 10) {
+            setIsTap(false); // It's a swipe
+        }
+    };
+
+    const handleTouchEnd = () => {
+        if (isTap) {
+            // It's a tap, handle click
+            handleClick();
+        }
+        // Else, it's a swipe, and Swiper will handle it
+    };
+
+    const handleClick = () => {
+        console.log("Post clicked");
+        push('/post/' + id); // Navigate to the post
+    };
+
+    return  <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
