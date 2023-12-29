@@ -26,7 +26,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'light' : 'white';
     const { pathname } = useLocation()
-    return  <IonCard  onMouseDown={(e) => {
+    return  <div className="swiper-no-swiping" ><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -138,4 +138,5 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
     </IonCard>
+    </div>
 }
