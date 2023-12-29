@@ -129,7 +129,7 @@ const Posts: React.FC = () => {
                         </IonButtons>
                         {/* Rest of your code for the end buttons */}
                     </IonToolbar> 
-                : <IonToolbar style={{ height: 0 }} color='paper' />}
+                : <IonToolbar style={{ maxHeight: 0 }} color='paper' />}
             </IonHeader>
 
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
