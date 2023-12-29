@@ -102,9 +102,9 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ padding: 0, margin: 0}}>
+            <IonHeader style={{ padding: 0, marginBottom: '10vh'}}>
                 {!hideToolbar ? 
-                    <IonToolbar style={{height: 'auto'}}>
+                    <IonToolbar style={{height: 'auto', position: 'absolute'}}>
                         <IonButtons slot='start' style={{ width: '100%' }}>
                         <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 20}}>Updates</IonTitle>
                             <IonSegment
