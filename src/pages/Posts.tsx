@@ -24,6 +24,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
+import 'swiper/css';
+import { Swiper as SwiperClass } from 'swiper';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import { PostList } from '../components/PostList';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -57,6 +60,24 @@ const Posts: React.FC = () => {
         const params = new URLSearchParams(location.search);
         params.set('type', newValue);
         history.push({ search: params.toString() });
+    };
+
+    const swiperRef = useRef<SwiperRef>(null);
+
+    useEffect(() => {
+        if (swiperRef.current && swiperRef.current.swiper) {
+            const newIndex = postType === 'top' ? 0 : 1;
+            swiperRef.current.swiper.slideTo(newIndex, 0);
+        }
+    }, [postType]);
+    
+    const handleSlideChange = () => {
+        const swiperInstance = swiperRef.current?.swiper;
+        if (swiperInstance) {
+            const newIndex = swiperInstance.activeIndex;
+            const newPostType = newIndex === 0 ? 'top' : 'recent';
+            handleSegmentChange(newPostType);
+        }
     };
 
     // Sync state with URL changes
@@ -127,7 +148,6 @@ const Posts: React.FC = () => {
                                 </IonSegmentButton>
                             </IonSegment>
                         </IonButtons>
-                        {/* Rest of your code for the end buttons */}
                     </IonToolbar> 
                 : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
             </IonHeader>
@@ -155,13 +175,22 @@ const Posts: React.FC = () => {
                 <IonHeader>
                     <IonToolbar className='transparent' style={{height: 0}}/>
                 </IonHeader>
-                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 0 }}>
-                    <IonRow>
-                        <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
+                <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
+                    <SwiperSlide>
+                        {/* Your content for "Friends" */}
+                        {postType === 'top' && (
                             <PostList type={postType} max={10} />
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+                            // You can add more components related to the "Friends" segment here
+                        )}
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        {/* Your content for "Everyone" */}
+                        {postType === 'recent' && (
+                            <PostList type={postType} max={10} />
+                            // Similarly, add components for the "Everyone" segment here
+                        )}
+                    </SwiperSlide>
+                </Swiper>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     {me && <div onClick={() =>  {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
