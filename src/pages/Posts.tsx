@@ -177,18 +177,10 @@ const Posts: React.FC = () => {
                 </IonHeader>
                 <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
                     <SwiperSlide>
-                        {/* Your content for "Friends" */}
-                        {postType === 'top' && (
-                            <PostList type={postType} max={10} />
-                            // You can add more components related to the "Friends" segment here
-                        )}
+                        <PostList type='top' max={10} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        {/* Your content for "Everyone" */}
-                        {postType === 'recent' && (
-                            <PostList type={postType} max={10} />
-                            // Similarly, add components for the "Everyone" segment here
-                        )}
+                        <PostList type='recent' max={10} />
                     </SwiperSlide>
                 </Swiper>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
