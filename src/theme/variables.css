@@ -254,7 +254,7 @@ ion-segment-button.ios::part(native) {
 }
 
 ion-segment-button.ios::part(indicator-background) {
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 ion-footer,
@@ -676,7 +676,7 @@ ion-segment-button {
 }
 
 ion-segment-button::part(indicator) {
-  width: 40%; /* Adjust this value to set the desired width */
+  width: 100%; /* Adjust this value to set the desired width */
   margin-left: auto;
   margin-right: auto;
   border-radius: 100px;

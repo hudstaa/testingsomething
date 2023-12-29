@@ -4,6 +4,7 @@ import {
     IonButton,
     IonButtons,
     IonCardTitle,
+    IonTitle,
     IonCol,
     IonContent,
     IonFab,
@@ -13,6 +14,7 @@ import {
     IonImg,
     IonItem,
     IonPage,
+    IonLabel,
     IonRow,
     IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
 } from '@ionic/react';
@@ -100,45 +102,36 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 10}}>
-                    <IonButtons slot='start'>
-                        <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
-                            onIonChange={(e) => {
-                                const newValue = e.detail.value;
-                                if (newValue === 'top' || newValue === 'recent') {
-                                    handleSegmentChange(newValue);
-                                }
-                            }}
-                            value={postType}                    >
-                            <IonSelectOption value={'top'} color={postType === 'top' ? 'medium' : 'paper'} >
-                                Top
-                            </IonSelectOption>
-                            <IonSelectOption value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                                New
-                            </IonSelectOption>
-                        </IonSelect>
-                    </IonButtons>
-
-                    <IonButtons slot='end'>
-                        <IonButton onClick={() => {
-                            showNotifications()
-                        }}>
-                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
-                                    {notifs}
-                                </IonText>
-                                <IonIcon icon={'/icons/notialt.svg'}  style={{ height: 24, width: 24 }}/>
-                            </IonBadge>
-                        </IonButton>
-                        <IonButton onMouseDown={() => {
-                            push('/account')
-                        }}>
-                            <MemberPfpImg size='smol' address={me.address} />
-                        </IonButton>
-                    </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
+            <IonHeader style={{ paddingTop: 0}}>
+                {!hideToolbar ? 
+                    <IonToolbar>
+                        <IonButtons slot='start' style={{ width: '100%' }}>
+                        <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 20}}>Updates</IonTitle>
+                            <IonSegment
+                                onIonChange={(e) => {
+                                    const newValue = e.detail.value;
+                                    if (newValue === 'top' || newValue === 'recent') {
+                                        handleSegmentChange(newValue);
+                                    }
+                                }}
+                                value={postType}
+                                color='paper'
+                                className='heavy'
+                                style={{ marginTop: '5vh', fontSize: 20, width: '100%' }} // Ensure full width
+                            >
+                                <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                                    <IonLabel>Top</IonLabel>
+                                </IonSegmentButton>
+                                <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
+                                    <IonLabel>New</IonLabel>
+                                </IonSegmentButton>
+                            </IonSegment>
+                        </IonButtons>
+                        {/* Rest of your code for the end buttons */}
+                    </IonToolbar> 
+                : <IonToolbar style={{ height: 0 }} color='paper' />}
             </IonHeader>
+
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
                 const isCloseToBottom =
@@ -160,9 +153,9 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar className='transparent'/>
+                    <IonToolbar className='transparent' style={{height: 0}}/>
                 </IonHeader>
-                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 10 }}>
+                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 0 }}>
                     <IonRow>
                         <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                             <PostList type={postType} max={10} />
