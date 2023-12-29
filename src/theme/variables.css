@@ -254,7 +254,7 @@ ion-segment-button.ios::part(native) {
 }
 
 ion-segment-button.ios::part(indicator-background) {
-  border-radius: 10px;
+  border-radius: 16px;
 }
 
 ion-footer,
