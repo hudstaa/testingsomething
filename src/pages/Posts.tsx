@@ -149,7 +149,7 @@ const Posts: React.FC = () => {
                                 </IonSegmentButton>
                             </IonSegment>
                     </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
+                </IonToolbar> : <IonToolbar style={{ height: 50 }} color='paper' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
