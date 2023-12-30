@@ -59,7 +59,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             </div>
             {comments.map((comment, i) => (
                 < div key={i}>
-                    <div style={{backgroundColor: "var(--ion-color-light"}}>
+                    <div style={{backgroundColor: "var(--ion-color-paper"}}>
                     <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: 0, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
                         <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 28, top: -2.5, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
@@ -95,7 +95,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                                 <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
-                    <IonItem color={'lightt'}>
+                    <IonItem lines="none" color={'lightt'}>
                     <div style={{paddingTop: 0, marginTop: 0, display: "flex", flexDirection: "row"}}>
                         <IonButtons slot='start 'style={{ paddingBottom: 0, marginLeft: 0, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
                         <IonText>
