@@ -94,14 +94,20 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           setContent(e.detail.value!)
         }}
       />
-      <IonButtons slot='end'>
-        <IonButton disabled={strippedLength < 1} onClick={async () => {
-          makeComment();
-        }}>
-          <IonIcon color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'light'} style={{ paddingBottom: 1, fontSize: '27px' }} icon={'/icons/sendLarge.svg'} />
-        </IonButton>
-      </IonButtons>
       </div>
+      <IonButtons slot='end'  style={{ marginLeft: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10}}>
+      <IonButton 
+          disabled={strippedLength < 1} 
+          onClick={async () => {
+              makeComment();
+          }} 
+          style={{display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+          <IonText color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'light'} className="bold">
+              Send
+          </IonText>
+      </IonButton>
+      </IonButtons>
     </IonToolbar>
   );
 }
