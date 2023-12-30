@@ -59,9 +59,9 @@ const Posts: React.FC = () => {
         setPostType(newValue);
         const params = new URLSearchParams(location.search);
         params.set('type', newValue);
-        history.push({ search: params.toString() });
+        history.replace({ search: params.toString() }); // Use replace instead of push
     };
-
+    
     const swiperRef = useRef<SwiperRef>(null);
 
     useEffect(() => {
