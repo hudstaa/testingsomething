@@ -110,7 +110,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         }}
       />
       </div>
-      <IonButtons slot='end'  style={{ marginLeft: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10}}>
+      <IonButtons slot='end'  style={{ marginLeft: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 32, padding: 8, paddingBottom: 10}}>
       <IonButton 
           disabled={strippedLength < 1} 
           onClick={async () => {
