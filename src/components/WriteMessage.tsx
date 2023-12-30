@@ -3,6 +3,8 @@ import { close, imageOutline, paperPlane, text } from "ionicons/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
 import { getAuth } from "firebase/auth";
+import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
+import { useMember } from "../hooks/useMember"
 import { useWriteMessage } from "../hooks/useWriteMessage";
 export function removeUndefinedProperties(obj: any) {
   Object.keys(obj).forEach(key => {
@@ -12,12 +14,14 @@ export function removeUndefinedProperties(obj: any) {
   });
   return obj;
 }
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
+export const WriteMessage: React.FC<{ author: string, placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
+  const me = useMember(x => x.getCurrentUser());
   const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   const bgColor = darkmode ? undefined : 'white';
   const [showMediaButton, setShowMediaButton] = useState(false);
+  const author = me!.address;
 
   const handleFocus = () => {
     setIsTextAreaFocused(true);
@@ -72,7 +76,11 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
   return (
     <IonToolbar color={bgColor} style={{ padding: 4, border: 0 }} >
-      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, marginTop: 4,paddingRight: 0, borderRadius: '32px', maxHeight: 44, display: 'flex'}}> 
+      <div style={{display: 'flex', width: '100%'}}>
+      <IonAvatar style={{marginTop: 4, height: 44}}>
+        <MemberPfp color='dark' size="veru-smol" address={author}/>
+      </IonAvatar>
+      <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 4, marginTop: 4,paddingRight: 0, borderRadius: '12px', maxHeight: 44, width: '100%',display: 'flex'}}> 
       {showMediaButton && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
@@ -111,20 +119,22 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           setContent(e.detail.value!)
         }}
       />
-      </div>
-      <IonButtons slot='end'  style={{ maxHeight: 44, marginLeft: 8, marginTop: 4, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 32, padding: 8, paddingBottom: 10}}>
-      <IonButton 
-          disabled={strippedLength < 1} 
-          onClick={async () => {
-              makeComment();
-          }} 
-          style={{display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-          <IonText color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'dark'} className="bold">
-              Send
-          </IonText>
-      </IonButton>
+      <IonButtons slot='end'  style={{ maxHeight: 32, marginLeft: 8, marginTop: 6, marginRight: 6, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 12, padding: 8, paddingBottom: 10}}>
+        <IonButton 
+            disabled={strippedLength < 1} 
+            onClick={async () => {
+                makeComment();
+            }} 
+            style={{display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        >
+            <IonText color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'dark'} className="medium">
+                Send
+            </IonText>
+        </IonButton>
       </IonButtons>
+      </div>
+
+      </div>
     </IonToolbar>
   );
 }
