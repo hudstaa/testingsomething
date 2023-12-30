@@ -61,7 +61,7 @@ const Posts: React.FC = () => {
         params.set('type', newValue);
         history.replace({ search: params.toString() }); // Use replace instead of push
     };
-    
+
     const swiperRef = useRef<SwiperRef>(null);
 
     useEffect(() => {
@@ -91,7 +91,7 @@ const Posts: React.FC = () => {
     const { highlightPost } = usePost();
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? undefined : 'light';
+    const bgColor = darkmode ? undefined : 'white';
     const { setPresentingElement } = useWriteMessage()
     const pageRef = useRef<any>(null)
     useIonViewDidEnter(() => {
@@ -125,7 +125,7 @@ const Posts: React.FC = () => {
         <IonPage ref={pageRef}>
             <IonHeader style={{ padding: 0, marginBottom: '10vh'}}>
                 {!hideToolbar ? 
-                    <IonToolbar style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
+                    <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
                 <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 28, letterSpacing: '-.0335em'}}>tribe</IonTitle>
                         <IonButtons slot='start' color='transparent' style={{ width: '100%' }}>
                             <IonSegment
