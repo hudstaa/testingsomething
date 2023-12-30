@@ -14,7 +14,7 @@ export function removeUndefinedProperties(obj: any) {
   });
   return obj;
 }
-export const WriteMessage: React.FC<{ author: string, placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const me = useMember(x => x.getCurrentUser());
