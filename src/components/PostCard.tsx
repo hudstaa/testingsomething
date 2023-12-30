@@ -180,15 +180,15 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             </IonButton>
             <div style={{ marginLeft: '10%', marginRight: -8, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ marginRight: -8, height: 20, width: 20 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ marginRight: -8, height: 18, width: 18 }} />
                 </IonButton>
                 <IonLabel style={{
-                    fontSize: 20, width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                    fontSize: '1rem', width: 36, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
-                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'tribe'} className='header ion-text-center'>{score} </IonText>
+                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'tribe'} className='fab ion-text-center'>{score} </IonText>
                 </IonLabel>
                 <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{marginLeft: -8, marginRight: 0, height: 20, width: 20 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{marginLeft: -8, marginRight: 0, height: 18, width: 18 }} />
                 </IonButton>
             </div>
         </IonRow>}
