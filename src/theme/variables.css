@@ -9,6 +9,19 @@ http://ionicframework.com/docs/theming/ */
 /* html.ios {
   --ion-default-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif
 } */
+#jupiter-terminal{
+  height: calc(100vh - 100px);
+}
+#jupiter-terminal > div > div > div > div > div > a > img {
+  display: none;
+}
+#jupiter-terminal>div>div>div>div>div>a>span {
+  display: none;
+}
+
+div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
+  display: none;
+}
 
 @font-face {
   font-family: 'AvenirBold';

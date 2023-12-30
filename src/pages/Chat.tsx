@@ -57,6 +57,13 @@ const Chat: React.FC = () => {
                 if (!querySnapshot.empty) {
                     const result = querySnapshot.docs.map(doc => ({ ...doc.data(), address: doc.id }));
                     setMembers(x => uniqByProp([...x ? x : [], ...result] as any, 'address') as any);
+                }else{
+                    const joinTribe = httpsCallable(getFunctions(app), 'joinBeta');
+                    setJoining(true);
+                    joinTribe().then(() => {
+                        setJoining(false);
+                        setMembers([{ "address": "0x0000000000000000000000000000000000000000" }, ...members||[]] as any)
+                    })
                 }
             })
             .catch(error => {
@@ -80,22 +87,6 @@ const Chat: React.FC = () => {
                         <IonLoading isOpen={joining} />
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
-                                {members && !members.map(x => x.address).includes("0x0000000000000000000000000000000000000000") && <IonItem>
-                                    Join Tribe Alpha
-                                    <IonButtons slot='end' >
-                                        <IonButton color='tribe' fill='solid' onMouseDown={() => {
-                                            const joinTribe = httpsCallable(getFunctions(app), 'joinBeta');
-                                            setJoining(true);
-                                            joinTribe().then(() => {
-                                                setJoining(false);
-                                                setMembers([{ "address": "0x0000000000000000000000000000000000000000" }, ...members] as any)
-                                            })
-                                        }}>
-                                            Join
-                                        </IonButton>
-
-                                    </IonButtons>
-                                </IonItem>}
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
                                     <IonItem routerDirection='forward' lines='none' routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />

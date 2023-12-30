@@ -2,7 +2,7 @@ import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonTi
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
 import { TribeHeader } from '../components/TribeHeader';
@@ -14,6 +14,8 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
+import { chevronBack, chevronDown, push } from 'ionicons/icons';
+import { MemberPfpImg } from '../components/MemberBadge';
 
 
 
@@ -81,6 +83,8 @@ const Post: React.FC = () => {
         }
     }, [me])
     const contentRef = useRef<HTMLIonContentElement>(null)
+    const {push}=useHistory()
+    const {notifications:notifs}=useNotifications()
     if (id === 'new') {
         return <NewPost />
     }
