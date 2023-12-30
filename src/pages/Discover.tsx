@@ -64,7 +64,7 @@ const Discover: React.FC = () => {
   }, [me])
   return (
     <TribePage page='discover'>
-      <IonHeader>
+      <IonHeader style={{display: 'flex', flexDirection: 'column'}}>
         <IonToolbar>
           <IonTitle className='bold' style={{fontWeight: 500, fontSize: 18}}>
             Discover
