@@ -126,7 +126,7 @@ const Posts: React.FC = () => {
             <IonHeader style={{ padding: 0, marginBottom: '10vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
-                <IonTitle className='bold' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 18}}>Updates</IonTitle>
+                <IonTitle className='heavyhead' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 24}}>TRIBE</IonTitle>
                         <IonButtons slot='start' color='transparent' style={{ width: '100%' }}>
                             <IonSegment
                                 onIonChange={(e) => {
