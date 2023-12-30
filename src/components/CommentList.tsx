@@ -71,18 +71,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonText>
                         
                         </div>
-                        <IonButtons slot='end'>
-                            <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
-                                const db = getFirestore(app);
-                                const uid = getAuth().currentUser!.uid;
-                                const postRef = doc(db, 'post', postId);
-                                const commentRef = doc(postRef, 'comments', comment.id);
-                                const voteRef = doc(commentRef, 'votes', uid);
-                                const vote = upvote ? 1 : -1;
-                                setDoc(voteRef, ({ vote }))
-                            }} />
 
-                        </IonButtons>
                         
                     </IonItem>
                     {
@@ -92,21 +81,37 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                                 <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                         </IonItem>
                     }
+                    
                     <IonItem lines="none" color={'lightt'}>
-                    <div style={{paddingTop: 0, marginTop: 0, display: "flex", flexDirection: "row"}}>
-                        <IonButtons slot='start 'style={{ paddingBottom: 0, marginLeft: 52, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
-                        <IonText>
-                        <span className="medium" onMouseDown={() => {
-                                setCommentPath(comment.id);
-                            }}>Reply</span>
-                        </IonText>
-                        </IonButtons>
-                        <IonText color={'dark'} className='light' style={{ paddingBottom: 0, marginLeft: 4, bottom: 0, fontSize: ".9rem", opacity: '50%' }}>
-                            • {timestampAgo(comment.sent)}
-                            
-                        </IonText>
+                    <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        {/* Reply/Time Ago section on the left */}
+                        <div style={{ display: "flex", alignItems: "center", fontSize: ".9rem", opacity: '50%' }}>
+                            <IonButtons style={{ paddingBottom: 0, marginLeft: 52 }}>
+                                <IonText>
+                                    <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
+                                </IonText>
+                            </IonButtons>
+                            <IonText color={'dark'} className='light' style={{ marginLeft: 4 }}>
+                                • {timestampAgo(comment.sent)}
+                            </IonText>
                         </div>
+
+                        {/* Voter component on the right */}
+                        <IonButtons style={{ paddingRight: 24 }}>
+                            <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
+                                const db = getFirestore(app);
+                                const uid = getAuth().currentUser!.uid;
+                                const postRef = doc(db, 'post', postId);
+                                const commentRef = doc(postRef, 'comments', comment.id);
+                                const voteRef = doc(commentRef, 'votes', uid);
+                                const vote = upvote ? 1 : -1;
+                                setDoc(voteRef, ({ vote }));
+                            }} />
+                        </IonButtons>
+                    </div>
+
                         </IonItem>
+                        
                 </div>
                 </div>))
             }
