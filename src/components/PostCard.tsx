@@ -118,16 +118,13 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
 
 
         {<IonRow style={{ marginTop: 0, display: 'flex', justifyContent: 'space-between'}}>
-            {<IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop:0, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
-                open((message) => {
-                    makeComment(id, message as any)
-                }, "", "Comment", id)
+            <IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop:0, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 20, width: 20 }} /> 
                 <IonText color={'medium'} className="fab" style={{ fontSize: "1rem", marginTop: 0, marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
-            </IonButton>}
+            </IonButton>
             <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
