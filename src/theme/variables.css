@@ -674,13 +674,11 @@ ion-footer {
 
 }
 
-.toolbarmain {
-  --min-height: 0px !important;
-}
-
 /* Remove shadow from segments */
 ion-segment-button {
   --box-shadow: none !important;
+  min-height: 3.5vh !important
+
 }
 
 ion-segment-button::part(indicator) {
