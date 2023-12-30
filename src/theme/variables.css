@@ -217,6 +217,7 @@ ion-header ion-toolbar {
   --border-width: 0 !important;
   border: none !important;
   box-shadow: none !important;
+  display: flex;
 }
 
 .footer-ios ion-toolbar:first-of-type {
