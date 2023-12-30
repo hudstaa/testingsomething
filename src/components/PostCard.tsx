@@ -148,28 +148,22 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 <IonIcon icon={'/icons/share.svg'} style={{ height: 25, width: 25 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
-            <IonButton style={{ marginLeft: "33%", marginBottom: 0, marginTop: -5, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
-                setLocalNotif("Copied to share link to clipboard")
-                navigator.clipboard.writeText('https://tribe.computer/post/' + id)
-            }}>
-                <IonIcon icon={'/icons/dots.svg'} style={{ height: 24, width: 24 }}/>
-                {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
-            </IonButton>
+            <div style={{ marginLeft: '10%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{ height: 24, width: 24 }} />
+                </IonButton>
+                <IonLabel style={{
+                    fontSize: 24, width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                }} >
+                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
+                </IonLabel>
+                <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 24, width: 24 }} />
+                </IonButton>
+            </div>
+            {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
 
         </IonRow>}
-        <IonButton style={{ position: 'absolute', right: -10, top: -5 }} fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{ height: 24, width: 24 }} />
-        </IonButton>
-        <IonLabel style={{
-            position: 'absolute', right: 9, top: 40, fontSize: 15, width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
-        }} >
-            <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
-        </IonLabel>
-        <IonButton style={{ position: 'absolute', right: -10, top: 44 }} fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-            <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 24, width: 24 }} />
-        </IonButton>
-        {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
-
     </IonCard>
     </div>
 }
