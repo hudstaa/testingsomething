@@ -130,7 +130,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                         }else if(content.startsWith("@")){
                             return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
                         }
-                    }                    ,
+                    },
                     formatHref:
                 {                    
                     mention: (href) => "https://beta.tribe.computer/member/" + href.substring(1),
