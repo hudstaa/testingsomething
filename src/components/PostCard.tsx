@@ -122,7 +122,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     makeComment(id, message as any)
                 }, "", "Comment", id)
             }}>
-                 <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 24, width: 24 }} /> 
+                 <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 20, width: 20 }} /> 
                 <IonText color={'medium'} className='medium' style={{ fontSize: "1rem", marginTop: 0, marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
@@ -131,21 +131,21 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/send.svg'} style={{ height: 24, width: 24 }}/>
+                <IonIcon icon={'/icons/send.svg'} style={{ height: 20, width: 20 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 24, width: 24 }}/>
+                <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 20, width: 20 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, opacity: '50%' }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/share.svg'} style={{ height: 25, width: 25 }}/>
+                <IonIcon icon={'/icons/share.svg'} style={{ height: 21, width: 21 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <div style={{ marginLeft: '10%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -153,7 +153,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 20, width: 20 }} />
                 </IonButton>
                 <IonLabel style={{
-                    fontSize: 20, width: 20, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                    fontSize: 20, width: 12, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
                 </IonLabel>
