@@ -54,9 +54,6 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
     return (
         <IonList style={{ marginRight: offset ? -35 : undefined }}>
-            <div style={{ height: 16 }}>
-
-            </div>
             {comments.map((comment, i) => (
                 < div key={i}>
                     <div style={{backgroundColor: "var(--ion-color-paper"}}>
