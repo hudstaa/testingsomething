@@ -83,7 +83,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
             </div>
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 16, paddingBottom: 1, paddingTop: 0, margin: 0,paddingRight: 16,  marginTop: -4 }}  >
-            <div style={{paddingRight: "10%"}}>
+            <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: '1.1rem', letterSpacing: "-0.0135em" }} onClick={() => {
             }} >
                 <Linkify options={{
