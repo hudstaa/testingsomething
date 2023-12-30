@@ -14,6 +14,9 @@ export function removeUndefinedProperties(obj: any) {
 }
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
+  const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
+  const handleFocus = () => setIsTextAreaFocused(true);
+  const handleBlur = () => setIsTextAreaFocused(false); 
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
     const content = textRef.current?.value!;
@@ -59,7 +62,8 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
   return (
     <IonToolbar style={{ padding: 4, border: 0 }} >
-      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 8, borderRadius: '32px', display: 'flex'}}> 
+      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 0, borderRadius: '32px', display: 'flex'}}> 
+      {isTextAreaFocused && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
         }} />}
@@ -76,13 +80,16 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
             </IonText>
           </IonChip>}
       </IonButtons>
+      )}
       <IonTextarea
         autoFocus={isModal || focused}
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
         autoGrow
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className="regular"
-        style={{ flex: 1, paddingTop: 0, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+        style={{ flex: 1, paddingTop: 0, paddingLeft: 8, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
