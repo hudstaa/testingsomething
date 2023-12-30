@@ -124,7 +124,7 @@ const Posts: React.FC = () => {
     return (
         <IonPage ref={pageRef}>
             <IonHeader style={{ }}>
-                {!hideToolbar ? <IonToolbar className='toolbarmain' style={{ paddingLeft: 8, minHeight: 0}}>
+                {!hideToolbar ? <IonToolbar className='toolbarmain' style={{ paddingLeft: 8, height: 44}}>
                     <IonButtons slot='start' style={{width: '20%'}}>
                         <IonTitle className='header' style={{textAlign: 'left', fontSize: 24, padding: 0 }}>tribe</IonTitle>
                     </IonButtons>
