@@ -153,7 +153,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 20, width: 20 }} />
                 </IonButton>
                 <IonLabel style={{
-                    fontSize: 20, width: 'auto', alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                    fontSize: 20, width: 16, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='black ion-text-center'>{score} </IonText>
                 </IonLabel>
