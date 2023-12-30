@@ -52,7 +52,6 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
     const gptRowStyle = onPostPage ? {
         borderBottom: '1px solid var(--ion-color-medium-shade)',
-        marginTop: 16,
         marginBottom: 4,
         display: 'flex',
         justifyContent: 'space-between'
