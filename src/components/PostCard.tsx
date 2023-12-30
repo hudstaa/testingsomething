@@ -59,7 +59,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         push('/post/' + id); // Navigate to the post
     };
 
-    return  <div style={{ borderBottom: '1px solid var(--ion-color-medium-shade)'}} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
+    return  <div style={{ borderTop: '1px solid var(--ion-color-medium-shade)'}} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {

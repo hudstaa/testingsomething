@@ -123,10 +123,10 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute'}}>
+            <IonHeader style={{ position: 'absolute' }}>
                 {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 8}}>
                     <IonButtons slot='start' style={{width: '20%'}}>
-                        <IonTitle className='bold' style={{textAlign: 'left', fontSize: 24, padding: 0 }}>Tribe</IonTitle>
+                        <IonTitle className='header' style={{textAlign: 'left', fontSize: 24, padding: 0 }}>tribe</IonTitle>
                     </IonButtons>
                     <IonButtons slot='end'>
                     <IonSegment
@@ -137,15 +137,15 @@ const Posts: React.FC = () => {
                                     }
                                 }}
                                 value={postType}
-                                color='paper'
+                                color='transparent'
                                 className='heavy'
                                 style={{ fontSize: 24 }}
                             >
                                 <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
-                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Friends</IonLabel>
+                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6, marginRight: -30}}>TOP</IonLabel>
                                 </IonSegmentButton>
                                 <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Everyone</IonLabel>
+                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6, marginRight: 0}}>NEW</IonLabel>
                                 </IonSegmentButton>
                             </IonSegment>
                     </IonButtons>

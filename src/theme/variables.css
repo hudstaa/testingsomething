@@ -229,7 +229,7 @@ ion-segment {
 }
 
 ion-segment-button::part(indicator-background) {
-  background: var(--ion-color-tribe);
+  background: transparent;
 }
 
 /* Material Design styles */
@@ -248,10 +248,13 @@ ion-segment-button.md::part(indicator-background) {
 /* iOS styles */
 ion-segment-button.ios::part(native) {
   color: var(--ion-color-dark);
+  opacity: 0.5;
+
 }
 
 .segment-button-checked.ios::part(native) {
   color: #fff;
+  opacity: 1;
 }
 
 ion-segment-button.ios::part(indicator-background) {
