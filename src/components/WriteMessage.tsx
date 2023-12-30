@@ -70,7 +70,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
 
   return (
     <IonToolbar style={{ padding: 4, border: 0 }} >
-      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 0, borderRadius: '32px', display: 'flex'}}> 
+      <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 0, borderRadius: '32px', maxHeight: 48, display: 'flex'}}> 
       {showMediaButton && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
@@ -97,7 +97,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"
-        style={{ flex: 1, paddingTop: 0, paddingLeft: 8, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+        style={{ flex: 1, paddingTop: 0, paddingLeft: 8, marginTop: -4, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
@@ -110,7 +110,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         }}
       />
       </div>
-      <IonButtons slot='end'  style={{ marginLeft: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 32, padding: 8, paddingBottom: 10}}>
+      <IonButtons slot='end'  style={{ maxHeight: 44, marginLeft: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 32, padding: 8, paddingBottom: 10}}>
       <IonButton 
           disabled={strippedLength < 1} 
           onClick={async () => {
