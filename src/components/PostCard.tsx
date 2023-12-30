@@ -30,7 +30,6 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     const [isTap, setIsTap] = useState(true);
 
     const cardStyle = onPostPage ? {
-        borderBottom: '1px solid var(--ion-color-medium-shade)',
         marginTop: 0,
         marginBottom: 0,
         marginLeft: 0,
