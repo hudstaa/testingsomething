@@ -93,7 +93,7 @@ const PfpUploader: React.FC<PfpUploaderProps> = ({ userId, onUpload, done }) => 
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const uploadImage = <IonIcon style={{
         filter: !darkmode ? 'invert(100%)' : undefined
-    }} size="small" color='primary' icon={'/icons/uploadd.svg'} />
+    }} size="medium" color='primary' icon={'/icons/uploadd.svg'} />
     return (
         <div>
             <IonButton fill='clear' {...getRootProps()} >

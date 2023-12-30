@@ -118,7 +118,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           }} 
           style={{display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
-          <IonText color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'light'} className="bold">
+          <IonText color={(typeof message?.content !== 'undefined' && message.content.length > 0) && message !== null ? 'primary' : 'dark'} className="bold">
               Send
           </IonText>
       </IonButton>
