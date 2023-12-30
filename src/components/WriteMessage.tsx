@@ -15,8 +15,16 @@ export function removeUndefinedProperties(obj: any) {
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
-  const handleFocus = () => setIsTextAreaFocused(true);
-  const handleBlur = () => setIsTextAreaFocused(false); 
+  const [showMediaButton, setShowMediaButton] = useState(false);
+
+  const handleFocus = () => {
+    setIsTextAreaFocused(true);
+    setShowMediaButton(true); // Show the media button when textarea is focused
+  };
+  const handleBlur = () => {
+    setIsTextAreaFocused(false);
+    // Optionally, add logic to determine when to hide the media button
+  };
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
     const content = textRef.current?.value!;
@@ -63,7 +71,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   return (
     <IonToolbar style={{ padding: 4, border: 0 }} >
       <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, paddingRight: 0, borderRadius: '32px', display: 'flex'}}> 
-      {isTextAreaFocused && (
+      {showMediaButton && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
         }} />}
