@@ -74,7 +74,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 16, paddingBottom: 12, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
-                <div style={{borderRadius: 100, marginTop: 4}}>
+                <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
                 <div style={{ marginLeft: 8}}>
