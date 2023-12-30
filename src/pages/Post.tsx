@@ -25,7 +25,7 @@ const Post: React.FC = () => {
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? undefined : 'light';
+    const bgColor = darkmode ? undefined : 'white';
 
     useEffect(() => {
         id && !post && getDoc(doc(getFirestore(app), 'post', id)).then((postDoc) => {
@@ -87,7 +87,7 @@ const Post: React.FC = () => {
     if (me === null) {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
-    return <IonPage ref={pageRef}>
+    return <IonPage color={bgColor} ref={pageRef}>
         <TribeHeader showBackButton={true} title='Post'/>
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>

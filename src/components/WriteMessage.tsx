@@ -15,6 +15,8 @@ export function removeUndefinedProperties(obj: any) {
 export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
+  const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const bgColor = darkmode ? undefined : 'white';
   const [showMediaButton, setShowMediaButton] = useState(false);
 
   const handleFocus = () => {
@@ -69,7 +71,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
-    <IonToolbar style={{ padding: 4, border: 0 }} >
+    <IonToolbar color={bgColor} style={{ padding: 4, border: 0 }} >
       <div style={{backgroundColor: 'var(--ion-color-light)', paddingLeft: 8, marginTop: 4,paddingRight: 0, borderRadius: '32px', maxHeight: 44, display: 'flex'}}> 
       {showMediaButton && (
       <IonButtons slot='start'>
