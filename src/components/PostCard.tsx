@@ -161,9 +161,9 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 24, width: 24 }} />
                 </IonButton>
             </div>
-            {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
-
         </IonRow>}
+        {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}
+
     </IonCard>
     </div>
 }
