@@ -82,20 +82,22 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
     return (
         <>
 
-            <IonButton style={{ marginRight: 20 }} fill="clear" onPointerDown={() => {
+            <IonButton style={{ marginRight: 0 }} fill="clear" onPointerDown={() => {
                 setVoteCache(-1)
                 handleVote(false)
             }} slot="start">
-            <IonIcon icon={arrowDown} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} style={{ height: 18, width: 18 }} />
+                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/ardoo.svg' : '/icons/ardo.svg'} style={{ height: 16, width: 16 }} />
             </IonButton>
-            <IonLabel style={{ position: 'absolute', right }}>
-                <IonText className="bold" style={{ fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
-            </IonLabel>
+            <IonLabel style={{
+                    fontSize: 16, width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                }} >
+                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'tribe'} className='header ion-text-center'>{score} </IonText>
+                </IonLabel>
             <IonButton fill="clear" onPointerDown={() => {
                 setVoteCache(1)
                 handleVote(true)
             }} slot="end">
-            <IonIcon icon={arrowUp} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} style={{ height: 18, width: 18 }} />
+                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/arup.svg' : '/icons/arupo.svg'} style={{marginLeft: 0, marginRight: 0, height: 16, width: 16 }} />
             </IonButton>
 
         </>
