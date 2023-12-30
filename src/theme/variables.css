@@ -233,7 +233,7 @@ ion-header ion-toolbar {
 }
 
 ion-segment {
-  --background: var(--ion-color-dark-contrast); /* Replace with your desired color */
+  --background: transparent; /* Replace with your desired color */
 }
 
 ion-segment-button::part(indicator-background) {
@@ -261,7 +261,7 @@ ion-segment-button.ios::part(native) {
 }
 
 .segment-button-checked.ios::part(native) {
-  color: #fff;
+  color: var(--ion-color-dark);
   opacity: 1;
 }
 
