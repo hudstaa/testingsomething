@@ -45,6 +45,10 @@ http://ionicframework.com/docs/theming/ */
   src: url("/fonts/GTbold.otf") format("opentype");
 }
 
+@font-face {
+  font-family: 'FabBold';
+  src: url("/fonts/tribebold.woff2") format("woff2");
+}
 
 @font-face {
   font-family: 'Rubik';
@@ -115,6 +119,10 @@ http://ionicframework.com/docs/theming/ */
 
 .heavyhead {
   font-family: 'OH', sans-serif !important;
+}
+
+.fab {
+  font-family: 'FabBold', sans-serif !important;
 }
 
 .bold {
