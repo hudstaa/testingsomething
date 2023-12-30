@@ -80,6 +80,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
                 <div style={{ marginLeft: 8}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
+                
             </div>
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 16, paddingBottom: 1, paddingTop: 0, margin: 0,paddingRight: 16,  marginTop: -4 }}  >
