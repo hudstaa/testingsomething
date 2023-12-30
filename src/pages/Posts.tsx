@@ -123,7 +123,7 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute' }}>
+            <IonHeader style={{ }}>
                 {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 8}}>
                     <IonButtons slot='start' style={{width: '20%'}}>
                         <IonTitle className='header' style={{textAlign: 'left', fontSize: 24, padding: 0 }}>tribe</IonTitle>
@@ -149,7 +149,7 @@ const Posts: React.FC = () => {
                                 </IonSegmentButton>
                             </IonSegment>
                     </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 50 }} color='paper' />}
+                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
@@ -172,7 +172,7 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar className='transparent' style={{height: 48}}/>
+                    <IonToolbar className='transparent' style={{height: 0}}/>
                 </IonHeader>
                 <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
                     <SwiperSlide>
