@@ -24,7 +24,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const { localNotif, setLocalNotif } = useNotifications()
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'light' : 'white';
+    const bgColor = darkmode ? 'tabblur' : 'white';
     const { pathname } = useLocation()
     const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
     const [isTap, setIsTap] = useState(true);
@@ -59,7 +59,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         push('/post/' + id); // Navigate to the post
     };
 
-    return  <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
+    return  <div style={{ borderBottom: '1px solid var(--ion-color-medium-shade)'}} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -116,7 +116,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonCardContent>
 
 
-        {<IonRow style={{ marginTop: 12, borderTop: '1px solid var(--ion-color-medium-shade)', display: 'flex', justifyContent: 'space-between'}}>
+        {<IonRow style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between'}}>
             {<IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop:0, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
                 open((message) => {
                     makeComment(id, message as any)
