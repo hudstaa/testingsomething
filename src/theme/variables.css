@@ -234,10 +234,14 @@ ion-header ion-toolbar {
 
 ion-segment {
   --background: transparent; /* Replace with your desired color */
+  box-shadow: none !important;
+
 }
 
 ion-segment-button::part(indicator-background) {
   background: transparent;
+  box-shadow: none !important;
+
 }
 
 /* Material Design styles */
