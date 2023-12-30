@@ -15,7 +15,7 @@ import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
 
 
-export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
+export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
     const { localCommentCount, commentAdded } = useNotifications()
@@ -29,6 +29,41 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
     const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
     const [isTap, setIsTap] = useState(true);
 
+    const cardStyle = onPostPage ? {
+        borderBottom: '1px solid var(--ion-color-medium-shade)',
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        cursor: 'pointer!important'
+    } : {
+        borderBottom: '1px solid var(--ion-color-medium-shade)',
+        marginTop: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        paddingRight: 0,
+        paddingBottom: 0,
+        paddingLeft: 0,
+        cursor: 'pointer!important'
+    };
+
+    const gptRowStyle = onPostPage ? {
+        borderTop: '1px solid var(--ion-color-medium-shade)',
+        borderBottom: '1px solid var(--ion-color-medium-shade)',
+        marginTop: 16,
+        marginBottom: 4,
+        display: 'flex',
+        justifyContent: 'space-between'
+    } : {
+        marginTop: 0,
+        display: 'flex',
+        justifyContent: 'space-between'
+    };
+    
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setTouchStart({
             x: e.touches[0].clientX,
@@ -59,7 +94,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         push('/post/' + id); // Navigate to the post
     };
 
-    return  <div style={{ borderBottom: '1px solid var(--ion-color-medium-shade)'}} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
+    return  <div style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const isAlias = Array.from((e.target as any).classList).includes('alias')
         if ((e.target as any)?.nodeName === "VIDEO") {
@@ -117,7 +152,7 @@ export const PostCard: React.FC<{ commentCount?: number, hideComments: boolean, 
         </IonCardContent>
 
 
-        {<IonRow style={{ marginTop: 0, display: 'flex', justifyContent: 'space-between'}}>
+        {<IonRow className="GPT" style={gptRowStyle}>
             <IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop:0, opacity: '50%' }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 20, width: 20 }} /> 

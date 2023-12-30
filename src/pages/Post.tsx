@@ -93,7 +93,7 @@ const Post: React.FC = () => {
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
                     <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                        {post !== null ? <PostCard id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} /> : <IonSkeletonText />}
+                        {post !== null ? <PostCard onPostPage={true} id={id} {...post as any} handleVote={handleVote} makeComment={makeComment as any} voted={voted} uid={auth.currentUser?.uid} /> : <IonSkeletonText />}
                     </IonCol>
                 </IonRow>
 
