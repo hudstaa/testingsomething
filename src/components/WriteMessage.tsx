@@ -77,10 +77,7 @@ export const WriteMessage: React.FC<{ author: string, placeHolder: string, addre
   return (
     <IonToolbar color={bgColor} style={{ padding: 4, border: 0 }} >
       <div style={{display: 'flex', width: '100%'}}>
-      <IonAvatar style={{marginTop: 4, height: 44}}>
-        <MemberPfp color='dark' size="veru-smol" address={author}/>
-      </IonAvatar>
-      <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 4, marginTop: 4,paddingRight: 0, borderRadius: '12px', maxHeight: 44, width: '100%',display: 'flex'}}> 
+      <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '12px', maxHeight: 44, width: '100%',display: 'flex'}}> 
       {showMediaButton && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
@@ -107,7 +104,7 @@ export const WriteMessage: React.FC<{ author: string, placeHolder: string, addre
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"
-        style={{ flex: 1, paddingTop: 0, paddingLeft: 8, marginTop: -4, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+        style={{ flex: 1, paddingTop: 0, paddingLeft: 16, marginTop: -4, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
