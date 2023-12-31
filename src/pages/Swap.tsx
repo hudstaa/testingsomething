@@ -37,7 +37,7 @@ return <IonPage>
 <div style={{height:'1000px'}}>
 <div id="integrated-terminal"></div>
 </div>
-:<iframe src={'https://tribe.computer/#/swap'} ref={iframe} style={{border:'none',height:'100%',width:'100%',overflow:'hidden'}}/>}
+:<iframe src={'https://tribe.computer/swap'} ref={iframe} style={{border:'none',height:'100%',width:'100%',overflow:'hidden'}}/>}
         </IonPage>
 }
 export default Swap;
