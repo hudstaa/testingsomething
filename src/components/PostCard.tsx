@@ -171,14 +171,14 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
 
         {<IonRow className="GPT" style={gptRowStyle}>
-            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0, marginRight: -24}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 18, width: 18 }} /> 
                 <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>
-            <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0, marginRight: -24}} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
@@ -192,7 +192,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
-            <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: -24, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
