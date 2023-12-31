@@ -198,7 +198,7 @@ const Posts: React.FC = () => {
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     {me && <div onClick={() =>  {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} className="fab" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 10, height: '60px', width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px',  }}>
+                    }} className="bold" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 10, height: '60px', width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px',  }}>
                         +
                     </div>}
                 </IonFab>
