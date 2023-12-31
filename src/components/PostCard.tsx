@@ -135,7 +135,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -12 }}  >
             <div>
-            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1rem' : '1rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
+            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.15rem' : '1.15rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
                     render:({attributes,content,eventListeners,tagName})=>{
                         if(content.startsWith("$")){
