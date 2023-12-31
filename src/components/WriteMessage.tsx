@@ -69,8 +69,15 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   }, [shouldFocus])
 
   useEffect(() => {
-    if (shouldFocus && textAreaRef.current) {
-      textAreaRef.current.setFocus();
+    if (shouldFocus) {
+      // Focus on the hidden input first
+      const hiddenInput = document.getElementById('hiddenInput');
+      hiddenInput?.focus();
+  
+      // Then, shift focus to the textarea
+      setTimeout(() => {
+        textAreaRef.current?.setFocus();
+      }, 100); // Adjust timeout as needed
     }
   }, [shouldFocus]);
 
@@ -99,6 +106,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           </IonChip>}
       </IonButtons>
       )}
+      <label htmlFor="hiddenInput" style={{ display: "none" }}>Hidden Label for Focus</label>
+      <input type="text" id="hiddenInput" style={{ display: "none" }} />
+
       <IonTextarea
         autoFocus={shouldFocus}
         id={isModal ? 'modal-write-message' : undefined}
