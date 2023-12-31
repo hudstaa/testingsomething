@@ -122,18 +122,18 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     }} color={bgColor} key={id} style={{ marginTop: 0,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 16, paddingBottom: 2, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 10, paddingBottom: 2, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 6, marginTop: -2}}>
+                <div style={{ marginLeft: 4, marginTop: -2}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 58, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -16 }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -16 }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1rem' : '.975rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
@@ -168,7 +168,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
 
         {<IonRow className="GPT" style={gptRowStyle}>
-            <IonButton style={{ marginLeft: -1, marginBottom: 0, marginTop:0}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 20, width: 20 }} /> 
                 <IonText color={'medium'} className="fab" style={{ fontSize: "1rem", marginTop: 0, marginLeft: 4, color: 'var(--ion-color-soft)' }}>
