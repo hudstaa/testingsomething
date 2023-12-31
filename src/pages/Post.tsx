@@ -65,6 +65,8 @@ const Post: React.FC = () => {
     })
     useIonViewDidLeave(() => {
         showTabs();
+        setPresentingElement(pageRef.current)
+
     })
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
