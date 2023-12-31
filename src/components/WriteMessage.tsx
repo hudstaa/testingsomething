@@ -78,7 +78,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
-    <IonToolbar color={bgColor} style={{ padding: 4, border: 0 }} >
+    <IonToolbar autoFocus={shouldFocus} color={bgColor} style={{ padding: 4, border: 0 }} >
       <div style={{display: 'flex', width: '100%'}}>
       <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '12px', maxHeight: 52, width: '100%',display: 'flex'}}> 
       {showMediaButton && (
