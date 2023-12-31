@@ -23,16 +23,13 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const [showMediaButton, setShowMediaButton] = useState(false);
   const author = me!.address;
 
-  const handleFocus = () => {
-    setIsTextAreaFocused(true);
-    setShowMediaButton(true); // Show the media button when textarea is focused
-  };
   const handleBlur = () => {
     setIsTextAreaFocused(false);
     // Optionally, add logic to determine when to hide the media button
   };
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
+    
     const content = textAreaRef.current?.value!;
     sendMessage(removeUndefinedProperties({ ...message, content }));
     setMedia(undefined as any);
@@ -41,6 +38,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     clearMessage();
   }, [message])
   const uid = getAuth().currentUser?.uid;
+  const textAreaRef = useRef<HTMLIonTextareaElement>(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -76,7 +74,6 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     }
   }, [shouldFocus]);
 
-  const textAreaRef = useRef<HTMLIonTextareaElement>(null);
 
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
@@ -107,7 +104,6 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         id={isModal ? 'modal-write-message' : undefined}
         ref={textAreaRef}
         autoGrow
-        onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"
         style={{ flex: 1, paddingTop: 0, paddingLeft: 16, marginTop: -4, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
