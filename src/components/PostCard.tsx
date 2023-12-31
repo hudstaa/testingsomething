@@ -179,7 +179,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/send.svg'} style={{ height: 18, width: 18 }}/>
+                <IonIcon icon={'/icons/send.svg'} style={{ marginTop: 1, height: 18, width: 18 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
