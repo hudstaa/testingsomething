@@ -271,7 +271,6 @@ const App: React.FC = () => {
                 <Route path="/post/:id" exact>
                   <Post />
                 </Route>
-
                 <Redirect exact path="/" to='/post' />
                 <Route exact path="/trade/:hash">
                   <Transaction />

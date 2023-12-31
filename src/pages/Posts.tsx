@@ -119,23 +119,11 @@ const Posts: React.FC = () => {
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
-        }} /> 
+        }} />
     }
-
-    const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
-
-    const triggerFocusOnWriteMessage = () => {
-        setShouldFocusWriteMessage(true);
-    };
-
-    useEffect(() => {
-        if (shouldFocusWriteMessage) {
-            setShouldFocusWriteMessage(false);
-        }
-    }, [shouldFocusWriteMessage]);
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ padding: 0, marginBottom: '4vh'}}>
+            <IonHeader style={{ padding: 0, marginBottom: '10vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
                 <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 28, letterSpacing: '-.0335em'}}>tribe</IonTitle>
@@ -163,6 +151,7 @@ const Posts: React.FC = () => {
                     </IonToolbar> 
                 : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
             </IonHeader>
+
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
                 const isCloseToBottom =
@@ -184,19 +173,20 @@ const Posts: React.FC = () => {
                 }
             }} scrollEvents>
                 <IonHeader>
-                    <IonToolbar className='transparent'/>
+                    <IonToolbar className='transparent' style={{height: 0}}/>
                 </IonHeader>
-                <IonGrid style={{ paddingLeft: 0, paddingRight: 0, paddingTop:0, marginTop: 10 }}>
-                    <IonRow>
-                        <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                            <PostList type={postType} max={10} />
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
+                <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
+                    <SwiperSlide>
+                        <PostList type='top' max={10} />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <PostList type='recent' max={10} />
+                    </SwiperSlide>
+                </Swiper>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     {me && <div onClick={() =>  {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 5, height: '50px', width: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontFamily: 'SF Pro Medium', }}>
+                    }} className="fab" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 10, height: '60px', width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px',  }}>
                         +
                     </div>}
                 </IonFab>
