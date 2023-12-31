@@ -4,6 +4,7 @@ import {
     IonButton,
     IonButtons,
     IonCardTitle,
+    IonTitle,
     IonCol,
     IonContent,
     IonFab,
@@ -13,6 +14,7 @@ import {
     IonImg,
     IonItem,
     IonPage,
+    IonLabel,
     IonRow,
     IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
 } from '@ionic/react';
@@ -22,6 +24,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { getAddress } from 'viem';
 import { app } from '../App';
+import 'swiper/css';
+import { Swiper as SwiperClass } from 'swiper';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import { PostList } from '../components/PostList';
 import { TribeContent } from '../components/TribeContent';
 import { TribeFooter } from '../components/TribeFooter';
@@ -54,7 +59,25 @@ const Posts: React.FC = () => {
         setPostType(newValue);
         const params = new URLSearchParams(location.search);
         params.set('type', newValue);
-        history.push({ search: params.toString() });
+        history.replace({ search: params.toString() }); // Use replace instead of push
+    };
+
+    const swiperRef = useRef<SwiperRef>(null);
+
+    useEffect(() => {
+        if (swiperRef.current && swiperRef.current.swiper) {
+            const newIndex = postType === 'top' ? 0 : 1;
+            swiperRef.current.swiper.slideTo(newIndex, 0);
+        }
+    }, [postType]);
+    
+    const handleSlideChange = () => {
+        const swiperInstance = swiperRef.current?.swiper;
+        if (swiperInstance) {
+            const newIndex = swiperInstance.activeIndex;
+            const newPostType = newIndex === 0 ? 'top' : 'recent';
+            handleSegmentChange(newPostType);
+        }
     };
 
     // Sync state with URL changes
@@ -68,7 +91,7 @@ const Posts: React.FC = () => {
     const { highlightPost } = usePost();
     const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? undefined : 'light';
+    const bgColor = darkmode ? undefined : 'white';
     const { setPresentingElement } = useWriteMessage()
     const pageRef = useRef<any>(null)
     useIonViewDidEnter(() => {
@@ -96,48 +119,49 @@ const Posts: React.FC = () => {
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
-        }} />
+        }} /> 
     }
+
+    const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
+
+    const triggerFocusOnWriteMessage = () => {
+        setShouldFocusWriteMessage(true);
+    };
+
+    useEffect(() => {
+        if (shouldFocusWriteMessage) {
+            setShouldFocusWriteMessage(false);
+        }
+    }, [shouldFocusWriteMessage]);
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ position: 'absolute' }}>
-                {!hideToolbar ? <IonToolbar  style={{ paddingLeft: 10}}>
-                    <IonButtons slot='start'>
-                        <IonSelect interface='popover' className='heavy' style={{fontSize:20}} toggleIcon={chevronDown} color='paper'
-                            onIonChange={(e) => {
-                                const newValue = e.detail.value;
-                                if (newValue === 'top' || newValue === 'recent') {
-                                    handleSegmentChange(newValue);
-                                }
-                            }}
-                            value={postType}                    >
-                            <IonSelectOption value={'top'} color={postType === 'top' ? 'medium' : 'paper'} >
-                                Top
-                            </IonSelectOption>
-                            <IonSelectOption value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                                New
-                            </IonSelectOption>
-                        </IonSelect>
-                    </IonButtons>
-
-                    <IonButtons slot='end'>
-                        <IonButton onClick={() => {
-                            showNotifications()
-                        }}>
-                            <IonBadge color='transparent' style={{ marginTop: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <IonText className='medium' style={{ fontSize: '16px', paddingTop: 0, paddingRight: 4 }} color='dark'>
-                                    {notifs}
-                                </IonText>
-                                <IonIcon icon={'/icons/notialt.svg'}  style={{ height: 24, width: 24 }}/>
-                            </IonBadge>
-                        </IonButton>
-                        <IonButton onMouseDown={() => {
-                            push('/account')
-                        }}>
-                            <MemberPfpImg size='smol' address={me.address} />
-                        </IonButton>
-                    </IonButtons>
-                </IonToolbar> : <IonToolbar style={{ height: 0 }} color='paper' />}
+            <IonHeader style={{ padding: 0, marginBottom: '4vh'}}>
+                {!hideToolbar ? 
+                    <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
+                <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 28, letterSpacing: '-.0335em'}}>tribe</IonTitle>
+                        <IonButtons slot='start' color='transparent' style={{ width: '100%' }}>
+                            <IonSegment
+                                onIonChange={(e) => {
+                                    const newValue = e.detail.value;
+                                    if (newValue === 'top' || newValue === 'recent') {
+                                        handleSegmentChange(newValue);
+                                    }
+                                }}
+                                value={postType}
+                                color='paper'
+                                className='heavy'
+                                style={{ marginTop: '5vh', fontSize: 24, width: '100%' }} // Ensure full width
+                            >
+                                <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Friends</IonLabel>
+                                </IonSegmentButton>
+                                <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
+                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Everyone</IonLabel>
+                                </IonSegmentButton>
+                            </IonSegment>
+                        </IonButtons>
+                    </IonToolbar> 
+                : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
             </IonHeader>
             < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                 const isCloseToTop = e.detail.scrollTop < 100;
