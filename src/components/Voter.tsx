@@ -86,7 +86,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                 setVoteCache(-1)
                 handleVote(false)
             }} slot="start">
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: 0, height: 32, width: 32 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: 1, height: 32, width: 32 }} />
             </IonButton>
             <IonLabel style={{
                     fontSize: '1rem', width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
