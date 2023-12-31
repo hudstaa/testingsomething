@@ -59,6 +59,14 @@ const Post: React.FC = () => {
         }
       }, [shouldFocusWriteMessage]);
 
+    useIonViewDidEnter(() => {
+        hideTabs();
+        setPresentingElement(pageRef.current)
+    })
+    useIonViewDidLeave(() => {
+        showTabs();
+    })
+
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
         const postRef = doc(db, 'post', postId);
