@@ -366,7 +366,7 @@ ion-footer ion-toolbar {
   --ion-color-medium-rgb: 162, 162, 162;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #f8f8f8;
+  --ion-color-medium-shade: #ededed;
   --ion-color-medium-tint: #9d9fa6;
 
   /** card **/
