@@ -918,7 +918,7 @@ ion-tab-bar {
   /* Set the border-top with 1px and use ion-color-medium variable for the color */
   border-top: 0px solid var(--ion-color-medium-shade);
   /* Set the background to a translucent color */
-  background: var(--ion-color-tabblur); /* Here, '0.5' is the alpha value for 50% transparency */
+  background: black; /* Here, '0.5' is the alpha value for 50% transparency */
 
   /* Add the blur effect */
   backdrop-filter: blur(10px); /* Adjust the px value to increase or decrease the blur */
