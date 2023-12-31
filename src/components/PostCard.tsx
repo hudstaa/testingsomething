@@ -198,7 +198,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             </IonButton>
             <div style={{ marginLeft: '10%', marginRight: -8, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -8, height: 24, width: 24 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -8, height: 32, width: 32 }} />
                 </IonButton>
                 <IonLabel style={{
                     fontSize: '1rem', width: 36, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
@@ -206,7 +206,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='fab ion-text-center'>{score} </IonText>
                 </IonLabel>
                 <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -8, marginRight: 0, height: 24, width: 24 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -8, marginRight: 0, height: 32, width: 32 }} />
                 </IonButton>
             </div>
         </IonRow>}
