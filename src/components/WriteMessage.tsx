@@ -14,7 +14,7 @@ export function removeUndefinedProperties(obj: any) {
   });
   return obj;
 }
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, shouldFocus?: boolean }> = ({ address, isModal, placeHolder, sendMessage, shouldFocus }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const me = useMember(x => x.getCurrentUser());
@@ -33,7 +33,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   };
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
-    const content = textRef.current?.value!;
+    const content = textAreaRef.current?.value!;
     sendMessage(removeUndefinedProperties({ ...message, content }));
     setMedia(undefined as any);
     setContent(undefined as any)
@@ -55,22 +55,28 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   }, [isOpen])
 
   useEffect(() => {
-    if (focused) {
-      textRef.current!.querySelector('textarea')!.focus();
+    if (shouldFocus) {
+      textAreaRef.current!.querySelector('textarea')!.focus();
       setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
+        textAreaRef.current!.querySelector('textarea')!.focus();
       }, 0)
       setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
+        textAreaRef.current!.querySelector('textarea')!.focus();
       }, 100)
       setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
+        textAreaRef.current!.querySelector('textarea')!.focus();
       }, 200)
 
     }
-  }, [focused])
+  }, [shouldFocus])
 
-  const textRef = useRef<HTMLIonTextareaElement>(null);
+  useEffect(() => {
+    if (shouldFocus && textAreaRef.current) {
+      textAreaRef.current.setFocus();
+    }
+  }, [shouldFocus]);
+
+  const textAreaRef = useRef<HTMLIonTextareaElement>(null);
 
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
@@ -97,9 +103,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
       </IonButtons>
       )}
       <IonTextarea
-        autoFocus={isModal || focused}
+        autoFocus={isModal || shouldFocus}
         id={isModal ? 'modal-write-message' : undefined}
-        ref={textRef}
+        ref={textAreaRef}
         autoGrow
         onFocus={handleFocus}
         onBlur={handleBlur}

@@ -42,6 +42,22 @@ const Post: React.FC = () => {
 
     const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)
+    const textAreaRef = useRef<HTMLIonTextareaElement>(null);
+    const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
+
+    const focusOnTextArea = () => {
+      textAreaRef.current?.setFocus();
+    };
+
+    const triggerFocusOnWriteMessage = () => {
+        setShouldFocusWriteMessage(true);
+      };
+
+    useEffect(() => {
+        if (shouldFocusWriteMessage) {
+          setShouldFocusWriteMessage(false);
+        }
+      }, [shouldFocusWriteMessage]);
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
@@ -108,7 +124,7 @@ const Post: React.FC = () => {
             {commentPath && <IonItem>
                 {commentPath}
             </IonItem>}
-            <WriteMessage sendMessage={(message) => {
+            <WriteMessage shouldFocus={shouldFocusWriteMessage} sendMessage={(message) => {
                 makeComment(id, message).then(() => {
                     contentRef.current?.scrollToBottom(500);
                 })

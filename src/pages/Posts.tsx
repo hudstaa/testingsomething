@@ -98,6 +98,18 @@ const Posts: React.FC = () => {
         setPresentingElement(pageRef.current)
     })
 
+    const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
+
+    const triggerFocusOnWriteMessage = () => {
+        setShouldFocusWriteMessage(true);
+    };
+
+    useEffect(() => {
+        if (shouldFocusWriteMessage) {
+            setShouldFocusWriteMessage(false);
+        }
+    }, [shouldFocusWriteMessage]);
+    
     const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
         const db = getFirestore(app);
         const newPost: any = {
@@ -184,13 +196,13 @@ const Posts: React.FC = () => {
                     </SwiperSlide>
                 </Swiper>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    {me && <div onClick={() =>  {
+                    {me && <div onClick={() => {
                         open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} className="fab" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 10, height: '60px', width: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px',  }}>
+                        triggerFocusOnWriteMessage(); // Call this function to trigger the focus
+                    }} className="fab">
                         +
                     </div>}
-                </IonFab>
-
+                    </IonFab>
             </IonContent >
             <TribeFooter page='posts' />
         </IonPage >
