@@ -97,7 +97,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </div>
 
                         {/* Voter component on the right */}
-                        <IonButtons style={{ paddingRight: 24 }}>
+                        <IonButtons style={{ paddingRight: 28 }}>
                             <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                                 const db = getFirestore(app);
                                 const uid = getAuth().currentUser!.uid;
