@@ -60,7 +60,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 40, height: 40, padding: 0, borderRadius: 13 };
+            pfpStyle = { width: 32, height: 32, padding: 0, borderRadius: 9 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 100 };

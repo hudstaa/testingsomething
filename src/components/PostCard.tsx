@@ -68,7 +68,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         justifyContent: 'space-between'
     } : {
         marginTop: -4,
-        marginLeft: 52, //testing TwitStyles
+        marginLeft: 41, //testing TwitStyles
         display: 'flex',
         justifyContent: 'space-between'
     };
@@ -125,13 +125,13 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 8}}>
+                <div style={{ marginLeft: 6, marginTop: -2}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 68, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -20 }}  >
+        <IonCardContent style={{ paddingLeft: 58, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -16 }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1rem' : '.975rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
