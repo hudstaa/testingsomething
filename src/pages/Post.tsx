@@ -124,7 +124,7 @@ const Post: React.FC = () => {
             {commentPath && <IonItem>
                 {commentPath}
             </IonItem>}
-            <WriteMessage shouldFocus={shouldFocusWriteMessage} sendMessage={(message) => {
+            <WriteMessage sendMessage={(message) => {
                 makeComment(id, message).then(() => {
                     contentRef.current?.scrollToBottom(500);
                 })
