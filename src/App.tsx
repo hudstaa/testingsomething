@@ -258,7 +258,7 @@ const App: React.FC = () => {
             <ShowMemberModalProvider />
             <NotificationsProvider />
             <IonTabs>
-              <IonRouterOutlet animated={false}>
+            <IonRouterOutlet animated={false}>
                 <Route exact path="/channel">
                   <Chat />
                 </Route>
