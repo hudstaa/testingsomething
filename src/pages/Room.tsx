@@ -38,6 +38,12 @@ const Room: React.FC = () => {
             setInfo(channelSnap.data())
         })
     }, [])
+    useIonViewDidEnter(() => {
+        hideTabs();
+    })
+    useIonViewDidLeave(() => {
+        showTabs();
+    })
 
     const sendMessage = useCallback(async (message: Message) => {
         setFocus(false);
