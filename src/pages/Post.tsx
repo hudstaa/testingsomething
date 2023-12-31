@@ -118,7 +118,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage color={bgColor} ref={pageRef}>
-        <TribeHeader showBackButton={true} title='Post'/>
+        <TribeHeader showBackButton={true} title=''/>
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
