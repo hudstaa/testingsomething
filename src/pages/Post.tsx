@@ -38,7 +38,7 @@ const Post: React.FC = () => {
         id && uid && getDoc(doc(getFirestore(app), 'post', id, 'votes', uid!)).then((postDoc) => {
             setVoteCache(postDoc.data()?.vote || null);
         })
-    }, [id, uid])
+    }, [id, uid]) 
 
     const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)

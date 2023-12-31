@@ -119,7 +119,7 @@ const Posts: React.FC = () => {
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
-        }} />
+        }} /> 
     }
 
     const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
