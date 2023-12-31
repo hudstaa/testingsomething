@@ -20,7 +20,7 @@ const Swap:React.FC=()=>{
         }
         if(iframe.current&&iframe.current.contentWindow){            
             const base = new URLSearchParams(search).get('chain')==='solana'?'jupiter':'swap/#'
-            let origin = 'https://tribe.computer'
+            let origin = 'https://tribe.computer/swap'
             if(!window.location.origin.includes('localhost')){
                 origin=window.location.origin
             }
