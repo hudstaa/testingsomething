@@ -100,7 +100,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
       </IonButtons>
       )}
       <IonTextarea
-        autoFocus={isModal || shouldFocus}
+        autoFocus={shouldFocus}
         id={isModal ? 'modal-write-message' : undefined}
         ref={textAreaRef}
         autoGrow
