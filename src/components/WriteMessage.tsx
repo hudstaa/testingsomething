@@ -1,4 +1,4 @@
-import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText } from "@ionic/react";
+import { IonToolbar, IonItem, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText, IonLabel, IonInput } from "@ionic/react";
 import { close, imageOutline, paperPlane, text } from "ionicons/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
@@ -52,21 +52,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     }, 100)
   }, [isOpen])
 
-  useEffect(() => {
-    if (shouldFocus) {
-      textAreaRef.current!.querySelector('textarea')!.focus();
-      setTimeout(() => {
-        textAreaRef.current!.querySelector('textarea')!.focus();
-      }, 0)
-      setTimeout(() => {
-        textAreaRef.current!.querySelector('textarea')!.focus();
-      }, 100)
-      setTimeout(() => {
-        textAreaRef.current!.querySelector('textarea')!.focus();
-      }, 200)
 
-    }
-  }, [shouldFocus])
 
   useEffect(() => {
     if (shouldFocus) {
@@ -106,9 +92,10 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           </IonChip>}
       </IonButtons>
       )}
-      <label htmlFor="hiddenInput" style={{ display: "none" }}>Hidden Label for Focus</label>
-      <input type="text" id="hiddenInput" style={{ display: "none" }} />
-
+      <IonItem style={{ display: "none" }}>
+        <IonLabel position="floating">Hidden Label for Focus</IonLabel>
+        <IonInput id="hiddenInput" type="text" />
+      </IonItem>
       <IonTextarea
         autoFocus={shouldFocus}
         id={isModal ? 'modal-write-message' : undefined}
