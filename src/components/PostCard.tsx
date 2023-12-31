@@ -134,7 +134,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: '-14.75px' }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 1, margin: 0, paddingRight: 16,  marginTop: '-14.75px' }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '1.05rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
