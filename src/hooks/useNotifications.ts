@@ -15,13 +15,19 @@ export type ActivityHook = {
     token: string | null
     localNotif: string | null
     localCommentCount: Record<string, number>
+    tradeUri?:string,
     setToken: (token: string) => void
     commentAdded: (id: string) => void
+    setTradeUri: (tradeUri: string) => void
     hide: () => void
     setLocalNotif: (localNotif: string | null) => void
 }
 
 export const useNotifications = create<ActivityHook>((set, store) => ({
+    tradeUri:'https://'+window.location.host+'/swap',
+    setTradeUri:((tradeUri)=>{
+        set({tradeUri})
+    }),
     hide: () => {
         set({ isOpen: false })
     },

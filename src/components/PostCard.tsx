@@ -13,7 +13,18 @@ import { useMember } from "../hooks/useMember"
 import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
-
+export const CashTag: React.FC<{ content: string }> = ({ content }) => {
+    const { setTradeUri } = useNotifications();
+    const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
+    const emoji = hit && hit.emoji;
+    const { push } = useHistory()
+    return <a href={'javascript:void(0)'} onClick={() => {
+        push({search:new URLSearchParams(hit.swap).toString(),pathname:'/swap'})
+    }}>
+        {emoji}
+        {content}
+    </a>
+}
 
 export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
@@ -94,9 +105,13 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
     return  <div style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
-        const isAlias = Array.from((e.target as any).classList).includes('alias')
+        const classes = Array.from((e.target as any).classList);
+        console.log(e.target);
+        const isAlias = classes.includes('alias') || classes.includes('cashtag')
         if ((e.target as any)?.nodeName === "VIDEO") {
-
+            return;
+        }
+        if ((e.target as any)?.tagName === "A") {
             return;
         }
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
@@ -126,16 +141,17 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                             if(!info){
                                 return <a {...attributes}>{content}</a>
                             }
-                            return <a {...attributes}>{content}{info.emoji}</a>
+                            return <CashTag content={content}/>
                         }else if(content.startsWith("@")){
                             return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
                         }
                     },
                     formatHref:
-                {                    
-                    mention: (href) => "https://beta.tribe.computer/member/" + href.substring(1),
-                }}}>
-                {content}
+                    {
+                        mention: (href) => "https://tribe.computer/member/" + href.substring(1),
+                    }
+                }}>
+                    {content}
                 </Linkify>
                 
                             </IonText>

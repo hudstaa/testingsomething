@@ -1,4 +1,4 @@
-import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText } from "@ionic/react";
+import { IonToolbar, IonItem, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText, IonLabel, IonInput } from "@ionic/react";
 import { close, imageOutline, paperPlane, text } from "ionicons/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
@@ -14,7 +14,7 @@ export function removeUndefinedProperties(obj: any) {
   });
   return obj;
 }
-export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, focused?: boolean }> = ({ address, isModal, placeHolder, sendMessage, focused }) => {
+export const WriteMessage: React.FC<{ placeHolder: string, address: string, sendMessage: (message: { content: string, media?: { src: string, type: string } }) => void, isModal?: boolean, shouldFocus?: boolean }> = ({ address, isModal, placeHolder, sendMessage, shouldFocus }) => {
   const [sent, setSent] = useState<boolean>(false);
   const [isTextAreaFocused, setIsTextAreaFocused] = useState(false);
   const me = useMember(x => x.getCurrentUser());
@@ -23,17 +23,14 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const [showMediaButton, setShowMediaButton] = useState(false);
   const author = me!.address;
 
-  const handleFocus = () => {
-    setIsTextAreaFocused(true);
-    setShowMediaButton(true); // Show the media button when textarea is focused
-  };
   const handleBlur = () => {
     setIsTextAreaFocused(false);
     // Optionally, add logic to determine when to hide the media button
   };
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
-    const content = textRef.current?.value!;
+    
+    const content = textAreaRef.current?.value!;
     sendMessage(removeUndefinedProperties({ ...message, content }));
     setMedia(undefined as any);
     setContent(undefined as any)
@@ -41,6 +38,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     clearMessage();
   }, [message])
   const uid = getAuth().currentUser?.uid;
+  const textAreaRef = useRef<HTMLIonTextareaElement>(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -54,28 +52,26 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
     }, 100)
   }, [isOpen])
 
+
+
   useEffect(() => {
-    if (focused) {
-      textRef.current!.querySelector('textarea')!.focus();
+    if (shouldFocus) {
+      // Focus on the hidden input first
+      const hiddenInput = document.getElementById('hiddenInput');
+      hiddenInput?.focus();
+  
+      // Then, shift focus to the textarea
       setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 0)
-      setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 100)
-      setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 200)
-
+        textAreaRef.current?.setFocus();
+      }, 100); // Adjust timeout as needed
     }
-  }, [focused])
+  }, [shouldFocus]);
 
-  const textRef = useRef<HTMLIonTextareaElement>(null);
 
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
 
   return (
-    <IonToolbar color={bgColor} style={{ padding: 4, border: 0 }} >
+    <IonToolbar autoFocus={shouldFocus} color={bgColor} style={{ padding: 4, border: 0 }} >
       <div style={{display: 'flex', width: '100%'}}>
       <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '12px', maxHeight: 52, width: '100%',display: 'flex'}}> 
       {showMediaButton && (
@@ -96,12 +92,15 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
           </IonChip>}
       </IonButtons>
       )}
+      <IonItem style={{ display: "none" }}>
+        <IonLabel position="floating">Hidden Label for Focus</IonLabel>
+        <IonInput id="hiddenInput" type="text" />
+      </IonItem>
       <IonTextarea
-        autoFocus={isModal || focused}
+        autoFocus={shouldFocus}
         id={isModal ? 'modal-write-message' : undefined}
-        ref={textRef}
+        ref={textAreaRef}
         autoGrow
-        onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"
         style={{ flex: 1, paddingTop: 0, paddingLeft: 16, marginTop: -4, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */

@@ -1,9 +1,8 @@
-import { Capacitor } from "@capacitor/core"
-import { getAuth, indexedDBLocalPersistence, initializeAuth } from "firebase/auth"
-import { formatEther } from "viem"
-import { app } from "../App"
+import { Capacitor } from "@capacitor/core";
+import { getAuth, initializeAuth } from "firebase/auth";
 import * as linkifyjs from 'linkifyjs';
-import { IonRouterLink } from "@ionic/react";
+import { formatEther } from "viem";
+import { app } from "../App";
 
 export const formatEth = (info: bigint | undefined) => {
     if (typeof info == 'undefined') {
@@ -82,30 +81,31 @@ export function slideTabIn() {
 const CashtagToken = linkifyjs.createTokenClass('cashtag', {
     isLink: true,
     toHref() {
-            return known_pairs[this.toString().slice(1).toLowerCase()]?.swap;
-      }
-  });
-  
-  /**
-   * @type {import('linkifyjs').Plugin}
-   */
-  function cashtag(_ref:any) {
+        return window.location.host + '' + known_pairs[this.toString().slice(1).toLowerCase()]?.swap;
+    }
+});
+const USDCSOLAddress = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+const WSOLAddress = 'So11111111111111111111111111111111111111112'
+/**
+ * @type {import('linkifyjs').Plugin}
+ */
+function cashtag(_ref: any) {
     let {
-      scanner,
-      parser
+        scanner,
+        parser
     } = _ref;
     // Various tokens that may compose a hashtag
     const {
-      DOLLAR,
-      UNDERSCORE
+        DOLLAR,
+        UNDERSCORE
     } = scanner.tokens;
     const {
-      alpha,
-      numeric,
-      alphanumeric,
-      emoji
+        alpha,
+        numeric,
+        alphanumeric,
+        emoji
     } = scanner.tokens.groups;
-  
+
     // Take or create a transition from start to the '#' sign (non-accepting)
     // Take transition from '#' to any text token to yield valid hashtag state
     // Account for leading underscore (non-accepting unless followed by alpha)
@@ -122,27 +122,76 @@ const CashtagToken = linkifyjs.createTokenClass('cashtag', {
     Hashtag.ta(alphanumeric, Hashtag);
     Hashtag.ta(emoji, Hashtag);
     Hashtag.tt(UNDERSCORE, Hashtag); // Trailing underscore is okay
-  }
-  
-  linkifyjs.registerPlugin('cashtag', cashtag);
-  export const known_pairs:Record<string,{swap:string,emoji:string}>={
-    nola:{
-        emoji:'🐈‍⬛',
-        swap:'https://swap.tribe.computer/#/?outputCurrency=0xF8388c2B6Edf00E2E27eEF5200B1beFB24cE141d&chain=arbitrum&inputCurrency=ETH'
+}
+
+linkifyjs.registerPlugin('cashtag', cashtag);
+export type currencySwapInfo= { chain: string, inputCurrency?: string, outputCurrency: string };
+export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string }> = {
+    nola: {
+        emoji: '🐈‍⬛',
+        swap: {
+            outputCurrency: '0xF8388c2B6Edf00E2E27eEF5200B1beFB24cE141d',
+            chain: 'arbitrum',
+            inputCurrency: 'ETH'
+        }
     },
-    tribe:{
-        emoji:'🏕️',
-        swap:'https://swap.tribe.computer'
+    size: {
+        emoji: '💪',
+        swap: {
+            outputCurrency: "0x939727d85D99d0aC339bF1B76DfE30Ca27C19067",
+            chain: "arbitrum",
+            inputCurrency: "ETH"
+        }
     },
-    bonk:{
-        emoji:'<img src="https://cdn3.emoji.gg/emojis/3416-bonk.png"/>',
-        swap:'https://jup.ag/swap/Bonk-USDC'
+    tribe: {
+        emoji: '🏕️',
+        "swap": {
+            "outputCurrency": "0x0",
+            "chain": "solana",
+            "inputCurrency": "0x0"
+        }
     },
-    mog:{
-emoji:'🕶️',
-swap:'https://swap.tribe.computer/#/?outputCurrency=0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a&chain=ethereum'
+    bonk: {
+        emoji: '🏏',
+        swap: {
+            chain: "solana",
+            outputCurrency: 'DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263',
+            inputCurrency: USDCSOLAddress,
+        },
     },
-    pepe:{emoji:'🐸',swap:'https://swap.tribe.computer/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=ethereum&inputCurrency=ETH'},
-    wif:{emoji:'👒',swap:'https://jup.ag/swap/EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm-USDC'},
-    bitcoin:{emoji:'🦔',swap:'https://swap.tribe.computer/#/?outputCurrency=0x6982508145454Ce325dDbE47a25d4ec3d2311933&chain=ethereum&inputCurrency=ETH'}
+    merlin: {
+        emoji: '🪄',
+        swap: {
+            inputCurrency: 'ETH',
+            outputCurrency: "0x234F534D322dF1a8a236a2F952d6657bf800F1FA",
+            chain: "arbitrum"
+        }
+    },
+    mog: {
+        emoji: '🕶️',
+        swap: {
+            outputCurrency: "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a",
+            chain: "mainnet",
+            inputCurrency: "ETH"
+        }
+    },
+    pepe: {
+        emoji: '🐸',
+        swap: {
+            outputCurrency: '0x6982508145454Ce325dDbE47a25d4ec3d2311933', chain: 'mainnet', inputCurrency: 'ETH'
+        }
+    },
+    wif: {
+        emoji: '👒', swap:
+            { outputCurrency: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', chain: 'solana' }
+    },
+    bitcoin: {
+
+        emoji: '🦔',
+        swap: {
+            outputCurrency: "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9",
+            chain: "mainnet",
+            inputCurrency: "ETH"
+        }
+    }
 }

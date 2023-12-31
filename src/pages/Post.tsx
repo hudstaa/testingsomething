@@ -2,7 +2,7 @@ import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonTi
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { app } from '../App';
 import { PostCard } from '../components/PostCard';
 import { TribeHeader } from '../components/TribeHeader';
@@ -14,6 +14,8 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
+import { chevronBack, chevronDown, push } from 'ionicons/icons';
+import { MemberPfpImg } from '../components/MemberBadge';
 
 
 
@@ -40,6 +42,22 @@ const Post: React.FC = () => {
 
     const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)
+    const textAreaRef = useRef<HTMLIonTextareaElement>(null);
+    const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
+
+    const focusOnTextArea = () => {
+      textAreaRef.current?.setFocus();
+    };
+
+    const triggerFocusOnWriteMessage = () => {
+        setShouldFocusWriteMessage(true);
+      };
+
+    useEffect(() => {
+        if (shouldFocusWriteMessage) {
+          setShouldFocusWriteMessage(false);
+        }
+      }, [shouldFocusWriteMessage]);
 
     function handleVote(postId: string, uid: string, upvote: boolean) {
         const db = getFirestore(app);
@@ -81,6 +99,8 @@ const Post: React.FC = () => {
         }
     }, [me])
     const contentRef = useRef<HTMLIonContentElement>(null)
+    const {push}=useHistory()
+    const {notifications:notifs}=useNotifications()
     if (id === 'new') {
         return <NewPost />
     }
@@ -104,7 +124,7 @@ const Post: React.FC = () => {
             {commentPath && <IonItem>
                 {commentPath}
             </IonItem>}
-            <WriteMessage sendMessage={(message) => {
+            <WriteMessage shouldFocus={shouldFocusWriteMessage} sendMessage={(message) => {
                 makeComment(id, message).then(() => {
                     contentRef.current?.scrollToBottom(500);
                 })
