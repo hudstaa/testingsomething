@@ -114,7 +114,7 @@ const Room: React.FC = () => {
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}
         <IonFooter style={{ borderTop: '1px solid' }}> {/* Add your border style here */}
             {footerMemo}
-            < WriteMessage focused={focused} placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
+            < WriteMessage placeHolder='Start a message' address={me?.address || ""} sendMessage={sendMessage as any} />
         </IonFooter>
     </TribePage>
 }
