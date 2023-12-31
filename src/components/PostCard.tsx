@@ -125,7 +125,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     }} color={bgColor} key={id} style={{ marginTop: 0,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 10, paddingBottom: 2, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 10, paddingBottom: 2, paddingTop: 6, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
@@ -136,7 +136,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 1, margin: 0, paddingRight: 16,  marginTop: '-14.75px' }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 2, margin: 0, paddingRight: 16,  marginTop: '-14.5px' }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '1.05rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
@@ -174,7 +174,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 18, width: 18 }} /> 
-                <IonText color={'medium'} className="fab" style={{ fontSize: ".9rem", marginTop: '.1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>
@@ -201,15 +201,15 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             </IonButton>
             <div style={{ marginLeft: '10%', marginRight: -8, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -8, height: 28, width: 28 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
                 </IonButton>
                 <IonLabel style={{
-                    fontSize: '1rem', width: 36, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                    fontSize: '1.05rem', width: 24, paddingBottom: 2, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
-                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='fab ion-text-center'>{score} </IonText>
+                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='bold ion-text-center'>{score} </IonText>
                 </IonLabel>
                 <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -8, marginRight: 0, height: 28, width: 28 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
                 </IonButton>
             </div>
         </IonRow>}

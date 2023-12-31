@@ -89,7 +89,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: 0, height: 32, width: 32 }} />
             </IonButton>
             <IonLabel style={{
-                    fontSize: '1rem', width: 44, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+                    fontSize: '1rem', width: 24, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
                     <IonText color="tribe"className="fab tribe" style={{ fontSize: 16, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
                 </IonLabel>
@@ -97,7 +97,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
                 setVoteCache(1)
                 handleVote(true)
             }} slot="end">
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: 0, marginRight: 0, height: 32, width: 32 }} />
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: 0, marginRight: 0, height: 30, width: 30 }} />
             </IonButton>
 
         </>
