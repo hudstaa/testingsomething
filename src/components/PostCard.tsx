@@ -21,7 +21,7 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     return <a href={'javascript:void(0)'} onClick={() => {
         push({search:new URLSearchParams(hit.swap).toString(),pathname:'/swap'})
     }}>
-        {emoji}
+        
         {content}
     </a>
 }
