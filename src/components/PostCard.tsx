@@ -127,13 +127,13 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 4, marginTop: -2}}>
+                <div style={{ marginLeft: 4, marginTop: -1}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: -16 }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: '-15.5px' }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '1.05rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
