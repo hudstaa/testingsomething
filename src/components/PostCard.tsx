@@ -70,6 +70,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         justifyContent: 'space-between'
     } : {
         marginTop: -4,
+        marginBottom: -4,
         marginLeft: 41, //testing TwitStyles
         display: 'flex',
         justifyContent: 'space-between'
@@ -159,9 +160,9 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                             </IonText>
                             </div>
             {media && (
-                <div style={{ marginTop: 16, marginBottom: -10, marginRight: 0, overflow: 'hidden', borderRadius: '10px' }}>
+                <div style={{ marginTop: 8, marginBottom: -12, marginRight: 0, overflow: 'hidden', borderRadius: '12px' }}>
                     {media.type.includes("image") ?
-                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 10 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 12 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
             )}
         </IonCardContent>
