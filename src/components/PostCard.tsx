@@ -171,7 +171,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
 
         {<IonRow className="GPT" style={gptRowStyle}>
-            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0, marginRight: -24, opacity: 0.9}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0, marginRight: -20, opacity: 0.9}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
                  <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 19, width: 19 }} /> 
                 <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
