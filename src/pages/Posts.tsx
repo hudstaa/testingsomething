@@ -142,7 +142,7 @@ const Posts: React.FC = () => {
                         <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0}} color='dark' fill='clear' size='small'>
                             <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width:  '1.5rem' }}/>
                         </IonButton>
-                            <IonTitle className="heavy" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft:44, paddingTop: 8}}>Tribe</IonTitle>
+                            <IonTitle className="bold" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft:44, paddingTop: 8}}>Tribe</IonTitle>
                         </div>
                         <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
                             <IonSegment
