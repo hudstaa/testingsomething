@@ -211,9 +211,9 @@ const Posts: React.FC = () => {
                 </IonFab>
             </IonContent >
             <IonFooter >
-            <div style={{height: 40, backgroundColor: "black"}}> {/* border radius curve top corners, interior select list YikYak */}
+            {/* <div style={{height: 40, backgroundColor: "black"}}> {/* border radius curve top corners, interior select list YikYak
 
-            </div>
+            </div> */}
         </IonFooter>
             <TribeFooter page='posts' />
         </IonPage >
