@@ -64,7 +64,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         <div style={{position: 'absolute', top: 0, marginLeft: 0, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
                         </div>
                         <div style={{display: "flex", flexDirection: "column"}}>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 24, marginLeft: 40, marginBottom: 0, fontSize: "1rem", letterSpacing: '-0.0135em', lineHeight: "1", opacity: '.9'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 40, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
@@ -85,7 +85,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     <IonItem lines="none" color={'lightt'}>
                     <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         {/* Reply/Time Ago section on the left */}
-                        <div style={{ display: "flex", alignItems: "center", fontSize: ".9rem", opacity: '50%' }}>
+                        <div style={{ display: "flex", alignItems: "center", fontSize: ".975rem", opacity: '50%' }}>
                             <IonButtons style={{ paddingBottom: 0, marginLeft: 34 }}>
                                 <IonText>
                                     <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
