@@ -5,6 +5,7 @@ import {
     IonButtons,
     IonCardTitle,
     IonTitle,
+    IonFooter,
     IonCol,
     IonContent,
     IonFab,
@@ -209,6 +210,11 @@ const Posts: React.FC = () => {
                     </div>}
                 </IonFab>
             </IonContent >
+            <IonFooter >
+            <div style={{height: 40, backgroundColor: "black"}}> {/* border radius curve top corners, interior select list YikYak */}
+
+            </div>
+        </IonFooter>
             <TribeFooter page='posts' />
         </IonPage >
     );
