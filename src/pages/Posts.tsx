@@ -140,9 +140,9 @@ const Posts: React.FC = () => {
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
                         <div slot='start' style={{ width:'auto' }}>
                         <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0}} color='dark' fill='clear' size='small'>
-                            <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -12, height: '1.2rem', width:  '1.2rem' }}/>
+                            <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width:  '1.5rem' }}/>
                         </IonButton>
-                            <IonTitle className="heavy" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft: 28, paddingTop: 8}}>Tribe</IonTitle>
+                            <IonTitle className="heavy" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft:44, paddingTop: 8}}>Tribe</IonTitle>
                         </div>
                         <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
                             <IonSegment
