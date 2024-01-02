@@ -135,10 +135,9 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ padding: 0, marginBottom: '10vh'}}>
+            <IonHeader style={{ padding: 0, marginBottom: '5vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
-                <IonTitle className='header' style={{padding: 0, paddingTop: 24,  height: 24, fontSize: 28, letterSpacing: '-.0335em'}}>tribe</IonTitle>
                         <IonButtons slot='start' color='transparent' style={{ width: '100%' }}>
                             <IonSegment
                                 onIonChange={(e) => {
@@ -150,7 +149,7 @@ const Posts: React.FC = () => {
                                 value={postType}
                                 color='paper'
                                 className='heavy'
-                                style={{ marginTop: '5vh', fontSize: 24, width: '100%' }} // Ensure full width
+                                style={{ fontSize: 24, width: '100%' }} // Ensure full width
                             >
                                 <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
                                     <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Friends</IonLabel>
