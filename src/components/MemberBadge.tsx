@@ -60,7 +60,7 @@ export const MemberPfp: React.FC<{ address: string, color?: string, size?: 'smol
             pfpStyle = { width: 20, height: 20, padding: 0, borderRadius: 100 };
             break;
         case 'veru-smol':
-            pfpStyle = { width: 28, height: 28, padding: 0, borderRadius: 8 };
+            pfpStyle = { width: 30, height: 30, padding: 0, borderRadius: 8 };
             break;
         case 'double-smol':
             pfpStyle = { width: 45, height: 45, padding: 0, borderRadius: 100 };
@@ -180,7 +180,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 4 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, marginTop: -2, paddingBottom: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, marginTop: 0, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
