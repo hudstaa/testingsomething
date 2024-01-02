@@ -152,10 +152,10 @@ const Posts: React.FC = () => {
                                 style={{ fontSize: 24, width: '100%' }} // Ensure full width
                             >
                                 <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
-                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Friends</IonLabel>
+                                    <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 6}}>Top</IonLabel>
                                 </IonSegmentButton>
                                 <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                                    <IonLabel className='bold' style={{fontSize: 16, paddingBottom: 6}}>Everyone</IonLabel>
+                                    <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 6}}>New</IonLabel>
                                 </IonSegmentButton>
                             </IonSegment>
                         </IonButtons>
