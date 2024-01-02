@@ -91,7 +91,7 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
             <IonLabel style={{
                     fontSize: '1rem', width: 24, paddingLeft: 0, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
-                    <IonText color="tribe"className="fab tribe" style={{ fontSize: 16, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
+                    <IonText color="tribe"className="heavy tribe" style={{ fontSize: 16, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
                 </IonLabel>
             <IonButton fill="clear" onPointerDown={() => {
                 setVoteCache(1)
