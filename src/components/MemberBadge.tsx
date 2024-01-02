@@ -180,7 +180,7 @@ export const MemberCardHeader: React.FC<{ clickable?: boolean, address: string, 
     return <IonRow >
         <IonGrid fixed style={{ paddingLeft: 4 }}>
             <IonRow>
-                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1rem', margin: 0, marginTop: -1, paddingBottom: 0 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', fontSize: '1.05rem', margin: 0, marginTop: -1, paddingBottom: 0 }}>
                     <div>
                         <IonText onMouseDown={() => {
                             clickable && member && setHighlight(member.address);
