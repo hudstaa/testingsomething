@@ -139,7 +139,7 @@ const Posts: React.FC = () => {
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
                         <div slot='start' style={{ width:'auto' }}>
-                            <IonTitle className="heavy" style={{ width:'50%', textAlign: 'left', padding: 8, paddingTop: 0}}>Tribe</IonTitle>
+                            <IonTitle className="heavy" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingTop: 0}}>Tribe</IonTitle>
                         </div>
                         <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
                             <IonSegment
