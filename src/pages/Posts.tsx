@@ -135,7 +135,7 @@ const Posts: React.FC = () => {
     }
     return (
         <IonPage ref={pageRef}>
-            <IonHeader style={{ padding: 0, marginBottom: '4vh'}}>
+            <IonHeader style={{ padding: 0, marginBottom: '4.5vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
                         <div slot='start' style={{ width:'auto' }}>
