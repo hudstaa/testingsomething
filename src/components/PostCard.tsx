@@ -130,7 +130,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 4, marginTop: -1}}>
+                <div style={{ marginLeft: 4, marginTop: -2}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
                 
