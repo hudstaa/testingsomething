@@ -18,7 +18,7 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
     const emoji = hit && hit.emoji;
     const { push } = useHistory()
-    return <a href={'javascript:void(0)'} onClick={() => {
+    return <a className="medium" href={'javascript:void(0)'} onClick={() => {
         push({search:new URLSearchParams(hit.swap).toString(),pathname:'/swap'})
     }}>
         
