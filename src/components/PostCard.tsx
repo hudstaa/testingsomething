@@ -209,7 +209,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='bold ion-text-center'>{score} </IonText>
                 </IonLabel>
                 <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
+                    <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
                 </IonButton>
             </div>
         </IonRow>}
