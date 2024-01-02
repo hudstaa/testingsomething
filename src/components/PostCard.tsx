@@ -125,7 +125,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     }} color={bgColor} key={id} style={{ marginTop: 0,marginBottom:0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
     }}>
-        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 10, paddingBottom: 2, paddingTop: 8, marginRight: 0 }}>
+        <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 10, paddingBottom: 0, paddingTop: 8, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
@@ -136,7 +136,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 2, margin: 0, paddingRight: 16,  marginTop: '-14px' }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: '-16px' }}  >
             <div>
             <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '1rem'}} onClick={() => {}}>
                 <Linkify options={{
