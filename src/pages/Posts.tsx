@@ -138,7 +138,10 @@ const Posts: React.FC = () => {
             <IonHeader style={{ padding: 0, marginBottom: '4vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
-                        <IonButtons slot='start' color='transparent' style={{ width: '100%' }}>
+                        <div slot='start' style={{ width:'auto' }}>
+                            <IonTitle className="heavy" style={{ width:'50%', textAlign: 'left', padding: 8}}>Tribe</IonTitle>
+                        </div>
+                        <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
                             <IonSegment
                                 onIonChange={(e) => {
                                     const newValue = e.detail.value;
@@ -148,6 +151,7 @@ const Posts: React.FC = () => {
                                 }}
                                 value={postType}
                                 color='paper'
+                                slot='end'
                                 className='heavy'
                                 style={{ fontSize: 24, width: '100%' }} // Ensure full width
                             >
