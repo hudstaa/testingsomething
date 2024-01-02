@@ -50,7 +50,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         paddingLeft: 0,
         cursor: 'pointer!important'
     } : {
-        borderBottom: '0.5px solid var(--ion-color-medium-shade)',
+        borderBottom: '1px solid var(--ion-color-medium-shade)',
         marginTop: 0,
         marginBottom: 0,
         marginLeft: 0,
@@ -62,7 +62,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     };
 
     const gptRowStyle = onPostPage ? {
-        borderBottom: '0.5px solid var(--ion-color-medium-shade)',
+        borderBottom: '1px solid var(--ion-color-medium-shade)',
         marginBottom: 4,
         marginTop: -8,
 
@@ -130,15 +130,15 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <div style={{borderRadius: 10, marginTop: 4}}>
                     <MemberPfp color='dark' size="veru-smol" address={author}/>
                 </div>
-                <div style={{ marginLeft: 4, marginTop: '-0.5px'}}>
+                <div style={{ marginLeft: 4, marginTop: 0}}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
                 
             </div>
         </IonCardHeader>
-        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 3, margin: 0, paddingRight: 12,  marginTop: '-14px' }}  >
+        <IonCardContent style={{ paddingLeft: 50, marginLeft: 0, paddingBottom: 1, paddingTop: 2, margin: 0, paddingRight: 16,  marginTop: '-14px' }}  >
             <div>
-            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1rem' : '1rem', letterSpacing: "-0.0135rem", opacity: '0.9' }} onClick={() => {}}>
+            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '1.05rem', letterSpacing: "-0.0135em" }} onClick={() => {}}>
                 <Linkify options={{
                     render:({attributes,content,eventListeners,tagName})=>{
                         if(content.startsWith("$")){
@@ -164,42 +164,42 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             {media && (
                 <div style={{ marginTop: 8, marginBottom: -4, marginRight: 0, overflow: 'hidden', borderRadius: '12px' }}>
                     {media.type.includes("image") ?
-                        <img style={{ border: '0.5px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 12 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 12 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
             )}
         </IonCardContent>
 
 
         {<IonRow className="GPT" style={gptRowStyle}>
-            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0, marginRight: -20, opacity: 0.8}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+            <IonButton style={{ marginLeft: -8, marginBottom: 0, marginTop:0}} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
             }}>
-                 <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 19, width: 19 }} /> 
-                <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '0.5px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
+                 <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 18, width: 18 }} /> 
+                <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>
-            <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0, marginRight: -24, opacity: 0.8}} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/send.svg'} style={{ marginTop: 1, height: 20, width: 20 }}/>
+                <IonIcon icon={'/icons/send.svg'} style={{ marginTop: 1, height: 18, width: 18 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
-            <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, opacity: 0.8}} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 19, width: 19 }}/>
+                <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
-            <IonButton style={{ marginLeft: -24, marginBottom: 0, marginTop: 0, opacity: 0.8}} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0}} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/share.svg'} style={{ height: 21, width: 21 }}/>
+                <IonIcon icon={'/icons/share.svg'} style={{ height: 19, width: 19 }}/>
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
-            <div style={{ marginLeft: '10%', marginRight: -3, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ marginLeft: '10%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
                 </IonButton>

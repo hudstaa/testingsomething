@@ -24,138 +24,92 @@ div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
 }
 
 @font-face {
-  font-family: 'AvenirBold';
-  src: url("/fonts/bold.otf") format("opentype");
+  font-family: 'SFR-Black';
+  src: url("/fonts/SF/SFR-Black.otf") format("opentype");
+}
+
+
+@font-face {
+  font-family: 'SFR-Heav';
+  src: url("/fonts/SF/SFR-Heav.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'AvenirText';
-  src: url("/fonts/demi.otf") format("opentype");
+  font-family: 'SFR-Bold';
+  src: url("/fonts/SF/SFR-Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeChat';
-  src: url("/fonts/chat.woff2") format("woff2");
+  font-family: 'SFR-Semibold';
+  src: url("/fonts/SF/SFR-Semibold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeBlack';
-  src: url("/fonts/GTblack.otf") format("opentype");
+  font-family: 'SFR-Medium';
+  src: url("/fonts/SF/SFR-Medium.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeReg';
-  src: url("/fonts/GTregular.otf") format("opentype");
+  font-family: 'SFR-Regular';
+  src: url("/fonts/SF/SFR-Regular.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeMed';
-  src: url("/fonts/GTmedium.otf") format("opentype");
+  font-family: 'SFR-Thin';
+  src: url("/fonts/SF/SFR-Thin.otf") format("opentype");
+}
+@font-face {
+  font-family: 'SFR-Light';
+  src: url("/fonts/SF/SFR-Light.otf") format("opentype");
 }
 
 @font-face {
-  font-family: 'TribeBold';
-  src: url("/fonts/GTbold.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'FabBold';
-  src: url("/fonts/tribebold.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: 'Rubik';
-  src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype-variations");
-  font-weight: 300, 400, 500, 600 700;
-  /* Define the range of font-weight Rubik supports */
-}
-
-@font-face {
-  font-family: 'SF Pro Black';
-  src: url("/fonts/SF-Pro-Text-Black.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF Pro Bold';
-  src: url("/fonts/SF-Pro-Text-Bold.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF Pro Heavy';
-  src: url("/fonts/SF-Pro-Text-Heavy.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'TribeLight';
-  src: url("/fonts/GTlight.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'OH';
-  src: url("/fonts/heavyheader.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF Pro Medium';
-  src: url("/fonts/SF-Pro-Text-Medium.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF Pro Regular';
-  src: url("/fonts/SF-Pro-Text-Regular.otf") format("opentype");
-}
-
-@font-face {
-  font-family: 'SF Pro Semibold';
-  src: url("/fonts/SF-Pro-Text-Semibold.otf") format("opentype");
+  font-family: 'SFR-UltraLight';
+  src: url("/fonts/SF/SFR-UltraLight.otf") format("opentype");
 }
 
 * {
-  font-family: 'TribeReg', sans-serif !important;
+  font-family: 'SFR-Regular', sans-serif !important;
 }
 
 .header {
-  font-family: 'TribeBlack', sans-serif !important;
+  font-family: 'SFR-Black', sans-serif !important;
 }
 
 .black {
-  font-family: 'TribeBlack', sans-serif !important;
+  font-family: 'SFR-Black', sans-serif !important;
 }
 
 .regular {
-  font-family: 'TribeReg', sans-serif !important;
+  font-family: 'SFR-Regular', sans-serif !important;
 }
 
 .heavy {
-  font-family: 'TribeBlack', sans-serif !important;
-}
-
-.heavyhead {
-  font-family: 'OH', sans-serif !important;
+  font-family: 'SFR-Heavy', sans-serif !important;
 }
 
 .fab {
-  font-family: 'FabBold', sans-serif !important;
+  font-family: 'SFR-Medium', sans-serif !important;
 }
 
 .bold {
-  font-family: 'TribeBold', sans-serif !important;
+  font-family: 'SFR-Bold', sans-serif !important;
 }
 
 .semi {
-  font-family: 'SF Pro Semibold', sans-serif !important;
+  font-family: 'SFR-Semibold', sans-serif !important;
 }
 
 .text {
-  font-family: 'SF Pro Regular', sans-serif !important;
+  font-family: 'SFR-Regular', sans-serif !important;
 }
 
 .light {
-  font-family: 'TribeLight', sans-serif !important;
+  font-family: 'SFR-Light', sans-serif !important;
 }
 
 .medium {
-  font-family: 'TribeMed', sans-serif !important;
+  font-family: 'SFR-Medium', sans-serif !important;
 }
 
 .bottom-start-container {
@@ -221,7 +175,7 @@ div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
 }
 
 textarea {
-  font-family: 'TribeReg' !important;
+  font-family: 'SFR-Regular' !important;
   font-size: '1rem' !important;
 }
 
@@ -354,7 +308,7 @@ ion-footer ion-toolbar {
   --ion-color-danger-tint: #ed576b;
 
   /** dark **/
-  --ion-color-dark: #0f1419;
+  --ion-color-dark: #000000;
   --ion-color-dark-rgb: rgb(15, 20, 25);
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
@@ -409,7 +363,16 @@ ion-footer ion-toolbar {
   --ion-color-tabblur-contrast-rgb: 0, 0, 0;
   --ion-color-tabblur-shade: #d7d8da00;
   --ion-color-tabblur-tint: #E9E8EB;
+
+  /** vote **/
+  --ion-color-vote: #f2f2f2;
+  --ion-color-vote-rgb: rgb(242, 242, 242);
+  --ion-color-vote-contrast: #000000;
+  --ion-color-vote-contrast-rgb: 0, 0, 0;
+  --ion-color-vote-shade: #d7d8da00;
+  --ion-color-vote-tint: #E9E8EB;
 }
+
 
 @media (prefers-color-scheme: dark) {
   /*
@@ -460,7 +423,7 @@ ion-footer ion-toolbar {
     --ion-color-danger-shade: #e04055;
     --ion-color-danger-tint: #ff5b71;
 
-    --ion-color-dark: #e7e9ea;
+    --ion-color-dark: #ffffff;
     --ion-color-dark-rgb: rgb(231, 233, 234);
     --ion-color-dark-contrast: #000000;
     --ion-color-dark-contrast-rgb: 0, 0, 0;
@@ -514,6 +477,14 @@ ion-footer ion-toolbar {
     --ion-color-tabblur-contrast-rgb: 0, 0, 0;
     --ion-color-tabblur-shade: #d7d8da00;
     --ion-color-tabblur-tint: #E9E8EB;
+
+    /** vote **/
+    --ion-color-vote: #333333;
+    --ion-color-vote-rgb: rgb(51, 51, 51);
+    --ion-color-vote-contrast: #000000;
+    --ion-color-vote-contrast-rgb: 0, 0, 0;
+    --ion-color-vote-shade: #d7d8da00;
+    --ion-color-vote-tint: #E9E8EB;
   }
 
   /*
