@@ -674,7 +674,9 @@ ion-footer {
 ion-segment-button {
   --box-shadow: none !important;
   min-width: 20px  !important;
-  max-width: 70px !important;
+  max-width: 65px !important;
+  --padding-start: 0px !important;
+  --padding-end: 8px !important;
   padding: 0px !important;
 
 }
