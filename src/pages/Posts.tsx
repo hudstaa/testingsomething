@@ -229,7 +229,7 @@ const Posts: React.FC = () => {
                     </div>}
                 </IonFab>
             </IonContent >
-            <IonFooter >
+            <IonFooter color='black'>
             <div style={{height: '7vh', backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
                 <IonSegment
                     value={filterType}
