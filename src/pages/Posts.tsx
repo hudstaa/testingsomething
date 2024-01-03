@@ -240,7 +240,7 @@ const Posts: React.FC = () => {
                         <IonLabel className='heavy' color="white" style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton className="my-custom-segment-class2" value="Apps" color={filterType === 'Apps' ? 'white' : undefined}>
-                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>My Apps</IonLabel>
+                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Apps</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton className="my-custom-segment-class2" value="Wallet" color={filterType === 'Wallet' ? 'white' : undefined}>
                         <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Wallet</IonLabel>
