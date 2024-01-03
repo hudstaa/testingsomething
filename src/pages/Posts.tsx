@@ -230,7 +230,7 @@ const Posts: React.FC = () => {
                 </IonFab>
             </IonContent >
             <IonFooter color='black'>
-            <div style={{height: '6.5vh', marginBottom: -2, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
+            <div style={{height: '6.5vh', marginBottom: -2, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '32px', borderTopRightRadius: '32px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
                 <IonSegment
                     value={filterType}
                     slot='start'
