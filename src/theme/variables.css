@@ -696,7 +696,6 @@ ion-segment-button::part(indicator) {
 /* Change the text style to not be all capitals */
 ion-segment-button .bold {
   text-transform: none; /* This will make the text appear in normal casing */
-  margin-bottom: -5px; /* Reduces the bottom margin */
   padding-bottom: 0; /* Reduces the bottom padding */
   letter-spacing: normal;
 }
