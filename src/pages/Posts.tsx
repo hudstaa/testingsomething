@@ -235,7 +235,7 @@ const Posts: React.FC = () => {
                     value={filterType}
                     slot='start'
                     className="heavy my-custom-segment-class2"
-                    style={{ fontSize: 24,display: 'flex', paddingLeft: 2, border: '1px solid #FFFFFF10',paddingRight: 2, justifyContent: 'space-between', alignItems: 'center', borderRadius: 24}} >
+                    style={{ fontSize: 24,display: 'flex', paddingLeft: 4, border: '1px solid #FFFFFF10',paddingRight: 4, justifyContent: 'space-between', alignItems: 'center', borderRadius: 24}} >
                      <IonSegmentButton value="Feed" onClick={() => setFilterType('Feed')}>
                             <IonLabel className='heavy' style={{color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
                         </IonSegmentButton>
