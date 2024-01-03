@@ -210,8 +210,11 @@ ion-segment-button.my-custom-segment-class1::part(indicator-background) {
 ion-segment-button.my-custom-segment-class2::part(indicator-background) {
   background: #ff6000 !important;
   box-shadow: none !important;
+  padding: 0px;
 }
-
+ion-segment {
+  --background: var(--ion-color-dark-shade) !important;
+}
 
 ion-segment-button::part(indicator-background) {
   background: #ff6000;
@@ -257,7 +260,7 @@ ion-segment-button.ios::part(native) {
 .my-custom-segment ion-segment-button.ios {
   --color:  #FF6000 !important;
   --color-checked: #fff !important;
-  --border-radius: 20px !important;
+  --border-radius: 29px !important;
 }
 
 .segment-button-checked.ios::part(native) {
@@ -268,6 +271,7 @@ ion-segment-button.ios::part(native) {
 ion-segment-button.ios::part(indicator-background) {
   border-radius: 16px;
 }
+
 
 ion-footer,
 ion-footer ion-toolbar {
@@ -704,7 +708,7 @@ ion-segment-button {
   --box-shadow: none !important;
   --padding-start:  8px !important;
   --padding-end: 8px !important;
-  padding: 0px !important;
+  padding: 4px !important;
 
 }
 
@@ -725,7 +729,7 @@ ion-segment-button .bold {
 ion-segment-button.ios .customButton {
   --color: #FF6000;
   --color-checked: #fff;
-  --border-radius: 20px;
+  --border-radius: 50px;
 }
 /* Remove shadow from any other possible elements */
 * {
