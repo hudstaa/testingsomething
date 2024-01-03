@@ -59,7 +59,7 @@ const Posts: React.FC = () => {
     const [postType, setPostType] = useState<'top' | 'recent'>(getPostTypeFromURL());
     const history = useHistory();
     const [menuType, setMenuType] = useState('push');
-    const [filterType, setFilterType] = useState<'Feed' | 'Apps' | 'Wallet'>();
+    const [filterType, setFilterType] = useState('Feed');
 
     const handleSegmentChange = (newValue: 'top' | 'recent') => {
         setPostType(newValue);
@@ -103,7 +103,9 @@ const Posts: React.FC = () => {
     useIonViewDidEnter(() => {
         setPresentingElement(pageRef.current)
     })
-
+    useEffect(() => {
+        setFilterType('Feed'); // Set the filterType to 'Feed' when the component mounts
+    }, []);
     const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
 
     const triggerFocusOnWriteMessage = () => {
