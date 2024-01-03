@@ -345,7 +345,7 @@ ion-footer ion-toolbar {
   --ion-color-dark-rgb: rgb(15, 20, 25);
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-shade: #0f0f10;
   --ion-color-dark-tint: #383a3e;
 
   /** medium **/
@@ -460,7 +460,7 @@ ion-footer ion-toolbar {
     --ion-color-dark-rgb: rgb(231, 233, 234);
     --ion-color-dark-contrast: #000000;
     --ion-color-dark-contrast-rgb: 0, 0, 0;
-    --ion-color-dark-shade: #d7d8da;
+    --ion-color-dark-shade: #0f0f10;
     --ion-color-dark-tint: #f5f6f9;
 
     --ion-color-medium: #454545;
