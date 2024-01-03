@@ -57,14 +57,14 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.map((comment, i) => (
                 < div key={i}>
                     <div style={{backgroundColor: "var(--ion-color-paper"}}>
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -6, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: -2.5, fontSize: "1rem"}}>
+                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -8, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 38, top: -2.5, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         </IonButtons>
                         <div style={{position: 'absolute', top: 0, marginLeft: 0, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
                         </div>
                         <div style={{display: "flex", flexDirection: "column"}}>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 36, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 38, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
