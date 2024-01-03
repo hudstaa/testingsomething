@@ -78,6 +78,34 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         justifyContent: 'space-between'
     };
     
+    const shouldNavigate = (target: EventTarget | null): boolean => {
+        while (target && target instanceof HTMLElement) {
+            if (target.nodeName === 'ION-BUTTON' || target.classList.contains('do-not-navigate')) {
+                return false;
+            }
+            target = target.parentNode;
+        }
+        return true;
+    };
+
+    const handleNavigation = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => {
+        if (shouldNavigate(e.target as EventTarget)) {
+            push('/post/' + id);
+        }
+    };
+
+    const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+        handleNavigation(e);
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent<HTMLElement>) => {
+        if (isTap) {
+            // It's a tap, handle click
+            handleNavigation(e);
+        }
+    };
+        
+    
     const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         setTouchStart({
             x: e.touches[0].clientX,
@@ -95,20 +123,13 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         }
     };
 
-    const handleTouchEnd = () => {
-        if (isTap) {
-            // It's a tap, handle click
-            handleClick();
-        }
-        // Else, it's a swipe, and Swiper will handle it
-    };
 
     const handleClick = () => {
         console.log("Post clicked");
         push('/post/' + id); // Navigate to the post
     };
 
-    return  <div style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
+    return  <div style={cardStyle}  onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard  onMouseDown={(e) => {
         console.log(e.target)
         const classes = Array.from((e.target as any).classList);
         console.log(e.target);
@@ -200,7 +221,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <div style={{ marginLeft: '10%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <IonButton fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
+                <IonButton className="do-not-navigate"  fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
                     <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
                 </IonButton>
                 <IonLabel style={{
@@ -208,7 +229,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 }} >
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='heavy ion-text-center'>{score} </IonText>
                 </IonLabel>
-                <IonButton  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
+                <IonButton  className="do-not-navigate"  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
                     <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
                 </IonButton>
             </div>
