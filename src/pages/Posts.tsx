@@ -175,13 +175,13 @@ const Posts: React.FC = () => {
                                 value={postType}
                                 color='paper'
                                 slot='end'
-                                className='heavy'
+                                className='heavy my-custom-segment-class1'
                                 style={{ fontSize: 24, width: '100%' }} // Ensure full width
                             >
-                                <IonSegmentButton value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                                <IonSegmentButton className="my-custom-segment-class1" value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
                                     <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Top</IonLabel>
                                 </IonSegmentButton>
-                                <IonSegmentButton value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
+                                <IonSegmentButton className="my-custom-segment-class1" value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
                                     <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>New</IonLabel>
                                 </IonSegmentButton>
                             </IonSegment>
@@ -235,16 +235,16 @@ const Posts: React.FC = () => {
                     value={filterType}
                     color='paper'
                     slot='start'
-                    className='heavy my-custom-segment' 
+                    className="heavy my-custom-segment-class2"
                     style={{ fontSize: 24,display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', borderRadius: 24}} >
-                    <IonSegmentButton value="Feed" color={filterType === 'Feed' ? '#FF6000' : '#FF6000'}>
-                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Feed</IonLabel>
+                    <IonSegmentButton className="my-custom-segment-class2" value="Feed" color={filterType === 'Feed' ? 'white' : undefined}>
+                        <IonLabel className='heavy' color="white" style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Feed</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="Apps" color={filterType === 'Apps' ? '#FF6000' : undefined}>
-                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Apps</IonLabel>
+                    <IonSegmentButton className="my-custom-segment-class2" value="Apps" color={filterType === 'Apps' ? 'white' : undefined}>
+                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Apps</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="Wallet" color={filterType === 'Wallet' ? '#FF6000' : undefined}>
-                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Wallet</IonLabel>
+                    <IonSegmentButton className="my-custom-segment-class2" value="Wallet" color={filterType === 'Wallet' ? 'white' : undefined}>
+                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Wallet</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
             </div> 

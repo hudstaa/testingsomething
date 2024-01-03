@@ -199,14 +199,22 @@ ion-header ion-toolbar {
   --border-color: var(--ion-color-medium-shade) !important;
 }
 
-ion-segment {
-  --background: transparent; /* Replace with your desired color */
+/* Apply styles only to IonSegmentButton */
+ion-segment-button.my-custom-segment-class1::part(indicator-background) {
+  background: transparent;
   box-shadow: none !important;
-
 }
 
+
+/* Apply styles only to IonSegmentButton */
+ion-segment-button.my-custom-segment-class2::part(indicator-background) {
+  background: #ff6000 !important;
+  box-shadow: none !important;
+}
+
+
 ion-segment-button::part(indicator-background) {
-  background: transparent;
+  background: #ff6000;
   box-shadow: none !important;
 
 }
@@ -233,6 +241,23 @@ ion-segment-button.ios::part(native) {
   color: var(--ion-color-vote);
   opacity: 1;
 
+}
+
+.my-custom-segment ion-segment-button {
+  --indicator-color: #FF6000 !important;
+}
+
+/* Material Design styles for custom segment */
+.my-custom-segment ion-segment-button.md {
+  --color: #000;
+  --color-checked: #FF6000 !important;
+}
+
+/* iOS styles for custom segment */
+.my-custom-segment ion-segment-button.ios {
+  --color:  #FF6000 !important;
+  --color-checked: #fff !important;
+  --border-radius: 20px !important;
 }
 
 .segment-button-checked.ios::part(native) {
@@ -677,8 +702,6 @@ ion-footer {
 /* Remove shadow from segments */
 ion-segment-button {
   --box-shadow: none !important;
-  min-width: 40px  !important;
-  max-width: 65px !important;
   --padding-start:  8px !important;
   --padding-end: 8px !important;
   padding: 0px !important;
@@ -699,7 +722,11 @@ ion-segment-button .bold {
   padding-bottom: 0; /* Reduces the bottom padding */
   letter-spacing: normal;
 }
-
+ion-segment-button.ios .customButton {
+  --color: #FF6000;
+  --color-checked: #fff;
+  --border-radius: 20px;
+}
 /* Remove shadow from any other possible elements */
 * {
   box-shadow: none !important;
