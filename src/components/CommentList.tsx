@@ -58,13 +58,13 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                 < div key={i}>
                     <div style={{backgroundColor: "var(--ion-color-paper"}}>
                     <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -6, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 40, top: -2.5, fontSize: "1rem"}}>
+                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 36, top: -2.5, fontSize: "1rem"}}>
                         <MemberAlias color='dark' address={comment.author} />
                         </IonButtons>
                         <div style={{position: 'absolute', top: 0, marginLeft: 0, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
                         </div>
                         <div style={{display: "flex", flexDirection: "column"}}>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 40, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
+                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 36, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
                             <Linkify>
                                 {comment.content}
                             </Linkify>
@@ -86,7 +86,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                     <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         {/* Reply/Time Ago section on the left */}
                         <div style={{ display: "flex", alignItems: "center", fontSize: ".975rem", opacity: '50%' }}>
-                            <IonButtons style={{ paddingBottom: 0, marginLeft: 34 }}>
+                            <IonButtons style={{ paddingBottom: 0, marginLeft: 30 }}>
                                 <IonText>
                                     <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
                                 </IonText>
