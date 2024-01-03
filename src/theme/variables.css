@@ -220,6 +220,10 @@ ion-segment-button.md::part(native) {
   color: var(--ion-color-dark);
 }
 
+.my-custom-segment .segment-button-checked {
+  --background: #FF6000 !important; /* Set background color for selected segment button */
+}
+
 ion-segment-button.md::part(indicator-background) {
   height: 3px;
 }
@@ -673,9 +677,9 @@ ion-footer {
 /* Remove shadow from segments */
 ion-segment-button {
   --box-shadow: none !important;
-  min-width: 20px  !important;
+  min-width: 40px  !important;
   max-width: 65px !important;
-  --padding-start: 0px !important;
+  --padding-start:  8px !important;
   --padding-end: 8px !important;
   padding: 0px !important;
 

@@ -59,6 +59,7 @@ const Posts: React.FC = () => {
     const [postType, setPostType] = useState<'top' | 'recent'>(getPostTypeFromURL());
     const history = useHistory();
     const [menuType, setMenuType] = useState('push');
+    const [filterType, setFilterType] = useState<'Feed' | 'Apps' | 'Wallet'>();
 
     const handleSegmentChange = (newValue: 'top' | 'recent') => {
         setPostType(newValue);
@@ -229,9 +230,24 @@ const Posts: React.FC = () => {
                 </IonFab>
             </IonContent >
             <IonFooter >
-            {/* <div style={{height: 40, backgroundColor: "black"}}> {/* border radius curve top corners, interior select list YikYak
-
-            </div> */}
+            <div style={{height: 40, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '16px', borderTopRightRadius: '16px', paddingLeft: 4, paddingRight: 4, paddingTop: 4 }}> 
+                <IonSegment
+                    value={filterType}
+                    color='paper'
+                    slot='start'
+                    className='heavy my-custom-segment' 
+                    style={{ fontSize: 24,display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', borderRadius: 24}} >
+                    <IonSegmentButton value="Feed" color={filterType === 'Feed' ? '#FF6000' : '#FF6000'}>
+                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Feed</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value="Apps" color={filterType === 'Apps' ? '#FF6000' : undefined}>
+                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Apps</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value="Wallet" color={filterType === 'Wallet' ? '#FF6000' : undefined}>
+                        <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Wallet</IonLabel>
+                    </IonSegmentButton>
+                </IonSegment>
+            </div> 
         </IonFooter>
             <TribeFooter page='posts' />
         </IonPage >
