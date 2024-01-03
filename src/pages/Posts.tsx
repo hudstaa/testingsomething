@@ -12,6 +12,8 @@ import {
     IonGrid,
     IonHeader,
     IonIcon,
+    IonMenu,
+    IonMenuToggle,
     IonImg,
     IonItem,
     IonPage,
@@ -42,6 +44,7 @@ import { chevronDown, chevronUp, listCircle, notifications } from 'ionicons/icon
 import { MemberPfp, MemberPfpImg } from '../components/MemberBadge';
 import { useNotifications } from '../hooks/useNotifications';
 import { removeUndefinedProperties } from '../components/WriteMessage';
+import type { RadioGroupCustomEvent } from '@ionic/react';
 
 
 
@@ -55,6 +58,7 @@ const Posts: React.FC = () => {
     };
     const [postType, setPostType] = useState<'top' | 'recent'>(getPostTypeFromURL());
     const history = useHistory();
+    const [menuType, setMenuType] = useState('push');
 
     const handleSegmentChange = (newValue: 'top' | 'recent') => {
         setPostType(newValue);
@@ -135,14 +139,28 @@ const Posts: React.FC = () => {
         }} />
     }
     return (
-        <IonPage ref={pageRef}>
+
+        <>
+        <IonMenu type={menuType} contentId="main-content" >
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Menu Content</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent className="ion-padding">
+                {/* Menu items here */}
+            </IonContent>
+        </IonMenu>
+        <IonPage id="main-content" ref={pageRef}>
             <IonHeader style={{ padding: 0, marginBottom: '4.5vh'}}>
                 {!hideToolbar ? 
                     <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
-                        <div slot='start' style={{ width:'auto' }}>
-                        <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0}} color='dark' fill='clear' size='small'>
-                            <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width:  '1.5rem' }}/>
-                        </IonButton>
+                        <div slot='start' style={{ width:'auto', height: 'auto' }}>
+                            <IonMenuToggle>
+                                <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0}} color='dark' fill='clear' size='small'>
+                                    <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width:  '1.5rem' }}/>
+                                </IonButton>
+                                </IonMenuToggle>
                             <IonTitle className="bold" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft:44, paddingTop: 8}}>Tribe</IonTitle>
                         </div>
                         <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
@@ -217,6 +235,7 @@ const Posts: React.FC = () => {
         </IonFooter>
             <TribeFooter page='posts' />
         </IonPage >
+        </>
     );
 };
 
