@@ -230,20 +230,20 @@ const Posts: React.FC = () => {
                 </IonFab>
             </IonContent >
             <IonFooter >
-            <div style={{height: '6vh', backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '20px', borderTopRightRadius: '20px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
+            <div style={{height: '7vh', backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '24px', borderTopRightRadius: '24px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
                 <IonSegment
                     value={filterType}
                     slot='start'
                     className="heavy my-custom-segment-class2"
                     style={{ fontSize: 24,display: 'flex', paddingLeft: 4, paddingRight: 4, justifyContent: 'space-between', alignItems: 'center', borderRadius: 24}} >
                     <IonSegmentButton className="my-custom-segment-class2" value="Feed" color={filterType === 'Feed' ? 'white' : undefined}>
-                        <IonLabel className='heavy' color="white" style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Feed</IonLabel>
+                        <IonLabel className='heavy' color="white" style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton className="my-custom-segment-class2" value="Apps" color={filterType === 'Apps' ? 'white' : undefined}>
-                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>My Apps</IonLabel>
+                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>My Apps</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton className="my-custom-segment-class2" value="Wallet" color={filterType === 'Wallet' ? 'white' : undefined}>
-                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Wallet</IonLabel>
+                        <IonLabel className='heavy'color="white"  style={{fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Wallet</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
             </div> 
