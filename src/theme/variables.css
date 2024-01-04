@@ -235,6 +235,11 @@ ion-segment-button.md::part(native) {
   --background: #FF6000 !important; /* Set background color for selected segment button */
 }
 
+.custom-avatar {
+  --border-radius: 10px;
+  width: 35px; /* Set your desired width */
+  height: 35px; /* Set your desired height */
+}
 
 /* iOS styles */
 ion-segment-button.ios::part(native) {
@@ -651,7 +656,6 @@ ion-footer ion-toolbar {
 
 .searchbar-left-aligned.sc-ion-searchbar-ios-h .searchbar-input.sc-ion-searchbar-ios {
   padding-inline-start: 2.35rem;
-  letter-spacing: -0.0135em;
 }
 ion-button.custombutton::part(native) {
   border-radius: 24px;

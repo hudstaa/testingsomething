@@ -87,12 +87,11 @@ const Discover: React.FC = () => {
             style={{ display: 'flex', alignItems: 'center' }} // Added flex styles here
         >
             <IonButtons slot='start'>
-                <IonAvatar>
-                    <IonImg src={x.twitterPfp} style={{ marginTop: 8, width: 35, height: 35 }} />
-                </IonAvatar>
+            <IonAvatar>
+              <IonImg  class="custom-avatar" src={x.twitterPfp} style={{ marginTop: 8, width: 35, height: 35 }} />
+            </IonAvatar>
             </IonButtons>
-              <IonText className='semi' style={{ marginLeft: 0 }}>{x.twitterName}</IonText> {/* Added IonText for better control */}
-            <BuyPriceBadge address={x?.address} />
+            <IonText className='semi' style={{ marginLeft: 0}}>{x.twitterName}</IonText> {/* Added IonText for better control */}
         </IonItem>
     ))}
 </IonList>
@@ -104,15 +103,14 @@ const Discover: React.FC = () => {
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
                 const member = getFriend(channel.address);
-                return <IonItem routerLink={'/member/' + member?.address} >
+                return <IonItem style={{marginLeft: -8}} lines="none" routerLink={'/member/' + member?.address} >
                   <IonAvatar>
-                    <IonImg src={member?.twitterPfp || personOutline} />
+                    <IonImg class="custom-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
-
                   <IonGrid>
                     <IonRow>
                     </IonRow>
-                    <IonBadge color='light' >
+                    <IonBadge color='transparent' >
                       {member?.twitterName}
                     </IonBadge>
                     <IonRow>
