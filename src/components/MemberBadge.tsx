@@ -131,7 +131,7 @@ export const MemberAlias: React.FC<{ clickable?: boolean, address: string, color
     return <IonText color={color} className='bold' onMouseDown={() => {
         clickable && setHighlight(member!.address)
     }}
-        style={{ margin: 0, fontSize: "1rem", paddingRight: 4 }} >
+        style={{ margin: 0, paddingRight: 4 }} >
         {member?.twitterName}
     </IonText>
 }

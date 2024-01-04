@@ -77,9 +77,9 @@ const contentBubble = (
                 />
             )}
             {!isMe && (
-                <div style={{ opacity: '75%', paddingLeft: 45, marginTop: -5, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias address={message.author} size='veru-smol' />
-                    <span style={{ paddingLeft: 10 }}>
+                <div style={{paddingLeft: 45, marginTop: 4, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                    <MemberAlias address={message.author} />
+                    <span style={{ paddingLeft:0 }}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
                     </span>
                 </div>
