@@ -75,7 +75,7 @@ const Chat: React.FC = () => {
     return (
         <TribePage page='chat'>
             <IonHeader>
-                <IonToolbar>
+                <IonToolbar color={'white'}>
                     <IonTitle className='bold' style={{ fontSize: 18}}>
                         Chats
                     </IonTitle>
@@ -131,7 +131,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
                     <span style={{ fontSize: '14px', fontWeight: 400, opacity: 0.5 }}>
                         <MemberAlias clickable={false} address={msg?.author as any} />
                     </span>
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', fontWeight: 400, opacity: 0.5, marginLeft: '5px' }}>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '14px', opacity: 0.5, marginLeft: '-4px' }}>
                         : {msg?.content?.slice(0, 20)}
                     </span>
                 </div>
