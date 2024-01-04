@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge color='tribe'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge style={{paddingLeft: 0}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
@@ -108,8 +108,8 @@ const Discover: React.FC = () => {
                     <IonImg class="disco2-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
-                    <IonBadge color='transparent' >
-                      {member?.twitterName}
+                    <IonBadge style={{paddingLeft: 0, fontSize: 16}} color='transparent' >
+                      <span className="bold">{member?.twitterName} </span>
                     </IonBadge>
                     <IonRow>
                       {<BuyPriceBadge address={member?.address} />}
