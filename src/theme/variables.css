@@ -656,7 +656,7 @@ ion-footer ion-toolbar {
   
 }
 .sc-ion-searchbar-ios-h {
-  align-items: stretch !important; /* or your desired value */
+  align-items: center !important; /* or your desired value */
 }
 
 .searchbar-input-container.sc-ion-searchbar-ios {
