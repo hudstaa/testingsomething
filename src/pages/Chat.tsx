@@ -131,7 +131,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
                     <span style={{ fontSize: '16px', opacity: 0.5 }}>
                         <MemberAlias clickable={false} address={msg?.author as any} />
                     </span>
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '16px', opacity: 0.5, marginLeft: '-4px' }}>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '16px', opacity: 0.5, marginLeft: '-3.5px' }}>
                         : {msg?.content?.slice(0, 20)}
                     </span>
                 </div>
