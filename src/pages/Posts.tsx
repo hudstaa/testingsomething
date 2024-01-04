@@ -147,7 +147,7 @@ const Posts: React.FC = () => {
         <IonMenu type={menuType} contentId="main-content" >
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Menu Content</IonTitle>
+                    <IonTitle></IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent className="ion-padding">
