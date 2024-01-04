@@ -244,7 +244,7 @@ ion-segment-button.md::part(native) {
 }
 
 .disco-avatar {
-  --border-radius: 10px;
+  --border-radius: 12px;
   width: 35px; /* Set your desired width */
   height: 35px; /* Set your desired height */
 }
