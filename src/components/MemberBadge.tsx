@@ -107,7 +107,7 @@ export const ChatMemberPfp: React.FC<{ address: string, color?: string, size?: '
     let pfpStyle = {};
     switch (size) {
         case 'smol':
-            pfpStyle = { width: 28, height: 28, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 28, height: 28, padding: 0, borderRadius: 10 };
             break;
         case 'veru-smol':
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
