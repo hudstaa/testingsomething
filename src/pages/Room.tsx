@@ -86,7 +86,7 @@ const Room: React.FC = () => {
     const { goBack } = useHistory();
     return <TribePage page='room'>
         <IonHeader>
-            <div style={{ borderBottom: '1px solid var(--ion-color-light)' }}>
+            <div style={{ borderBottom: '1px solid var(--ion-color-light)', width: '100%' }}>
             <IonToolbar  >
                 <IonButtons slot='start'>
                     <IonButton onMouseDown={() => {
