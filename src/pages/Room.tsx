@@ -87,7 +87,7 @@ const Room: React.FC = () => {
     return <TribePage page='room'>
         <IonHeader>
             <div style={{ borderBottom: '1px solid var(--ion-color-light)', width: '100%' }}>
-            <IonToolbar  >
+            <IonToolbar color={'transparent'} >
                 <IonButtons slot='start'>
                     <IonButton onMouseDown={() => {
 
