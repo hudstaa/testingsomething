@@ -90,7 +90,7 @@ export const MemberPfpImg: React.FC<{ address: string, color?: string, size?: 's
             pfpStyle = { width: 35, height: 35, padding: 0, borderRadius: 100 };
             break;
         case 'double-smol':
-            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 100 };
+            pfpStyle = { width: 48, height: 48, padding: 0, borderRadius: 16 };
             break;
         case 'big':
         default:
