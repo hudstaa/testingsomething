@@ -123,7 +123,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     <IonGrid style={{ padding: 0, borderBottom: '1px solid var(--ion-color-medium-shade' }}>
                         <IonRow>
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{ padding: '0px' }}>
-                                <IonSegment color={"tribe"} mode='md' value={segment}>
+                                <IonSegment className='custom1' color='transparent' mode='md' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         <span className='bold' style={{ fontSize: '1rem' }}>Posts</span>
                                     </IonSegmentButton>}

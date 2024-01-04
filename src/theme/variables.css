@@ -213,7 +213,11 @@ ion-segment-button.my-custom-segment-class2::part(indicator-background) {
   padding: 0px;
 }
 ion-segment {
-  --background: var(--ion-color-dark-shade) !important;
+  --background: var(--ion-color-dark-shade);
+}
+
+ ion-segment.custom1 {
+  --background: transparent !important;
 }
 
 ion-segment-button::part(indicator-background) {
