@@ -97,6 +97,7 @@ const contentBubble = (
     return (
         <div className="message-container" key={message.id} style={{
             display: 'flex',
+            paddingRight: 4,
             flexDirection: 'column',
             overflowWrap: 'break-word',
             alignItems: isMe ? 'flex-end' : 'flex-start',
