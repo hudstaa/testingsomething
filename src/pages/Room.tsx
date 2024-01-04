@@ -88,14 +88,14 @@ const Room: React.FC = () => {
         <IonHeader>
             <div style={{ borderBottom: '1px solid var(--ion-color-light)', width: '100%' }}>
             <IonToolbar color={'transparent'} >
-                <IonButtons slot='start'>
+                <IonButtons  slot='start'>
                     <IonButton onMouseDown={() => {
 
                         goBack()
                     }}>
                         <IonIcon icon={chevronBack} />
-                        <IonAvatar>
-                            <IonImg src={channelOwner?.twitterPfp} />
+                        <IonAvatar  style={{justifyContent: 'center'}} >
+                            <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
                         </IonAvatar>
                         <IonGrid>
                             <IonRow>

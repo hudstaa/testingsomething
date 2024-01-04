@@ -88,7 +88,7 @@ const Discover: React.FC = () => {
         >
             <IonButtons slot='start'>
             <IonAvatar>
-              <IonImg  class="custom-avatar" src={x.twitterPfp} style={{ marginTop: 8, width: 35, height: 35 }} />
+              <IonImg  class="disco-avatar" src={x.twitterPfp} style={{ marginTop: 8, width: 35, height: 35 }} />
             </IonAvatar>
             </IonButtons>
             <IonText className='semi' style={{ marginLeft: 0}}>{x.twitterName}</IonText> {/* Added IonText for better control */}
@@ -105,7 +105,7 @@ const Discover: React.FC = () => {
                 const member = getFriend(channel.address);
                 return <IonItem style={{marginLeft: -8}} lines="none" routerLink={'/member/' + member?.address} >
                   <IonAvatar>
-                    <IonImg class="custom-avatar"  src={member?.twitterPfp || personOutline} />
+                    <IonImg class="disco-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid>
                     <IonRow>
