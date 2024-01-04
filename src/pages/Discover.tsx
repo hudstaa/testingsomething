@@ -117,8 +117,8 @@ const Discover: React.FC = () => {
                     </IonRow>
                   </IonGrid>
                   <IonButtons slot='end'>
-                    {typeof channel.holders[me!.address] === 'undefined' && <IonButton style={{bprderRadius: 12}} color='tribe' fill='solid'>
-                      Join
+                    {typeof channel.holders[me!.address] === 'undefined' && <IonButton style={{borderRadius: 12}} color='tribe' fill='solid'>
+                      <span className='bold'>Join</span>
                     </IonButton>}
                   </IonButtons>
                   {/* <MemberGraph address={member!.address} /> */}
