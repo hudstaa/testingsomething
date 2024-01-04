@@ -236,7 +236,7 @@ ion-segment-button.md::part(native) {
 }
 
 .custom-avatar {
-  --border-radius: 12px;
+  --border-radius: 14px;
   width: 40px; /* Set your desired width */
   height: 40px; /* Set your desired height */
   margin-top: 4px;
