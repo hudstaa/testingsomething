@@ -137,7 +137,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     if (!isReplyToMe) {
         items.reverse();
     }
-    return <div style={{ margin: '0px!important', maxWidth: '50%', whiteSpace: 'pre-wrap' }} key={'reply' + message.id}>
+    return <div style={{ margin: '0px!important', maxWidth: '50%', whiteSpace: 'pre-wrap', marginLeft: 40, marginBottom: 4 }} key={'reply' + message.id}>
         {items}
     </div>
 }
