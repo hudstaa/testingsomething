@@ -128,7 +128,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
                     <MemberAlias clickable={false} address={address} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span style={{ fontSize: '16px', fontWeight: 400, opacity: 0.5 }}>
+                    <span style={{ fontSize: '16px', opacity: 0.5 }}>
                         <MemberAlias clickable={false} address={msg?.author as any} />
                     </span>
                     <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '16px', opacity: 0.5, marginLeft: '-4px' }}>
