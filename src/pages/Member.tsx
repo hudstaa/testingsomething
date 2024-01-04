@@ -57,7 +57,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
         }
     }, [member]);
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? undefined : 'light';
+    const bgColor = darkmode ? 'black' : 'white';
     const { setPresentingElement } = useWriteMessage()
     const pageRef = useRef<any>(null)
 
@@ -70,13 +70,13 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
     return (
         <IonPage ref={pageRef}>
             <TribeHeader
-                color='transparent'
+                color={bgColor}
                 title=""
                 sticky
                 showBackButton={true}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard className='postcard' color="#00000000" style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
+                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
                         <IonText style={{ paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
@@ -103,7 +103,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 </div>
                             ) : null}
                         </div>
-                        <div style={{ marginLeft: -3, padding: 3 }}>
+                        <div style={{ marginLeft: -5, padding: 3 }}>
                             <img style={{ width: 72, height: 72, borderRadius: '24px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
                         </div>
                     </IonCardHeader>
