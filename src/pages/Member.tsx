@@ -104,7 +104,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                             ) : null}
                         </div>
                         <div style={{ marginLeft: -3, padding: 3 }}>
-                            <img style={{ width: 72, height: 72, borderRadius: '100px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
+                            <img style={{ width: 72, height: 72, borderRadius: '24px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
                         </div>
                     </IonCardHeader>
                 </IonCard>
