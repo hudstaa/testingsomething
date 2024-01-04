@@ -242,7 +242,7 @@ const Posts: React.FC = () => {
                             <IonLabel className='heavy' style={{color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
                         </IonSegmentButton>
                         <IonSegmentButton value="Apps" onClick={() => setFilterType('Apps')}>
-                            <IonLabel className='heavy' style={{color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Apps</IonLabel>
+                            <IonLabel className='heavy' style={{color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Swap</IonLabel>
                         </IonSegmentButton>
                         <IonSegmentButton value="Wallet" onClick={() => setFilterType('Wallet')}>
                             <IonLabel className='heavy' style={{color: filterType === 'Wallet' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Wallet</IonLabel>
