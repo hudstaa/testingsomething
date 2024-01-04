@@ -239,13 +239,13 @@ const Posts: React.FC = () => {
                     className="heavy my-custom-segment-class2"
                     style={{ fontSize: 24,display: 'flex', paddingLeft: 3, border: '1px solid #FFFFFF10',paddingRight: 3, justifyContent: 'space-between', alignItems: 'center', borderRadius: 24, paddingBottom: '0.5px'}} >
                      <IonSegmentButton value="Feed" onClick={() => setFilterType('Feed')}>
-                            <IonLabel className='heavy' style={{color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
+                            <IonLabel className='heavy' style={{color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Feed</IonLabel>
                         </IonSegmentButton>
                         <IonSegmentButton value="Apps" onClick={() => setFilterType('Apps')}>
-                            <IonLabel className='heavy' style={{color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Swap</IonLabel>
+                            <IonLabel className='heavy' style={{color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Swap</IonLabel>
                         </IonSegmentButton>
                         <IonSegmentButton value="Wallet" onClick={() => setFilterType('Wallet')}>
-                            <IonLabel className='heavy' style={{color: filterType === 'Wallet' ? 'white' : 'var(--ion-color-medium)', fontSize: 16, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Wallet</IonLabel>
+                            <IonLabel className='heavy' style={{color: filterType === 'Wallet' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24}}>Wallet</IonLabel>
                         </IonSegmentButton>
                 </IonSegment>
             </div> 
