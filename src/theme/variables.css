@@ -261,8 +261,8 @@ ion-segment-button.md::part(native) {
 
 .disco3-avatar {
   --border-radius: 18px;
-  width: 54px; /* Set your desired width */
-  height: 54px; /* Set your desired height */
+  width: 50px; /* Set your desired width */
+  height: 50px; /* Set your desired height */
 }
 
 /* iOS styles */
