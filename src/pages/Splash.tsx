@@ -6,6 +6,7 @@ const Splash: React.FC = () => {
     return (
         <TribePage page='splash'>
             <TribeHeader />
+            <div><span>hi</span></div>
         </TribePage>
     );
 };
