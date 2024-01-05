@@ -105,7 +105,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                             {error && <IonBadge color='danger'>{error}</IonBadge>}
                         </>
                     ) : (
-                        <span></span>
+                        <span aria-disabled="true"></span>
                     )}
                 </IonTitle>
             ), [refresh, me, walletAddress, user, ready])}
