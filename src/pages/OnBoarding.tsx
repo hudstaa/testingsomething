@@ -91,7 +91,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             </> : <IonSpinner name="crescent" />}
             <br />
             <IonLabel color='tribe'>
-                {!ready && <>connecting to privy</>}
+                {!ready && <>connecting</>}
                 {me === null && ready && user !== null && <>initializing <br />
 
 
