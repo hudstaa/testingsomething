@@ -41,7 +41,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         }}>
             {!isMe && (
                 <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -2, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias address={message.author} />
+                    <MemberAlias color={'dark'}address={message.author} />
                 </div>
             )}
         </div>
