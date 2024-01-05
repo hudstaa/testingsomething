@@ -27,7 +27,8 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
 
     const imageStyle: React.CSSProperties = {
         maxWidth: '100%', // Image can fill the width of the chat container
-        height: '200px', // Keep image aspect ratio
+        height: '200px',
+        minWidth: '20px', // Keep image aspect ratio
         // Additional styles as needed
     };
 
@@ -64,7 +65,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             !isMe&&reply(message.id);
         }} style={{ 
             marginBottom: isMe ? 0 : 12, 
-            paddingLeft: isMe ? 0 : 4, 
+            paddingLeft: isMe ? 0 : 0, 
             overflowWrap: 'break-word',
             display: 'flex', 
             flexDirection: 'column', 
@@ -93,15 +94,19 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         <div style={{
             display: 'flex',
             top: 0,
+            minWidth: '28px',
+            width: '28px',
+            height: '28px',
             flexDirection: 'column', // This will align the items horizontally
             fontSize: '12px',
+            marginRight: 4,
+            marginLeft: 4,
             overflowWrap: 'break-word',
         }}>
             {!isMe && (
                 <ChatMemberPfp
                     size="smol"
                     address={message.author}
-                    style={{ marginLeft: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
                 />
             )}
         </div>
