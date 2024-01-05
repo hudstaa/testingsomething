@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge className='light' style={{paddingLeft: 0, fontSize: '.7rem', opacity: 0.95, fontWeight: 300, paddingTop: '4.5px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge className='light' style={{paddingLeft: 0, fontSize: '.7rem', opacity: 0.8, fontWeight: 300, paddingTop: '4.5px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
