@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge className='regular' style={{paddingLeft: 0, fontSize: '.7rem', opacity: 0.6, fontWeight: 500, paddingTop: '3px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge className='regular' style={{paddingLeft: 0, fontSize: '.7rem', opacity: 0.6, fontWeight: 500, paddingTop: '5px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
@@ -104,7 +104,7 @@ const Discover: React.FC = () => {
               {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
                 const member = getFriend(channel.address);
                 return <IonItem style={{marginLeft: -10, paddingBottom: 4}} lines="none" routerLink={'/member/' + member?.address} >
-                  <IonAvatar style={{height: 54}}>
+                  <IonAvatar style={{height: 50}}>
                     <IonImg class="disco3-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
