@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge className='medium' style={{paddingLeft: 0, fontSize: '.65rem', opacity: 0.6, fontWeight: 500, paddingTop: '6px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge className='medium' style={{paddingLeft: 0, fontSize: '.65rem', opacity: 0.6, fontWeight: 500, paddingTop: '4px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
@@ -111,7 +111,7 @@ const Discover: React.FC = () => {
                     <IonBadge style={{paddingLeft: 6, marginBottom: -8, paddingTop: 0, paddingBottom: 0, fontSize: 16}} color='transparent' >
                       <div style={{display: 'flex', flexDirection: 'column'}}>
                         <span style={{textAlign: 'left', fontSize: '1rem', paddingTop: 3, letterSpacing: '-0.0135em'}}className="semi">{member?.twitterName} </span>
-                        <span className='semi' style={{opacity: 0.35, fontSize: '.75rem', fontWeight: 500, paddingTop: 6}}>{member?.bio}</span>
+                        <span className='semi' style={{opacity: 0.35, fontSize: '.75rem', fontWeight: 500, paddingTop: 4}}>{member?.bio}</span>
                       </div>
                       <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div> {/* lets change to member count instead of price here*/}
                     </IonBadge>
