@@ -93,13 +93,13 @@ const Room: React.FC = () => {
 
                         goBack()
                     }}>
-                        <IonIcon icon={chevronBack} />
+                        <IonIcon icon={chevronBack} color='dark' />
                         <IonAvatar  style={{justifyContent: 'center'}} >
                             <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
                         </IonAvatar>
                         <IonGrid>
                             <IonRow>
-                                {(channelOwner?.twitterName) || address}
+                                <IonText color={'dark'}>{(channelOwner?.twitterName) || address}</IonText> 
                             </IonRow>
                             <IonRow>
                                 {info ? <IonText color='medium'>
