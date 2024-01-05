@@ -119,7 +119,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
     }, [address]);
 
     return (
-        <div style={{ paddingTop: '5px', paddingBottom: '5px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <div style={{ paddingTop: '7px', paddingBottom: '14px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
             <IonButtons slot='start'>
                 <MemberPfpImg address={address} size='double-smol' />
             </IonButtons>
