@@ -110,8 +110,8 @@ const Discover: React.FC = () => {
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
                     <IonBadge style={{paddingLeft: 6, marginBottom: -6, paddingTop: 0, paddingBottom: 0, fontSize: 16}} color='transparent' >
                       <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <span style={{textAlign: 'left', fontSize: '.95rem', paddingTop: 1, letterSpacing: '-0.0135em'}}className="medium">{member?.twitterName} </span>
-                        <span className='medium' style={{opacity: 0.35, fontSize: '.9rem', fontWeight: 500, paddingTop: 4}}>{member?.bio}</span>
+                        <span style={{textAlign: 'left', fontSize: '.95rem', paddingTop: 4, letterSpacing: '-0.0135em'}}className="medium">{member?.twitterName} </span>
+                        <span className='medium' style={{opacity: 0.35, fontSize: '.9rem', fontWeight: 500, paddingTop: 3}}>{member?.bio}</span>
                       </div>
                       <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div> {/* lets change to member count instead of price here*/}
                     </IonBadge>
