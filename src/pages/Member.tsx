@@ -160,9 +160,9 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 <IonRow>
                                     <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
                                         {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
-                                            <MemberBadge address={holder} />
+                                            <MemberBadge  color='transparent' address={holder} />
                                             <IonButtons slot='end'>
-                                                <IonChip>
+                                                <IonChip color='transparent'>
                                                     <IonAvatar>
                                                         <IonImg src='/favicon.png' />
                                                     </IonAvatar>
