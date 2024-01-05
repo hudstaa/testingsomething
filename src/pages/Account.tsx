@@ -46,7 +46,7 @@ const Account: React.FC = () => {
         const coll = collection(db, "member");
         const q = query(coll, where("referrer", "==", me!.twitterUsername));
         getCountFromServer(q).then((snap) => {
-                setCount(snap.data().count);
+            setCount(snap.data().count);
         })
     }, [me]);
     useEffect(() => {
@@ -171,7 +171,7 @@ const Account: React.FC = () => {
                                                 </IonText>
                                                 <IonCardTitle>
                                                     <IonText color='tribe'>
-                                                        {count === null ? <IonSpinner name='dots' /> : count }
+                                                        {count === null ? <IonSpinner name='dots' /> : count}
                                                     </IonText>
                                                 </IonCardTitle>
                                             </IonBadge>
@@ -224,7 +224,7 @@ const Account: React.FC = () => {
                                     {user ? <IonRow>
                                         {user && typeof (user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address === 'undefined' ? <IonButton fill='clear' onClick={linkWallet}>
                                             Link Browser wallet
-                                        </IonButton> : <IonChip color='medium'>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
+                                        </IonButton> : <IonChip color='tribe'>{(user.linkedAccounts.find((x: any) => x.connectorType == 'injected') as any)?.address}</IonChip>}
                                         {user && typeof user.discord?.username === 'undefined' ? <IonButton fill='clear' onClick={linkDiscord}>
                                             Link Discord
                                         </IonButton> : <IonChip color='tertiary'>
