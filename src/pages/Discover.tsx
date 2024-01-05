@@ -110,7 +110,7 @@ const Discover: React.FC = () => {
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
                     <IonBadge style={{paddingLeft: 0, marginBottom: -6,fontSize: 16}} color='transparent' >
                       <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <span style={{textAlign: 'left'}}className="semi">{member?.twitterName} </span>
+                        <span style={{textAlign: 'left'}}className="medium">{member?.twitterName} </span>
                         <span className='light' style={{opacity: 0.65, fontSize: '.75rem', paddingTop: 4}}>{member?.bio}</span>
                       </div>
                       <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div>
