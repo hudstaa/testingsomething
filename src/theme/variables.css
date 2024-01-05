@@ -670,16 +670,18 @@ ion-footer ion-toolbar {
 }
 
 .searchbar-search-icon.sc-ion-searchbar-ios {
-  inset-inline-start: 16px;
+  inset-inline-start: 10px;
   width: 16px;
   height: 40px;
+  
 }
 
 .searchbar-left-aligned.sc-ion-searchbar-ios-h .searchbar-input.sc-ion-searchbar-ios {
-  padding-inline-start: 2.5rem;
   font-size: medium;
   font-family: 'SFR-Medium' !important;
 }
+
+
 
 ion-button.custombutton::part(native) {
   border-radius: 24px;
