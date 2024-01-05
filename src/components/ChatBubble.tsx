@@ -95,6 +95,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             display: 'flex',
             top: 0,
             minWidth: '28px',
+            paddingTop: 1,
             width: '28px',
             height: '28px',
             flexDirection: 'column', // This will align the items horizontally
