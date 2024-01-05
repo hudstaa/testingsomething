@@ -111,7 +111,7 @@ const Discover: React.FC = () => {
                     <IonBadge style={{paddingLeft: 6, marginBottom: -6, paddingTop: 0, paddingBottom: 0, fontSize: 16}} color='transparent' >
                       <div style={{display: 'flex', flexDirection: 'column'}}>
                         <span style={{textAlign: 'left', fontSize: '.95rem', paddingTop: 1}}className="bold">{member?.twitterName} </span>
-                        <span className='regular' style={{opacity: 0.65, letterSpacing: '0.0235em',fontSize: '.9rem', paddingTop: 5}}>{member?.bio}</span>
+                        <span className='regular' style={{opacity: 0.75, letterSpacing: '0.0235em',fontSize: '.9rem', fontWeight: 400, paddingTop: 5}}>{member?.bio}</span>
                       </div>
                       <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div>
                     </IonBadge>
