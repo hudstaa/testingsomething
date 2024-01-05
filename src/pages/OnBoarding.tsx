@@ -96,7 +96,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                                 {me === null && ready && user !== null && (
                                     <> 
                                         <br />
-                                        <span aria-disabled="true"></span>
+                                        <IonSpinner name="circular" />
                                         <br />
                                     </>
                                 )}
@@ -105,7 +105,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                             {error && <IonBadge color='danger'>{error}</IonBadge>}
                         </>
                     ) : (
-                        <IonSpinner name="circular" />
+                        <span aria-disabled="true"></span>
                     )}
                 </IonTitle>
             ), [refresh, me, walletAddress, user, ready])}
