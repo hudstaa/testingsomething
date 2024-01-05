@@ -99,7 +99,7 @@ const Room: React.FC = () => {
                         </IonAvatar>
                         <IonGrid>
                             <IonRow>
-                                <IonText color={'dark'}>{(channelOwner?.twitterName) || address}</IonText> 
+                                <IonText color={'dark'} className='semi'>{(channelOwner?.twitterName) || address}</IonText> 
                             </IonRow>
                             <IonRow>
                                 {info ? <IonText color='medium'>
