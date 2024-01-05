@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge style={{paddingLeft: 0}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge style={{paddingLeft: 0, fontSize: '.6rem', opacity: 0.8, paddingTop: 4}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
@@ -103,18 +103,18 @@ const Discover: React.FC = () => {
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
                 const member = getFriend(channel.address);
-                return <IonItem style={{marginLeft: -10, paddingBottom: 6}} lines="none" routerLink={'/member/' + member?.address} >
+                return <IonItem style={{marginLeft: -10, paddingBottom: 4}} lines="none" routerLink={'/member/' + member?.address} >
                   <IonAvatar style={{height: 48}}>
                     <IonImg class="disco2-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
-                    <IonBadge style={{paddingLeft: 0, fontSize: 16}} color='transparent' >
-                      <span className="semi">{member?.twitterName} </span>
+                    <IonBadge style={{paddingLeft: 0, marginBottom: -8,fontSize: 16}} color='transparent' >
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <span style={{textAlign: 'left'}}className="bold">{member?.twitterName} </span>
+                        <span className='semi' style={{opacity: 0.5, fontSize: '.8rem', paddingTop: 4}}>{member?.bio}</span>
+                      </div>
+                      <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div>
                     </IonBadge>
-                    <IonRow>
-                      {<BuyPriceBadge address={member?.address} />}
-
-                    </IonRow>
                   </IonGrid>
                   <IonButtons slot='end'>
                     {typeof channel.holders[me!.address] === 'undefined' && <IonButton style={{borderRadius: 12}} color='tribe' fill='solid'>
