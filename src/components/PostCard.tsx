@@ -165,7 +165,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                         if(content.startsWith("$")){
                             const info = sugar.known_pairs[content.toLowerCase().slice(1)];
                             if(!info){
-                                return <a {...attributes}>{content}</a>
+                                return <a className="medium"{...attributes}>{content}</a>
                             }
                             return <CashTag content={content}/>
                         }else if(content.startsWith("@")){
