@@ -83,7 +83,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                 </IonButton> : <>
                     <IonButton onClick={dismiss} fill='clear'>
                         {path === '/auth' ? 'open in tribe' : user.twitter?.name}
-                        {path !== '/auth' ? <IonIcon color="success" icon={checkmark} /> : <img style={{ borderRadius: 10 }} height={40} src={'/favicon.png'} />}
+                        {path !== '/auth' ? <IonIcon color="success" icon={checkmark} /> : <img style={{ borderRadius: 12 }} height={40} src={'/favicon.png'} />}
 
                     </IonButton>
                     <br />
