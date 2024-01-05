@@ -108,9 +108,9 @@ const Discover: React.FC = () => {
                     <IonImg class="disco3-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
-                    <IonBadge style={{paddingLeft: 6, marginBottom: -6, paddingTop: 6, paddingBottom: 6, fontSize: 16}} color='transparent' >
+                    <IonBadge style={{paddingLeft: 6, marginBottom: -6, paddingTop: 0, paddingBottom: 0, fontSize: 16}} color='transparent' >
                       <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <span style={{textAlign: 'left'}}className="medium">{member?.twitterName} </span>
+                        <span style={{textAlign: 'left', fontSize: '.95rem', paddingTop: 1}}className="medium">{member?.twitterName} </span>
                         <span className='light' style={{opacity: 0.65, fontSize: '.85rem', paddingTop: 5}}>{member?.bio}</span>
                       </div>
                       <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div>
