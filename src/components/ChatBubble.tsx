@@ -52,7 +52,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {
-                    <span style={{ paddingLeft:0 ,textAlign: 'right', paddingTop: 4,marginRight: -4, fontSize: '10px'}}>
+                    <span style={{ paddingLeft:24 ,textAlign: 'right', paddingTop: 4,marginRight: -4, fontSize: '10px'}}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
                     </span>
             }
