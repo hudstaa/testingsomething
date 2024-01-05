@@ -88,14 +88,14 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                     </IonButton>
                     <br />
                 </>}
-            </> : <IonSpinner name="crescent" />}
+            </> : <IonSpinner name="circular" />}
             <br />
             <IonLabel color='tribe'>
                 {!ready && <>connecting</>}
                 {me === null && ready && user !== null && <>initializing <br />
 
 
-                    <IonSpinner name='dots' />
+                    <IonSpinner name='circular' />
                     <br />
                 </>}
 
