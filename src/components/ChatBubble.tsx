@@ -149,7 +149,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     }
     const isMe = me === message.author;
 
-    const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px!important', font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+    const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px', paddingTop: 4, paddingBottom: 10, font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
         {message.content}
     </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
 
