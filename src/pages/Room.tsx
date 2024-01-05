@@ -111,7 +111,7 @@ const Room: React.FC = () => {
                 </IonButtons>
                 <IonButtons slot='end'>
                     {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='tribe' onClick={() => { setHighlight(address) }}>
-                        Boost
+                        Buy
                     </IonButton>}
                 </IonButtons>
             </IonToolbar>
