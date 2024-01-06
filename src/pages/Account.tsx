@@ -1,11 +1,11 @@
 import { Capacitor } from '@capacitor/core';
 import { PushNotificationSchema, PushNotifications } from '@capacitor/push-notifications';
-import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonIcon, IonItem, IonModal, IonRow, IonSpinner, IonText, IonToast } from '@ionic/react';
+import { IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonCol, IonGrid, IonHeader, IonIcon, IonItem, IonModal, IonRow, IonSpinner, IonText, IonToast, IonToolbar } from '@ionic/react';
 import { usePrivy } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
 import { addDoc, collection, deleteDoc, doc, getCountFromServer, getDoc, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, settings, settingsOutline } from 'ionicons/icons';
+import { closeOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, settings, settingsOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { getAddress } from 'viem';
@@ -114,6 +114,15 @@ const Account: React.FC = () => {
             </IonButton>}
             <Member profile={true} />
             <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
+                <IonHeader>
+                    <IonToolbar>
+                        <IonButtons slot='end'>
+                            <IonButton onClick={() => { setShow(false) }}>
+                                <IonIcon icon={closeOutline} color='danger' />
+                            </IonButton>
+                        </IonButtons>
+                    </IonToolbar>
+                </IonHeader>
                 <TribeContent >
                     <IonGrid>
                         <IonRow>
