@@ -19,7 +19,7 @@ import {
     IonPage,
     IonLabel,
     IonRow,
-    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave
+    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -76,7 +76,7 @@ const Posts: React.FC = () => {
             swiperRef.current.swiper.slideTo(newIndex, 0);
         }
     }, [postType]);
-    
+
     const handleSlideChange = () => {
         const swiperInstance = swiperRef.current?.swiper;
         if (swiperInstance) {
@@ -117,7 +117,7 @@ const Posts: React.FC = () => {
             setShouldFocusWriteMessage(false);
         }
     }, [shouldFocusWriteMessage]);
-    
+
     const addPost = (from: string, message: { content: string, media?: { src: string, type: string } }) => {
         const db = getFirestore(app);
         const newPost: any = {
@@ -144,93 +144,101 @@ const Posts: React.FC = () => {
     return (
 
         <>
-        <IonMenu type={menuType} contentId="main-content" >
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle></IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent className="ion-padding">
-                {/* Menu items here */}
-            </IonContent>
-        </IonMenu>
-        <IonPage id="main-content" ref={pageRef}>
-            <IonHeader style={{ padding: 0, marginBottom: '4.5vh'}}>
-                {!hideToolbar ? 
-                    <IonToolbar  color={bgColor} style={{height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute'}}>
-                        <div slot='start' style={{ width:'auto', height: 'auto' }}>
-                            <IonMenuToggle>
-                                <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0}} color='dark' fill='clear' size='small'>
-                                    <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width:  '1.5rem' }}/>
-                                </IonButton>
+            <IonMenu type={menuType} contentId="main-content" >
+                <IonList>
+                    <IonToolbar>
+                        <img src={'/icon.svg'} />
+                    </IonToolbar>
+                    <IonMenuToggle>
+                        <IonItem routerLink={'/member/' + me.address}>
+                            {me.twitterName}
+                        </IonItem>
+                        <IonItem routerLink={'/channel/'}>
+                            chat
+                        </IonItem>
+                        <IonItem routerLink={'/member/'}>
+                            discover
+                        </IonItem>
+                    </IonMenuToggle>
+                </IonList>
+            </IonMenu>
+            <IonPage id="main-content" ref={pageRef}>
+                <IonHeader style={{ padding: 0, marginBottom: '4.5vh' }}>
+                    {!hideToolbar ?
+                        <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
+                            <div slot='start' style={{ width: 'auto', height: 'auto' }}>
+                                <IonMenuToggle>
+                                    <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0 }} color='dark' fill='clear' size='small'>
+                                        <IonIcon icon={'/icons/hamburger.svg'} style={{ marginLeft: -6, height: '1.5rem', width: '1.5rem' }} />
+                                    </IonButton>
                                 </IonMenuToggle>
-                            <IonTitle className="bold" style={{ fontSize: '1.2rem', width:'50%', textAlign: 'left', padding: 8, paddingLeft:44, paddingTop: 8}}>Tribe</IonTitle>
-                        </div>
-                        <IonButtons slot='end' color='transparent' style={{ width: 'auto'}}>
-                            <IonSegment
-                                onIonChange={(e) => {
-                                    const newValue = e.detail.value;
-                                    if (newValue === 'top' || newValue === 'recent') {
-                                        handleSegmentChange(newValue);
-                                    }
-                                }}
-                                value={postType}
-                                color='paper'
-                                slot='end'
-                                className='heavy my-custom-segment-class1'
-                                style={{ fontSize: 24, width: '100%' }} // Ensure full width
-                            >
-                                <IonSegmentButton className="my-custom-segment-class1" value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
-                                    <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>Top</IonLabel>
-                                </IonSegmentButton>
-                                <IonSegmentButton className="my-custom-segment-class1" value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
-                                    <IonLabel className='heavy' style={{fontSize: 16, paddingBottom: 0, paddingTop: 1}}>New</IonLabel>
-                                </IonSegmentButton>
-                            </IonSegment>
-                        </IonButtons>
-                    </IonToolbar> 
-                : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
-            </IonHeader>
-
-            < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
-                const isCloseToTop = e.detail.scrollTop < 100;
-                const isCloseToBottom =
-                    e.detail.scrollTop + e.target.clientHeight >=
-                    e.target.scrollEl.height - 500;
-                if (isCloseToTop) {
-                    !hideToolbar && setHideToolbar(false)
-                    return;
-                }
-                if (isCloseToBottom) {
-                    return;
-                }
-                console.log(e.detail.velocityY)
-                if (e.detail.velocityY < -0.5) {
-                    hideToolbar && setHideToolbar(false);
-                }
-                if (e.detail.velocityY > 0.5) {
-                    !hideToolbar && setHideToolbar(true)
-                }
-            }} scrollEvents>
-                <IonHeader>
-                    <IonToolbar className='transparent' style={{height: 0}}/>
+                                <IonTitle className="bold" style={{ fontSize: '1.2rem', width: '50%', textAlign: 'left', padding: 8, paddingLeft: 44, paddingTop: 8 }}>Tribe</IonTitle>
+                            </div>
+                            <IonButtons slot='end' color='transparent' style={{ width: 'auto' }}>
+                                <IonSegment
+                                    onIonChange={(e) => {
+                                        const newValue = e.detail.value;
+                                        if (newValue === 'top' || newValue === 'recent') {
+                                            handleSegmentChange(newValue);
+                                        }
+                                    }}
+                                    value={postType}
+                                    color='paper'
+                                    slot='end'
+                                    className='heavy my-custom-segment-class1'
+                                    style={{ fontSize: 24, width: '100%' }} // Ensure full width
+                                >
+                                    <IonSegmentButton className="my-custom-segment-class1" value={'top'} color={postType === 'top' ? 'medium' : 'paper'}>
+                                        <IonLabel className='heavy' style={{ fontSize: 16, paddingBottom: 0, paddingTop: 1 }}>Top</IonLabel>
+                                    </IonSegmentButton>
+                                    <IonSegmentButton className="my-custom-segment-class1" value={'recent'} color={postType === 'recent' ? 'medium' : 'paper'}>
+                                        <IonLabel className='heavy' style={{ fontSize: 16, paddingBottom: 0, paddingTop: 1 }}>New</IonLabel>
+                                    </IonSegmentButton>
+                                </IonSegment>
+                            </IonButtons>
+                        </IonToolbar>
+                        : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
                 </IonHeader>
-                <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
-                    <SwiperSlide>
-                        <PostList type='top' max={10} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <PostList type='recent' max={10} />
-                    </SwiperSlide>
-                </Swiper>
-                <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    {me && <div onClick={() =>  {
-                        open((message) => addPost(me.address, message as any), me.address, 'Write a post');
-                    }} className="bold" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 7, height: '56px', width: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '44px',  }}>
-                        +
-                    </div>}
-                </IonFab>
-            </IonContent >
+
+                < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
+                    const isCloseToTop = e.detail.scrollTop < 100;
+                    const isCloseToBottom =
+                        e.detail.scrollTop + e.target.clientHeight >=
+                        e.target.scrollEl.height - 500;
+                    if (isCloseToTop) {
+                        !hideToolbar && setHideToolbar(false)
+                        return;
+                    }
+                    if (isCloseToBottom) {
+                        return;
+                    }
+                    console.log(e.detail.velocityY)
+                    if (e.detail.velocityY < -0.5) {
+                        hideToolbar && setHideToolbar(false);
+                    }
+                    if (e.detail.velocityY > 0.5) {
+                        !hideToolbar && setHideToolbar(true)
+                    }
+                }} scrollEvents>
+                    <IonHeader>
+                        <IonToolbar className='transparent' style={{ height: 0 }} />
+                    </IonHeader>
+                    <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
+                        <SwiperSlide>
+                            <PostList type='top' max={10} />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <PostList type='recent' max={10} />
+                        </SwiperSlide>
+                    </Swiper>
+                    <IonFab slot="fixed" vertical="bottom" horizontal="end">
+                        {me && <div onClick={() => {
+                            open((message) => addPost(me.address, message as any), me.address, 'Write a post');
+                        }} className="bold" style={{ cursor: 'pointer', borderRadius: '1000px', color: 'white', background: '#FF6000', padding: '0px', paddingBottom: 7, height: '56px', width: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '44px', }}>
+                            +
+                        </div>}
+                    </IonFab>
+                </IonContent >
             <IonFooter color='black'>
             <div style={{ marginBottom: -2, paddingBottom: 2, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '28px', borderTopRightRadius: '28px', paddingLeft: 8, paddingRight: 8, paddingTop: 6}}> 
                 <IonSegment
