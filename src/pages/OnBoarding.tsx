@@ -91,12 +91,12 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                                 </>
                             )}
                             <br />
-                            <IonLabel color='tribe'>
+                            <IonLabel color='dark'>
                                 {!ready && <></>}
                                 {me === null && ready && user !== null && (
                                     <> 
                                         <br />
-                                        <IonSpinner name="circular" />
+                                        <IonSpinner name="crescent" />
                                         <br />
                                     </>
                                 )}
