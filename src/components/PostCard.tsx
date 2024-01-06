@@ -13,6 +13,7 @@ import { useMember } from "../hooks/useMember"
 import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
+import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const { setTradeUri } = useNotifications();
@@ -25,13 +26,14 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
             </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-
-            <IonItem lines='none' href={'javascript:void(0)'} onClick={() => {
+            <IonButton fill='clear' expand="full" onClick={() => {
                 dismiss()
                 push({ search: new URLSearchParams(hit.swap).toString(), pathname: '/swap' });
             }}>
-                Trade
-            </IonItem>
+                Swap for mog {content}
+            </IonButton>
+            <AdvancedRealTimeChart details={true} hide_top_toolbar hide_side_toolbar allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>
+
         </IonContent></>;
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
     const emoji = hit && hit.emoji;
@@ -209,7 +211,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             {media && (
                 <div style={{ marginTop: 8, marginBottom: -4, marginRight: 0, overflow: 'hidden', borderRadius: '12px' }}>
                     {media.type.includes("image") ?
-                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: 1000, borderRadius: 12 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
+                        <img style={{ border: '1px solid var(--ion-color-medium-shade)', minWidth: '100%', maxHeight: '100%', borderRadius: 12 }} src={media.src} /> : <video preload="metadata" autoPlay={showComments} style={{ border: '1px solid var(--ion-color-light-tint)', minHeight: '100%', width: '100%', borderRadius: 10 }} controls src={media.src + '#t=0.6'} onPlay={(e: any) => { e.target.currentTime = 0 }} />}
                 </div>
             )}
         </IonCardContent>

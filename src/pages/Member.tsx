@@ -73,7 +73,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 color={bgColor}
                 title=""
                 sticky
-                showBackButton={true}
+                showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
                 <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
@@ -151,7 +151,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         segment === 'posts' && <IonGrid style={{ padding: 0 }}>
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
-                                    {member!==null&&member.address&&<PostList type={'top'} max={10} from={member!.address} />}
+                                    {member !== null && member.address && <PostList type={'top'} max={10} from={member!.address} />}
                                 </IonCol></IonRow></IonGrid>
                     }
                     {

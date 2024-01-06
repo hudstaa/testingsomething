@@ -1003,3 +1003,6 @@ a {
   font-family: 'TribeMed' !important;
   text-decoration: none !important;
 }
+div.tradingview-widget-copyright{
+  position: fixed!important;
+}
