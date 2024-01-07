@@ -47,7 +47,7 @@ export const FriendTechPortfolioChip: React.FC<{ address?: string, held: number,
                     {held}
                 </IonText>
                 <IonAvatar style={{ marginLeft: 5 }}>
-                    <IonImg src={'/public/icons/ft.png'} />
+                    <IonImg src={'/icons/ft.png'} />
                 </IonAvatar>
 
             </IonChip>
