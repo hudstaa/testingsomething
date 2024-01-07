@@ -70,6 +70,7 @@ div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
 
 * {
   font-family: 'SFR-Regular', sans-serif !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 .header {
