@@ -34,8 +34,8 @@ const Account: React.FC = () => {
 
     const searchParams = useMemo(() => new URLSearchParams(search), [search]);
     const safeAreaStyle = {
-        top: `calc(env(safe-area-inset-top) + 5px)`, // Adjust the top position based on safe area
-        right: `calc(env(safe-area-inset-right) + 5px)`, // Adjust the right position based on safe area
+        top: `calc(env(safe-area-inset-top))`, // Adjust the top position based on safe area
+        right: `calc(env(safe-area-inset-right))`, // Adjust the right position based on safe area
         position: 'absolute',
         zIndex: 100000000
     };
