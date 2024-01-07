@@ -163,13 +163,12 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                             <MemberBadge  color='transparent' address={holder} />
                                             <IonButtons slot='end'>
                                                 <IonChip color='transparent'>
-                                                    <IonAvatar style={{ borderRadius: '20%' /* or any other value */ }}>
-                                                        <IonImg  src='/favicon.png' />
-                                                    </IonAvatar>
-                                                    <IonText className='bold' style={{ fontSize: '1rem'}}>
+                                                    <IonText className='bold' style={{ fontSize: '1.25rem'}}>
                                                         {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
                                                     </IonText>
-
+                                                    <IonAvatar style={{ marginLeft: 5 }}>
+                                                        <IonImg  src='/icons/bolt.svg' />
+                                                    </IonAvatar>
                                                 </IonChip>
 
                                             </IonButtons>
