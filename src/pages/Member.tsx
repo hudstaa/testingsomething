@@ -73,7 +73,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 color={bgColor}
                 title=""
                 sticky
-                showBackButton={true}
+                showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
                 <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
