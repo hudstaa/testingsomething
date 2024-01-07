@@ -7,6 +7,9 @@ import { timeAgo } from "./TradeItem";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const bgColor = darkmode ? 'white' : 'black';
 
     const messageContainerStyle: React.CSSProperties = {
         display: 'flex',
@@ -41,7 +44,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         }}>
             {!isMe && (
                 <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -2, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias color={'dark'}address={message.author} />
+                    <MemberAlias color={bgColor}address={message.author} />
                 </div>
             )}
         </div>
