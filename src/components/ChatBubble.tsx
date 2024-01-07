@@ -43,7 +43,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {!isMe && (
-                <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -2, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -4, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
                     <MemberAlias color={bgColor}address={message.author} />
                 </div>
             )}
