@@ -30,7 +30,7 @@ export const FriendPortfolioChip: React.FC<{ address?: string }> = ({ address })
     </IonButton> : <IonChip><IonSpinner /></IonChip>
 }
 export const FriendTechPortfolioChip: React.FC<{ address?: string, held: number, name: string, pfp: string }> = ({ name, pfp, held }) => {
-    return <IonItem style={{ '--padding-start': '0', '--inner-padding-end': '0','--border-color': 'var(--ion-color-vote)' }} lines="full">
+    return <IonItem style={{ '--padding-start': '0', '--inner-padding-end': '0','--border-color': 'var(--ion-color-light)' }} lines="full">
         <IonChip color={'transparent'}>
 
             <IonAvatar style={{width: 36, height: 36}}>
