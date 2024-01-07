@@ -159,7 +159,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                             <IonGrid style={{padding: 0}}>
                                 <IonRow>
                                     <IonCol style={{padding: 0}} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem  style={{ '--padding-start': '4px', paddingTop: 0, paddingBottom: 0, '--inner-padding-end': '0','--border-color': 'var(--ion-color-light)' }} key={i} lines='full'>
+                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem  style={{ '--padding-start': '2px', paddingTop: 0, paddingBottom: 0, '--inner-padding-end': '0','--border-color': 'var(--ion-color-light)' }} key={i} lines='full'>
                                             <MemberBadge  color='transparent' address={holder} />
                                             <IonButtons slot='end'>
                                                 <IonChip color='transparent'>
