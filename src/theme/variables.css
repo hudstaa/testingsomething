@@ -778,7 +778,7 @@ ion-segment-button.ios .customButton {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #fff711;
+  --ion-color-tribe-tint: #00bafa;
 }
 
 /* Color Usage Example */
@@ -798,7 +798,7 @@ ion-segment-button.ios .customButton {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #fd2200;
+  --ion-color-tribe-tint: #00bafa;
 }
 
 /* Color Usage Example */
@@ -809,6 +809,15 @@ ion-segment-button.ios .customButton {
   --ion-color-contrast-rgb: var(--ion-color-tribel-contrast-rgb);
   --ion-color-shade: var(--ion-color-tribel-shade);
   --ion-color-tint: var(--ion-color-tribel-tint);
+}
+
+.ion-color-tribelue {
+  --ion-color-base: var(--ion-color-tribelue);
+  --ion-color-base-rgb: var(--ion-color-tribelue-rgb);
+  --ion-color-contrast: var(--ion-color-tribelue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-tribelue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-tribelue-shade);
+  --ion-color-tint: var(--ion-color-tribelue-tint);
 }
 
 ion-button,
@@ -834,6 +843,16 @@ ion-icon {
   --ion-color-tribel-contrast-rgb: 255, 255, 255;
   --ion-color-tribel-shade: #dd5700;
   --ion-color-tribel-tint: #fd2200;
+}
+
+/* New tribel Color */
+:root {
+  --ion-color-tribelue: #00bafa;
+  --ion-color-tribelue-rgb: 255, 87, 0;
+  --ion-color-tribtribelueel-contrast: #ffffff;
+  --ion-color-tribelue-contrast-rgb: 255, 255, 255;
+  --ion-color-tribelue-shade: #dd5700;
+  --ion-color-tribelue-tint: #fd2200;
 }
 
 /* Light Mode: Paper Color */

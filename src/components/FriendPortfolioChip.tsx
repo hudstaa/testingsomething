@@ -43,7 +43,7 @@ export const FriendTechPortfolioChip: React.FC<{ address?: string, held: number,
 
         <IonButtons slot='end'>
             <IonChip color={'transparent'}>
-                <IonText className='bold' style={{ fontSize: '1.25rem'}}>
+                <IonText className='heavy' color="tribelue" style={{ fontSize: '1.25rem'}}>
                     {held}
                 </IonText>
                 <IonAvatar style={{ marginLeft: 5 }}>
