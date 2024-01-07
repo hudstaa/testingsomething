@@ -88,7 +88,7 @@ const Chat: React.FC = () => {
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
                             <IonCard style={{ margin: 0, borderRadius: 0 }}>
                                 {useMemo(() => members && members !== null ? members.map(({ address, }, i) =>
-                                    <IonItem routerDirection='forward' lines='none' routerLink={'/channel/' + address} key={address} >
+                                    <IonItem routerDirection='forward' lines='full' style={{'--border-color': 'var(--ion-color-light)' }} routerLink={'/channel/' + address} key={address} >
                                         <LastMessage address={address} />
                                     </IonItem>) : <><br /><br /><br /><IonTitle>
                                         <IonSpinner name='crescent' /></IonTitle></>, [members])}
@@ -128,10 +128,10 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
                     <MemberAlias clickable={false} address={address} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <span style={{ fontSize: '16px', opacity: 0.5 }}>
+                    <span style={{ fontSize: '.95rem', opacity: 0.5 }}>
                         <MemberAlias clickable={false} address={msg?.author as any} />
                     </span>
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '16px', opacity: 0.5, marginLeft: '-3.5px' }}>
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '.95rem', opacity: 0.5, marginLeft: '-3.5px' }}>
                         : {msg?.content?.slice(0, 20)}
                     </span>
                 </div>
