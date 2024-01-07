@@ -22,7 +22,7 @@ export const WriteMessageModalProvider: React.FC = () => {
     }, [isOpen])
     
     return <>
-        <IonModal presentingElement={presentingElement as any} style={{ height: '90vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presentingElement as any} style={{ height: '100vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
             <IonHeader>
