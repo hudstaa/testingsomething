@@ -158,15 +158,15 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         segment === 'tribe' && typeof boosters !== 'undefined' && boosters !== null && <>
                             <IonGrid>
                                 <IonRow>
-                                    <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
+                                    <IonCol style={{padding: 0}} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem style={{ '--padding-start': '0', '--inner-padding-end': '0' }} key={i} lines='none'>
                                             <MemberBadge  color='transparent' address={holder} />
                                             <IonButtons slot='end'>
                                                 <IonChip color='transparent'>
-                                                    <IonAvatar>
-                                                        <IonImg src='/favicon.png' />
+                                                    <IonAvatar style={{ borderRadius: '20%' /* or any other value */ }}>
+                                                        <IonImg  src='/favicon.png' />
                                                     </IonAvatar>
-                                                    <IonText>
+                                                    <IonText className='bold' style={{ fontSize: '1rem'}}>
                                                         {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
                                                     </IonText>
 
