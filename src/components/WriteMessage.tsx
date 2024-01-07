@@ -77,7 +77,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   return (
     <IonToolbar color={bgColor} style={{ padding: 4, paddingBottom: 36, paddingLeft: 8, paddingRight: 8, border: 0 }} >
       <div style={{display: 'flex', width: '100%'}}>
-      <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '32px', maxHeight: 52, width: '100%',display: 'flex'}}> 
+      <div style={{backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '32px', width: '100%',display: 'flex'}}> 
       {showMediaButton && (
       <IonButtons slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
@@ -100,7 +100,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
         autoFocus={isModal || focused}
         id={isModal ? 'modal-write-message' : undefined}
         ref={textRef}
-        autoGrow
+        autoGrow={true}
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"

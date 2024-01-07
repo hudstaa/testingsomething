@@ -19,10 +19,10 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
         overflowWrap: 'break-word',
-        paddingLeft: '10px',
+        paddingLeft: '8px',
         paddingRight: '10px',
         paddingTop: '3px',
-        wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
+        wordWrap: 'break-word', // Add this line
     };
 
     const imageStyle: React.CSSProperties = {
@@ -53,7 +53,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {
-                    <span style={{ paddingLeft:24 ,textAlign: 'right', paddingTop: 4,marginRight: -4, fontSize: '10px'}}>
+                    <span style={{ paddingLeft:24 ,textAlign: 'right', paddingTop: 0,marginRight: -4, marginBottom: -2, fontSize: '10px'}}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
                     </span>
             }
@@ -83,7 +83,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     );
     const replyButton = !isMe && (
         <button
-            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 10  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 8  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             color='primary'
 
         >
