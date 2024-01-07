@@ -23,7 +23,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
         maxWidth: '100%', // Maximum width for text bubble
         overflowWrap: 'break-word',
         paddingLeft: '8px',
-        paddingRight: '10px',
+        paddingRight: '8px',
         paddingTop: '3px',
         wordWrap: 'break-word', // Add this line
     };
@@ -56,7 +56,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {
-                    <span style={{ paddingLeft:32 ,textAlign: 'right', paddingTop: 0,marginRight: -4, marginBottom: -1, fontSize: '10px'}}>
+                    <span style={{ paddingLeft:32 ,textAlign: 'right', paddingTop: 0,marginRight: -2, marginBottom: -1, fontSize: '10px'}}>
                         {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
                     </span>
             }
