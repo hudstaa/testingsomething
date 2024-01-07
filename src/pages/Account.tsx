@@ -110,7 +110,7 @@ const Account: React.FC = () => {
     return (
         <>
             {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 5, top: 5 }} onClick={() => { setShow(true) }}>
-                <IonIcon size={'large'} style={{top: 0}}icon={settingsOutline} />
+                <IonIcon size={'medium'} style={{top: 0}} color='dark' icon={settingsOutline} />
             </IonButton>}
             <Member profile={true} />
             <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
