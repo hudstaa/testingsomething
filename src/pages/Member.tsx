@@ -92,11 +92,11 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "5px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "3px solid #F45000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-                                <span className="heavy" style={{ fontSize: 14.5 }}>Boost</span>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                                <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5 }}>
@@ -156,20 +156,19 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     }
                     {
                         segment === 'tribe' && typeof boosters !== 'undefined' && boosters !== null && <>
-                            <IonGrid>
+                            <IonGrid style={{padding: 0}}>
                                 <IonRow>
-                                    <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem key={i} lines='none'>
-                                            <MemberBadge address={holder} />
+                                    <IonCol style={{padding: 0}} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
+                                        {(boosters as any)[0]?.map((holder: any, i: number) => <IonItem  style={{ '--padding-start': '2px', paddingTop: 0, paddingBottom: 0, '--inner-padding-end': '0','--border-color': 'var(--ion-color-light)' }} key={i} lines='full'>
+                                            <MemberBadge  color='transparent' address={holder} />
                                             <IonButtons slot='end'>
-                                                <IonChip>
-                                                    <IonAvatar>
-                                                        <IonImg src='/favicon.png' />
-                                                    </IonAvatar>
-                                                    <IonText>
+                                                <IonChip color='transparent'>
+                                                    <IonText className='heavy' color="tribe" style={{ fontSize: '1.25rem'}}>
                                                         {(boosters as any)[1] && formatUnits((boosters as any)[1][i], 0)}
                                                     </IonText>
-
+                                                    <IonAvatar style={{ marginLeft: 5 }}>
+                                                        <IonImg  src='/icons/bolt.svg' />
+                                                    </IonAvatar>
                                                 </IonChip>
 
                                             </IonButtons>

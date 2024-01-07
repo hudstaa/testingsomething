@@ -7,6 +7,9 @@ import { timeAgo } from "./TradeItem";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const bgColor = darkmode ? 'white' : 'black';
 
     const messageContainerStyle: React.CSSProperties = {
         display: 'flex',
@@ -19,76 +22,103 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
     const textBubbleStyle: React.CSSProperties = {
         maxWidth: '100%', // Maximum width for text bubble
         overflowWrap: 'break-word',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-        wordBreak: 'break-all' as 'break-all', // Use 'break-all' instead of 'break-word'
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        paddingTop: '3px',
+        wordWrap: 'break-word', // Add this line
     };
 
     const imageStyle: React.CSSProperties = {
         maxWidth: '100%', // Image can fill the width of the chat container
-        height: '200px', // Keep image aspect ratio
+        height: '200px',
+        minWidth: '20px', // Keep image aspect ratio
         // Additional styles as needed
     };
 
-    
-const contentBubble = (
-    <div onClick={()=>{
-        !isMe&&reply(message.id);
-    }} style={{ 
-        marginBottom: isMe ? 0 : -30, 
-        paddingLeft: isMe ? 0 : 40, 
-        overflowWrap: 'break-word',
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: isMe ? 'flex-end' : 'flex-start' 
-    }}>
-        {message.media && (
-            <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
-        )}
-        <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
-            {message.content}
+    const alias = (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column', // This will align the items horizontally
+            fontSize: '13px',
+            overflowWrap: 'break-word',
+        }}>
+            {!isMe && (
+                <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -4, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                    <MemberAlias color={bgColor}address={message.author} />
+                </div>
+            )}
         </div>
-    </div>
-);
+    );    
+    const time = (
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column', // This will align the items horizontally
+            overflowWrap: 'break-word',
+        }}>
+            {
+                    <span style={{ paddingLeft:32 ,textAlign: 'right', paddingTop: 0,marginRight: -2, marginBottom: -1, fontSize: '10px'}}>
+                        {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
+                    </span>
+            }
+        </div>
+    );    
 
-
+    const contentBubble = (
+        <div onClick={()=>{
+            !isMe&&reply(message.id);
+        }} style={{ 
+            marginBottom: isMe ? 0 : 12, 
+            paddingLeft: isMe ? 0 : 0, 
+            overflowWrap: 'break-word',
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: isMe ? 'flex-end' : 'flex-start' 
+        }}>
+            {message.media && (
+                <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
+            )}
+            <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
+                {alias}
+                {message.content}
+                {time}
+            </div>
+        </div>
+    );
     const replyButton = !isMe && (
         <button
-            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 10  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 8  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             color='primary'
 
         >
             <IonIcon color='tertiary' icon={returnDownBack} />
         </button>
     );
-
-    const profileAndAlias = (
+    const profile = (
         <div style={{
             display: 'flex',
+            top: 0,
+            minWidth: '28px',
+            paddingTop: 1,
+            width: '28px',
+            height: '28px',
             flexDirection: 'column', // This will align the items horizontally
             fontSize: '12px',
+            marginRight: 4,
+            marginLeft: 4,
             overflowWrap: 'break-word',
         }}>
             {!isMe && (
                 <ChatMemberPfp
                     size="smol"
                     address={message.author}
-                    style={{ marginLeft: '5px', width: '20px', height: '20px' }} // Adjust sizes as needed
                 />
-            )}
-            {!isMe && (
-                <div style={{paddingLeft: 45, marginTop: 4, lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias address={message.author} />
-                    <span style={{ paddingLeft:0 }}>
-                        {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
-                    </span>
-                </div>
             )}
         </div>
     );
 
     const combinedBubble = (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+            {profile}
             {contentBubble}
             {/* {replyButton} */}
         </div>
@@ -108,13 +138,8 @@ const contentBubble = (
 
             {/* Render the message content */}
             <div style={messageContainerStyle}>
-                {contentBubble}
-                {/* {replyButton} */}
-
+                {isMe ? contentBubble : combinedBubble}
             </div>
-
-            {/* Render the profile picture and username under the message */}
-            {profileAndAlias}
         </div>
     );
 }
@@ -128,7 +153,7 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     }
     const isMe = me === message.author;
 
-    const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px!important', font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
+    const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px', paddingTop: 4, paddingBottom: 10, font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
         {message.content}
     </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
 

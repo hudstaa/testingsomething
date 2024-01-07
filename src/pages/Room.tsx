@@ -93,13 +93,13 @@ const Room: React.FC = () => {
 
                         goBack()
                     }}>
-                        <IonIcon icon={chevronBack} />
+                        <IonIcon icon={chevronBack} color='dark' />
                         <IonAvatar  style={{justifyContent: 'center'}} >
                             <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
                         </IonAvatar>
                         <IonGrid>
                             <IonRow>
-                                {(channelOwner?.twitterName) || address}
+                                <IonText color={'dark'} className='semi'>{(channelOwner?.twitterName) || address}</IonText> 
                             </IonRow>
                             <IonRow>
                                 {info ? <IonText color='medium'>
@@ -111,7 +111,7 @@ const Room: React.FC = () => {
                 </IonButtons>
                 <IonButtons slot='end'>
                     {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='tribe' onClick={() => { setHighlight(address) }}>
-                        Boost
+                        Buy
                     </IonButton>}
                 </IonButtons>
             </IonToolbar>

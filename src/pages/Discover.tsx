@@ -20,7 +20,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 
 export const BuyPriceBadge: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
-  return <IonBadge style={{paddingLeft: 0}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
+  return <IonBadge className='medium' style={{paddingLeft: 0, fontSize: '.65rem', opacity: 0.6, fontWeight: 500, paddingTop: '4px'}} color='transparent'>{formatEther(buyPrice)+'Ξ'}</IonBadge>
 }
 export const BuyPriceText: React.FC<{ address: string | undefined, style?: any, onClick?: () => void }> = ({ address, style, onClick }) => {
   const { buyPrice } = useBuyPass(address as Address, 1n);
@@ -66,7 +66,7 @@ const Discover: React.FC = () => {
     <TribePage page='discover'>
       <IonHeader style={{display: 'flex', flexDirection: 'column'}}>
         <IonToolbar color={'transparent'}>
-          <IonTitle className='bold' color={'dark'} style={{ fontSize: 18}}>
+          <IonTitle className='bold' color={'dark'} style={{ paddingTop: 12, fontSize: 18}}>
             Discover
           </IonTitle>
         </IonToolbar>
@@ -103,18 +103,18 @@ const Discover: React.FC = () => {
             <IonCol sizeMd='6' offsetMd='3' sizeXs='12' >
               {channels?.filter(x => x?.address !== '0x0000000000000000000000000000000000000000').map((channel, i) => {
                 const member = getFriend(channel.address);
-                return <IonItem style={{marginLeft: -10, paddingBottom: 6}} lines="none" routerLink={'/member/' + member?.address} >
-                  <IonAvatar style={{height: 48}}>
-                    <IonImg class="disco2-avatar"  src={member?.twitterPfp || personOutline} />
+                return <IonItem style={{marginLeft: -10, paddingBottom: 4}} lines="none" routerLink={'/member/' + member?.address} >
+                  <IonAvatar style={{height: 50}}>
+                    <IonImg class="disco3-avatar"  src={member?.twitterPfp || personOutline} />
                   </IonAvatar>
                   <IonGrid style={{paddingLeft: '1.5rem'}}>
-                    <IonBadge style={{paddingLeft: 0, fontSize: 16}} color='transparent' >
-                      <span className="semi">{member?.twitterName} </span>
+                    <IonBadge style={{paddingLeft: 6, marginBottom: -8, paddingTop: 0, paddingBottom: 0, fontSize: 16}} color='transparent' >
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <span style={{textAlign: 'left', fontSize: '1rem', paddingTop: 3, letterSpacing: '-0.0135em'}}className="semi">{member?.twitterName} </span>
+                        <span className='semi' style={{opacity: 0.45, fontSize: '.75rem', fontWeight: 500, paddingTop: 4}}>{member?.bio}</span>
+                      </div>
+                      <div style={{textAlign: 'left'}}>{<BuyPriceBadge address={member?.address} />}</div> {/* lets change to member count instead of price here*/}
                     </IonBadge>
-                    <IonRow>
-                      {<BuyPriceBadge address={member?.address} />}
-
-                    </IonRow>
                   </IonGrid>
                   <IonButtons slot='end'>
                     {typeof channel.holders[me!.address] === 'undefined' && <IonButton style={{borderRadius: 12}} color='tribe' fill='solid'>

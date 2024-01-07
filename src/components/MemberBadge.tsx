@@ -12,12 +12,12 @@ export const MemberBadge: React.FC<{ address: string, color?: string }> = ({ add
     const member = useMember(x => x.getFriend(address))
     return member && member !== null ? <IonChip onMouseDown={() => {
     }} color={color}>
-        <IonAvatar>
-            <IonImg onError={() => {
+        <IonAvatar style={{width: 36, height: 36}}>
+            <IonImg  style={{borderRadius: '14px'}} onError={() => {
 
             }} src={member?.twitterPfp || personOutline} />
         </IonAvatar>
-        <IonText>
+        <IonText className='semi' style={{ paddingLeft: '.5rem', fontSize: '1rem'}}>
             {member?.twitterName || address.slice(0, 4) + "..." + address.slice(38, 42)}
         </IonText>
     </IonChip> : <IonChip>

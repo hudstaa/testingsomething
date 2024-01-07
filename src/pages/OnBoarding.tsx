@@ -68,43 +68,48 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
 
     const navigate = useHistory();
     const path = location.pathname
-    return <IonContent>
-        {useMemo(() => <IonTitle className="ion-text-center">
-            {ready ? <>
-                {(user === null) ? <IonButton color='tribe' onClick={() => {
-                    if (isPlatform("capacitor")) {
-                        Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'fullscreen', windowName: 'auth' })
-                    } else {
-                        linkTwitter();
-                    }
-                }}>
-                    Connect to {isPlatform("capacitor") ? "tribe" : "privy"}
-
-                </IonButton> : <>
-                    <IonButton onClick={dismiss} fill='clear'>
-                        {path === '/auth' ? 'open in tribe' : user.twitter?.name}
-                        {path !== '/auth' ? <IonIcon color="success" icon={checkmark} /> : <img style={{ borderRadius: 10 }} height={40} src={'/favicon.png'} />}
-
-                    </IonButton>
-                    <br />
-                </>}
-            </> : <IonSpinner name="crescent" />}
-            <br />
-            <IonLabel color='tribe'>
-                {!ready && <>connecting to privy</>}
-                {me === null && ready && user !== null && <>initializing <br />
-
-
-                    <IonSpinner name='dots' />
-                    <br />
-                </>}
-
-            </IonLabel>
-            <br />
-            {error && <IonBadge color='danger'>{error}</IonBadge>}
-
-        </IonTitle>, [refresh, me, walletAddress, user, ready, refresh])}
-        <IonLoading isOpen={tribeLoading} />
-
-    </IonContent >
+    return (
+        <IonContent>
+            {useMemo(() => (
+                <IonTitle className="ion-text-center">
+                    {ready ? (
+                        <>
+                            {user === null ? (
+                                <IonButton color='tribe' onClick={() => {
+                                    if (isPlatform("capacitor")) {
+                                        Browser.open({ url: 'https://tribe.computer/#/auth', presentationStyle: 'fullscreen', windowName: 'auth' });
+                                    } else {
+                                        linkTwitter();
+                                    }
+                                }}>
+                                    Connect to {isPlatform("capacitor") ? "tribe" : "privy"}
+                                </IonButton>
+                            ) : (
+                                <>
+                                    <IonButton onClick={dismiss} fill='clear'></IonButton>
+                                    <br />
+                                </>
+                            )}
+                            <br />
+                            <IonLabel color='dark'>
+                                {!ready && <></>}
+                                {me === null && ready && user !== null && (
+                                    <> 
+                                        <br />
+                                        <IonSpinner name="crescent" />
+                                        <br />
+                                    </>
+                                )}
+                            </IonLabel>
+                            <br />
+                            {error && <IonBadge color='danger'>{error}</IonBadge>}
+                        </>
+                    ) : (
+                        <span aria-disabled="true"></span>
+                    )}
+                </IonTitle>
+            ), [refresh, me, walletAddress, user, ready])}
+            <IonLoading isOpen={tribeLoading} />
+        </IonContent>
+    );
 }

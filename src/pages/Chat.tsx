@@ -76,7 +76,7 @@ const Chat: React.FC = () => {
         <TribePage page='chat'>
             <IonHeader>
                 <IonToolbar color={'transparent'}>
-                    <IonTitle className='bold' style={{ fontSize: 18}}>
+                    <IonTitle className='bold' color={'dark'}style={{ paddingTop: 12, fontSize: 18}}>
                         Chats
                     </IonTitle>
                 </IonToolbar>
@@ -119,7 +119,7 @@ const LastMessage: React.FC<{ address: string }> = ({ address }) => {
     }, [address]);
 
     return (
-        <div style={{ paddingTop: '5px', paddingBottom: '5px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <div style={{ paddingTop: '6px', paddingBottom: '6px', paddingLeft: '0px', paddingRight: '0px', display: 'flex', alignItems: 'center', width: '100%' }}>
             <IonButtons slot='start'>
                 <MemberPfpImg address={address} size='double-smol' />
             </IonButtons>

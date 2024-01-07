@@ -22,11 +22,11 @@ export const WriteMessageModalProvider: React.FC = () => {
     }, [isOpen])
     
     return <>
-        <IonModal presentingElement={presentingElement as any} style={{ height: '90vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
+        <IonModal presentingElement={presentingElement as any} style={{ height: '100vh!important' }} ref={modalRef} isOpen={isOpen} onDidDismiss={() => {
             setIsOpen(false);
         }}>
             <IonHeader>
-                <IonToolbar color='light'>
+                <IonToolbar color='transparent'>
                     <IonButtons slot='end'>
                         <IonButton style={{position: "absolute", right: 0}}fill="clear" color='dark' onClick={() => {
                             dismiss(false)
@@ -36,12 +36,12 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        <div >{postId ? 'Comments' : "New Post"}</div>
+                        <div className="bold" >{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
             </IonHeader>
-            <IonContent color="light">
+            <IonContent color="transparent">
                 {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
                 {!postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
