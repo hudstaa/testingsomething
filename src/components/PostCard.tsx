@@ -221,16 +221,16 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 {/* <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} /> */}
             </IonButton>
             <div className="no-hover" style={{ marginLeft: '10%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <IonButton className="do-not-navigate no-hover"  fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
+                <IonButton className="do-not-navigate no-hover"  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
+                    <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
                 </IonButton>
                 <IonLabel style={{
                     fontSize: '1.05rem', width: 24, paddingBottom: 2, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
                     <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='heavy ion-text-center'>{score} </IonText>
                 </IonLabel>
-                <IonButton  className="do-not-navigate no-hover"  fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
+                <IonButton className="do-not-navigate no-hover" fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
+                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginLeft: -12, height: 30, width: 30 }} />
                 </IonButton>
             </div>
         </IonRow>}

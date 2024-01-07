@@ -81,27 +81,28 @@ const Voter: React.FC<VoteToolbarProps> = ({ score, handleVote, commentId, postI
     const fontSize = font[length];
     return (
         <>
-
-            <IonButton style={{ marginRight: 0 }} fill="clear" onPointerDown={() => {
-                setVoteCache(-1)
-                handleVote(false)
+            <IonButton fill="clear" onPointerDown={() => {
+                setVoteCache(1);
+                handleVote(true);
             }} slot="start">
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: 0, height: 30, width: 30 }} />
+                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === 1 ? '/icons/upOR.svg' : '/icons/upGRE.svg'} style={{ marginRight: 0, height: 30, width: 30 }} />
             </IonButton>
+
             <IonLabel style={{
                     fontSize: '1rem', width: 24, paddingLeft: 0, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
                 }} >
-                    <IonText color="tribe"className="heavy tribe" style={{ fontSize: 16, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
-                </IonLabel>
-            <IonButton fill="clear" onPointerDown={() => {
-                setVoteCache(1)
-                handleVote(true)
-            }} slot="end">
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{marginLeft: 2, marginRight: 0, height: 30, width: 30 }} />
-            </IonButton>
+                    <IonText color="tribe" className="heavy tribe" style={{ fontSize: fontSize, fontVariantNumeric: 'tabular-nums' }} >{score === null ? <></> : totalScore}</IonText>
+            </IonLabel>
 
+            <IonButton style={{ marginLeft: 0 }} fill="clear" onPointerDown={() => {
+                setVoteCache(-1);
+                handleVote(false);
+            }} slot="end">
+                <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginLeft: 2, height: 30, width: 30 }} />
+            </IonButton>
         </>
     );
 }
+
 
 export default Voter;
