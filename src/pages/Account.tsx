@@ -33,7 +33,12 @@ const Account: React.FC = () => {
     const { search } = useLocation();
 
     const searchParams = useMemo(() => new URLSearchParams(search), [search]);
-
+    const safeAreaStyle = {
+        top: `calc(env(safe-area-inset-top) + 5px)`, // Adjust the top position based on safe area
+        right: `calc(env(safe-area-inset-right) + 5px)`, // Adjust the right position based on safe area
+        position: 'absolute',
+        zIndex: 100000000
+    };
     const { notifications } = useNotifications();
     const [pushNotifications, setPushNotifications] = useState<PushNotificationSchema[]>([]);
     const [count, setCount] = useState<number | null>(null);
@@ -109,9 +114,13 @@ const Account: React.FC = () => {
     }
     return (
         <>
-            {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 5, top: 10 }} onClick={() => { setShow(true) }}>
-                <IonIcon size={'medium'}  color='dark' icon={settingsOutline} />
-            </IonButton>}
+            {pathname.includes('account') &&                 <IonButton 
+                    fill='clear' 
+                    style={safeAreaStyle} // Apply the safe area style
+                    onClick={() => { setShow(true) }}
+                >
+                    <IonIcon size={'medium'} color='dark' icon={settingsOutline} />
+                </IonButton>}
             <Member profile={true} />
             <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
                 <IonHeader>
