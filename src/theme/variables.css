@@ -68,9 +68,10 @@ div>div>img #jupiter-terminal>div>div>div>div>div>a>img {
   src: url("/fonts/SF/SFR-UltraLight.otf") format("opentype");
 }
 
+
 * {
   font-family: 'SFR-Regular', sans-serif !important;
-  -webkit-tap-highlight-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important; 
 }
 
 .header {
@@ -812,14 +813,15 @@ ion-segment-button.ios .customButton {
 
 ion-button,
 ion-icon {
-  --ripple-color: transparent;
+  --ripple-color: transparent !important;
   /* For Ionic 4+ */
-  --background-activated: transparent;
+  --background-activated: transparent !important;
   /* For Ionic 4+ */
-  --background-focused: transparent;
+  --background-focused: transparent !important;
   /* For Ionic 4+ */
-  --background-hover: transparent;
+  --background-hover: transparent !important;
   /* For Ionic 4+ */
+  opacity: 1 !important;
   
 }
 
@@ -920,10 +922,16 @@ ion-footer {
   background: var(--ion-color-light-tint);
 }
 
+.no-hover {
+  --background-hover: transparent !important;
+}
+
 .reply {
   background: var(--ion-color-medium);
   margin: 0px !important;
 }
+
+
 
 .image-msg {
   padding: 0px !important;
