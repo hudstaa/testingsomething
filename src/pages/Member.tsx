@@ -80,10 +80,10 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
                     <img style={{ width: 72, height: 72, borderRadius: '24px', marginTop: 0, border: '4px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
                 </div>
-                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-40px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
+                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-50px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
   
                     <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0 }}>
-                        <IonText style={{ marginTop: '-4px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
+                        <IonText style={{ marginTop: '-6px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
@@ -91,10 +91,10 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: '3px', paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: '16px', paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-4px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+                        <div style={{ marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
