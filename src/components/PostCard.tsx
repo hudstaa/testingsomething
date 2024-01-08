@@ -30,9 +30,9 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
                 dismiss()
                 push({ search: new URLSearchParams(hit.swap).toString(), pathname: '/swap' });
             }}>
-                Swap for mog {content}
+                Swap for {content}
             </IonButton>
-            <AdvancedRealTimeChart details={true} hide_top_toolbar hide_side_toolbar allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>
+            <AdvancedRealTimeChart details={false} hide_top_toolbar hide_side_toolbar hide_legend allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>
 
         </IonContent></>;
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]

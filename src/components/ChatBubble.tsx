@@ -2,8 +2,11 @@ import { IonButton, IonIcon, IonItem, IonText } from "@ionic/react";
 import { returnDownBack } from "ionicons/icons";
 import { useGroupMessages } from "../hooks/useGroupMessages";
 import { Message } from "../models/Message";
-import { ChatMemberPfp, MemberAlias, MemberPfp } from "./MemberBadge";
+import { ChatMemberPfp, MemberAlias, MemberPfp, TwitterNameLink } from "./MemberBadge";
 import { timeAgo } from "./TradeItem";
+import Linkify from "linkify-react";
+import { CashTag } from "./PostCard";
+import { known_pairs } from "../lib/sugar";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
@@ -43,12 +46,12 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {!isMe && (
-                <div style={{paddingLeft: 0, marginLeft: -3, marginTop: 0,marginBottom: -4, textAlign: 'left',lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
-                    <MemberAlias color={bgColor}address={message.author} />
+                <div style={{ paddingLeft: 0, marginLeft: -3, marginTop: 0, marginBottom: -4, textAlign: 'left', lineHeight: '20px' }}> {/* Adjust line height to align text with image */}
+                    <MemberAlias color={bgColor} address={message.author} />
                 </div>
             )}
         </div>
-    );    
+    );
     const time = (
         <div style={{
             display: 'flex',
@@ -56,37 +59,39 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             overflowWrap: 'break-word',
         }}>
             {
-                    <span style={{ paddingLeft:32 ,textAlign: 'right', paddingTop: 0,marginRight: -2, marginBottom: -1, fontSize: '10px'}}>
-                        {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
-                    </span>
+                <span style={{ paddingLeft: 32, textAlign: 'right', paddingTop: 0, marginRight: -2, marginBottom: -1, fontSize: '10px' }}>
+                    {timeAgo(new Date(message.sent !== null ? message.sent.seconds * 1000 : Date.now()))}
+                </span>
             }
         </div>
-    );    
+    );
 
     const contentBubble = (
-        <div onClick={()=>{
-            !isMe&&reply(message.id);
-        }} style={{ 
-            marginBottom: isMe ? 0 : 12, 
-            paddingLeft: isMe ? 0 : 0, 
+        <div onClick={() => {
+            !isMe && reply(message.id);
+        }} style={{
+            marginBottom: isMe ? 0 : 12,
+            paddingLeft: isMe ? 0 : 0,
             overflowWrap: 'break-word',
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: isMe ? 'flex-end' : 'flex-start' 
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: isMe ? 'flex-end' : 'flex-start'
         }}>
             {message.media && (
                 <img className={(isMe ? "send" : "recieve") + ' msg image-msg'} style={imageStyle} src={message.media.src} />
             )}
             <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
                 {alias}
-                {message.content}
+                <Linkify>
+                    {message.content}
+                </Linkify>
                 {time}
             </div>
         </div>
     );
     const replyButton = !isMe && (
         <button
-            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 8  ,verticalAlign:'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
+            style={{ display: 'inline-block', margin: '0px!important', paddingLeft: 8, verticalAlign: 'center', padding: '0px!important', background: 'rgba(0,0,0,0)' }}
             color='primary'
 
         >
@@ -123,7 +128,7 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             {/* {replyButton} */}
         </div>
     );
-    
+
     return (
         <div className="message-container" key={message.id} style={{
             display: 'flex',
@@ -154,8 +159,25 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     const isMe = me === message.author;
 
     const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px', paddingTop: 4, paddingBottom: 10, font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
-        {message.content}
-    </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
+        <Linkify options={{
+            render: ({ attributes, content, eventListeners, tagName }) => {
+                if (content.startsWith("$")) {
+                    const info = known_pairs[content.toLowerCase().slice(1)];
+                    if (!info) {
+                        return <a {...attributes}>{content}</a>
+                    }
+                    return <CashTag content={content} />
+                } else if (content.startsWith("@")) {
+                    return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />
+                }
+            },
+            formatHref:
+            {
+                mention: (href) => "https://tribe.computer/member/" + href.substring(1),
+            }
+        }}>
+            {message.content}
+        </Linkify>    </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
 
     const items = [
         // <ChatMemberPfp style={{ margin: '0px!important', position: 'absolute', bottom: 0, left: !isMe ? -20 : undefined, right: !isMe ? undefined : -20 }} size="veru-smol" address={message.author} />

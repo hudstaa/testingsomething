@@ -5,7 +5,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { signOut } from 'firebase/auth';
 import { addDoc, collection, deleteDoc, doc, getCountFromServer, getDoc, getFirestore, query, serverTimestamp, where } from 'firebase/firestore';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { closeOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, settings, settingsOutline } from 'ionicons/icons';
+import { alertOutline, closeOutline, copy, exit, key, logoDiscord, logoGoogle, notificationsOutline, settings, settingsOutline } from 'ionicons/icons';
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { getAddress } from 'viem';
@@ -104,6 +104,7 @@ const Account: React.FC = () => {
     }, [ready, user, me])
     const [show, setShow] = useState(false);
     const { pathname } = useLocation();
+    const { show: showNotifications } = useNotifications()
     if (!me) {
         return <TribePage page='account'><></></TribePage>
     }
@@ -111,6 +112,10 @@ const Account: React.FC = () => {
         <>
             {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 5, top: 5 }} onClick={() => { setShow(true) }}>
                 <IonIcon size={'large'} icon={settingsOutline} />
+            </IonButton>}
+            {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 100, top: 5 }} onClick={showNotifications}>
+                <IonIcon size={'large'} icon={alertOutline} />
+                <IonBadge>{notifications.length}</IonBadge>
             </IonButton>}
             <Member profile={true} />
             <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
@@ -126,51 +131,6 @@ const Account: React.FC = () => {
                 <TribeContent >
                     <IonCard color='paper'>
                         <IonCardContent >
-                            {notifications && notifications.length > 0 && <IonCard color='paper'>
-                                <IonCardHeader>
-                                    <IonItem lines='none' color='paper'>
-
-                                        <IonText>
-                                            Notifications
-                                        </IonText>
-                                        <IonButtons slot='end'>
-                                            <IonBadge color='tribe'>
-                                                {notifications.length}
-                                                <IonIcon icon={notificationsOutline} />
-                                            </IonBadge>
-                                            {notifications.length > 0 && <IonButton color='tribe' fill='solid' onClick={() => {
-                                                notifications.forEach(({ id }) => {
-                                                    deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
-
-                                                    })
-
-                                                })
-                                            }}>
-                                                Clear
-                                            </IonButton>}
-                                        </IonButtons>
-                                    </IonItem>
-
-                                </IonCardHeader>
-                                <IonCardContent>
-                                    {pushNotifications.map(({ title, subtitle, body, id, data }) => <IonItem>
-                                        <IonButtons slot='start'>
-                                            {title}
-                                        </IonButtons>
-                                        {subtitle}
-
-                                        {body}
-                                    </IonItem>)}
-                                    {notifications.map(({ from, ref, timestamp, message, id }: any) => <IonItem lines='none' color='paper' onClick={() => {
-                                        deleteDoc(doc(getFirestore(app), 'notifications', id)).then(() => {
-
-                                        })
-                                    }} routerLink={ref.split('/')[0] + '/' + ref.split('/')[1]}>
-                                        <MemberBadge address={from} />{message}
-                                    </IonItem>)}
-                                </IonCardContent>
-                            </IonCard>}
-
                             <IonItem lines='none' color='paper'>
                                 <IonButtons slot='start'>
                                     <MemberBadge address={me!.address} />
