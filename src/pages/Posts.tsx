@@ -146,12 +146,20 @@ const Posts: React.FC = () => {
     const handleScroll = (e: IonContentCustomEvent<ScrollDetail>) => {
         const currentScroll = e.detail.scrollTop;
         const deltaY = currentScroll - lastScrollTop;
-        const newToolbarY = Math.max(-toolbarHeight, Math.min(0, toolbarY - deltaY));
-        const shouldHideToolbar = currentScroll === 0;
-        setHideToolbar(shouldHideToolbar);
-        setToolbarY(newToolbarY);
+    
+        // Check if we are at the top of the page
+        if (currentScroll <= 0) {
+            setToolbarY(0); // Reset toolbarY to show the toolbar
+            setHideToolbar(false);
+        } else {
+            const newToolbarY = Math.max(-toolbarHeight, Math.min(0, toolbarY - deltaY));
+            setToolbarY(newToolbarY);
+            setHideToolbar(newToolbarY <= -toolbarHeight);
+        }
+    
         setLastScrollTop(currentScroll);
-      };
+    };
+    
 
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
