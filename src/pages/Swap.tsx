@@ -1,6 +1,7 @@
 import { IonContent, IonFooter, IonLabel, IonPage, IonSegment, IonSegmentButton } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import { Wallet } from '../components/Wallet';
 const Swap: React.FC = () => {
     const { search } = useLocation();
     const iframe = useRef<HTMLIFrameElement>(null)
@@ -35,14 +36,15 @@ const Swap: React.FC = () => {
 
     })
     return <IonPage>
-        <IonContent>
+        {filterType === 'Wallet' ? <Wallet /> :
+            <IonContent>
+                {search.includes('solana') ?
+                    <div style={{ height: '1000px' }}>
+                        <div id="integrated-terminal"></div>
+                    </div>
+                    : <iframe src={'https://tribe.computer/swap'} ref={iframe} style={{ border: 'none', height: '100%', width: '100%', overflow: 'hidden' }} />}
 
-            {search.includes('solana') ?
-                <div style={{ height: '1000px' }}>
-                    <div id="integrated-terminal"></div>
-                </div>
-                : <iframe src={'https://tribe.computer/swap'} ref={iframe} style={{ border: 'none', height: '100%', width: '100%', overflow: 'hidden' }} />}
-        </IonContent>
+            </IonContent>}
         {pathname.includes('swap') && <IonFooter color='black'>
             <div style={{ marginBottom: -2, paddingBottom: 2, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '28px', borderTopRightRadius: '28px', paddingLeft: 8, paddingRight: 8, paddingTop: 6 }}>
                 <IonSegment
@@ -58,7 +60,7 @@ const Swap: React.FC = () => {
                     <IonSegmentButton value="Apps" onClick={() => setFilterType('Apps')}>
                         <IonLabel className='heavy' style={{ color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Swap</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton value="Wallet" onClick={() => setFilterType('Wallet')}>
+                    <IonSegmentButton value="Wallet" onClick={() => { setFilterType('Wallet') }}>
                         <IonLabel className='heavy' style={{ color: filterType === 'Wallet' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Wallet</IonLabel>
                     </IonSegmentButton>
                 </IonSegment>
