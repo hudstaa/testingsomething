@@ -82,7 +82,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 </div>
                 <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-50px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible', zIndex: 444 }}>
   
-                    <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0, zIndex: 777 }}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 15, borderBottom: 0, zIndex: 777 }}>
                         <IonText style={{ marginTop: '-6px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
@@ -100,7 +100,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                             </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0, zIndex: 777, marginRight: 0  }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5, zIndex: 777 , marginRight: -12}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5, zIndex: 777 , marginRight: -4}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
                             </IonButton>}
                             {balance ? (

@@ -134,8 +134,8 @@ const Account: React.FC = () => {
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
-                <TribeContent  color={bgColor}>
-                    <IonGrid>
+                <TribeContent color={bgColor}>
+                    <IonGrid color={bgColor}>
                         <IonRow>
                             <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
                                 <IonCard color='paper'>
