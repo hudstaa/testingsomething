@@ -123,7 +123,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
     <div>
      
       </div>
-      <IonFooter className="fixed-footer" style={{height: '25vh'}}>
+      <IonFooter className="fixed-footer" style={{height: '5vh'}}>
       {showMediaButton && (
       <IonButtons style={{ position: 'absolute', bottom: 10, left: 5}} slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
