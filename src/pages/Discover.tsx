@@ -65,7 +65,7 @@ const Discover: React.FC = () => {
   return (
     <TribePage page='discover'>
       <IonHeader style={{ display: 'flex', flexDirection: 'column' }}>
-        <IonToolbar color={'transparent'}>
+        <IonToolbar>
           <IonTitle className='bold' color={'dark'} style={{ paddingTop: 12, fontSize: 18 }}>
             Discover
           </IonTitle>
@@ -80,7 +80,6 @@ const Discover: React.FC = () => {
             <IonItem
               detail={false}
               lines="none"
-              color='transparent'
               onClick={() => setHits([])}
               routerLink={'/member/' + x.address}
               style={{ display: 'flex', alignItems: 'center' }} // Added flex styles here

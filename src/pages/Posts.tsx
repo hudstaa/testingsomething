@@ -166,7 +166,7 @@ const Posts: React.FC = () => {
                 </IonList>
             </IonMenu>
             <IonPage id="pages-content" ref={pageRef}>
-                <IonHeader style={{ padding: 0, marginBottom: '4.5vh' }}>
+                <IonHeader>
                     {!hideToolbar ?
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
