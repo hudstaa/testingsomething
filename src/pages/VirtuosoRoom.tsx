@@ -11,6 +11,18 @@ import { Message } from "../models/Message";
 import { UserDetails } from "../lib/friendTech";
 import { Member } from "../hooks/useMember";
 
+function isValidMessage(data: any): data is Message {
+    // Basic checks for required fields
+    const hasRequiredFields = typeof data.author === 'string' && data.sent instanceof Timestamp;
+
+    // If there are replies, they should also be valid messages
+    let repliesValid = true;
+    if (data.replies && Array.isArray(data.replies)) {
+        repliesValid = data.replies.every(isValidMessage);
+    }
+
+    return hasRequiredFields && repliesValid;
+}
 
 const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) => void }> = ({ channel, me, reply }) => {
     const [lastMessageReached, setLastMessageReached] = useState(false)
@@ -23,54 +35,40 @@ const VirtuosoRoom: React.FC<{ channel: string, me: Member, reply: (id: string) 
     const containerRef = useRef<HTMLIonContentElement>(null)
     const hasMessages = messages.length != 0;
     useEffect(() => {
-        if (!channel) {
-            return;
-        }
-        (async () => {
-            if (!channel) {
-                return;
-            }
-            console.log(channel, "CHANNEL");
-            const db = getFirestore(app);
-            const messagesCol = collection(db, "channel", channel, "messages");
+        if (!channel) return;
 
-            onSnapshot(
-                query(
-                    messagesCol,
-                    orderBy("sent", "desc"),
-                    limit(1)
-                ),
-                async (channelDocs) => {
-                    const changes = channelDocs.docChanges();
-                    const replyIds = changes.map(change => change.doc.data().reply).filter(id => id);
-                    let replies: any = [];
-                    if (replyIds.length > 0) {
-                        const repliesSnapshot = await getDocs(query(messagesCol, where(documentId(), "in", replyIds)));
-                        replies = repliesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-                    }
-                    const newMessages = changes.filter(x => x.type === 'added').map(x => (({ ...x.doc.data(), id: x.doc.id } as any)))
-                    const latestMessages = [...newMessages];
-                    if (latestMessages.length === 0) {
-                        return;
-                    } else {
-                    }
-                    changes.forEach((change) => {
-                        if (change.type == 'added') {
-                            if (change.doc.data().sent !== null) {
-                                return;
-                            }
-                            const latestMessages: Message[] = [{ ...change.doc.data() as any, id: change.doc.id, sent: change.doc.data().sent ? change.doc.data().sent : new Timestamp(Date.now() / 1000, 0) }];
-                            pushMessages(channel, latestMessages, replies);
-                            setNewMessage(latestMessages[0].id)
-                            setTimeout(() => {
-                                containerRef.current?.scrollToBottom(500);
-                            }, 1)
+        const db = getFirestore(app);
+        const messagesCol = collection(db, "channel", channel, "messages");
+
+        const unsubscribe = onSnapshot(
+            query(messagesCol, orderBy("sent", "asc")),
+            (snapshot) => {
+                const newMessages: Message[] = []; // Explicitly typing as an array of Message
+                let replies: Message[] = []; // Explicitly typing as an array of Message
+
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added" || change.type === "modified") {
+                        const messageData = change.doc.data();
+                        if (isValidMessage(messageData)) {
+                            newMessages.push({ ...messageData, id: change.doc.id } as Message);
                         }
-                    });
+                    }
+                    // Handle 'removed' type if needed
+                });
+
+                // Update the state with new messages
+                if (newMessages.length > 0) {
+                    pushMessages(channel, newMessages, replies);
+                    setNewMessage(newMessages[newMessages.length - 1].id);
+                    setTimeout(() => {
+                        containerRef.current?.scrollToBottom(500);
+                    }, 1);
                 }
-            );
-        })();
-    }, [hasMessages])
+            }
+        );
+
+        return () => unsubscribe();
+    }, [channel]);
     const fetchMore = useCallback(async (event: any) => {
         if (loadingMore) {
             setTimeout(() => {

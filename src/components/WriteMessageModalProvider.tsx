@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { CommentList } from "./CommentList";
 import { nativeAuth } from "../lib/sugar";
 import { MemberAlias } from "./MemberBadge";
+import { WriteMessage2 } from "./WriteMessage2";
 
 export const WriteMessageModalProvider: React.FC = () => {
     const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId, presentingElement, commentPath } = useWriteMessage();
@@ -36,14 +37,14 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        <div className="bold" >{postId ? 'Comments' : "New Post"}</div>
+                        <div className="bold" style={{fontSize: '1.15rem'}}>{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
             </IonHeader>
             <IonContent color="transparent">
                 {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
-                {!postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
+                {!postId && <WriteMessage2 isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);
                 }} />}
@@ -54,7 +55,7 @@ export const WriteMessageModalProvider: React.FC = () => {
                 </IonItem>}
 
                 {message && message.media?.src && message.media.type.includes("image") ? <IonImg style={{ height: '100px', width: '100px' }} src={message?.media?.src} /> : message?.media?.src ? <video webkit-playsinline playsInline preload="none" style={{ height: '100px' }} src={message?.media?.src} /> : <></>}
-                {postId && <WriteMessage isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
+                {postId && <WriteMessage2 isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                     setContent(message.content)
                     dismiss(true);
                 }} />}

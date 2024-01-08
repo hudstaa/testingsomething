@@ -219,7 +219,7 @@ ion-segment {
 }
 
  ion-segment.custom1 {
-  --background: transparent !important;
+  --background: var(--ion-color-tabblur) !important;
 }
 
 ion-segment-button::part(indicator-background) {
@@ -694,7 +694,7 @@ ion-button.custombutton::part(native) {
   border-radius: 24px;
   background-color: var(--ion-color-tribe);
   padding: 20px;
-  font-family: 'TribeBold';
+  font-family: 'SFR-Bold';
   font-size: 1.1rem;
 }
 
@@ -745,6 +745,17 @@ ion-segment-button {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 
+}
+
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  transition: bottom 0.3s; /* Smooth transition for moving the footer */
+}
+
+.body-no-scroll {
+  overflow: hidden; /* Prevent scrolling */
 }
 
 ion-segment-button::part(indicator) {
@@ -798,7 +809,7 @@ ion-segment-button.ios .customButton {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #00bafa;
+  --ion-color-tribe-tint: #ff6000;
 }
 
 /* Color Usage Example */
@@ -893,6 +904,11 @@ ion-tab-bar {
 
   /* Add the blur effect */
   backdrop-filter: blur(25px); /* Adjust the px value to increase or decrease the blur */
+}
+
+.tooly ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
 }
 
 .message-container {
