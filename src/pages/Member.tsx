@@ -78,9 +78,9 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
             < TribeContent fullscreen color={bgColor} >
                 <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
                 <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
-                    <img style={{ width: 72, height: 72, borderRadius: '24px', marginTop: 0, border: '4px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
+                    <img style={{ width: 72, height: 72, borderRadius: '24px', marginLeft: -2, marginTop: 0, border: '4px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
                 </div>
-                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-38px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
+                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-40px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
   
                     <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0 }}>
                         <IonText style={{ marginTop: '-4px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
