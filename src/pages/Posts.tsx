@@ -22,6 +22,7 @@ import {
     IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList
 } from '@ionic/react';
 import 'firebase/firestore';
+import { IonContentCustomEvent, ScrollDetail } from '@ionic/core';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -136,7 +137,22 @@ const Posts: React.FC = () => {
     }
     const { show: showNotifications } = useNotifications();
     const notifs = useNotifications(x => x.notifications.length);
+    const [isScrollingDown, setIsScrollingDown] = useState(false);
+    const [lastScrollTop, setLastScrollTop] = useState(0);
+    const [toolbarY, setToolbarY] = useState(0);
+    const toolbarHeight = 50; // Adjust this to the actual height of your toolbar
     const [hideToolbar, setHideToolbar] = useState<boolean>(false)
+
+    const handleScroll = (e: IonContentCustomEvent<ScrollDetail>) => {
+        const currentScroll = e.detail.scrollTop;
+        const deltaY = currentScroll - lastScrollTop;
+        const newToolbarY = Math.max(-toolbarHeight, Math.min(0, toolbarY - deltaY));
+        const shouldHideToolbar = currentScroll === 0;
+        setHideToolbar(shouldHideToolbar);
+        setToolbarY(newToolbarY);
+        setLastScrollTop(currentScroll);
+      };
+
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
@@ -164,8 +180,7 @@ const Posts: React.FC = () => {
                 </IonList>
             </IonMenu>
             <IonPage id="main-content" ref={pageRef}>
-                <IonHeader style={{ padding: 0, marginBottom: '4.5vh' }}>
-                    {!hideToolbar ?
+            <IonHeader style={{ transform: `translateY(${toolbarY}px)`, transition: 'transform 0.3s ease' }}>
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
                                 <IonMenuToggle>
@@ -198,30 +213,12 @@ const Posts: React.FC = () => {
                                 </IonSegment>
                             </IonButtons>
                         </IonToolbar>
-                        : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
+                        : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />
                 </IonHeader>
 
-                < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
-                    const isCloseToTop = e.detail.scrollTop < 100;
-                    const isCloseToBottom =
-                        e.detail.scrollTop + e.target.clientHeight >=
-                        e.target.scrollEl.height - 500;
-                    if (isCloseToTop) {
-                        !hideToolbar && setHideToolbar(false)
-                        return;
-                    }
-                    if (isCloseToBottom) {
-                        return;
-                    }
-                    console.log(e.detail.velocityY)
-                    if (e.detail.velocityY < -0.5) {
-                        hideToolbar && setHideToolbar(false);
-                    }
-                    if (e.detail.velocityY > 0.5) {
-                        !hideToolbar && setHideToolbar(true)
-                    }
-                }} scrollEvents>
-                    <IonHeader>
+                <IonContent onIonScroll={handleScroll} scrollEvents={true}style={{ paddingTop: hideToolbar ? '0' : 'var(--ion-safe-area-top)'}}>
+
+                    <IonHeader style={{marginBottom: '2.5vh'}}>
                         <IonToolbar className='transparent' style={{ height: 0 }} />
                     </IonHeader>
                     <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
