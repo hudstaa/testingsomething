@@ -76,7 +76,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(8px)', transform: 'scale(13)', overflow: 'hidden' }} />
+                <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(8px) brightness(1.2)', transform: 'scale(13)', overflow: 'hidden' }} />
                 <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 555, width: '100px' }}>
                     <img style={{ width: 80, height: 80, borderRadius: '24px', marginTop: 0, border: '2.5px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
                 </div>
