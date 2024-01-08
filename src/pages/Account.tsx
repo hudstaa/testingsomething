@@ -124,7 +124,7 @@ const Account: React.FC = () => {
             <Member profile={true} />
             <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
                 <IonHeader>
-                    <IonToolbar>
+                    <IonToolbar color={'black'}> 
                         <IonButtons slot='end'>
                             <IonButton onClick={() => { setShow(false) }}>
                                 <IonIcon icon={closeOutline} color='danger' />

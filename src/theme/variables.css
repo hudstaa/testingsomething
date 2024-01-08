@@ -895,6 +895,11 @@ ion-tab-bar {
   backdrop-filter: blur(25px); /* Adjust the px value to increase or decrease the blur */
 }
 
+.tooly ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+}
+
 .message-container {
   padding: 1px;
 }
