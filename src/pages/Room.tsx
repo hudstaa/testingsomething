@@ -31,7 +31,7 @@ const Room: React.FC = () => {
     const [focused, setFocus] = useState<boolean>(false);
     const channel = address;
     const [info, setInfo] = useState<any | undefined>()
-    
+
     useEffect(() => {
         const db = getFirestore(app);
         getDoc(doc(db, "channel", channel)).then((channelSnap) => {
@@ -69,9 +69,9 @@ const Room: React.FC = () => {
     }, []);
     const replyingToMessage = messages.find(x => x.id === replyingToMessageId);
     const footerMemo = useMemo(() => replyingToMessageId !== null && replyingToMessage ? <IonItem>
-<IonButtons slot='start'>
-        <MemberPfp size='smol' address={replyingToMessage.author} />
-    </IonButtons>
+        <IonButtons slot='start'>
+            <MemberPfp size='smol' address={replyingToMessage.author} />
+        </IonButtons>
         {replyingToMessage.content}
         {replyingToMessage.media && <IonAvatar>
             <IonImg src={replyingToMessage.media.src} />
@@ -87,34 +87,34 @@ const Room: React.FC = () => {
     return <TribePage page='room'>
         <IonHeader>
             <div style={{ borderBottom: '1px solid var(--ion-color-light)', width: '100%' }}>
-            <IonToolbar color={'transparent'} >
-                <IonButtons  slot='start'>
-                    <IonButton onMouseDown={() => {
+                <IonToolbar >
+                    <IonButtons slot='start'>
+                        <IonButton onMouseDown={() => {
 
-                        goBack()
-                    }}>
-                        <IonIcon icon={chevronBack} color='dark' />
-                        <IonAvatar  style={{justifyContent: 'center'}} >
-                            <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
-                        </IonAvatar>
-                        <IonGrid>
-                            <IonRow>
-                                <IonText color={'dark'} className='semi'>{(channelOwner?.twitterName) || address}</IonText> 
-                            </IonRow>
-                            <IonRow>
-                                {info ? <IonText color='medium'>
-                                    {Object.keys(info?.holders || {}).length} members
-                                </IonText> : <IonSpinner />}
-                            </IonRow>
-                        </IonGrid>
-                    </IonButton>
-                </IonButtons>
-                <IonButtons slot='end'>
-                    {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='tribe' onClick={() => { setHighlight(address) }}>
-                        Buy
-                    </IonButton>}
-                </IonButtons>
-            </IonToolbar>
+                            goBack()
+                        }}>
+                            <IonIcon icon={chevronBack} color='dark' />
+                            <IonAvatar style={{ justifyContent: 'center' }} >
+                                <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
+                            </IonAvatar>
+                            <IonGrid>
+                                <IonRow>
+                                    <IonText color={'dark'} className='semi'>{(channelOwner?.twitterName) || address}</IonText>
+                                </IonRow>
+                                <IonRow>
+                                    {info ? <IonText color='medium'>
+                                        {Object.keys(info?.holders || {}).length} members
+                                    </IonText> : <IonSpinner />}
+                                </IonRow>
+                            </IonGrid>
+                        </IonButton>
+                    </IonButtons>
+                    <IonButtons slot='end'>
+                        {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='tribe' onClick={() => { setHighlight(address) }}>
+                            Buy
+                        </IonButton>}
+                    </IonButtons>
+                </IonToolbar>
             </div>
         </IonHeader>
         {me !== null ? <VirtuosoRoom reply={reply} channel={channel} me={me} /> : <IonSpinner />}

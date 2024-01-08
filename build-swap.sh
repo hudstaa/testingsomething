@@ -17,7 +17,6 @@ if [ -d "$CLONE_DIR" ]; then
     # Copying files to build directory, excluding index.html
     rsync -av --exclude='service-worker.js' --exclude='asset-manifest.json' --exclude='apple-app-site-association' --exclude='index.html' --exclude='manifest.json' $CLONE_DIR/ $BUILD_DIR/
     cp $CLONE_DIR/index.html $BUILD_DIR/swap.html
-    cp $CLONE_DIR/service-worker.js.html $BUILD_DIR/swap-service-worker.js
 
     # Optional: Remove the cloned repository directory
     rm -rf $CLONE_DIR
