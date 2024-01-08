@@ -159,28 +159,41 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         </IonCardHeader>
         <IonCardContent style={{ paddingLeft: 46, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16,  marginTop: '-10px' }}  >
             <div>
-            <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '.975rem', letterSpacing: '.0135em'}} onClick={() => {}}>
-                <Linkify  options={{
-                    render:({attributes,content,eventListeners,tagName})=>{
-                        if(content.startsWith("$")){
-                            const info = sugar.known_pairs[content.toLowerCase().slice(1)];
-                            if(!info){
-                                return <a className="medium"{...attributes}>{content}</a>
-                            }
-                            return <CashTag content={content}/>
-                        }else if(content.startsWith("@")){
-                            return <TwitterNameLink twitterName={content.toLowerCase().slice(1)}/>
-                        }
-                    },
-                    formatHref:
-                    {
-                        mention: (href) => "https://tribe.computer/member/" + href.substring(1),
-                    }
-                }}>
-                    {content}
-                </Linkify>
-                
-                            </IonText>
+            <IonText 
+    color='dark' 
+    className='regular' 
+    style={{ 
+        whiteSpace: 'pre-wrap', 
+        fontSize: onPostPage ? '1.05rem' : '.975rem', 
+        letterSpacing: '.0135em'
+    }} 
+    onClick={() => {}}
+>
+    <Linkify options={{
+        render: ({ attributes, content, eventListeners, tagName }) => {
+            if (content.startsWith("$")) {
+                const info = sugar.known_pairs[content.toLowerCase().slice(1)];
+                if (!info) {
+                    // Fallback for when the cash tag isn't in known_pairs
+                    return <a {...attributes} className="medium">{content}</a>;
+                }
+                // Using CashTag for cash tags
+                return <CashTag content={content} />;
+            } else if (content.startsWith("@")) {
+                // Using TwitterNameLink for @mentions
+                return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />;
+            }
+            // Fallback for other links
+            return <a {...attributes} className="medium">{content}</a>;
+        },
+        formatHref: {
+            mention: (href) => "https://tribe.computer/member/" + href.substring(1),
+        }
+    }}>
+        {content}
+    </Linkify>
+</IonText>
+
                             </div>
             {media && (
                 <div style={{ marginTop: 8, marginBottom: -4, marginRight: 0, overflow: 'hidden', borderRadius: '12px' }}>
