@@ -76,7 +76,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
         onFocus={handleFocus}
         onBlur={handleBlur}
         className="regular"
-        style={{ flex: 1, paddingTop: 0, paddingLeft: 0, marginTop: -2, minHeight: '20rem' }} /* flex: 1 allows the textarea to grow and fill available space */
+        style={{ flex: 1, paddingTop: 0, paddingLeft: 0, marginTop: -2, minHeight: '20rem', fontSize: '1.1rem' }} /* flex: 1 allows the textarea to grow and fill available space */
         value={message?.content}
         placeholder={placeHolder}
         onKeyUp={(e) => {
