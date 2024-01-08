@@ -94,13 +94,13 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         <IonText className='bold' color='dark' style={{ marginTop: '16px', paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginRight: -12, marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%', zIndex: 777 }}>
-                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0, zIndex: 777 }} routerLink={'/channel/' + address}>
+                        <div style={{ marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%', zIndex: 777 }}>
+                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0, zIndex: 777, marginRight: -12 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0, zIndex: 777 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0, zIndex: 777, marginRight: 0  }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5, zIndex: 777 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5, zIndex: 777 , marginRight: -12}} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
                             </IonButton>}
                             {balance ? (
