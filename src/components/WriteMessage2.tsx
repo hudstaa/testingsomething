@@ -31,7 +31,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
     // Adjust footer to move above the keyboard
     const footer = document.querySelector('.fixed-footer') as HTMLElement; // Type assertion
     if (footer) {
-      footer.style.bottom = '40vh'; // Adjust as needed
+      footer.style.bottom = '41vh'; // Adjust as needed
     }
   };
   
