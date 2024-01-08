@@ -123,7 +123,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
                 {member && <>
-                    <IonGrid style={{ padding: 0, borderBottom: '0px solid var(--ion-color-medium-shade', backgroundColor: 'var(--ion-color-tabblur)', zIndex: 999999}}>
+                    <IonGrid style={{ padding: 0, marginTop: -1,backgroundColor: 'var(--ion-color-tabblur)', zIndex: 999999}}>
                         <IonRow>
                             <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{ padding: '0px',backgroundColor: 'var(--ion-color-tabblur)' }}>
                                 <IonSegment className='custom1' color='tabblur' mode='md' value={segment}>
