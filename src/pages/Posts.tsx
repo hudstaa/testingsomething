@@ -180,7 +180,7 @@ const Posts: React.FC = () => {
                 </IonList>
             </IonMenu>
             <IonPage id="main-content" ref={pageRef}>
-            <IonHeader style={{ transform: `translateY(${toolbarY}px)`, transition: 'transform 0.3s ease' }}>
+            <IonHeader style={{ transform: `translateY(${toolbarY}px)`, transition: 'transform 0.5s ease',opacity: 1 + toolbarY / toolbarHeight }}>
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
                                 <IonMenuToggle>
