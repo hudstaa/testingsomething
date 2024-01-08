@@ -57,33 +57,6 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
   }, [message])
   const uid = getAuth().currentUser?.uid;
 
-  useEffect(() => {
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 0)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 10)
-    setTimeout(() => {
-      (document.querySelector("#modal-write-message textarea") as any)?.focus();
-    }, 100)
-  }, [isOpen])
-
-  useEffect(() => {
-    if (focused) {
-      textRef.current!.querySelector('textarea')!.focus();
-      setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 0)
-      setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 100)
-      setTimeout(() => {
-        textRef.current!.querySelector('textarea')!.focus();
-      }, 200)
-
-    }
-  }, [focused])
 
   const textRef = useRef<HTMLIonTextareaElement>(null);
 
