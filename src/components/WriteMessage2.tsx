@@ -1,4 +1,4 @@
-import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText } from "@ionic/react";
+import { IonToolbar, IonTextarea, IonButtons, IonButton, IonIcon, IonImg, IonAvatar, IonBadge, IonChip, IonText, IonFooter } from "@ionic/react";
 import { close, imageOutline, paperPlane, text } from "ionicons/icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import PfpUploader from "./UploadComponent";
@@ -77,26 +77,9 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
   return (
     <div>
     <IonToolbar color={bgColor} style={{ padding: 4, paddingBottom: 36, paddingLeft: 8, paddingRight: 8, border: 0 }} >
-      <div style={{display: 'flex', width: '100%'}}>
+      <div style={{display: 'flex', width: '100%', height: '50vh'}}>
       <div style={{backgroundColor: '', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '32px', width: '100%',display: 'flex'}}> 
-      {showMediaButton && (
-      <IonButtons slot='start'>
-        {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
-        }} />}
-
-        {message?.media &&
-          <IonChip onMouseDown={() => { removeMedia() }}>
-            <IonAvatar>
-
-              {message?.media?.type.includes('image') ? <IonImg src={message.media.src} /> :
-                <video webkit-playsinline playsInline preload="metadata" controls style={{ borderRadius: 20, margin: 'auto', width: "100%", marginTop: 5, marginLeft: 4 }} src={message.media.src + '#t=0.5'} />}
-            </IonAvatar>
-            <IonText color='danger'>
-              <IonIcon icon={close} />
-            </IonText>
-          </IonChip>}
-      </IonButtons>
-      )}
+      
       <IonTextarea
         autoFocus={isModal || focused}
         id={isModal ? 'modal-write-message' : undefined}
@@ -123,7 +106,28 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
       </div>
     </IonToolbar>
     <div>
-    <IonButtons slot='end'  style={{ maxHeight: 40, marginLeft: 8, marginTop: 6, marginRight: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10, position: 'absolute', bottom: 10, right: 5}}>
+     
+      </div>
+      <IonFooter style={{height: '25vh'}}>
+      {showMediaButton && (
+      <IonButtons style={{ position: 'absolute', bottom: 10, left: 5}} slot='start'>
+        {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
+        }} />}
+
+        {message?.media &&
+          <IonChip onMouseDown={() => { removeMedia() }}>
+            <IonAvatar>
+
+              {message?.media?.type.includes('image') ? <IonImg src={message.media.src} /> :
+                <video webkit-playsinline playsInline preload="metadata" controls style={{ borderRadius: 20, margin: 'auto', width: "100%", marginTop: 5, marginLeft: 4 }} src={message.media.src + '#t=0.5'} />}
+            </IonAvatar>
+            <IonText color='danger'>
+              <IonIcon icon={close} />
+            </IonText>
+          </IonChip>}
+      </IonButtons>
+      )}
+      <IonButtons slot='end'  style={{ maxHeight: 40, marginLeft: 8, marginTop: 6, marginRight: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10, position: 'absolute', bottom: 10, right: 5}}>
         <IonButton 
             disabled={strippedLength < 1} 
             onClick={async () => {
@@ -136,7 +140,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
             </IonText>
         </IonButton>
       </IonButtons>
-      </div>
+      </IonFooter>
     </div>
   );
 }
