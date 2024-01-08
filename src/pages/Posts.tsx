@@ -147,7 +147,7 @@ const Posts: React.FC = () => {
         const currentScroll = e.detail.scrollTop;
         const deltaY = currentScroll - lastScrollTop;
         const newToolbarY = Math.max(-toolbarHeight, Math.min(0, toolbarY - deltaY));
-        const shouldHideToolbar = currentScroll !== 0;
+        const shouldHideToolbar = currentScroll === 0;
         setHideToolbar(shouldHideToolbar);
         setToolbarY(newToolbarY);
         setLastScrollTop(currentScroll);
@@ -180,7 +180,7 @@ const Posts: React.FC = () => {
                 </IonList>
             </IonMenu>
             <IonPage id="main-content" ref={pageRef}>
-            <IonHeader style={{ transform: `translateY(${toolbarY}px)`, transition: 'transform 0.3s ease',opacity: hideToolbar ? 0 : 1 }}>
+            <IonHeader style={{ transform: `translateY(${toolbarY}px)`, transition: 'transform 0.3s ease' }}>
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
                                 <IonMenuToggle>
