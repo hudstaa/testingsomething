@@ -751,7 +751,7 @@ ion-segment-button {
   position: fixed;
   bottom: 0;
   width: 100%;
-  z-index: 1000; /* Ensure it's above other content */
+  transition: bottom 0.3s; /* Smooth transition for moving the footer */
 }
 
 .body-no-scroll {

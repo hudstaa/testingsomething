@@ -27,13 +27,23 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
     setIsTextAreaFocused(true);
     setShowMediaButton(true);
     document.body.classList.add('body-no-scroll'); // Prevent scrolling
-    // Adjust footer position if needed
+  
+    // Adjust footer to move above the keyboard
+    const footer = document.querySelector('.fixed-footer') as HTMLElement; // Type assertion
+    if (footer) {
+      footer.style.bottom = '50vh'; // Adjust as needed
+    }
   };
-
+  
   const handleBlur = () => {
     setIsTextAreaFocused(false);
     document.body.classList.remove('body-no-scroll'); // Allow scrolling
-    // Reset footer position if changed
+  
+    // Reset footer position
+    const footer = document.querySelector('.fixed-footer') as HTMLElement; // Type assertion
+    if (footer) {
+      footer.style.bottom = '0'; // Reset to original position
+    }
   };
 
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
