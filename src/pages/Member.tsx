@@ -76,20 +76,26 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
-                    <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonText style={{ paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
+            <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
+
+            <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
+  <img style={{ width: 72, height: 72, borderRadius: '24px', border: "3px solid var(--ion-color-light)", marginTop: 0 }} src={member?.twitterPfp || personOutline} />
+</div>
+<IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-36px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
+  
+                    <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0 }}>
+                        <IonText style={{ marginTop: '-4px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='dark' className='regular' style={{ opacity: 0.75, fontSize: '.95rem' }}>
+                            <IonText color='dark' className='regular' style={{  marginTop: '0px', opacity: 0.75, fontSize: '.95rem' }}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: '3px', paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+                        <div style={{ marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
@@ -103,9 +109,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 </div>
                             ) : null}
                         </div>
-                        <div style={{ marginLeft: -5, padding: 3 }}>
-                            <img style={{ width: 72, height: 72, borderRadius: '24px', border: "3px solid var(--ion-color-light" }} src={member?.twitterPfp || personOutline} />
-                        </div>
+                       
                     </IonCardHeader>
                 </IonCard>
 

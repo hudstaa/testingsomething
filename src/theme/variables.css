@@ -219,7 +219,7 @@ ion-segment {
 }
 
  ion-segment.custom1 {
-  --background: transparent !important;
+  --background: var(--ion-color-tabblur) !important;
 }
 
 ion-segment-button::part(indicator-background) {
