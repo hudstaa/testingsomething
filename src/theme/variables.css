@@ -747,6 +747,17 @@ ion-segment-button {
 
 }
 
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.body-no-scroll {
+  overflow: hidden; /* Prevent scrolling */
+}
+
 ion-segment-button::part(indicator) {
   width: 100%; /* Adjust this value to set the desired width */
   margin-left: auto;

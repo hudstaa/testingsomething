@@ -25,12 +25,17 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
 
   const handleFocus = () => {
     setIsTextAreaFocused(true);
-    setShowMediaButton(true); // Show the media button when textarea is focused
+    setShowMediaButton(true);
+    document.body.classList.add('body-no-scroll'); // Prevent scrolling
+    // Adjust footer position if needed
   };
+
   const handleBlur = () => {
     setIsTextAreaFocused(false);
-    // Optionally, add logic to determine when to hide the media button
+    document.body.classList.remove('body-no-scroll'); // Allow scrolling
+    // Reset footer position if changed
   };
+
   const { isOpen, removeMedia, message, setContent, setMedia, clearMessage} = useWriteMessage();
   const makeComment = useCallback(() => {
     const content = textRef.current?.value!;
@@ -77,7 +82,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
   return (
     <div>
     <IonToolbar color={bgColor} style={{ padding: 4, paddingBottom: 36, paddingLeft: 8, paddingRight: 8, border: 0 }} >
-      <div style={{display: 'flex', width: '100%', height: '50vh'}}>
+      <div style={{display: 'flex', width: '100%'}}>
       <div style={{backgroundColor: '', marginLeft: 0, marginTop: 4,paddingRight: 0, borderRadius: '32px', width: '100%',display: 'flex'}}> 
       
       <IonTextarea
@@ -108,7 +113,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
     <div>
      
       </div>
-      <IonFooter style={{height: '25vh'}}>
+      <IonFooter className="fixed-footer" style={{height: '25vh'}}>
       {showMediaButton && (
       <IonButtons style={{ position: 'absolute', bottom: 10, left: 5}} slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
