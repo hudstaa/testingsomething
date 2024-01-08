@@ -77,12 +77,12 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
             />
             < TribeContent fullscreen color={bgColor} >
                 <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
-                <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
+                <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 555, width: '100px' }}>
                     <img style={{ width: 80, height: 80, borderRadius: '24px', marginTop: 0, border: '2.5px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
                 </div>
-                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-50px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
+                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-50px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible', zIndex: 444 }}>
   
-                    <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0 }}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0, zIndex: 777 }}>
                         <IonText style={{ marginTop: '-6px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
@@ -94,13 +94,13 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         <IonText className='bold' color='dark' style={{ marginTop: '16px', paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
-                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
+                        <div style={{ marginRight: -12, marginTop: '-8px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%', zIndex: 777 }}>
+                            {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0, zIndex: 777 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0, zIndex: 777 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
-                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
+                            {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5, zIndex: 777 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
                                 <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
                             </IonButton>}
                             {balance ? (
