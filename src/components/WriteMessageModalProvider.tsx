@@ -37,7 +37,7 @@ export const WriteMessageModalProvider: React.FC = () => {
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot={'start'}>
-                        <div className="bold" >{postId ? 'Comments' : "New Post"}</div>
+                        <div className="bold" style={{fontSize: '1.15rem'}}>{postId ? 'Comments' : "New Post"}</div>
                     </IonButtons>
                 </IonToolbar>
 
