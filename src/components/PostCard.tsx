@@ -17,7 +17,6 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 import { TaggableContent } from "./TaggableContent"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
-    const { setTradeUri } = useNotifications();
     const Popover = () => <>
         <IonHeader>
             <IonToolbar color='tribe'>
@@ -28,8 +27,8 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
         </IonHeader>
         <IonContent className="ion-padding">
             <IonButton fill='clear' expand="full" onClick={() => {
-                dismiss()
-                push({ search: new URLSearchParams(hit.swap).toString(), pathname: '/swap' });
+                push('/swap?' + new URLSearchParams(hit.swap).toString());
+                dismiss();
             }}>
                 Swap for {content}
             </IonButton>
@@ -39,16 +38,15 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
     const emoji = hit && hit.emoji;
     const { push } = useHistory()
-    const [show, setShow] = useState<boolean>(false);
     const [present, dismiss] = useIonModal(Popover, {
         onDismiss: (data: any, role: string) => dismiss(data, role),
     });
 
     return <>
-        <a className="medium" href={'javascript:void(0)'} onClick={() => {
+        <a className="medium" onClick={() => {
             present();
         }}>
-            {content}
+            {emoji}{content}
         </a>
     </>
 }
@@ -212,7 +210,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
-                <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }} />
+                {/* <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }} /> */}
                 <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton>
             {/* <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {

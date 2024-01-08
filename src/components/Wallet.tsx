@@ -11,7 +11,7 @@ export const Wallet: React.FC = () => {
     const { data: ethBalance } = useBalance({ address: me?.address as any, watch: true })
 
     return <IonCard>
-        {me && <IonItem color='paper' lines='none' detail={false} href='javascript:void(0)' onClick={() => {
+        {me && <IonItem color='paper' lines='none' detail={false} onClick={() => {
             navigator.clipboard.writeText(me!.address);
             setShowToast(true);
         }}>

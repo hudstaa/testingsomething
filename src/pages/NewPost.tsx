@@ -57,7 +57,7 @@ const Posts: React.FC = () => {
     }
 
     return (
-        <IonPage id='main-content'>
+        <IonPage id='newpost-content'>
             <TribeHeader color='success' title={'New Post'} />
             <TribeContent fullscreen>
                 {me && <IonItem color='paper'>

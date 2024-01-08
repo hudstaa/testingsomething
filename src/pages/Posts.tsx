@@ -65,6 +65,7 @@ const Posts: React.FC = () => {
 
     const handleSegmentChange = (newValue: 'top' | 'recent') => {
         setPostType(newValue);
+        setFilterType('Feed');
         const params = new URLSearchParams(location.search);
         params.set('type', newValue);
         history.replace({ search: params.toString() }); // Use replace instead of push
@@ -146,7 +147,7 @@ const Posts: React.FC = () => {
     return (
 
         <>
-            <IonMenu type={menuType} contentId="main-content" >
+            <IonMenu type={menuType} contentId="pages-content" >
                 <IonList>
                     <IonToolbar>
                         <img src={'/icon.svg'} />
@@ -164,7 +165,7 @@ const Posts: React.FC = () => {
                     </IonMenuToggle>
                 </IonList>
             </IonMenu>
-            <IonPage id="main-content" ref={pageRef}>
+            <IonPage id="pages-content" ref={pageRef}>
                 <IonHeader style={{ padding: 0, marginBottom: '4.5vh' }}>
                     {!hideToolbar ?
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
@@ -201,7 +202,6 @@ const Posts: React.FC = () => {
                         </IonToolbar>
                         : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
                 </IonHeader>
-
                 {filterType === 'Feed' && < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                     const isCloseToTop = e.detail.scrollTop < 100;
                     const isCloseToBottom =
@@ -264,7 +264,6 @@ const Posts: React.FC = () => {
                         </IonSegment>
                     </div>
                 </IonFooter>
-                <TribeFooter page='posts' />
             </IonPage >
         </>
     );

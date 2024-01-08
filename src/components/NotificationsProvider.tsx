@@ -54,7 +54,7 @@ export const NotificationsProvider: React.FC = () => {
             </IonHeader>
             <IonContent>
                 {notifications.map(({ from, ref, timestamp, to, id, message }) => {
-                    return <IonItem href='javascript:void(0)' onMouseDown={() => {
+                    return <IonItem onMouseDown={() => {
                         push("/" + ref.split('/')[0] + '/' + ref.split('/')[1])
                         deleteDoc(doc(getFirestore(app), 'notifications', id))
                         hide();

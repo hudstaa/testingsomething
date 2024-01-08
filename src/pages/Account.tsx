@@ -149,7 +149,7 @@ const Account: React.FC = () => {
                                 </IonButtons>
                             </IonItem>
 
-                            <IonItem color='paper' lines='none' detail={false} href='javascript:void(0)' onClick={() => {
+                            <IonItem color='paper' lines='none' detail={false} onClick={() => {
                                 navigator.clipboard.writeText(me.address);
                                 setShowToast(true);
                             }}>
@@ -173,7 +173,7 @@ const Account: React.FC = () => {
                                     </IonText>
                                 </IonButtons>
                             </IonItem>
-                            <IonItem color='paper' lines='none' detail={false} href={'javascript:void(0)'} onClick={() => {
+                            <IonItem color='paper' lines='none' detail={false} onClick={() => {
                                 exportWallet();
                             }}>
                                 <IonButtons slot='start' >
