@@ -57,7 +57,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
         }
     }, [member]);
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const bgColor = darkmode ? 'black' : 'white';
+    const bgColor = darkmode ? 'black' : 'transparent';
     const { setPresentingElement } = useWriteMessage()
     const pageRef = useRef<any>(null)
 
