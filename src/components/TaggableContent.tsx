@@ -19,6 +19,8 @@ export const TaggableContent: React.FC<PropsWithChildren> = ({ children }) => {
                 // return <CashTag content={content} />
             } else if (content.startsWith("@")) {
                 return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />
+            } else {
+                return <a {...props}>{content}</a>
             }
         },
         formatHref:

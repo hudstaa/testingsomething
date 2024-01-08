@@ -166,7 +166,7 @@ const Posts: React.FC = () => {
                 </IonList>
             </IonMenu>
             <IonPage id="pages-content" ref={pageRef}>
-                <IonHeader>
+                {filterType === 'Feed' && <IonHeader>
                     {!hideToolbar ?
                         <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
@@ -201,7 +201,7 @@ const Posts: React.FC = () => {
                             </IonButtons>
                         </IonToolbar>
                         : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
-                </IonHeader>
+                </IonHeader>}
                 {filterType === 'Feed' && < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                     const isCloseToTop = e.detail.scrollTop < 100;
                     const isCloseToBottom =
