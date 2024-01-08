@@ -76,12 +76,11 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
-            <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
-
-            <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
-  <img style={{ width: 72, height: 72, borderRadius: '24px', marginTop: 0 }} src={member?.twitterPfp || personOutline} />
-</div>
-<IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-36px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
+                <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
+                <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
+                    <img style={{ width: 72, height: 72, borderRadius: '24px', marginTop: 0, border: '4px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
+                </div>
+                <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-38px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
   
                     <IonCardHeader className='ion-image-left' style={{ padding: 15, boderBottom: 0 }}>
                         <IonText style={{ marginTop: '-4px', paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
@@ -124,10 +123,10 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     {member && <SubscribeButton topic={member.address} uid={nativeAuth().currentUser?.uid || ""} />}
                 </>}
                 {member && <>
-                    <IonGrid style={{ padding: 0, borderBottom: '1px solid var(--ion-color-medium-shade', backgroundColor: 'var(--ion-color-tabblur)' }}>
+                    <IonGrid style={{ padding: 0, borderBottom: '1px solid var(--ion-color-medium-shade', backgroundColor: 'var(--ion-color-tabblur)', zIndex: 999999}}>
                         <IonRow>
-                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{ padding: '0px' }}>
-                                <IonSegment className='custom1' color='transparent' mode='md' value={segment}>
+                            <IonCol sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='0' sizeSm='12' style={{ padding: '0px',backgroundColor: 'var(--ion-color-tabblur)' }}>
+                                <IonSegment className='custom1' color='tabblur' mode='md' value={segment}>
                                     {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton style={{ margin: 0 }} value={'posts'} onClick={() => { setSegment('posts') }} >
                                         <span className='bold' style={{ fontSize: '1rem' }}>Posts</span>
                                     </IonSegmentButton>}
@@ -154,7 +153,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     {
                         segment === 'posts' && <IonGrid style={{ padding: 0 }}>
                             <IonRow>
-                                <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
+                                <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ backgroundColor: 'var(--ion-color-tabblur)',zIndex: 999999, padding: 0 }}>
                                     {member!==null&&member.address&&<PostList type={'top'} max={10} from={member!.address} />}
                                 </IonCol></IonRow></IonGrid>
                     }
