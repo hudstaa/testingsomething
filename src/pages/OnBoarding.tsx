@@ -1,14 +1,14 @@
 import { Browser } from '@capacitor/browser'
-import { IonBadge, IonButton, IonContent, IonIcon, IonLabel, IonLoading, IonSpinner, IonText, IonTitle, isPlatform } from "@ionic/react"
+import { IonBadge, IonButton, IonContent, IonIcon, IonLabel, IonLoading, IonSpinner, IonText, IonTitle, isPlatform, useIonViewDidEnter, useIonViewDidLeave } from "@ionic/react"
 import { usePrivy } from "@privy-io/react-auth"
 import axios from "axios"
 import { signInWithCustomToken } from "firebase/auth"
 import { doc, getDoc, getFirestore } from "firebase/firestore"
 import { getFunctions, httpsCallable } from "firebase/functions"
 import { checkmark } from "ionicons/icons"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { app } from "../App"
-import { nativeAuth } from "../lib/sugar"
+import { hideTabs, nativeAuth, showTabs } from "../lib/sugar"
 import { useMember } from '../hooks/useMember'
 import { useLocation, useHistory } from 'react-router'
 export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dismiss }) => {
@@ -21,6 +21,9 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
     const walletAddress = user?.wallet?.address;
     const { setCurrentUser } = useMember();
     const [refresh, setRefresh] = useState<number>(0)
+    
+    const pageRef = useRef<any>(null)
+
     const [tribeLoading, setLoading] = useState<boolean>(false)
     useEffect(() => {
         auth.onAuthStateChanged(async (currentUser) => {
@@ -65,7 +68,13 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
             });
         })
     }, [user, ready, auth])
+    useIonViewDidEnter(() => {
+        hideTabs();
+    })
+    useIonViewDidLeave(() => {
+        showTabs();
 
+    })
     const navigate = useHistory();
     const path = location.pathname
     return (
@@ -113,3 +122,5 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
         </IonContent>
     );
 }
+
+

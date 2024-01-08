@@ -37,7 +37,7 @@ import { TribeHeader } from '../components/TribeHeader';
 import { useMember } from '../hooks/useMember';
 import { usePost } from '../hooks/usePosts';
 import { useWriteMessage } from '../hooks/useWriteMessage';
-import { nativeAuth } from '../lib/sugar';
+import { nativeAuth, showTabs } from '../lib/sugar';
 import { OnBoarding } from './OnBoarding';
 import { TribePage } from './TribePage';
 import { chevronDown, chevronUp, listCircle, notifications } from 'ionicons/icons';
@@ -101,6 +101,7 @@ const Posts: React.FC = () => {
     const { setPresentingElement } = useWriteMessage()
     const pageRef = useRef<any>(null)
     useIonViewDidEnter(() => {
+        showTabs();
         setPresentingElement(pageRef.current)
     })
     useEffect(() => {
