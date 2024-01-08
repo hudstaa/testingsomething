@@ -78,7 +78,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
             < TribeContent fullscreen color={bgColor} >
                 <IonImg src={member?.twitterPfp} style={{ width: '100%', height: '5vh', filter: 'blur(5px)', transform: 'scale(10)', overflow: 'hidden' }} />
                 <div style={{ paddingLeft: '12px', position: 'relative', zIndex: 999999 }}>
-                    <img style={{ width: 80, height: 80, borderRadius: '24px', marginTop: 0, border: '4px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
+                    <img style={{ width: 80, height: 80, borderRadius: '24px', marginTop: 0, border: '2.5px solid var(--ion-color-tabblur)' }} src={member?.twitterPfp || personOutline} />
                 </div>
                 <IonCard color={'black'} style={{ backgroundColor: 'var(--ion-color-tabblur)', marginLeft: 0, marginRight: 0, marginTop: '-50px', marginBottom: 0, padding: 0, borderRadius: 0, overflow: 'visible' }}>
   
