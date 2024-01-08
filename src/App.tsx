@@ -65,6 +65,7 @@ import './theme/variables.css';
 
 setupIonicReact({
   rippleEffect: false,
+  swipeBackEnabled: false,
   mode: 'ios',
 });
 const { chains, publicClient } = configureChains(
@@ -254,11 +255,11 @@ const App: React.FC = () => {
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
           <WriteMessageModalProvider />
-          <IonReactHashRouter >
+          <IonReactHashRouter  >
             <ShowMemberModalProvider />
             <NotificationsProvider />
             <IonTabs>
-            <IonRouterOutlet animated={false}>
+              <IonRouterOutlet animated={false} >
                 <Route exact path="/channel">
                   <Chat />
                 </Route>
@@ -266,7 +267,7 @@ const App: React.FC = () => {
                   <Room />
                 </Route>
                 <Route path="/channel/undefined">
-                  <Redirect to="/channel"/>
+                  <Redirect to="/channel" />
                 </Route>
                 <Route path="/post/:id" exact>
                   <Post />
@@ -322,14 +323,14 @@ const App: React.FC = () => {
                 {/* <IonTabButton tab="swap" href="/swap">
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : 'invert(100%)' }} icon={tab === 'channel' ? '/icons/wallet.svg' : '/icons/wallet2.svg'} />
                 </IonTabButton> */}
-                 <IonTabButton tab="channel" href="/channel">
+                <IonTabButton tab="channel" href="/channel">
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : 'invert(100%)' }} icon={tab === 'channel' ? '/icons/msg.svg' : '/icons/msg2.svg'} />
-                </IonTabButton> 
+                </IonTabButton>
                 <IonTabButton tab="account" href="/account">
                   <NotifBadge />
                   <IonIcon style={{ filter: darkmode ? 'invert(100%)' : 'invert(100%)' }} icon={tab === 'account' ? '/icons/usr.svg' : '/icons/usr2.svg'} />
                 </IonTabButton>
-                </IonTabBar>
+              </IonTabBar>
             </IonTabs>
 
           </IonReactHashRouter>
