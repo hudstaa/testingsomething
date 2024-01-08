@@ -16,6 +16,7 @@ import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
 import { chevronBack, chevronDown, push } from 'ionicons/icons';
 import { MemberPfpImg } from '../components/MemberBadge';
+import { CommentTree } from '../components/CommentTree';
 
 
 
@@ -38,7 +39,7 @@ const Post: React.FC = () => {
         id && uid && getDoc(doc(getFirestore(app), 'post', id, 'votes', uid!)).then((postDoc) => {
             setVoteCache(postDoc.data()?.vote || null);
         })
-    }, [id, uid]) 
+    }, [id, uid])
 
     const { setPresentingElement, commentPath, message } = useWriteMessage()
     const pageRef = useRef<any>(null)
@@ -46,18 +47,18 @@ const Post: React.FC = () => {
     const [shouldFocusWriteMessage, setShouldFocusWriteMessage] = useState(false);
 
     const focusOnTextArea = () => {
-      textAreaRef.current?.setFocus();
+        textAreaRef.current?.setFocus();
     };
 
     const triggerFocusOnWriteMessage = () => {
         setShouldFocusWriteMessage(true);
-      };
+    };
 
     useEffect(() => {
         if (shouldFocusWriteMessage) {
-          setShouldFocusWriteMessage(false);
+            setShouldFocusWriteMessage(false);
         }
-      }, [shouldFocusWriteMessage]);
+    }, [shouldFocusWriteMessage]);
 
     useIonViewDidEnter(() => {
         hideTabs();
@@ -109,8 +110,8 @@ const Post: React.FC = () => {
         }
     }, [me])
     const contentRef = useRef<HTMLIonContentElement>(null)
-    const {push}=useHistory()
-    const {notifications:notifs}=useNotifications()
+    const { push } = useHistory()
+    const { notifications: notifs } = useNotifications()
     if (id === 'new') {
         return <NewPost />
     }
@@ -118,7 +119,7 @@ const Post: React.FC = () => {
         return <OnBoarding me={me} dismiss={() => { }} />
     }
     return <IonPage color={bgColor} ref={pageRef}>
-        <TribeHeader showBackButton={true} title=''/>
+        <TribeHeader showBackButton={true} title='' />
         <IonContent color={bgColor} ref={contentRef}>
             <IonGrid style={{ padding: 0 }}>
                 <IonRow>
@@ -131,9 +132,7 @@ const Post: React.FC = () => {
             </IonGrid>
         </IonContent>
         <IonFooter>
-            {commentPath && <IonItem>
-                {commentPath}
-            </IonItem>}
+            {commentPath && <CommentTree postId={post?.id || ""} commentPath={commentPath} />}
             <WriteMessage sendMessage={(message) => {
                 makeComment(id, message).then(() => {
                     contentRef.current?.scrollToBottom(500);

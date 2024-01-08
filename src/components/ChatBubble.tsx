@@ -7,6 +7,7 @@ import { timeAgo } from "./TradeItem";
 import Linkify from "linkify-react";
 import { CashTag } from "./PostCard";
 import { known_pairs } from "../lib/sugar";
+import { TaggableContent } from "./TaggableContent";
 
 export const NewChatBubble: React.FC<{ message: Message, me: string, channel: string, reply: (messageId: string) => void }> = ({ message, me, channel, reply }) => {
     const isMe = me === message.author;
@@ -82,9 +83,9 @@ export const NewChatBubble: React.FC<{ message: Message, me: string, channel: st
             )}
             <div className={(isMe ? "send" : "recieve") + ' msg regular'} style={textBubbleStyle}>
                 {alias}
-                <Linkify>
+                <TaggableContent>
                     {message.content}
-                </Linkify>
+                </TaggableContent>
                 {time}
             </div>
         </div>
@@ -159,25 +160,9 @@ export const RenderReply: React.FC<{ messageId: string, channel: string, isReply
     const isMe = me === message.author;
 
     const contentBubble = !message.media ? <div key={messageId + 'content'} style={{ margin: '0px', paddingTop: 4, paddingBottom: 10, font: 'Avenir', whiteSpace: 'pre-wrap' }} className={(isMe ? "send" : "recieve") + ' msg regular'}>
-        <Linkify options={{
-            render: ({ attributes, content, eventListeners, tagName }) => {
-                if (content.startsWith("$")) {
-                    const info = known_pairs[content.toLowerCase().slice(1)];
-                    if (!info) {
-                        return <a {...attributes}>{content}</a>
-                    }
-                    return <CashTag content={content} />
-                } else if (content.startsWith("@")) {
-                    return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />
-                }
-            },
-            formatHref:
-            {
-                mention: (href) => "https://tribe.computer/member/" + href.substring(1),
-            }
-        }}>
+        <TaggableContent>
             {message.content}
-        </Linkify>    </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
+        </TaggableContent>    </div> : <img key={messageId + 'img'} style={{ margin: '0px!important' }} className={(isMe ? "send" : "recieve") + ' reply msg image-msg regular'} height={50} src={message.media.src} />
 
     const items = [
         // <ChatMemberPfp style={{ margin: '0px!important', position: 'absolute', bottom: 0, left: !isMe ? -20 : undefined, right: !isMe ? undefined : -20 }} size="veru-smol" address={message.author} />

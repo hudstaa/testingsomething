@@ -56,63 +56,64 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
         <IonList style={{ marginRight: offset ? -35 : undefined }}>
             {comments.map((comment, i) => (
                 < div key={i}>
-                    <div style={{backgroundColor: "var(--ion-color-paper"}}>
-                    <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -8, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
-                        <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 38, top: -2.5, fontSize: "1rem"}}>
-                        <MemberAlias color='dark' address={comment.author} />
-                        </IonButtons>
-                        <div style={{position: 'absolute', top: 0, marginLeft: 0, borderRadius: 100}}><MemberPfp color='dark' size="veru-smol" style={{ top: 0}}address={comment.author} />
-                        </div>
-                        <div style={{display: "flex", flexDirection: "column"}}>
-                        <IonText className='regular' color='dark' style={{ paddingLeft:0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 38, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em'}} >
-                            <Linkify>
-                                {comment.content}
-                            </Linkify>
-                        </IonText>
-                        
-                        </div>
-
-                        
-                    </IonItem>
-                    {
-                        comment.media &&
-                        <IonItem lines="none" color='lightt' style={{ marginLeft: 30, marginRight: 32, paddingBottom: 4, paddingTop: 8}} >
-                            {comment.media.type.includes("image") ?
-                                <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
-                        </IonItem>
-                    }
-                    
-                    <IonItem lines="none" color={'lightt'}>
-                    <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        {/* Reply/Time Ago section on the left */}
-                        <div style={{ display: "flex", alignItems: "center", fontSize: ".975rem", opacity: '50%' }}>
-                            <IonButtons style={{ paddingBottom: 0, marginLeft: 30 }}>
-                                <IonText>
-                                    <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
-                                </IonText>
+                    {comment.reply && comment.reply}
+                    <div style={{ backgroundColor: "var(--ion-color-paper" }}>
+                        <IonItem lines="none" color={'lightt'} style={{ marginTop: 0, marginLeft: -8, marginBottom: 0, paddingTop: 12, paddingBottom: 0, paddingRight: 24 }} >
+                            <IonButtons slot='start' style={{ position: 'absolute', paddingLeft: 38, top: -2.5, fontSize: "1rem" }}>
+                                <MemberAlias color='dark' address={comment.author} />
                             </IonButtons>
-                            <IonText color={'dark'} className='medium' style={{ marginLeft: 4 }}>
-                                • {timestampAgo(comment.sent)}
-                            </IonText>
-                        </div>
+                            <div style={{ position: 'absolute', top: 0, marginLeft: 0, borderRadius: 100 }}><MemberPfp color='dark' size="veru-smol" style={{ top: 0 }} address={comment.author} />
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "column" }}>
+                                <IonText className='regular' color='dark' style={{ paddingLeft: 0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 38, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em' }} >
+                                    <Linkify>
+                                        {comment.content}
+                                    </Linkify>
+                                </IonText>
 
-                        {/* Voter component on the right */}
-                        <IonButtons style={{ paddingRight: 28 }}>
-                            <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
-                                const db = getFirestore(app);
-                                const uid = getAuth().currentUser!.uid;
-                                const postRef = doc(db, 'post', postId);
-                                const commentRef = doc(postRef, 'comments', comment.id);
-                                const voteRef = doc(commentRef, 'votes', uid);
-                                const vote = upvote ? 1 : -1;
-                                setDoc(voteRef, ({ vote }));
-                            }} />
-                        </IonButtons>
-                    </div>
+                            </div>
+
 
                         </IonItem>
-                        
-                </div>
+                        {
+                            comment.media &&
+                            <IonItem lines="none" color='lightt' style={{ marginLeft: 30, marginRight: 32, paddingBottom: 4, paddingTop: 8 }} >
+                                {comment.media.type.includes("image") ?
+                                    <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
+                            </IonItem>
+                        }
+
+                        <IonItem lines="none" color={'lightt'}>
+                            <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                {/* Reply/Time Ago section on the left */}
+                                <div style={{ display: "flex", alignItems: "center", fontSize: ".975rem", opacity: '50%' }}>
+                                    <IonButtons style={{ paddingBottom: 0, marginLeft: 30 }}>
+                                        <IonText>
+                                            <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
+                                        </IonText>
+                                    </IonButtons>
+                                    <IonText color={'dark'} className='medium' style={{ marginLeft: 4 }}>
+                                        • {timestampAgo(comment.sent)}
+                                    </IonText>
+                                </div>
+
+                                {/* Voter component on the right */}
+                                <IonButtons style={{ paddingRight: 28 }}>
+                                    <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
+                                        const db = getFirestore(app);
+                                        const uid = getAuth().currentUser!.uid;
+                                        const postRef = doc(db, 'post', postId);
+                                        const commentRef = doc(postRef, 'comments', comment.id);
+                                        const voteRef = doc(commentRef, 'votes', uid);
+                                        const vote = upvote ? 1 : -1;
+                                        setDoc(voteRef, ({ vote }));
+                                    }} />
+                                </IonButtons>
+                            </div>
+
+                        </IonItem>
+
+                    </div>
                 </div>))
             }
         </IonList >

@@ -14,6 +14,7 @@ import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
+import { TaggableContent } from "./TaggableContent"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const { setTradeUri } = useNotifications();
@@ -186,26 +187,9 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         <IonCardContent style={{ paddingLeft: 46, marginLeft: 0, paddingBottom: 1, paddingTop: 0, margin: 0, paddingRight: 16, marginTop: '-10px' }}  >
             <div>
                 <IonText color='dark' className='regular' style={{ whiteSpace: 'pre-wrap', fontSize: onPostPage ? '1.05rem' : '.975rem', letterSpacing: '.0135em' }} onClick={() => { }}>
-                    <Linkify options={{
-                        render: ({ attributes, content, eventListeners, tagName }) => {
-                            if (content.startsWith("$")) {
-                                const info = sugar.known_pairs[content.toLowerCase().slice(1)];
-                                if (!info) {
-                                    return <a {...attributes}>{content}</a>
-                                }
-                                return <CashTag content={content} />
-                            } else if (content.startsWith("@")) {
-                                return <TwitterNameLink twitterName={content.toLowerCase().slice(1)} />
-                            }
-                        },
-                        formatHref:
-                        {
-                            mention: (href) => "https://tribe.computer/member/" + href.substring(1),
-                        }
-                    }}>
+                    <TaggableContent>
                         {content}
-                    </Linkify>
-
+                    </TaggableContent>
                 </IonText>
             </div>
             {media && (
@@ -224,13 +208,13 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
             </IonButton>
-            {/* <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {
+            <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }} />
                 <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
-            </IonButton> */}
+            </IonButton>
             {/* <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)

@@ -45,6 +45,8 @@ import { MemberPfp, MemberPfpImg } from '../components/MemberBadge';
 import { useNotifications } from '../hooks/useNotifications';
 import { removeUndefinedProperties } from '../components/WriteMessage';
 import type { RadioGroupCustomEvent } from '@ionic/react';
+import Swap from './Swap';
+import { Wallet } from '../components/Wallet';
 
 
 
@@ -200,7 +202,7 @@ const Posts: React.FC = () => {
                         : <IonToolbar style={{ maxHeight: 0 }} color='transparent' />}
                 </IonHeader>
 
-                < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
+                {filterType === 'Feed' && < IonContent color={bgColor} fullscreen onIonScroll={(e: any) => {
                     const isCloseToTop = e.detail.scrollTop < 100;
                     const isCloseToBottom =
                         e.detail.scrollTop + e.target.clientHeight >=
@@ -238,7 +240,11 @@ const Posts: React.FC = () => {
                             +
                         </div>}
                     </IonFab>
-                </IonContent >
+                </IonContent >}
+                {filterType === 'Apps' && <IonContent fullscreen>
+                    <Swap /></IonContent>}
+                {filterType === 'Wallet' && <IonContent fullscreen>
+                    <Wallet /></IonContent>}
                 <IonFooter color='black'>
                     <div style={{ marginBottom: -2, paddingBottom: 2, backgroundColor: "black", display: 'flex', flexDirection: 'row', borderTopLeftRadius: '28px', borderTopRightRadius: '28px', paddingLeft: 8, paddingRight: 8, paddingTop: 6 }}>
                         <IonSegment
