@@ -30,6 +30,8 @@ const Account: React.FC = () => {
     const uid = auth.currentUser ? auth.currentUser.uid : undefined;
     const me = useMember(x => x.getCurrentUser());
     const { setCurrentUser } = useMember();
+    const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const bgColor = darkmode ? 'black' : 'white';
     const { search } = useLocation();
 
     const searchParams = useMemo(() => new URLSearchParams(search), [search]);
@@ -132,7 +134,7 @@ const Account: React.FC = () => {
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
-                <TribeContent >
+                <TribeContent  color={bgColor}>
                     <IonGrid>
                         <IonRow>
                             <IonCol offsetMd='2' sizeMd='8' sizeXs='12'>
