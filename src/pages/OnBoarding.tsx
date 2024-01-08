@@ -59,7 +59,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
         }
         auth.authStateReady().then((state) => {
             getAccessToken().then((privyToken) => {
-                axios.post('https://us-central1-remilio-tribe.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
+                axios.post('/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
                     signInWithCustomToken(auth, res.data.authToken)
                 });
             });
@@ -94,7 +94,7 @@ export const OnBoarding: React.FC<{ me: any, dismiss: () => void }> = ({ me, dis
                             <IonLabel color='dark'>
                                 {!ready && <></>}
                                 {me === null && ready && user !== null && (
-                                    <> 
+                                    <>
                                         <br />
                                         <IonSpinner name="crescent" />
                                         <br />

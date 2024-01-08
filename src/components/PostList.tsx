@@ -4,7 +4,7 @@ import { app } from "../App";
 import { useMember } from "../hooks/useMember";
 import { nativeAuth } from "../lib/sugar";
 import { PostCard } from "./PostCard";
-import { IonButton, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRefresher, IonRefresherContent } from "@ionic/react";
+import { IonButton, IonCard, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonRefresher, IonRefresherContent, IonToolbar } from "@ionic/react";
 import { useNotifications } from "../hooks/useNotifications";
 import { Post, usePost } from "../hooks/usePosts";
 import { useWriteMessage } from "../hooks/useWriteMessage";
@@ -25,7 +25,7 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
         const db = getFirestore(app);
         const postsRef = query(collection(db, 'post'), orderBy(type == 'top' ? 'score' : 'sent', type == 'top' ? 'desc' : 'desc'), limit(currentMax));
         const authorPostsRef = query(collection(db, 'post'), orderBy('author'), where('author', from ? '==' : '!=', from ? from : null), orderBy(type == 'top' ? 'score' : 'sent', 'desc'), limit(currentMax));
-        
+
         getDocs(from ? authorPostsRef : postsRef).then(snapshot => {
             const postsData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id, sent: doc.data().sent == null ? new Timestamp(new Date().getSeconds(), 0) : doc.data().sent }));
             setPostsData(postsData as Post[])
@@ -98,7 +98,6 @@ export const PostList: React.FC<{ type: 'top' | 'recent', max: number, from?: st
         }
     }, [currentMax, posts.length])
     return <>
-
         {useMemo(() => posts.map((post) => (
             <PostCard hideComments key={post.id} {...post} handleVote={handleVote} makeComment={makeComment} voted={voted[post.id]} uid={auth.currentUser?.uid} />
         )), [type, posts, voted])}

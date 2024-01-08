@@ -19,7 +19,7 @@ import {
     IonPage,
     IonLabel,
     IonRow,
-    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList
+    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList, IonRefresher, IonRefresherContent
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -222,9 +222,12 @@ const Posts: React.FC = () => {
                         !hideToolbar && setHideToolbar(true)
                     }
                 }} scrollEvents>
-                    <IonHeader>
-                        <IonToolbar className='transparent' style={{ height: 0 }} />
-                    </IonHeader>
+                    <IonRefresher onIonRefresh={() => {
+                        alert('refresh')
+                    }}>
+                        <IonRefresherContent></IonRefresherContent>
+                    </IonRefresher>
+
                     <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
                         <SwiperSlide>
                             <PostList type='top' max={10} />

@@ -44,6 +44,7 @@ const config: CapacitorConfig = {
       "https://goerli.base.org",
       "https://base-goerli.blastapi.io/fe9c30fc-3bc5-4064-91e2-6ab5887f8f4d",
       "us-central1-tribal-pass.cloudfunctions.net",
+      "us-central1-remillio-tribe.cloudfunctions.net",
       "*"
     ]
   }
