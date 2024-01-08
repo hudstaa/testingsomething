@@ -97,7 +97,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
      
       </div>
       <IonFooter className="fixed-footer" style={{height: '5vh'}}>
-      {showMediaButton && (
+
       <IonButtons style={{ position: 'absolute', bottom: 20, left: 5}} slot='start'>
         {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
         }} />}
@@ -114,7 +114,7 @@ export const WriteMessage2: React.FC<{ placeHolder: string, address: string, sen
             </IonText>
           </IonChip>}
       </IonButtons>
-      )}
+      
       <IonButtons slot='end'  style={{ maxHeight: 40, marginLeft: 8, marginTop: 6, marginRight: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10, position: 'absolute', bottom: 20, right: 5}}>
         <IonButton 
             disabled={strippedLength < 1} 
