@@ -2,10 +2,15 @@ import {
   IonApp,
   IonBadge,
   IonIcon,
+  IonItem,
+  IonList,
+  IonMenu,
+  IonMenuToggle,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonToolbar,
   setupIonicReact
 } from '@ionic/react';
 import { IonReactHashRouter } from '@ionic/react-router';
@@ -41,7 +46,7 @@ import { initializeApp } from "firebase/app";
 import { signInWithCustomToken } from 'firebase/auth';
 import { useEffect } from 'react';
 import { base, baseGoerli } from 'viem/chains';
-import { configureChains, createConfig, createStorage, useChainId } from 'wagmi';
+import { configureChains, createConfig, createStorage, useChainId, useSwitchNetwork } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
@@ -208,15 +213,15 @@ const DeepLinkProvider: React.FC = () => {
   const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
   const { wallets } = useWallets();
   const chainId = useChainId()
-  // const { switchNetwork } = useSwitchNetwork();
-  // useEffect(() => {
-  //   wallets.forEach((wallet) => {
-  //     if (wallet.connectorType === 'embedded') {
-  //       // setActiveWallet(wallet);
-  //       // switchNetwork && switchNetwork(baseGoerli.id);
-  //     }
-  //   })
-  // }, [wallets, activeWallet]);
+  const { switchNetwork } = useSwitchNetwork();
+  useEffect(() => {
+    wallets.forEach((wallet) => {
+      if (wallet.connectorType === 'embedded') {
+        setActiveWallet(wallet);
+        switchNetwork && switchNetwork(baseGoerli.id);
+      }
+    })
+  }, [wallets, activeWallet]);
   useEffect(() => {
     CapacitorApp.addListener('appUrlOpen', (event) => {
       Browser.close();
@@ -259,6 +264,9 @@ const App: React.FC = () => {
           <IonReactHashRouter  >
             <ShowMemberModalProvider />
             <NotificationsProvider />
+
+
+
             <IonTabs>
               <IonRouterOutlet animated={false} >
                 <Route exact path="/channel">

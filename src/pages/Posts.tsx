@@ -147,6 +147,7 @@ const Posts: React.FC = () => {
     return (
 
         <>
+
             <IonMenu type={menuType} contentId="pages-content" >
                 <IonList>
                     <IonToolbar>
@@ -165,6 +166,7 @@ const Posts: React.FC = () => {
                     </IonMenuToggle>
                 </IonList>
             </IonMenu>
+
             <IonPage id="pages-content" ref={pageRef}>
                 {filterType === 'Feed' && <IonHeader>
                     {!hideToolbar ?
