@@ -27,34 +27,10 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const outputCurrency = hit?.swap.outputCurrency;
     const outputChain = hit?.swap.chain;
     const outputID = hit?.id;
-    const [showModal, setShowModal] = useState(false);
     const emoji = hit?.emoji;
-
-    const Popover = () => (
-        <>
-          <IonContent style={{padding: 0}}>
-            {outputID && (
-              <TokenInfo 
-                id={outputID} 
-                contractId={outputCurrency} 
-                chainName={outputChain} 
-                content={content}
-                onGetToken={() => {
-                  push('/swap?' + new URLSearchParams(hit.swap).toString());
-                  dismiss();
-                }}
-              />
-            )}
-          </IonContent>
-        </>
-      );
-    const presentingElement = document.querySelector('ion-router-outlet') as HTMLElement | undefined;
-    const modal = useRef<HTMLIonModalElement>(null);
+    const [showModal, setShowModal] = useState(false);
 
     const { push } = useHistory();
-    const [present, dismiss] = useIonModal(Popover, {
-        onDismiss: (data: any, role: string) => dismiss(data, role),
-    });
 
     return (
         <>
@@ -64,15 +40,14 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     
             <IonModal
                 isOpen={showModal}
-                ref={modal}
+                onDidDismiss={() => setShowModal(false)}
                 initialBreakpoint={0.4} 
-                breakpoints={[0, 0.4, 1]} 
+                breakpoints={[0, 0.4, 1]}
             >
                 <IonContent style={{padding: 0}}>
                     {outputID && (
                         <TokenInfo 
                             id={outputID}
-                            
                             contractId={outputCurrency} 
                             chainName={outputChain} 
                             content={content}
@@ -86,7 +61,6 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
             </IonModal>
         </>
     );
-    
 };
 
 export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
