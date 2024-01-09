@@ -10,7 +10,6 @@ export const TaggableContent: React.FC<PropsWithChildren> = ({ children }) => {
                 return <></>
             }
             const content = props.content;
-            console.log(content);
             if (content.startsWith("$")) {
                 // const info = sugar.known_pairs[content.toLowerCase().slice(1)];
                 // if (!info) {

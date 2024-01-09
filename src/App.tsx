@@ -213,12 +213,11 @@ const DeepLinkProvider: React.FC = () => {
   const { wallet: activeWallet, setActiveWallet, ready: wagmiReady } = usePrivyWagmi();
   const { wallets } = useWallets();
   const chainId = useChainId()
-  const { switchNetwork } = useSwitchNetwork();
+  console.log(chainId);
   useEffect(() => {
     wallets.forEach((wallet) => {
       if (wallet.connectorType === 'embedded') {
         setActiveWallet(wallet);
-        switchNetwork && switchNetwork(baseGoerli.id);
       }
     })
   }, [wallets, activeWallet]);
@@ -256,7 +255,7 @@ const App: React.FC = () => {
   const { tab } = useTabs();
   const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   return <IonApp>
-    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ defaultChain: baseGoerli, appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, additionalChains: [base], loginMethods: ['twitter', 'email'] }} >
+    <PrivyProvider appId={'clndg2dmf003vjr0f8diqym7h'} config={{ defaultChain: baseGoerli, appearance: { theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }, supportedChains: [baseGoerli], loginMethods: ['twitter', 'email'] }} >
       <PrivyWagmiConnector wagmiChainsConfig={config as any}>
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
@@ -299,9 +298,6 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/post/" exact>
                   <Posts />
-                </Route>
-                <Route path="/coin/new" exact>
-                  <AddCoin />
                 </Route>
                 <Route path="/swap" exact>
                   <Swap />

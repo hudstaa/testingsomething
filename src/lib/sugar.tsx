@@ -1444,7 +1444,7 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
     },
     "crv": {
         "logo": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xD533a949740bb3306d119CC777fa900bA034cd52/logo.png",
-        "symbol": "CRV",
+        "symbol": "CRVUSD",
         "emoji": "",
         "swap": {
             "outputCurrency": "0xD533a949740bb3306d119CC777fa900bA034cd52",
@@ -1454,7 +1454,7 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
     },
     "uni": {
         "logo": "ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg",
-        "symbol": "UNI",
+        "symbol": "UNIUSD",
         "emoji": "",
         "swap": {
             "outputCurrency": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
