@@ -55,9 +55,9 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
         </IonGrid>
         <div style={{  marginBottom: '5%', width: '100%' }}>
           <IonButtons style={{display: 'flex', justifyContent: 'space-around', padding: 10}}>
-            <IonButton className='medium' style={{'--background': timeFrame === '1d' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}} onClick={() => setTimeFrame('1d')}>1D</IonButton>
-            <IonButton className='medium' style={{'--background': timeFrame === '1w' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}}  onClick={() => setTimeFrame('1w')}>1W</IonButton>
-            <IonButton className='medium' style={{'--background': timeFrame === '1m' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}}  onClick={() => setTimeFrame('1m')}>1M</IonButton>
+            <IonButton className='semi' style={{'--background': timeFrame === '1d' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}} onClick={() => setTimeFrame('1d')}><span style={{opacity: .6}}>1D</span></IonButton>
+            <IonButton className='semi' style={{'--background': timeFrame === '1w' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}}  onClick={() => setTimeFrame('1w')}><span style={{opacity: .6}}>1W</span></IonButton>
+            <IonButton className='semi' style={{'--background': timeFrame === '1m' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px', '--color': 'var(--ion-color-dark)'}}  onClick={() => setTimeFrame('1m')}><span style={{opacity: .6}}>1M</span></IonButton>
           </IonButtons>
         </div>
         </div>
