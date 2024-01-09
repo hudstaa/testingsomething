@@ -68,7 +68,7 @@ interface TokenData {
             <IonCardTitle className='bold' style={{fontSize: '1.15rem'}}>{tokenData.name} </IonCardTitle> 
             {/* ({tokenData.symbol.toUpperCase()}) */}
             <IonCardSubtitle color={'dark'} className='heavy' style={{ fontSize: '1.5rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
-            <div style={{paddingBottom: 8, paddingTop: 4}}><img style={{borderRadius: '100%'}} src={tokenData.image.small} alt={tokenData.name} /></div>
+            <div style={{paddingBottom: 8, paddingTop: 0}}><img style={{borderRadius: '100%', width: '40px', height: '40px'}} src={tokenData.image.small} alt={tokenData.name} /></div>
         </IonCardHeader>
         <IonCardContent>
         <div style={{maxHeight: '500px', marginTop: '10%'}}>
@@ -83,11 +83,11 @@ interface TokenData {
         )}
         <div style={{display: 'flex', marginBottom: '4%', color: 'var(--ion-color-dark)', opacity: 0.7}}>
           <div> 
-            <p>24h volume:</p>
-             ${tokenData.market_data.total_volume.usd}</div>
+            <p className='medium'>24h volume:</p>
+             <span className='semi'>${tokenData.market_data.total_volume.usd}</span></div>
           <div style={{marginLeft: '1rem', color: 'var(--ion-color-dark)'}}> 
-            <p>Market Cap:</p>
-            ${tokenData.market_data.market_cap.usd}</div>
+            <p className='medium'>Market Cap:</p>
+            <span className='semi'>${tokenData.market_data.market_cap.usd}</span></div>
           </div>
         <div>
          <div style={{marginBottom: '5%'}}>
