@@ -6,7 +6,7 @@ import { CommentList } from "./CommentList"
 import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
 import { timeAgo } from "./TradeItem"
 import { WriteMessage } from "./WriteMessage"
-import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp } from "ionicons/icons"
+import { paperPlane, share, shareOutline, shareSocialOutline, personOutline, arrowDown, arrowUp, closeOutline } from "ionicons/icons"
 import { useNotifications } from "../hooks/useNotifications"
 import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
@@ -15,24 +15,32 @@ import * as sugar from '../lib/sugar'
 import 'linkify-plugin-mention';
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 import { TaggableContent } from "./TaggableContent"
+import { AddCoin } from "../pages/AddCoin"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const Popover = () => <>
         <IonHeader>
-            <IonToolbar color='tribe'>
+            <IonToolbar>
                 <IonTitle>
                     {content}
                 </IonTitle>
+                <IonButtons slot="end">
+                    <IonButton onClick={() => {
+                        dismiss();
+                    }}><IonIcon icon={closeOutline} />
+                    </IonButton>
+                </IonButtons>
             </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-            <IonButton fill='clear' expand="full" onClick={() => {
+            {hit && <IonButton fill='solid' color='tribe' expand="full" onClick={() => {
                 push('/swap?' + new URLSearchParams(hit.swap).toString());
                 dismiss();
             }}>
                 Swap for {content}
-            </IonButton>
-            <AdvancedRealTimeChart details={false} hide_top_toolbar hide_side_toolbar hide_legend allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>
+            </IonButton>}
+            {!hit && <AddCoin tag={content.slice(1)} />}
+            {hit && hit.symbol && <AdvancedRealTimeChart details={false} hide_top_toolbar hide_side_toolbar hide_legend allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>}
 
         </IonContent></>;
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
