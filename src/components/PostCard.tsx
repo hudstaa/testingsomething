@@ -1,7 +1,7 @@
-import { IonBadge, IonButton, IonRow, IonGrid, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast, IonPopover, IonContent, useIonPopover, useIonModal, IonHeader, IonTitle, IonToolbar } from "@ionic/react"
+import { IonModal, IonBadge, IonButton, IonRow, IonGrid, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast, IonPopover, IonContent, useIonPopover, useIonModal, IonHeader, IonTitle, IonToolbar } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useRef } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
 import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
@@ -27,6 +27,7 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const outputCurrency = hit?.swap.outputCurrency;
     const outputChain = hit?.swap.chain;
     const outputID = hit?.id;
+    const [showModal, setShowModal] = useState(false);
     const emoji = hit?.emoji;
 
     const Popover = () => (
@@ -47,6 +48,8 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
           </IonContent>
         </>
       );
+    const presentingElement = document.querySelector('ion-router-outlet') as HTMLElement | undefined;
+    const modal = useRef<HTMLIonModalElement>(null);
 
     const { push } = useHistory();
     const [present, dismiss] = useIonModal(Popover, {
@@ -54,12 +57,36 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     });
 
     return (
-        <a className="medium" onClick={() => {
-            present();
-        }}>
-            {emoji}{content}
-        </a>
+        <>
+            <a className="medium" onClick={() => setShowModal(true)}>
+                {emoji}{content}
+            </a>
+    
+            <IonModal
+                isOpen={showModal}
+                ref={modal}
+                initialBreakpoint={0.4} 
+                breakpoints={[0, 0.4, 1]} 
+            >
+                <IonContent style={{padding: 0}}>
+                    {outputID && (
+                        <TokenInfo 
+                            id={outputID}
+                            
+                            contractId={outputCurrency} 
+                            chainName={outputChain} 
+                            content={content}
+                            onGetToken={() => {
+                                push('/swap?' + new URLSearchParams(hit.swap).toString());
+                                setShowModal(false);
+                            }}
+                        />
+                    )}
+                </IonContent>
+            </IonModal>
+        </>
     );
+    
 };
 
 export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
