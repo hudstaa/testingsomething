@@ -138,7 +138,10 @@ const Posts: React.FC = () => {
     }
     const { show: showNotifications } = useNotifications();
     const notifs = useNotifications(x => x.notifications.length);
+    const [toolbarY, setToolbarY] = useState(0);
+    const toolbarHeight = 50; // Adjust this to the actual height of your toolbar
     const [hideToolbar, setHideToolbar] = useState<boolean>(false)
+
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
