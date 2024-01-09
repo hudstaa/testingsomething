@@ -92,6 +92,7 @@ import { TradeMobile } from './components/Trade';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 import Posts from './pages/Posts';
 import { swapHorizontal } from 'ionicons/icons';
+import { AddCoin } from './pages/AddCoin';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -290,6 +291,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/post/" exact>
                   <Posts />
+                </Route>
+                <Route path="/coin/new" exact>
+                  <AddCoin />
                 </Route>
                 <Route path="/swap" exact>
                   <Swap />
