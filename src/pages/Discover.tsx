@@ -70,11 +70,14 @@ const Discover: React.FC = () => {
             Discover
           </IonTitle>
         </IonToolbar>
-        <IonSearchbar class="custom" style={{ padding: 12, paddingTop: 4, paddingBottom: 0, borderRadius: 30 }} onIonInput={(event) => {
-          event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
-            setHits((res.results[0] as any).hits || [])
-          })
-        }} />
+        <IonToolbar>
+
+          <IonSearchbar class="custom" style={{ padding: 12, paddingTop: 4, paddingBottom: 0, borderRadius: 30 }} onIonInput={(event) => {
+            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
+              setHits((res.results[0] as any).hits || [])
+            })
+          }} />
+        </IonToolbar>
         <IonList>
           {hits.map(x => (
             <IonItem
