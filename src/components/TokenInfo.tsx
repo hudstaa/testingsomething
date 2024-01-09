@@ -76,8 +76,8 @@ interface TokenData {
         </div>
         {content && onGetToken && (
           <div style={{backgroundColor: '#FF6000', borderRadius: '100px', marginBottom: '5%'}}>
-            <IonButton fill='clear' expand="full" size={'small'} onClick={onGetToken}>
-              <span className='bold' style={{fontSize: '1.25rem', padding: 10}}>Get {content}</span> 
+            <IonButton style={{'--color': 'var(--ion-color-primary)'}} fill='clear' expand="full" size={'small'} onClick={onGetToken}>
+              <span className='heavy' style={{fontSize: '1.25rem', padding: 10}}>Get {content}</span> 
             </IonButton>
           </div>
         )}
