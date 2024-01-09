@@ -1,5 +1,6 @@
 import { IonBadge, IonButton, IonRow, IonGrid, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast, IonPopover, IonContent, useIonPopover, useIonModal, IonHeader, IonTitle, IonToolbar } from "@ionic/react"
 import { Timestamp } from "firebase/firestore"
+
 import { useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
@@ -12,29 +13,36 @@ import { useHistory, useLocation } from "react-router"
 import { useMember } from "../hooks/useMember"
 import Linkify from "linkify-react"
 import * as sugar from '../lib/sugar'
+import { known_pairs } from '../lib/sugar'; // Adjust the path as necessary
 import 'linkify-plugin-mention';
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
+import { TokenGraph } from "./TokenGraph"
 import { TaggableContent } from "./TaggableContent"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
-    const Popover = () => <>
-        <IonHeader>
-            <IonToolbar color='tribe'>
-                <IonTitle>
-                    {content}
-                </IonTitle>
-            </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
-            <IonButton fill='clear' expand="full" onClick={() => {
-                push('/swap?' + new URLSearchParams(hit.swap).toString());
-                dismiss();
-            }}>
-                Swap for {content}
-            </IonButton>
-            <AdvancedRealTimeChart details={false} hide_top_toolbar hide_side_toolbar hide_legend allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>
+    const currencyKey = content.substring(1).toLowerCase(); // Assuming 'content' is like '#bitcoin'
+    const outputCurrency = known_pairs[currencyKey]?.swap.outputCurrency;
+    const outputChain = known_pairs[currencyKey]?.swap.chain;
 
-        </IonContent></>;
+    const Popover = () => (
+        <>
+            <IonHeader>
+                <IonToolbar color='transparent'>
+                    <IonTitle>{content}</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent className="ion-padding">
+                <IonButton fill='clear' expand="full" onClick={() => {
+                    push('/swap?' + new URLSearchParams(hit.swap).toString());
+                    dismiss();
+                }}>
+                    Swap for {content}
+                </IonButton>
+                {/* Conditionally render MyChartComponent if outputCurrency is available */}
+                {outputCurrency && <TokenGraph chainName ={outputChain} contractId={outputCurrency} />}
+            </IonContent>
+        </>
+    );
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
     const emoji = hit && hit.emoji;
     const { push } = useHistory()
