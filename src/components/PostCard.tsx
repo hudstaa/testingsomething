@@ -59,6 +59,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     const member = useMember(x => x.getFriend(author));
     const { localNotif, setLocalNotif } = useNotifications()
     const { push } = useHistory();
+    const { setHighlight } = useMember();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'tabblur' : 'white';
     const { pathname } = useLocation()
@@ -173,10 +174,14 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     }}>
         <IonCardHeader style={{ display: 'flex', cursor: 'pointer', paddingLeft: 8, paddingBottom: 0, paddingTop: 6, marginRight: 0 }}>
             <div style={{ display: 'flex' }}>
-                <div style={{ borderRadius: 10, marginTop: 4 }}>
+                <div style={{ borderRadius: 10, marginTop: 4 }} onClick={() => {
+                    member && setHighlight(member.address)
+                }}>
                     <MemberPfp color='dark' size="veru-smol" address={author} />
                 </div>
-                <div style={{ marginLeft: 4, marginTop: -2 }}>
+                <div style={{ marginLeft: 4, marginTop: -2 }} onClick={() => {
+                    member && setHighlight(member.address)
+                }}>
                     <MemberCardHeader address={author} content={<>{sent !== null && sent?.seconds && timeAgo(new Date(sent.seconds * 1000))}</>} />
                 </div>
 

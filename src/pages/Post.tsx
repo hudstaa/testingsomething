@@ -1,9 +1,10 @@
-import { IonCol, IonContent, IonFooter, IonGrid, IonItem, IonPage, IonRow, IonTitle, IonHeader, IonToolbar, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonCol, IonContent, IonFooter, IonGrid, IonPage, IonRow, IonSkeletonText, useIonViewDidEnter, useIonViewDidLeave } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, doc, getDoc, getFirestore, serverTimestamp, setDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { app } from '../App';
+import { CommentTree } from '../components/CommentTree';
 import { PostCard } from '../components/PostCard';
 import { TribeHeader } from '../components/TribeHeader';
 import { WriteMessage, removeUndefinedProperties } from '../components/WriteMessage';
@@ -14,9 +15,6 @@ import { useWriteMessage } from '../hooks/useWriteMessage';
 import { hideTabs, nativeAuth, showTabs } from '../lib/sugar';
 import NewPost from './NewPost';
 import { OnBoarding } from './OnBoarding';
-import { chevronBack, chevronDown, push } from 'ionicons/icons';
-import { MemberPfpImg } from '../components/MemberBadge';
-import { CommentTree } from '../components/CommentTree';
 
 
 
