@@ -48,7 +48,7 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
           <ResponsiveContainer aspect={1.3} width={'113%'} style={{padding: 0, marginLeft: '-7%'}}>
               <AreaChart data={chartData}>
                 {/* <Tooltip /> */}
-                <Area type="monotone" dataKey="price" strokeWidth="5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
+                <Area type="monotone" dataKey="price" strokeWidth="4px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
               </AreaChart>
           </ResponsiveContainer>
 
