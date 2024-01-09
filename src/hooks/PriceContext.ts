@@ -20,7 +20,7 @@ export const PriceProvider: React.FC<PriceProviderProps> = ({ children }) => {
   const [price, setPrice] = useState<number | null>(null);
 
   return (
-    <PriceContext.Provider value={{ price, setPrice }}>
+    <PriceContext.Provider>
       {children}
     </PriceContext.Provider>
   );
