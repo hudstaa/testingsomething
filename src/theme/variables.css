@@ -662,6 +662,9 @@ ion-footer ion-toolbar {
 
 }
 
+.custom-modal {
+  --border-radius: 30px !important; /* Adjust as needed */
+}
 .custom {
   --border-radius: 20px;
   

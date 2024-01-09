@@ -39,6 +39,7 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
             </a>
     
             <IonModal
+                className="custom-modal"
                 isOpen={showModal}
                 onDidDismiss={() => setShowModal(false)}
                 initialBreakpoint={0.8} 
