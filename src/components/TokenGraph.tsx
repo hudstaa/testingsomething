@@ -1,7 +1,6 @@
-import { IonGrid } from '@ionic/react';
+import { IonButton, IonButtons, IonGrid } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { usePriceContext } from '../hooks/PriceContext';
 
 interface ChartData {
   time: string; // Time is formatted by hour
@@ -20,22 +19,13 @@ interface CustomTooltipProps {
 
 export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contractId }) => {
     const [chartData, setChartData] = useState<ChartData[]>([]);
-    const { setPrice } = usePriceContext(); // Get the setPrice function from context
+    const [timeFrame, setTimeFrame] = useState('1'); // Default to 1 day
 
-    const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
-      useEffect(() => {
-        if (active && payload && payload.length) {
-          setPrice(payload[0].value); // Update the price in context
-        }
-      }, [active, payload]);
-  
-      // Return null as we don't need an actual tooltip
-      return null;
-    };
 
     useEffect(() => {
+      const days = timeFrame === '1m' ? 30 : timeFrame === '1w' ? 7 : 1;
       const fetchChartData = async () => {
-        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${chainName}/contract/${contractId}/market_chart/?vs_currency=usd&days=1&precision=full`);
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${chainName}/contract/${contractId}/market_chart/?vs_currency=usd&days=${days}&precision=full`);
         const data = await response.json();
 
         setChartData(data.prices.map((item: [number, number]) => ({
@@ -48,20 +38,28 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
       };
   
       fetchChartData();
-    }, [chainName, contractId]);
+    }, [chainName, contractId, timeFrame]);
 
     return (
-      <div style={{maxHeight: '500px'}}>
-        <IonGrid className='transparent' style={{padding: 0}}>
+      <div>
 
-        <ResponsiveContainer height={window.innerHeight / 1} width={'110%'} style={{padding: 0, marginLeft: '-5.25%'}}>
-            <AreaChart data={chartData}>
-              <Tooltip content={<CustomTooltip />} cursor={false} />
-              <Area type="monotone" dataKey="price" strokeWidth="3.5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
-            </AreaChart>
-        </ResponsiveContainer>
+        <IonGrid className='transparent' style={{padding: 0, height: '300px'}}>
+
+          <ResponsiveContainer aspect={1} width={'113%'} style={{padding: 0, marginLeft: '-7%'}}>
+              <AreaChart data={chartData}>
+                {/* <Tooltip /> */}
+                <Area type="monotone" dataKey="price" strokeWidth="5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
+              </AreaChart>
+          </ResponsiveContainer>
 
         </IonGrid>
+        <div style={{ marginTop: '25%', marginBottom: '10%', width: '100%' }}>
+          <IonButtons style={{display: 'flex', justifyContent: 'space-around'}}>
+            <IonButton onClick={() => setTimeFrame('1d')}>1D</IonButton>
+            <IonButton onClick={() => setTimeFrame('1w')}>1W</IonButton>
+            <IonButton onClick={() => setTimeFrame('1m')}>1M</IonButton>
+          </IonButtons>
+        </div>
         </div>
     );
 };

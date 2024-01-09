@@ -92,7 +92,6 @@ import { TradeMobile } from './components/Trade';
 import { WriteMessageModalProvider } from './components/WriteMessageModalProvider';
 import Posts from './pages/Posts';
 import { swapHorizontal } from 'ionicons/icons';
-import PriceProvider from './hooks/PriceContext';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -256,7 +255,6 @@ const App: React.FC = () => {
         <ApolloProvider client={graphQLclient}>
           <DeepLinkProvider />
           <WriteMessageModalProvider />
-          <PriceProvider>
           <IonReactHashRouter  >
             <ShowMemberModalProvider />
             <NotificationsProvider />
@@ -336,7 +334,6 @@ const App: React.FC = () => {
             </IonTabs>
 
           </IonReactHashRouter>
-          </PriceProvider>
         </ApolloProvider>
       </PrivyWagmiConnector>
     </PrivyProvider>

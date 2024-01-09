@@ -126,7 +126,7 @@ function cashtag(_ref: any) {
 
 linkifyjs.registerPlugin('cashtag', cashtag);
 export type currencySwapInfo = { chain: string, inputCurrency?: string, outputCurrency: string };
-export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string, symbol: string, id: string }> = {
+export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string, symbol: string, id: string, color: string }> = {
     nola: {
         emoji: '🐈‍⬛',
         swap: {
@@ -135,7 +135,8 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             inputCurrency: 'ETH'
         },
         symbol: 'NOLAWETH_DB9A76.USD',
-        id: ''
+        id: '',
+        color: '' 
     },
     size: {
         emoji: '💪',
@@ -145,7 +146,8 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             inputCurrency: "ETH"
         },
         symbol: 'SIZEWETH_E8DD5E.USD',
-        id: ''
+        id: '',
+        color: '' 
     },
     tribe: {
         emoji: '🏕️',
@@ -155,7 +157,8 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             "inputCurrency": "0x0"
         },
         symbol: 'unknown',
-        id: ''
+        id: '',
+        color: '#0000FF' 
     },
     bonk: {
         emoji: '🏏',
@@ -165,7 +168,8 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             inputCurrency: USDCSOLAddress,
         },
         symbol: 'BONKUSDT',
-        id: ''
+        id: '',
+        color: '#0000FF' 
     },
     merlin: {
         emoji: '🪄',
@@ -175,7 +179,8 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             chain: "arbitrum"
         },
         symbol: 'MERLINWETH_E75D23',
-        id: ''
+        id: '',
+        color: '' 
     },
     mog: {
         emoji: '🕶️',
@@ -186,6 +191,7 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
         },
         symbol: 'MOGWETH_C2EAB7.USD',
         id: 'mog-coin'
+        ,color: '#0000FF' 
     },
     pepe: {
         emoji: '🐸',
@@ -193,23 +199,26 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             outputCurrency: '0x6982508145454Ce325dDbE47a25d4ec3d2311933', chain: 'ethereum', inputCurrency: 'ETH'
         },
         symbol: 'PEPEUSDT',
-        id: ''
+        id: '',
+        color: '' 
     },
     wif: {
         symbol: 'WIFUSDT',
         emoji: '👒', swap:
             { outputCurrency: 'EKpQGSJtjMFqKZ9KQanSqYXRcF8fBopzLHYxdM65zcjm', chain: 'solana' 
         },
-        id: ''
+        id: '',
+        color: '' 
     },
     bitcoin: {
-        symbol: 'BITCOINWETH_0C3006.USD',
+        symbol: 'BITCOINWETH',
         emoji: '🦔',
         swap: {
             outputCurrency: "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9",
             chain: "ethereum",
             inputCurrency: "ETH"
         },
-        id: 'harrypotterobamasonic10inu'
+        id: 'harrypotterobamasonic10in',
+        color: '#FF6000' 
     }
 }

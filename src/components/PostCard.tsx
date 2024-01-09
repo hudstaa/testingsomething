@@ -19,7 +19,6 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 import { TokenGraph } from "./TokenGraph"
 import { TokenInfo } from "./TokenInfo"
 import { TaggableContent } from "./TaggableContent"
-import { usePriceContext } from '../hooks/PriceContext';
 
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
@@ -32,26 +31,22 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
 
     const Popover = () => (
         <>
-            <IonHeader>
-                <IonToolbar color='transparent'>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent style={{padding: 0}}>
-                {/* Render TokenInfo with additional props */}
-                {outputID && <TokenInfo id={outputID} contractId={outputCurrency} chainName={outputChain} />}
-                {/* Removed TokenGraph since it's now inside TokenInfo */}
-                <div style={{backgroundColor: '#FF6000'}}>
-                    <IonButton fill='clear' expand="full" onClick={() => {
-                        push('/swap?' + new URLSearchParams(hit.swap).toString());
-                        dismiss();
-                    }}>
-                        Get {content}
-                    </IonButton>
-                </div>
-            </IonContent>
+          <IonContent style={{padding: 0}}>
+            {outputID && (
+              <TokenInfo 
+                id={outputID} 
+                contractId={outputCurrency} 
+                chainName={outputChain} 
+                content={content}
+                onGetToken={() => {
+                  push('/swap?' + new URLSearchParams(hit.swap).toString());
+                  dismiss();
+                }}
+              />
+            )}
+          </IonContent>
         </>
-    );
-    
+      );
 
     const { push } = useHistory();
     const [present, dismiss] = useIonModal(Popover, {
