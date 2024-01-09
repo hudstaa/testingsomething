@@ -45,7 +45,7 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
 
         <IonGrid className='transparent' style={{padding: 0, height: '300px'}}>
 
-          <ResponsiveContainer aspect={1} width={'113%'} style={{padding: 0, marginLeft: '-7%'}}>
+          <ResponsiveContainer aspect={1.3} width={'113%'} style={{padding: 0, marginLeft: '-7%'}}>
               <AreaChart data={chartData}>
                 {/* <Tooltip /> */}
                 <Area type="monotone" dataKey="price" strokeWidth="5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
@@ -53,7 +53,7 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
           </ResponsiveContainer>
 
         </IonGrid>
-        <div style={{ marginTop: '25%', marginBottom: '10%', width: '100%' }}>
+        <div style={{ marginTop: '5%', marginBottom: '10%', width: '100%' }}>
           <IonButtons style={{display: 'flex', justifyContent: 'space-around', padding: 10}}>
             <IonButton className='bold' style={{'--background': timeFrame === '1d' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px'}} onClick={() => setTimeFrame('1d')}>1D</IonButton>
             <IonButton className='bold' style={{'--background': timeFrame === '1w' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px'}}  onClick={() => setTimeFrame('1w')}>1W</IonButton>
