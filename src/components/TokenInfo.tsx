@@ -65,10 +65,10 @@ interface TokenData {
       <IonCard style={{margin: 0}}>
 
         <IonCardHeader style={{padding: '12px'}} >  
-            <IonCardTitle className='heavy' style={{fontSize: '1.3rem'}}>{tokenData.name} </IonCardTitle> 
+            <IonCardTitle className='bold' style={{fontSize: '1.15rem'}}>{tokenData.name} </IonCardTitle> 
             {/* ({tokenData.symbol.toUpperCase()}) */}
-            <IonCardSubtitle color={'dark'} className='black' style={{ fontSize: '2rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
-            <div style={{paddingBottom: 8}}><img style={{borderRadius: '100%'}} src={tokenData.image.small} alt={tokenData.name} /></div>
+            <IonCardSubtitle color={'dark'} className='heavy' style={{ fontSize: '1.5rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
+            <div style={{paddingBottom: 8, paddingTop: 4}}><img style={{borderRadius: '100%'}} src={tokenData.image.small} alt={tokenData.name} /></div>
         </IonCardHeader>
         <IonCardContent>
         <div style={{maxHeight: '500px', marginTop: '10%'}}>
