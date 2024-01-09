@@ -94,11 +94,16 @@ interface TokenData {
             <span className='bold' style={{fontSize: '1rem', color: 'var(--ion-color-dark)'}}>About {content}</span> 
             <p style={{marginTop: '1.125%', color: 'var(--ion-color-dark)', opacity: 0.7}} >{tokenData.description.en}</p>
           </div>
-        <div>
-            {tokenData.links.homepage.map(url => url && <a className='bold' href={url} target="_blank" rel="noopener noreferrer">Website</a>)}
-            {tokenData.links.blockchain_site.filter(url => url.includes('etherscan.io')).map(url => url && <a className='bold' style={{marginLeft: '1rem'}} href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>)}
-            {tokenData.links.twitter_screen_name && <a className='bold' style={{marginLeft: '1rem'}} href={`https://twitter.com/${tokenData.links.twitter_screen_name}`} target="_blank" rel="noopener noreferrer">Twitter</a>}
-            {tokenData.links.subreddit_url && <a className='bold' style={{marginLeft: '1rem'}} href={tokenData.links.subreddit_url} target="_blank" rel="noopener noreferrer">Reddit</a>}
+        <div style={{display: 'flex'}}>
+            <div style={{backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+              {tokenData.links.homepage.map(url => url && <a className='bold' href={url} target="_blank" rel="noopener noreferrer">Website</a>)}
+            </div>
+            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+              {tokenData.links.blockchain_site.filter(url => url.includes('etherscan.io')).map(url => url && <a className='bold' href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>)}
+            </div>            
+            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+              {tokenData.links.twitter_screen_name && <a className='bold' href={`https://twitter.com/${tokenData.links.twitter_screen_name}`} target="_blank" rel="noopener noreferrer">Twitter</a>}
+            </div>
         </div>
         </div>
         </IonCardContent>
