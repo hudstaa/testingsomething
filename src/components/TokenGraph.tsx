@@ -42,7 +42,6 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
                         <stop offset="100%" stopColor="#F45000" stopOpacity={0}/> {/* Adjust this value as needed */}
                     </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="" />
                 <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{ padding: '10px 14px', borderRadius: 10, borderColor: 'var(--ion-color-paper)' }} />
                 <Area type="monotone" dataKey="price" strokeWidth="3.5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
             </AreaChart>
