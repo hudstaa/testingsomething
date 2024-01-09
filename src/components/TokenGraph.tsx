@@ -54,10 +54,10 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
 
         </IonGrid>
         <div style={{ marginTop: '25%', marginBottom: '10%', width: '100%' }}>
-          <IonButtons style={{display: 'flex', justifyContent: 'space-around'}}>
-            <IonButton onClick={() => setTimeFrame('1d')}>1D</IonButton>
-            <IonButton onClick={() => setTimeFrame('1w')}>1W</IonButton>
-            <IonButton onClick={() => setTimeFrame('1m')}>1M</IonButton>
+          <IonButtons style={{display: 'flex', justifyContent: 'space-around', padding: 10}}>
+            <IonButton className='bold' style={{'--background': timeFrame === '1d' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px'}} onClick={() => setTimeFrame('1d')}>1D</IonButton>
+            <IonButton className='bold' style={{'--background': timeFrame === '1w' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px'}}  onClick={() => setTimeFrame('1w')}>1W</IonButton>
+            <IonButton className='bold' style={{'--background': timeFrame === '1m' ? 'var(--ion-color-vote)' : 'transparent','--border-radius': '100%', '--padding-start': '10px', '--padding-bottom': '10px', '--padding-top': '10px', '--padding-end': '10px'}}  onClick={() => setTimeFrame('1m')}>1M</IonButton>
           </IonButtons>
         </div>
         </div>
