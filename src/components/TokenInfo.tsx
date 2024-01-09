@@ -1,0 +1,1 @@
+// https://api.coingecko.com/api/v3/coins/mog-coin?tickers=true&market_data=true&community_data=true&developer_data

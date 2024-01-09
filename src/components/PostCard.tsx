@@ -35,12 +35,14 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
 
                 {/* Conditionally render MyChartComponent if outputCurrency is available */}
                 {outputCurrency && <TokenGraph chainName ={outputChain} contractId={outputCurrency} />}
-                                <IonButton fill='clear' expand="full" onClick={() => {
-                    push('/swap?' + new URLSearchParams(hit.swap).toString());
-                    dismiss();
-                }}>
-                    Get {content}
-                </IonButton>
+                <div style={{backgroundColor: '#FF6000'}}>
+                    <IonButton fill='clear' expand="full" onClick={() => {
+                        push('/swap?' + new URLSearchParams(hit.swap).toString());
+                        dismiss();
+                    }}>
+                        Get {content}
+                    </IonButton>
+                </div>
             </IonContent>
         </>
     );
