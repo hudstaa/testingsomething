@@ -33,10 +33,10 @@ export const TokenGraph: React.FC<MyChartComponentProps> = ({ chainName, contrac
     }, [chainName, contractId]);
 
     return (
-        <IonGrid className='transparent'>
-        <ResponsiveContainer height={window.innerHeight / 4} width={'100%'}>
+        <IonGrid className='transparent' style={{padding: 0}}>
+        <ResponsiveContainer height={window.innerHeight / 4} width={'105%'} style={{padding: 0, marginLeft: '-2.25%'}}>
             <AreaChart data={chartData}>
-                <defs>
+                <defs  width={'100%'}>
                     <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#F45000" stopOpacity={0.3}/>
                         <stop offset="100%" stopColor="#F45000" stopOpacity={0}/> {/* Adjust this value as needed */}

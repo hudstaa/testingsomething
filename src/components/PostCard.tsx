@@ -31,15 +31,16 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
                     <IonTitle>{content}</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent className="ion-padding">
-                <IonButton fill='clear' expand="full" onClick={() => {
+            <IonContent style={{padding: 0}}>
+
+                {/* Conditionally render MyChartComponent if outputCurrency is available */}
+                {outputCurrency && <TokenGraph chainName ={outputChain} contractId={outputCurrency} />}
+                                <IonButton fill='clear' expand="full" onClick={() => {
                     push('/swap?' + new URLSearchParams(hit.swap).toString());
                     dismiss();
                 }}>
-                    Swap for {content}
+                    Get {content}
                 </IonButton>
-                {/* Conditionally render MyChartComponent if outputCurrency is available */}
-                {outputCurrency && <TokenGraph chainName ={outputChain} contractId={outputCurrency} />}
             </IonContent>
         </>
     );
