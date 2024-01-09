@@ -185,7 +185,7 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             inputCurrency: "ETH"
         },
         symbol: 'MOGWETH_C2EAB7.USD',
-        id: ''
+        id: 'mog-coin'
     },
     pepe: {
         emoji: '🐸',
@@ -210,6 +210,6 @@ export const known_pairs: Record<string, { swap: currencySwapInfo, emoji: string
             chain: "ethereum",
             inputCurrency: "ETH"
         },
-        id: ''
+        id: 'harrypotterobamasonic10inu'
     }
 }

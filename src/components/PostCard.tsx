@@ -17,24 +17,29 @@ import { known_pairs } from '../lib/sugar'; // Adjust the path as necessary
 import 'linkify-plugin-mention';
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 import { TokenGraph } from "./TokenGraph"
+import { TokenInfo } from "./TokenInfo"
 import { TaggableContent } from "./TaggableContent"
+import { usePriceContext } from '../hooks/PriceContext';
+
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
-    const currencyKey = content.substring(1).toLowerCase(); // Assuming 'content' is like '#bitcoin'
-    const outputCurrency = known_pairs[currencyKey]?.swap.outputCurrency;
-    const outputChain = known_pairs[currencyKey]?.swap.chain;
+    const currencyKey = content.substring(1).toLowerCase();
+    const hit = known_pairs[currencyKey];
+    const outputCurrency = hit?.swap.outputCurrency;
+    const outputChain = hit?.swap.chain;
+    const outputID = hit?.id;
+    const emoji = hit?.emoji;
 
     const Popover = () => (
         <>
             <IonHeader>
                 <IonToolbar color='transparent'>
-                    <IonTitle>{content}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent style={{padding: 0}}>
-
-                {/* Conditionally render MyChartComponent if outputCurrency is available */}
-                {outputCurrency && <TokenGraph chainName ={outputChain} contractId={outputCurrency} />}
+                {/* Render TokenInfo with additional props */}
+                {outputID && <TokenInfo id={outputID} contractId={outputCurrency} chainName={outputChain} />}
+                {/* Removed TokenGraph since it's now inside TokenInfo */}
                 <div style={{backgroundColor: '#FF6000'}}>
                     <IonButton fill='clear' expand="full" onClick={() => {
                         push('/swap?' + new URLSearchParams(hit.swap).toString());
@@ -46,21 +51,21 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
             </IonContent>
         </>
     );
-    const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
-    const emoji = hit && hit.emoji;
-    const { push } = useHistory()
+    
+
+    const { push } = useHistory();
     const [present, dismiss] = useIonModal(Popover, {
         onDismiss: (data: any, role: string) => dismiss(data, role),
     });
 
-    return <>
+    return (
         <a className="medium" onClick={() => {
             present();
         }}>
             {emoji}{content}
         </a>
-    </>
-}
+    );
+};
 
 export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
