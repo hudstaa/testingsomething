@@ -51,9 +51,6 @@
       {
         "source": "/@**",
         "function": "share"
-      }{
-        "source": "/privyAuth",
-        "function": "privyAuth"
       },{
         "source": "/$**",
         "function": "share"
