@@ -406,7 +406,7 @@ ion-footer ion-toolbar {
   --ion-color-light-rgb: 244, 245, 248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da00;
+  --ion-color-light-shade: #f9f9f9;
   --ion-color-light-tint: #E9E8EB;
 
     /** lightt **/
@@ -520,7 +520,7 @@ ion-footer ion-toolbar {
     --ion-color-light-rgb: 34, 36, 40;
     --ion-color-light-contrast: #ffffff;
     --ion-color-light-contrast-rgb: 255, 255, 255;
-    --ion-color-light-shade: #1e202300;
+    --ion-color-light-shade: #07090c;
     --ion-color-light-tint: #26262B;
 
         /** lightt **/
@@ -528,7 +528,7 @@ ion-footer ion-toolbar {
     --ion-color-lightt-rgb: 34, 36, 40;
     --ion-color-lightt-contrast: 255, 255, 255;
     --ion-color-lightt-contrast-rgb: 0, 0, 0;
-    --ion-color-lightt-shade: #1e202300;
+    --ion-color-lightt-shade: #060607;
     --ion-color-lightt-tint: #26262B;
 
         /** tabblur **/
@@ -663,7 +663,7 @@ ion-footer ion-toolbar {
 }
 
 .custom-modal {
-  --border-radius: 30px !important; /* Adjust as needed */
+  --border-radius: 36px !important; /* Adjust as needed */
 }
 .custom {
   --border-radius: 20px;
@@ -703,7 +703,7 @@ ion-button.custombutton::part(native) {
 
 /* Remove shadow from buttons */
 ion-button {
-  --box-shadow: none !important;
+  --box-shadow: none;
   --box-shadow-hover: none !important;
 }
 
@@ -782,7 +782,7 @@ ion-segment-button.ios .customButton {
 }
 /* Remove shadow from any other possible elements */
 * {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 /* New tribe Color */
@@ -792,7 +792,7 @@ ion-segment-button.ios .customButton {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #00bafa;
+  --ion-color-tribe-tint: rgb(255, 243, 235);
 }
 
 /* Color Usage Example */
@@ -812,7 +812,7 @@ ion-segment-button.ios .customButton {
   --ion-color-tribe-contrast: #ffffff;
   --ion-color-tribe-contrast-rgb: 255, 255, 255;
   --ion-color-tribe-shade: #dd5700;
-  --ion-color-tribe-tint: #ff6000;
+  --ion-color-tribe-tint: rgb(255, 243, 235);
 }
 
 /* Color Usage Example */

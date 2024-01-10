@@ -32,7 +32,7 @@ interface TokenData {
       }
     };
     image: {
-      small: string;
+      large: string;
     };
     links: {
         homepage: string[];
@@ -62,46 +62,46 @@ interface TokenData {
     const formattedPrice = tokenData.market_data.current_price.usd.toPrecision(6);
 
     return (
-      <IonCard style={{margin: 0}}>
+      <IonCard style={{margin: 0, backgroundColor: 'var(--ion-color-light-shade)'}}>
 
-        <IonCardHeader style={{padding: '12px'}} >  
-            <IonCardTitle className='bold' style={{fontSize: '1.15rem'}}>{tokenData.name} </IonCardTitle> 
+        <IonCardHeader style={{padding: '16px'}} >  
+            <IonCardTitle className='medium'  color={'dark'} style={{fontSize: '1.15rem', letterSpacing: '.0115em'}}>{tokenData.name} </IonCardTitle> 
             {/* ({tokenData.symbol.toUpperCase()}) */}
-            <IonCardSubtitle color={'dark'} className='heavy' style={{ fontSize: '1.5rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
-            <div style={{paddingBottom: 8, paddingTop: 0}}><img style={{borderRadius: '100%', width: '40px', height: '40px'}} src={tokenData.image.small} alt={tokenData.name} /></div>
+            <IonCardSubtitle color={'dark'} className='bold' style={{ fontSize: '1.25rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
+            <div style={{paddingBottom: 12, paddingTop: 0}}><img style={{borderRadius: '100%', width: '36px', height: '36px', boxShadow: '0px 2px 15px rgba(0, 0, 0, .1)'}} src={tokenData.image.large} alt={tokenData.name} /></div>
         </IonCardHeader>
         <IonCardContent>
-        <div style={{maxHeight: '500px', marginTop: '10%'}}>
+        <div style={{maxHeight: '500px', marginTop: '0%'}}>
            <TokenGraph contractId={contractId} chainName={chainName} />
         </div>
         {content && onGetToken && (
-          <div style={{backgroundColor: '#FF6000', borderRadius: '100px', marginBottom: '5%'}}>
+          <div style={{backgroundColor: '#FF6000', borderRadius: '100px', marginBottom: '7.5%', boxShadow: '0px 2px 15px rgba(0, 0, 0, .1)'}}>
             <IonButton style={{'--color': 'var(--ion-color-primary)'}} fill='clear' expand="full" size={'small'} onClick={onGetToken}>
-              <span className='heavy' style={{fontSize: '1.25rem', padding: 10}}>Get {content}</span> 
+              <span className='heavy' style={{fontSize: '1.15rem', padding: 8}}>Get {content}</span> 
             </IonButton>
           </div>
         )}
-        <div style={{display: 'flex', marginBottom: '4%', color: 'var(--ion-color-dark)', opacity: 0.7}}>
+        <div style={{display: 'flex', marginBottom: '7.5%', color: 'var(--ion-color-dark)', opacity: 0.65}}>
           <div> 
-            <p className='medium'>24h volume:</p>
-             <span className='semi'>${tokenData.market_data.total_volume.usd}</span></div>
+            <p className='semi' style={{opacity: 0.75}}>24h volume:</p>
+             <span className='bold'>${tokenData.market_data.total_volume.usd}</span></div>
           <div style={{marginLeft: '1rem', color: 'var(--ion-color-dark)'}}> 
-            <p className='medium'>Market Cap:</p>
-            <span className='semi'>${tokenData.market_data.market_cap.usd}</span></div>
+            <p className='semi' style={{opacity: 0.75}}>Market Cap:</p>
+            <span className='bold'>${tokenData.market_data.market_cap.usd}</span></div>
           </div>
         <div>
-         <div style={{marginBottom: '5%'}}>
-            <span className='bold' style={{fontSize: '1rem', color: 'var(--ion-color-dark)'}}>About {content}</span> 
-            <p style={{marginTop: '1.125%', color: 'var(--ion-color-dark)', opacity: 0.7}} >{tokenData.description.en}</p>
+         <div style={{marginBottom: '6.5%'}}>
+            <span className='heavy' style={{fontSize: '1rem', color: 'var(--ion-color-dark)', opacity: 0.75}}>About {content}</span> 
+            <p className="regular" style={{marginTop: '2.5%', color: 'var(--ion-color-dark)', opacity: 0.5, fontSize: '1rem'}} >{tokenData.description.en}</p>
           </div>
-        <div style={{display: 'flex'}}>
-            <div style={{backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+        <div style={{display: 'flex', marginBottom: '5%'}}>
+            <div style={{backgroundColor: 'var(--ion-color-tribe-tint)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
               {tokenData.links.homepage.map(url => url && <a className='bold' href={url} target="_blank" rel="noopener noreferrer">Website</a>)}
             </div>
-            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-tribe-tint)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
               {tokenData.links.blockchain_site.filter(url => url.includes('etherscan.io')).map(url => url && <a className='bold' href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>)}
             </div>            
-            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-vote)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
+            <div style={{marginLeft: '.5rem', backgroundColor: 'var(--ion-color-tribe-tint)', paddingInline: '16px', paddingTop: 8, paddingBottom: 8, borderRadius: '30px'}}>
               {tokenData.links.twitter_screen_name && <a className='bold' href={`https://twitter.com/${tokenData.links.twitter_screen_name}`} target="_blank" rel="noopener noreferrer">Twitter</a>}
             </div>
         </div>
