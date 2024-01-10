@@ -54,29 +54,30 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <img style={{minHeight: '100vh', minWidth: '100vw',  filter:' blur(30px)', opacity: 0.25 }} src={highlight?.twitterPfp || personOutline} />
               </div>
 
-            <IonHeader style={{justifyContent: 'center', marginBottom: '1rem', marginTop: '.5rem'}}>
-                <IonCardHeader className='ion-image-center' style={{ marginTop: '2.5%',paddingBottom: 0 }}>
-                <div style={{ paddingTop: 8, opacity: '0.5' }}>
-                        <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
-                            @{highlight?.twitterUsername}
-                        </IonText>
-                    </div>
-                    <div style={{ paddingTop: '1.25rem', opacity: '1' }}>
+
+            <IonContent style={{ padding: 0, '--background': 'transparent', zIndex: 1 }}>
+                <IonCard color={'transparent'} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '2.5rem'}}>
+                <img style={{ width: '5rem', height: '5rem', borderRadius: '1.5rem', }} src={highlight?.twitterPfp || personOutline} />
+
+                <div style={{ paddingTop: '1rem', opacity: '1' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1.35rem' }}>
                             {highlight?.twitterName}
                         </IonText>
                     </div>
+                    <div style={{ paddingTop: 8, opacity: '0.5' }}>
+                        <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
+                            @{highlight?.twitterUsername}
+                        </IonText>
+                    </div>
+
                     {/* <div style={{ paddingTop: 8 }}>
                         <IonText className="heavy" style={{ fontSize: '1.5rem' }}>
                             {formatEth(buyPrice)}
                         </IonText>
                     </div> */}
-                    <img style={{ width: '9rem', height: '9rem', borderRadius: '2rem', }} src={highlight?.twitterPfp || personOutline} />
+                    </IonCard>
+                    {highlight && <MemberGraph address={highlight.address} />}           
 
-                </IonCardHeader>
-            </IonHeader>
-
-            <IonContent style={{ padding: 0, '--background': 'transparent', zIndex: 1 }}>
                 <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column' }}>
                     
                     <IonCardContent style={{ margin: '2rem', marginBottom: '1rem',padding: 0, paddingTop: '1rem', paddingBottom: '1rem', borderTop: '1px solid var(--ion-color-primary-shade)', borderBottom: '1px solid var(--ion-color-primary-shade)' }}>
