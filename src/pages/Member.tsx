@@ -78,15 +78,15 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
             < TribeContent fullscreen color={bgColor} >
                 <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, paddingBottom: 0, borderRadius: 0 }}>
                     <IonCardHeader className='ion-image-left' style={{ padding: 4, boderBottom: 0 }}>
-                        <IonText style={{ paddingTop: 8, paddingBottom: 0, fontSize: '1rem' }} color='dark' className='regular' >
+                        <IonText style={{ paddingTop: 8, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='dark' className='medium' style={{ opacity: 0.75, fontSize: '1rem' }}>
+                            <IonText color='dark' className='medium' style={{ opacity: 0.75, fontSize: '.95rem' }}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.5rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: 4, paddingTop: 2, paddingBottom: 3, fontSize: '1.25rem' }} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
