@@ -32,8 +32,8 @@ export const WriteMessageModalProvider: React.FC = () => {
                 ref={modalRef}
                 isOpen={isOpen}
                 onDidDismiss={() => setIsOpen(false)}
-                initialBreakpoint={.8}
-                breakpoints={[0,.8]}
+                initialBreakpoint={1}
+                breakpoints={[0,1.0]}
                 style={{ height: '100vh!important' }}
             >
                 <IonHeader >
