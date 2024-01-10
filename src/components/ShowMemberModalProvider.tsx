@@ -54,7 +54,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <img style={{minHeight: '100vh', minWidth: '100vw',  filter:' blur(30px)', opacity: 0.25 }} src={highlight?.twitterPfp || personOutline} />
               </div>
 
-            <IonHeader style={{justifyContent: 'center', marginBottom: '0'}}>
+            <IonHeader style={{justifyContent: 'center', marginBottom: '0', marginTop: '.5rem'}}>
                 <IonCardHeader className='ion-image-center' style={{ marginTop: '2.5%',paddingBottom: 0 }}>
                 <div style={{ paddingTop: 8, opacity: '0.5' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
