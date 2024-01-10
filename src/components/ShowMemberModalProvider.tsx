@@ -54,7 +54,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <img style={{minHeight: '100vh', minWidth: '100vw',  filter:' blur(30px)', opacity: 0.25 }} src={highlight?.twitterPfp || personOutline} />
               </div>
 
-            <IonHeader style={{justifyContent: 'center', marginBottom: '0', marginTop: '.5rem'}}>
+            <IonHeader style={{justifyContent: 'center', marginBottom: '1rem', marginTop: '.5rem'}}>
                 <IonCardHeader className='ion-image-center' style={{ marginTop: '2.5%',paddingBottom: 0 }}>
                 <div style={{ paddingTop: 8, opacity: '0.5' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
@@ -114,20 +114,20 @@ export const ShowMemberModalProvider: React.FC = () => {
                     </IonCardContent>
                     <div style={{ margin:'2rem', marginTop: 0}}>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Supply</IonText>
-                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Members</IonText>
+                                <IonText color="white" style={{opacity: .5}}>50</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Member Since</IonText>
-                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Joined</IonText>
+                                <IonText color="white" style={{opacity: .5}}>12/12/2024</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
                                 <IonText color="white" className="medium" style={{opacity: .5}}>Contract</IonText>
-                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                                <IonText color="white" style={{opacity: .5}}>0xwg4932zs</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
                                 <IonText color="white" className="medium" style={{opacity: .5}}>Network</IonText>
-                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                                <IonText color="white" style={{opacity: .5}}>Base</IonText>
                             </div>
                         
 
