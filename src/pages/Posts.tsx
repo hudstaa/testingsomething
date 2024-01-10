@@ -180,7 +180,7 @@ const Posts: React.FC = () => {
             <IonPage id="pages-content" ref={pageRef}>
                 {filterType === 'Feed' && <IonHeader>
                     {!hideToolbar ?
-                        <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'absolute' }}>
+                        <IonToolbar color={bgColor} style={{ height: 'auto', display: 'flex', flexDirection: 'column', position: 'relative' }}>
                             <div slot='start' style={{ width: 'auto', height: 'auto' }}>
                                 <IonMenuToggle>
                                     <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0, paddingTop: 0 }} color='dark' fill='clear' size='small'>

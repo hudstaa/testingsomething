@@ -54,14 +54,14 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <img style={{minHeight: '100vh', minWidth: '100vw',  filter:' blur(30px)', opacity: 0.25 }} src={highlight?.twitterPfp || personOutline} />
               </div>
 
-            <IonHeader style={{justifyContent: 'center', marginBottom: '2.5%'}}>
+            <IonHeader style={{justifyContent: 'center', marginBottom: '0'}}>
                 <IonCardHeader className='ion-image-center' style={{ marginTop: '2.5%',paddingBottom: 0 }}>
                 <div style={{ paddingTop: 8, opacity: '0.5' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
                             Created by @{highlight?.twitterUsername}
                         </IonText>
                     </div>
-                    <div style={{ paddingTop: '1rem', opacity: '1' }}>
+                    <div style={{ paddingTop: '1.25rem', opacity: '1' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1.25rem' }}>
                             {highlight?.twitterName}'s tribe
                         </IonText>
@@ -79,18 +79,25 @@ export const ShowMemberModalProvider: React.FC = () => {
             <IonContent style={{ padding: 0, '--background': 'transparent', zIndex: 1 }}>
                 <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column' }}>
                     
-                    <IonCardContent style={{ margin: '24px', padding: 0, borderTop: '1px solid var(--ion-color-primary-shade)' }}>
-                    <div style={{display: 'flex'}}>
+                    <IonCardContent style={{ margin: '2rem', padding: 0, paddingTop: '1rem', paddingBottom: '1rem', borderTop: '1px solid var(--ion-color-primary-shade)', borderBottom: '1px solid var(--ion-color-primary-shade)' }}>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8}}>Boost Price</IonText> 
+                    <IonText color="white" className='bold' style={{fontSize: '1.5rem'}}>{formatEth(buyPrice)}</IonText>
                         </div>
 
-                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: 24, marginBottom: '2.5%', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: '1rem', marginBottom: '2.5%', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton className="custombutton" disabled={typeof buyPass === 'undefined'} style={{ margin: 0, width: '100%' }} color='tribe' onClick={buyPass}>
                                 Mint {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
 
 
-                            <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' , marginBottom: '2.5%'}}>
+                         
+
+
+                    </IonCardContent>
+                    <div style={{ margin: 28, marginTop: 0}}>
+                    <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' , marginBottom: '2.5%'}}>
                                 <IonButton className="custombutton" style={{ height: 36, margin: 0, marginRight: 2, width: '100%' }} color='tribe' onMouseDown={() => {
                                     push('/member/' + highlight?.address)
                                     setHighlight(null);
@@ -109,9 +116,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                                     Chat
                                 </IonButton>
                             </div>
-
-
-                    </IonCardContent>
+                </div>
                 </div>
                 <IonItem color={'transparent'} lines="none">
                     <IonText color='warning'>
