@@ -58,7 +58,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
             {comments.length === 0 ? (
                 <div style={{marginTop: '5%',width: '100%', textAlign: 'center'}}>
                 <IonText color="medium" className="regular" style={{ textAlign: 'center', padding: 10 }}>
-                    No Comments yet...
+                    No Comments yet.
                 </IonText>
                 </div>
             ) : (

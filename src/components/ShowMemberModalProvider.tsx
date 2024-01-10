@@ -58,12 +58,12 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <IonCardHeader className='ion-image-center' style={{ marginTop: '2.5%',paddingBottom: 0 }}>
                 <div style={{ paddingTop: 8, opacity: '0.5' }}>
                         <IonText className="bold" color={'white'} style={{ fontSize: '1rem' }}>
-                            Created by @{highlight?.twitterUsername}
+                            @{highlight?.twitterUsername}
                         </IonText>
                     </div>
                     <div style={{ paddingTop: '1.25rem', opacity: '1' }}>
-                        <IonText className="bold" color={'white'} style={{ fontSize: '1.25rem' }}>
-                            {highlight?.twitterName}'s tribe
+                        <IonText className="bold" color={'white'} style={{ fontSize: '1.35rem' }}>
+                            {highlight?.twitterName}
                         </IonText>
                     </div>
                     {/* <div style={{ paddingTop: 8 }}>
@@ -79,43 +79,67 @@ export const ShowMemberModalProvider: React.FC = () => {
             <IonContent style={{ padding: 0, '--background': 'transparent', zIndex: 1 }}>
                 <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column' }}>
                     
-                    <IonCardContent style={{ margin: '2rem', padding: 0, paddingTop: '1rem', paddingBottom: '1rem', borderTop: '1px solid var(--ion-color-primary-shade)', borderBottom: '1px solid var(--ion-color-primary-shade)' }}>
+                    <IonCardContent style={{ margin: '2rem', marginBottom: '1rem',padding: 0, paddingTop: '1rem', paddingBottom: '1rem', borderTop: '1px solid var(--ion-color-primary-shade)', borderBottom: '1px solid var(--ion-color-primary-shade)' }}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                     <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8}}>Boost Price</IonText> 
                     <IonText color="white" className='bold' style={{fontSize: '1.5rem'}}>{formatEth(buyPrice)}</IonText>
                         </div>
 
-                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: '1rem', marginBottom: '2.5%', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                        {useMemo(() => <div className="ion-text-center" style={{ paddingTop: '1rem', marginBottom: '4%', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton className="custombutton" disabled={typeof buyPass === 'undefined'} style={{ margin: 0, width: '100%' }} color='tribe' onClick={buyPass}>
-                                Mint {formatEth(buyPrice)}
+                                Boost {formatEth(buyPrice)}
                             </IonButton>
                         </div>, [sellPass, buyPass])}
+                        <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', marginBottom: '0%' }}>
+                        <IonButton 
+                            className="custombuttony" 
+                            style={{ 
+                                height: 'auto',  // Ensure the height can adjust based on content
+                                maxHeight: '1rem',  // Set the maximum height
+                                margin: 0, 
+                                marginRight: 0, 
+                                width: '100%' 
+                            }} 
+                            color='tribe' 
+                            onMouseDown={() => {
+                                push('/member/' + highlight?.address)
+                                setHighlight(null);
+                                dismiss(false);
+                            }}>
+                            Go to {highlight?.twitterName}'s profile →
 
-
-                         
-
+                        </IonButton>
+                    </div>
 
                     </IonCardContent>
-                    <div style={{ margin: 28, marginTop: 0}}>
-                    <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' , marginBottom: '2.5%'}}>
-                                <IonButton className="custombutton" style={{ height: 36, margin: 0, marginRight: 2, width: '100%' }} color='tribe' onMouseDown={() => {
-                                    push('/member/' + highlight?.address)
-                                    setHighlight(null);
-                                    dismiss(false);
-                                }}>
-                                    Profile
-                                </IonButton>
+                    <div style={{ margin:'2rem', marginTop: 0}}>
+                            <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
                             </div>
-                            <div className="ion-text-center" style={{ paddingTop: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                            </div>
+                            <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                            </div>
+                            <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" style={{opacity: .5}}>dd</IonText>
+                            </div>
+                        
 
-                                <IonButton className="custombutton" style={{ height: 36, margin: 0, marginLeft: 2, width: '100%' }} color='tribe' onMouseDown={() => {
+                        <div className="ion-text-center" style={{ paddingTop: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <IonButton className="custombutton" style={{ height: 36, margin: 0, marginLeft: 2, width: '100%' }} color='tribe' onMouseDown={() => {
                                     setHighlight(null);
                                     dismiss(false);
                                     push('/channel/' + highlight?.address)
                                 }}>
                                     Chat
-                                </IonButton>
-                            </div>
+                            </IonButton>
+                        </div>
                 </div>
                 </div>
                 <IonItem color={'transparent'} lines="none">
