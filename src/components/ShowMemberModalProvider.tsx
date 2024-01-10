@@ -80,11 +80,18 @@ export const ShowMemberModalProvider: React.FC = () => {
                 <div style={{ marginTop: 0, display: 'flex', flexDirection: 'column' }}>
                     
                     <IonCardContent style={{ margin: '2rem', marginBottom: '1rem',padding: 0, paddingTop: '1rem', paddingBottom: '1rem', borderTop: '1px solid var(--ion-color-primary-shade)', borderBottom: '1px solid var(--ion-color-primary-shade)' }}>
+                    <div style={{display:'flex', justifyContent: 'space-between'}}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
-                    <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8}}>Boost Price</IonText> 
-                    <IonText color="white" className='bold' style={{fontSize: '1.5rem'}}>{formatEth(buyPrice)}</IonText>
-                        </div>
-
+                        <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8}}>Boost Price</IonText> 
+                        <IonText color="white" className='bold' style={{fontSize: '1.5rem'}}>{formatEth(buyPrice)}</IonText>
+   
+                    </div>
+                       
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8, textAlign: 'right'}}>Leaderboard Rank</IonText> 
+                        <IonText color="white" className='bold' style={{fontSize: '1.5rem', textAlign: 'right'}}>#1</IonText>
+                    </div>
+                    </div>
                         {useMemo(() => <div className="ion-text-center" style={{ paddingTop: '1rem', marginBottom: '4%', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton className="custombutton" disabled={typeof buyPass === 'undefined'} style={{ margin: 0, width: '100%' }} color='tribe' onClick={buyPass}>
                                 Boost {formatEth(buyPrice)}
