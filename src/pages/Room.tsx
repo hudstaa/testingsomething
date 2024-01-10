@@ -120,8 +120,8 @@ const Room: React.FC = () => {
                     </IonButtons>
                     <IonButtons slot='end'>
                         <div style={{marginRight: 8, paddingLeft: 4, paddingRight: 4,backgroundColor: 'var(--ion-color-tribe)', borderRadius: '1.5rem'}}>
-                        {address !== "0x0000000000000000000000000000000000000000" && <IonButton size="default" color='white' className='bold' onClick={() => { setHighlight(address) }}>
-                            Boost
+                        {address !== "0x0000000000000000000000000000000000000000" && <IonButton size="default" color='white' onClick={() => { setHighlight(address) }}>
+                            <span className="bold" style={{letterSpacing: '-0.0135em'}}>Boost</span>
                         </IonButton>}
                         </div>
                     </IonButtons>
