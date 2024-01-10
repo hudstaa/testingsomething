@@ -86,10 +86,10 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: 4, paddingTop: 2, paddingBottom: 3, fontSize: '1.25rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: '1rem', paddingTop: 2, paddingBottom: 3, fontSize: '1.25rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+                        <div style={{ marginTop: '-48px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
