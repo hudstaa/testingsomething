@@ -62,7 +62,7 @@ interface TokenData {
     const formattedPrice = tokenData.market_data.current_price.usd.toPrecision(6);
 
     return (
-      <IonCard style={{margin: 0, backgroundColor: 'var(--ion-color-tabblur)'}}>
+      <IonCard style={{margin: 0, backgroundColor: 'var(--ion-color-light-shade)'}}>
         <IonCardHeader style={{padding: '16px'}} >  
             <IonCardTitle className='medium'  color={'dark'} style={{fontSize: '1.15rem', letterSpacing: '.0115em'}}>{tokenData.name} </IonCardTitle> 
             {/* ({tokenData.symbol.toUpperCase()}) */}

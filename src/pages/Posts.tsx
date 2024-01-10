@@ -19,7 +19,7 @@ import {
     IonPage,
     IonLabel,
     IonRow,
-    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList, IonRefresher, IonRefresherContent
+    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList, IonRefresher, IonRefresherContent, useIonRouter
 } from '@ionic/react';
 import 'firebase/firestore';
 import { addDoc, collection, getFirestore, serverTimestamp } from 'firebase/firestore';
@@ -58,6 +58,18 @@ const Posts: React.FC = () => {
         const params = new URLSearchParams(location.search);
         return params.get('type') === 'recent' ? 'recent' : 'top';
     };
+    const ionRouter = useIonRouter();
+
+    const doRefresh = (event: { detail: { complete: () => void; }; }) => {
+        // Refresh the page
+        ionRouter.push(ionRouter.routeInfo.pathname, 'forward', 'replace');
+
+        // Complete the refresh operation
+        setTimeout(() => {
+            event.detail.complete();
+        }, 1000);
+    };
+
     const [postType, setPostType] = useState<'top' | 'recent'>(getPostTypeFromURL());
     const history = useHistory();
     const [menuType, setMenuType] = useState('push');
@@ -222,12 +234,9 @@ const Posts: React.FC = () => {
                         !hideToolbar && setHideToolbar(true)
                     }
                 }} scrollEvents>
-                    <IonRefresher onIonRefresh={() => {
-                        alert('refresh')
-                    }}>
-                        <IonRefresherContent></IonRefresherContent>
-                    </IonRefresher>
-
+                    <IonRefresher slot='fixed' onIonRefresh={doRefresh}>
+                <IonRefresherContent />
+            </IonRefresher>
                     <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
                         <SwiperSlide>
                             <PostList type='top' max={10} />
