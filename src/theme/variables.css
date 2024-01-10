@@ -702,7 +702,7 @@ ion-footer ion-toolbar {
 ion-button.custombutton::part(native) {
   border-radius: 32px;
   background-color: var(--ion-color-tribe);
-  padding: 1.15rem;
+  padding: 1rem;
   padding-inline-start: 0px !important;
   padding-inline-end: 0px !important;
   font-family: 'SFR-Heavy';
