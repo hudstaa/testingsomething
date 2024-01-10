@@ -131,7 +131,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                             </div>
                         
 
-                        <div className="ion-text-center" style={{ paddingTop: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                        {/* <div className="ion-text-center" style={{ paddingTop: '1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
                             <IonButton className="custombutton" style={{ height: 36, margin: 0, marginLeft: 2, width: '100%' }} color='tribe' onMouseDown={() => {
                                     setHighlight(null);
                                     dismiss(false);
@@ -139,7 +139,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 }}>
                                     Chat
                             </IonButton>
-                        </div>
+                        </div> */}
                 </div>
                 </div>
                 <IonItem color={'transparent'} lines="none">

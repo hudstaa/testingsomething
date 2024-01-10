@@ -96,7 +96,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-                                <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
+                                <span className="heavy" style={{ fontSize: 14.5 }}>Boost</span>
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5 }}>

@@ -111,10 +111,10 @@ const Account: React.FC = () => {
     return (
         <>
             {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 5, top: 5 }} onClick={() => { setShow(true) }}>
-                <IonIcon size={'large'} icon={settingsOutline} />
+                <IonIcon size={'medium'} color={'dark'} icon={settingsOutline} />
             </IonButton>}
-            {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 100, top: 5 }} onClick={showNotifications}>
-                <IonIcon size={'large'} icon={alertOutline} />
+            {pathname.includes('account') && <IonButton  fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 100, top: 5 }} onClick={showNotifications}>
+                <IonIcon size={'medium'} color={'dark'} icon={alertOutline} />
                 <IonBadge>{notifications.length}</IonBadge>
             </IonButton>}
             <Member profile={true} />
