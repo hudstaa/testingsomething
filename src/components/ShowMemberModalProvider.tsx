@@ -106,7 +106,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                                 setHighlight(null);
                                 dismiss(false);
                             }}>
-                            Go to {highlight?.twitterName}'s profile →
+                            View {highlight?.twitterName}'s profile →
 
                         </IonButton>
                     </div>
