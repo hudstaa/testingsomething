@@ -78,9 +78,9 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
   const strippedLength = message?.content ? message.content.replaceAll(' ', '').replaceAll('\n', '').length : 0
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   return (
-    <IonToolbar color={bgColor} style={{ padding: 4, paddingBottom: 36, paddingLeft: 8, paddingRight: 8, border: 0 }} >
+    <IonToolbar style={{ padding: 4, paddingBottom: 36, paddingLeft: 8, paddingRight: 8, border: 0 }} >
       <div style={{ display: 'flex', width: '100%' }}>
-        <div style={{ backgroundColor: 'var(--ion-color-light)', marginLeft: 0, marginTop: 4, paddingRight: 0, borderRadius: '32px', width: '100%', display: 'flex' }}>
+        <div style={{ backgroundColor: 'var(--ion-color-tabblur)', border: '1px solid var(--ion-color-medium-shade)',marginLeft: 0, marginTop: 4, paddingRight: 0, borderRadius: '32px', width: '100%', display: 'flex' }}>
           {showMediaButton && (
             <IonButtons slot='start'>
               {uid && <PfpUploader done={sent} userId={uid} onUpload={(path) => {
@@ -116,7 +116,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
             onFocus={handleFocus}
             onBlur={handleBlur}
             className="regular"
-            style={{ flex: 1, paddingTop: 0, paddingLeft: 20, marginTop: -2, minHeight: 50 }} /* flex: 1 allows the textarea to grow and fill available space */
+            style={{ flex: 1, paddingTop: 0, paddingLeft: 20, marginTop: -2, minHeight: 30 }} /* flex: 1 allows the textarea to grow and fill available space */
             value={message?.content}
             placeholder={placeHolder}
             onKeyUp={(e) => {
@@ -128,7 +128,7 @@ export const WriteMessage: React.FC<{ placeHolder: string, address: string, send
               setContent(e.detail.value!)
             }}
           />
-          <IonButtons slot='end' style={{ maxHeight: 40, marginLeft: 8, marginTop: 6, marginRight: 8, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10 }}>
+          <IonButtons slot='end' style={{ maxHeight: 40, marginLeft: 8, marginTop: 10, marginRight: 10, backgroundColor: 'var(--ion-color-tribe)', borderRadius: 24, padding: 8, paddingBottom: 10 }}>
             <IonButton
               disabled={strippedLength < 1}
               onClick={async () => {

@@ -664,15 +664,15 @@ ion-footer ion-toolbar {
 
 
 .custom-modal {
-  --border-radius: 32px !important; /* Adjust as needed */
+  --border-radius: 36px !important; /* Adjust as needed */
 }
 
 .custom-modal2 {
-  --border-radius: 32px !important; /* Adjust as needed */
+  --border-radius: 36px !important; /* Adjust as needed */
   --backdrop-opacity: 1.0 !important;
 }
 .custom {
-  --border-radius: 20px;
+  --border-radius: 36px;
 
 }
 .sc-ion-searchbar-ios-h {
