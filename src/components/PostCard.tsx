@@ -44,8 +44,9 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
                 onDidDismiss={() => setShowModal(false)}
                 initialBreakpoint={0.75} 
                 breakpoints={[0, 0.75, 1]}
+                style={{zIndex: 999}}
             >
-                <IonContent style={{padding: 0}}>
+                <IonContent style={{padding: 10}}>
                     {outputID && (
                         <TokenInfo 
                             id={outputID}
@@ -181,9 +182,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
     return (
     <div onClick={handleCardClick} style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard onMouseDown={(e) => {
-        console.log(e.target)
         const classes = Array.from((e.target as any).classList);
-        console.log(e.target);
         const isAlias = classes.includes('alias') || classes.includes('cashtag')
         if ((e.target as any)?.nodeName === "VIDEO") {
             return;
@@ -241,7 +240,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
             }}>
                 {/* <IonIcon icon={'/icons/bookmark.svg'} style={{ height: 18, width: 18 }} /> */}
-                <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
+                <IonIcon icon={'/icons/share.svg'} style={{ height: 19, width: 19, marginTop: 0, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton>
             {/* <IonButton style={{ marginLeft: -14, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
@@ -257,7 +256,7 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
                 <IonIcon icon={'/icons/share.svg'} style={{ height: 19, width: 19 }} />
                 <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton> */}
-            <div style={{ marginLeft: '10%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ marginLeft: '25%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <IonButton className="do-not-navigate" fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted === 'undefined' || voted === null || voted === -1 ? 'medium' : 'tribe'}>
     <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{ marginRight: -12, marginLeft: 0, height: 30, width: 30 }} />
 </IonButton>

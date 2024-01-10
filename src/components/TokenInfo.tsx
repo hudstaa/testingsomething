@@ -64,10 +64,10 @@ interface TokenData {
     return (
       <IonCard style={{margin: 0, backgroundColor: 'var(--ion-color-light-shade)'}}>
         <IonCardHeader style={{padding: '16px'}} >  
-            <IonCardTitle className='medium'  color={'dark'} style={{fontSize: '1.15rem', letterSpacing: '.0115em'}}>{tokenData.name} </IonCardTitle> 
+            <IonCardTitle className='medium'  color={'dark'} style={{fontSize: '1.35rem', letterSpacing: '.0115em'}}>{tokenData.name} </IonCardTitle> 
             {/* ({tokenData.symbol.toUpperCase()}) */}
-            <IonCardSubtitle color={'dark'} className='bold' style={{ fontSize: '1.25rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
-            <div style={{paddingBottom: 12, paddingTop: 0}}><img style={{borderRadius: '100%', width: '36px', height: '36px', boxShadow: '0px 2px 15px rgba(0, 0, 0, .1)'}} src={tokenData.image.large} alt={tokenData.name} /></div>
+            <IonCardSubtitle color={'dark'} className='bold' style={{ fontSize: '1.5rem'}}>${tokenData.market_data.current_price.usd}</IonCardSubtitle>
+            <div style={{paddingBottom: 8, paddingTop: 0}}><img style={{borderRadius: '100%', width: '40px', height: '40px', boxShadow: '0px 2px 15px rgba(0, 0, 0, .1)'}} src={tokenData.image.large} alt={tokenData.name} /></div>
         </IonCardHeader>
         <IonCardContent>
         <div style={{maxHeight: '500px', marginTop: '0%'}}>
