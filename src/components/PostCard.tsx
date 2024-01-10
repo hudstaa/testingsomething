@@ -64,7 +64,7 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     );
 };
 
-export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
+export const PostCard: React.FC<{ onPostPage?: false, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
     const { localCommentCount, commentAdded } = useNotifications()
@@ -77,6 +77,10 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
     const { pathname } = useLocation()
     const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
     const [isTap, setIsTap] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const toggleModal = () => setShowModal(!showModal);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const cardStyle = onPostPage ? {
         marginTop: 0,
@@ -103,32 +107,42 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
         borderBottom: '1px solid var(--ion-color-medium-shade)',
         marginBottom: 4,
         marginTop: -8,
-
-        paddingLeft: 41, //testing TwitStyles
+        paddingLeft: 30, //testing TwitStyles
 
         display: 'flex',
         justifyContent: 'space-between'
     } : {
         marginTop: -8,
         marginBottom: -4,
-        marginLeft: 41, //testing TwitStyles
+        paddingLeft: 30, //testing TwitStyles
         display: 'flex',
         justifyContent: 'space-between'
     };
 
+    const openCommentsModal = () => {
+        open(
+            (message) => makeComment(id, message as any),
+            author,
+            "Comment",
+            id
+        );
+    };
+
     const shouldNavigate = (target: EventTarget | null): boolean => {
         while (target && target instanceof HTMLElement) {
-            if (target.nodeName === 'ION-BUTTON' || target.classList.contains('do-not-navigate')) {
+            if (target.nodeName === 'ION-BUTTON' || 
+                target.classList.contains('do-not-navigate') || 
+                target.nodeName === "VIDEO" || 
+                target.tagName === "A") {
                 return false;
             }
             target = target.parentNode;
         }
         return true;
     };
-
     const handleNavigation = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => {
         if (shouldNavigate(e.target as EventTarget)) {
-            push('/post/' + id);
+            openCommentsModal();
         }
     };
 
@@ -160,14 +174,19 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
             setIsTap(false); // It's a swipe
         }
     };
-
+    const handleCardClick = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>) => {
+        if (shouldNavigate(e.target as EventTarget)) {
+            openCommentsModal();
+        }
+    };
 
     const handleClick = () => {
         console.log("Post clicked");
         push('/post/' + id); // Navigate to the post
     };
 
-    return <div style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard onMouseDown={(e) => {
+    return (
+    <div onClick={handleCardClick} style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard onMouseDown={(e) => {
         console.log(e.target)
         const classes = Array.from((e.target as any).classList);
         console.log(e.target);
@@ -213,12 +232,16 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
 
         {<IonRow className="GPT" style={gptRowStyle}>
-            <IonButton onClick={handleClick} style={{ marginLeft: -12, marginBottom: 0, marginTop: 0 }} routerDirection="root" color='dark' fill="clear" onMouseDown={handleClick}>
+            {<IonButton style={{ margin: 0 }} routerDirection="root" color='dark' fill="clear" onMouseDown={() => {
+                open((message) => {
+                    makeComment(id, message as any)
+                }, "", "Comment", id)
+            }}>
                 <IonIcon color={'medium'} icon={'/icons/msgo.svg'} style={{ height: 18, width: 18 }} />
-                <IonText color={'medium'} className="medium" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
+                <IonText color={'medium'} className="medmum" style={{ fontSize: ".9rem", marginTop: '1px', marginLeft: 4, color: 'var(--ion-color-soft)' }}>
                     {typeof commentCount !== 'undefined' ? commentCount + newComments : newComments + 0}
                 </IonText>
-            </IonButton>
+            </IonButton>}
             <IonButton style={{ marginLeft: 0, marginBottom: 0, marginTop: 0 }} color='dark' fill='clear' size='small' onMouseDown={() => {
                 setLocalNotif("Copied to share link to clipboard")
                 navigator.clipboard.writeText('https://tribe.computer/post/' + id)
@@ -258,4 +281,5 @@ export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, h
 
     </IonCard>
     </div>
+    )
 }
