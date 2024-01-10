@@ -114,19 +114,19 @@ export const ShowMemberModalProvider: React.FC = () => {
                     </IonCardContent>
                     <div style={{ margin:'2rem', marginTop: 0}}>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Supply</IonText>
                                 <IonText color="white" style={{opacity: .5}}>dd</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Member Since</IonText>
                                 <IonText color="white" style={{opacity: .5}}>dd</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Contract</IonText>
                                 <IonText color="white" style={{opacity: .5}}>dd</IonText>
                             </div>
                             <div style={{display:'flex',justifyContent: 'space-between', marginBottom: '1rem' }}>
-                                <IonText color="white" className="medium" style={{opacity: .5}}>Holders</IonText>
+                                <IonText color="white" className="medium" style={{opacity: .5}}>Network</IonText>
                                 <IonText color="white" style={{opacity: .5}}>dd</IonText>
                             </div>
                         

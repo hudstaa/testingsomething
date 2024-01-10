@@ -706,7 +706,7 @@ ion-button.custombutton::part(native) {
   padding-inline-start: 0px !important;
   padding-inline-end: 0px !important;
   font-family: 'SFR-Heavy';
-  font-size: 1.35rem;
+  font-size: 1.25rem;
 }
 
 ion-button.custombuttony::part(native) {
