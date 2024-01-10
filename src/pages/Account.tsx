@@ -222,7 +222,7 @@ const Account: React.FC = () => {
                                 Login</IonButton>}
                         </IonCardContent>
                     </IonCard>
-                    <IonButton expand='full' fill='outline' onClick={() => {
+                    <IonButton style={{position: 'absolute', bottom: 20,width: '100%'}} expand='full' fill='clear' onClick={() => {
                         signOut(auth); logout(); setCurrentUser(null as any);
                         setTimeout(() => {
                             window.location.reload();
