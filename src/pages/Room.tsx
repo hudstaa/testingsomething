@@ -98,21 +98,32 @@ const Room: React.FC = () => {
                                 <IonImg class="custom-avatar" src={channelOwner?.twitterPfp} />
                             </IonAvatar>
                             <IonGrid>
-                                <IonRow>
+                                <IonRow style={{marginTop: '.15rem'}}>
                                     <IonText color={'dark'} className='semi'>{(channelOwner?.twitterName) || address}</IonText>
                                 </IonRow>
-                                <IonRow>
-                                    {info ? <IonText color='medium'>
-                                        {Object.keys(info?.holders || {}).length} members
-                                    </IonText> : <IonSpinner />}
+                                <IonRow style={{marginTop: '.15rem'}}>
+                                {info ? (
+                                    <>
+                                    <div style={{opacity: 0.25}}>
+                                    <IonIcon icon={'/icons/people.svg'}  style={{ marginRight: '5px', width: '.9rem', height: '.9rem'}} />
+                                    </div>
+                                    <IonText color='medium' className='medium' style={{fontSize: '.9rem'}}>
+                                        {Object.keys(info?.holders || {}).length} Members
+                                    </IonText>
+                                    </>
+                                ) : (
+                                    <IonSpinner />
+                                )}
                                 </IonRow>
                             </IonGrid>
                         </IonButton>
                     </IonButtons>
                     <IonButtons slot='end'>
-                        {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='tribe' onClick={() => { setHighlight(address) }}>
-                            Buy
+                        <div style={{marginRight: 8, paddingLeft: 12, paddingRight: 12, paddingTop: 0, paddingBottom: 0,backgroundColor: 'var(--ion-color-tribe)', borderRadius: '1rem'}}>
+                        {address !== "0x0000000000000000000000000000000000000000" && <IonButton color='white' className='bold 'onClick={() => { setHighlight(address) }}>
+                            Boost
                         </IonButton>}
+                        </div>
                     </IonButtons>
                 </IonToolbar>
             </div>

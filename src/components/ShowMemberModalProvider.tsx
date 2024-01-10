@@ -89,7 +89,7 @@ export const ShowMemberModalProvider: React.FC = () => {
                     </div>
                        
                     <div style={{display: 'flex', flexDirection: 'column'}}>
-                        <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8, textAlign: 'right'}}>Leaderboard Rank</IonText> 
+                        <IonText color="white" className="semi" style={{fontSize: '.75rem', opacity: 0.8, textAlign: 'right'}}>Leaderboard</IonText> 
                         <IonText color="white" className='bold' style={{fontSize: '1.5rem', textAlign: 'right'}}>#1</IonText>
                     </div>
                     </div>
