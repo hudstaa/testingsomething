@@ -76,17 +76,17 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
-                    <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonText style={{ paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
+                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, paddingBottom: 0, borderRadius: 0 }}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 4, boderBottom: 0 }}>
+                        <IonText style={{ paddingTop: 8, paddingBottom: 0, fontSize: '1rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='dark' className='regular' style={{ opacity: 0.75, fontSize: '.95rem' }}>
+                            <IonText color='dark' className='medium' style={{ opacity: 0.75, fontSize: '1rem' }}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.5rem' }} >
                             {member?.twitterName}
                         </IonText>
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
@@ -145,7 +145,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 <div>
 
                     {
-                        segment === 'posts' && <IonGrid style={{ padding: 0 }}>
+                        segment === 'posts' && <IonGrid style={{ padding: 0, paddingTop: 4}}>
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                                     {member !== null && member.address && <PostList type={'top'} max={10} from={member!.address} />}
