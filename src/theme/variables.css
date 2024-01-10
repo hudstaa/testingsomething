@@ -662,6 +662,7 @@ ion-footer ion-toolbar {
 
 }
 
+
 .custom-modal {
   --border-radius: 36px !important; /* Adjust as needed */
 }
@@ -852,7 +853,9 @@ ion-icon {
   opacity: 1 !important;
   
 }
-
+.my-custom-item {
+    --ion-color-shade: var(--ion-color-medium-shade); /* Replace with your desired color */
+}
 
 /* New tribel Color */
 :root {

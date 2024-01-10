@@ -64,17 +64,15 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     );
 };
 
-export const PostCard: React.FC<{ onPostPage?: false, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
+export const PostCard: React.FC<{ onPostPage?: boolean, commentCount?: number, hideComments: boolean, id: string, sent: Timestamp, score: number, voted: 1 | -1 | undefined | null, author: string, uid: string, content: string, makeComment: (id: string, content: string) => void, handleVote: (id: string, uid: string, vote: boolean) => void, media?: { src: string, type: string } }> = ({ onPostPage = false, hideComments, author, sent, uid, handleVote, id, score, voted, content, makeComment, media, commentCount }) => {
     const [showComments, setShowComments] = useState<boolean>(!hideComments);
     const { open } = useWriteMessage();
     const { localCommentCount, commentAdded } = useNotifications()
     const newComments = localCommentCount[id] || 0;
     const member = useMember(x => x.getFriend(author));
     const { localNotif, setLocalNotif } = useNotifications()
-    const { push } = useHistory();
     const darkmode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const bgColor = darkmode ? 'tabblur' : 'white';
-    const { pathname } = useLocation()
     const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
     const [isTap, setIsTap] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -180,10 +178,6 @@ export const PostCard: React.FC<{ onPostPage?: false, commentCount?: number, hid
         }
     };
 
-    const handleClick = () => {
-        console.log("Post clicked");
-        push('/post/' + id); // Navigate to the post
-    };
 
     return (
     <div onClick={handleCardClick} style={cardStyle} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}><IonCard onMouseDown={(e) => {
@@ -198,7 +192,7 @@ export const PostCard: React.FC<{ onPostPage?: false, commentCount?: number, hid
             return;
         }
         if ((e.target as any)?.nodeName != 'VIDEO' && (e.target as any)?.nodeName != 'ION-BUTTON' && (e.target as any)?.parentNode?.nodeName !== 'ION-BUTTON' && !isAlias) {
-            push('/post/' + id);
+            openCommentsModal();
         }
     }} color={bgColor} key={id} style={{ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0, paddingRight: 0, paddingBottom: 0, paddingLeft: 0, cursor: 'pointer!important' }} onClick={(e) => {
 
@@ -264,17 +258,20 @@ export const PostCard: React.FC<{ onPostPage?: false, commentCount?: number, hid
                 <IonIcon icon={'/icons/se.svg'} style={{ height: 18, width: 18, marginTop: 2, marginLeft: '-7px', color: 'var(--ion-color-soft)' }} />
             </IonButton> */}
             <div style={{ marginLeft: '10%', marginRight: -2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <IonButton className="do-not-navigate" fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
-                    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginRight: -12, height: 30, width: 30 }} />
-                </IonButton>
-                <IonLabel style={{
-                    fontSize: '1.05rem', width: 24, paddingBottom: 2, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
-                }} >
-                    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'} className='heavy ion-text-center'>{score} </IonText>
-                </IonLabel>
-                <IonButton className="do-not-navigate" fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted !== 'undefined' && voted !== null && voted === 1 ? 'tribe' : 'medium'}>
-                    <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{ marginLeft: -12, marginRight: 0, height: 30, width: 30 }} />
-                </IonButton>
+            <IonButton className="do-not-navigate" fill='clear' onPointerDown={() => handleVote(id, uid, true)} color={typeof voted === 'undefined' || voted === null || voted === -1 ? 'medium' : 'tribe'}>
+    <IonIcon icon={typeof voted === 'undefined' || voted === null || voted === -1 ? '/icons/upGRE.svg' : '/icons/upOR.svg'} style={{ marginRight: -12, marginLeft: 0, height: 30, width: 30 }} />
+</IonButton>
+
+<IonLabel style={{
+    fontSize: '1.05rem', width: 24, paddingBottom: 2, alignItems: "middle", textAlign: 'center', fontVariantNumeric: 'tabular-nums'
+}} >
+    <IonText color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} className='heavy ion-text-center'>{score} </IonText>
+</IonLabel>
+
+<IonButton className="do-not-navigate" fill='clear' onPointerDown={() => handleVote(id, uid, false)} color={typeof voted !== 'undefined' && voted !== null && voted === -1 ? 'tribe' : 'medium'} >
+    <IonIcon icon={typeof voted !== 'undefined' && voted !== null && voted === -1 ? '/icons/downRE.svg' : '/icons/downGRE.svg'} style={{ marginLeft: -12, height: 30, width: 30 }} />
+</IonButton>
+
             </div>
         </IonRow>}
         {showComments && <CommentList offset total={commentCount || 0} uid={uid} postId={id} amount={commentCount} />}

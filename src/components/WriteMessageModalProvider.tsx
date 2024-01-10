@@ -8,13 +8,17 @@ import { CommentList } from "./CommentList";
 import { nativeAuth } from "../lib/sugar";
 import { MemberAlias } from "./MemberBadge";
 import { WriteMessage2 } from "./WriteMessage2";
+import { PostCard } from "./PostCard";
+import { usePost } from "../hooks/usePosts";
 
 export const WriteMessageModalProvider: React.FC = () => {
     const { dismiss, message, setContent, setIsOpen, isOpen, placeholder, setMedia, postId, commentPath } = useWriteMessage();
     const me = useMember(x => x.getCurrentUser());
     const uid = nativeAuth().currentUser?.uid;
     const modalRef = useRef<HTMLIonModalElement>(null);
-
+    const { postCache } = usePost();
+    const post = postId ? postCache[postId] : null;
+    
     useEffect(() => {
         if (!isOpen) {
             modalRef.current?.dismiss();
@@ -29,18 +33,19 @@ export const WriteMessageModalProvider: React.FC = () => {
                 isOpen={isOpen}
                 onDidDismiss={() => setIsOpen(false)}
                 initialBreakpoint={1}
-                breakpoints={[0, 1]}
+                breakpoints={[0,1]}
                 style={{ height: '100vh!important' }}
             >
-                <IonHeader>
-                    <IonToolbar color='transparent'>
+                <IonHeader >
+                    <IonToolbar color='transparent'style={{justifyContent: 'center'}}>
 
-                        <IonButtons slot={'start'}>
-                            <div className="bold" style={{ fontSize: '1.15rem' , paddingTop: 12}}>{postId ? 'Comments' : "New Post"}</div>
+                        <IonButtons style={{justifyContent: 'space-around'}}>
+                            <div className="bold" style={{ fontSize: '1.15rem' , paddingTop: 8}}>{postId ? 'Comments' : "New Post"}</div>
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent color="transparent">
+                    
                     {uid && postId && <CommentList postId={postId} uid={uid} amount={undefined} total={0} />}
                     {!postId && <WriteMessage2 isModal placeHolder={placeholder || ""} address={me?.address || ""} sendMessage={(message) => {
                         setContent(message.content);

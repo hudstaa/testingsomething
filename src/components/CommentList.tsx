@@ -54,7 +54,15 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
     return (
         <IonList style={{ marginRight: offset ? -35 : undefined }}>
-            {comments.map((comment, i) => (
+        
+            {comments.length === 0 ? (
+                <div style={{marginTop: '5%',width: '100%', textAlign: 'center'}}>
+                <IonText color="medium" className="regular" style={{ textAlign: 'center', padding: 10 }}>
+                    No Comments yet...
+                </IonText>
+                </div>
+            ) : (
+                comments.map((comment, i) => (
                 < div key={i}>
                     {comment.reply && comment.reply}
                     <div style={{ backgroundColor: "var(--ion-color-paper" }}>
@@ -77,17 +85,17 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                         </IonItem>
                         {
                             comment.media &&
-                            <IonItem lines="none" color='lightt' style={{ marginLeft: 30, marginRight: 32, paddingBottom: 4, paddingTop: 8 }} >
+                            <IonItem lines="none" color='lightt' style={{ marginLeft: 30, marginRight: 0, paddingBottom: 4, paddingTop: 8 }} >
                                 {comment.media.type.includes("image") ?
                                     <img style={{ border: '1px solid var(--ion-color-light-tint)', borderRadius: 12.5, width: '100%' }} src={comment.media.src} /> : <video preload="metadata" controls style={{ borderRadius: 20, color: 'white', width: '100%' }} src={comment.media.src + '#t=0.1'} />}
                             </IonItem>
                         }
 
-                        <IonItem lines="none" color={'lightt'}>
-                            <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <IonItem className="my-custom-item"  lines="inset" color={'lightt'} style={{marginLeft: 30}}>
+                            <div style={{ paddingTop: 0, width: '100%', marginTop: 0, display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 4}}>
                                 {/* Reply/Time Ago section on the left */}
                                 <div style={{ display: "flex", alignItems: "center", fontSize: ".975rem", opacity: '50%' }}>
-                                    <IonButtons style={{ paddingBottom: 0, marginLeft: 30 }}>
+                                    <IonButtons style={{ paddingBottom: 0, marginLeft: 0 }}>
                                         <IonText>
                                             <span className="medium" onMouseDown={() => { setCommentPath(comment.id); }}>Reply</span>
                                         </IonText>
@@ -98,7 +106,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                                 </div>
 
                                 {/* Voter component on the right */}
-                                <IonButtons style={{ paddingRight: 28 }}>
+                                <IonButtons style={{ marginRight: -8 }}>
                                     <Voter score={comment.score || 0} commentId={comment.id} postId={postId} uid={uid} handleVote={function (upvote: boolean): void {
                                         const db = getFirestore(app);
                                         const uid = getAuth().currentUser!.uid;
@@ -115,7 +123,7 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
 
                     </div>
                 </div>))
-            }
-        </IonList >
+            )}
+        </IonList>
     );
 };
