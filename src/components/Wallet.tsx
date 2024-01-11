@@ -35,7 +35,7 @@ export const Wallet: React.FC = () => {
     const me = useMember(x => x.getCurrentUser());
     const { data: ethBalance } = useBalance({ address: me?.address as any, watch: true })
     const [showReceive, setShowReceive] = useState<boolean>(false);
-    return <IonContent color='black' className='ion-text-center ion-justify-center'>    <IonCard>
+    return <div className='ion-text-center ion-justify-center'>    <IonCard>
         {me && <IonItem color='paper' lines='none' detail={false} onClick={() => {
             navigator.clipboard.writeText(me!.address);
             setShowToast(true);
@@ -62,5 +62,5 @@ export const Wallet: React.FC = () => {
         </IonItem>}
     </IonCard>
         {me && <ETHQrCode amount='1' ethAddress={me!.address} />}
-    </IonContent>
+    </div>
 }

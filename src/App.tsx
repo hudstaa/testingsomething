@@ -98,6 +98,8 @@ import { WriteMessageModalProvider } from './components/WriteMessageModalProvide
 import Posts from './pages/Posts';
 import { swapHorizontal } from 'ionicons/icons';
 import { AddCoin } from './pages/AddCoin';
+import { SearchProvider } from './components/SearchCoins';
+import { Coin } from './pages/Coin';
 
 const storage = createStorage({
   storage: noopStorage,
@@ -261,6 +263,7 @@ const App: React.FC = () => {
           <DeepLinkProvider />
           <WriteMessageModalProvider />
           <IonReactHashRouter  >
+            <SearchProvider />
             <ShowMemberModalProvider />
             <NotificationsProvider />
 
@@ -308,6 +311,9 @@ const App: React.FC = () => {
 
                 <Route path="/member/:address" exact>
                   <Member profile={false} />
+                </Route>
+                <Route path="/coin/:id" exact>
+                  <Coin />
                 </Route>
 
                 <Route path="/auth" exact>

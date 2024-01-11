@@ -1,6 +1,6 @@
 import { IonBadge, IonButton, IonRow, IonGrid, IonButtons, IonCard, IonCardContent, IonCardHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonLabel, IonRouterLink, IonText, IonToast, IonPopover, IonContent, useIonPopover, useIonModal, IonHeader, IonTitle, IonToolbar } from "@ionic/react"
-import { Timestamp } from "firebase/firestore"
-import { useMemo, useState } from "react"
+import { Timestamp, collection, getDocs, getFirestore, query, where } from "firebase/firestore"
+import { useEffect, useMemo, useState } from "react"
 import { useWriteMessage } from "../hooks/useWriteMessage"
 import { CommentList } from "./CommentList"
 import { MemberCardHeader, MemberPfp, TwitterNameLink } from "./MemberBadge"
@@ -16,6 +16,9 @@ import 'linkify-plugin-mention';
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets"
 import { TaggableContent } from "./TaggableContent"
 import { AddCoin } from "../pages/AddCoin"
+import { getFunctions, httpsCallable } from "firebase/functions"
+import { getApp } from "firebase/app"
+import { app } from "../App"
 
 export const CashTag: React.FC<{ content: string }> = ({ content }) => {
     const Popover = () => <>
@@ -43,7 +46,31 @@ export const CashTag: React.FC<{ content: string }> = ({ content }) => {
             {hit && hit.symbol && <AdvancedRealTimeChart details={false} hide_top_toolbar hide_side_toolbar hide_legend allow_symbol_change={false} symbol={hit.symbol} theme="dark" autosize></AdvancedRealTimeChart>}
 
         </IonContent></>;
+
     const hit = sugar.known_pairs[content.substring(1).toLowerCase()]
+    const [dbHits, setDbHits] = useState<any[]>([])
+    useEffect(() => {
+        if (typeof hit === 'undefined') {
+
+            // const coinInfo = httpsCallable(getFunctions(app), 'coinInfo');
+            const tokensRef = collection(getFirestore(getApp()), 'coin');
+            const q = query(tokensRef, where('ticker', '==', content.substring(1).toLowerCase()));
+
+            getDocs(q).then((querySnapshot) => {
+                if (querySnapshot.empty) {
+                    console.log('No matching documents found for ticker:', content);
+                    return;
+                }
+
+                querySnapshot.forEach(doc => {
+                    console.log(doc.id, '=>', doc.data());
+                });
+                setDbHits(querySnapshot.docs.map(x => x.data()))
+            }).catch((error) => {
+                console.log('Error getting documents:', error);
+            });
+        }
+    }, [hit])
     const emoji = hit && hit.emoji;
     const { push } = useHistory()
     const [present, dismiss] = useIonModal(Popover, {

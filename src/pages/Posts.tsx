@@ -19,7 +19,7 @@ import {
     IonPage,
     IonLabel,
     IonRow,
-    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList
+    IonSegment, IonSegmentButton, IonSelect, IonSelectOption, IonText, IonToolbar, useIonViewDidEnter, useIonViewDidLeave, useIonViewWillLeave, IonList, IonCardContent, IonCard
 } from '@ionic/react';
 import 'firebase/firestore';
 import { IonContentCustomEvent, ScrollDetail } from '@ionic/core';
@@ -46,6 +46,8 @@ import { MemberPfp, MemberPfpImg } from '../components/MemberBadge';
 import { useNotifications } from '../hooks/useNotifications';
 import { removeUndefinedProperties } from '../components/WriteMessage';
 import type { RadioGroupCustomEvent } from '@ionic/react';
+import { Wallet } from '../components/Wallet';
+import { Apps } from '../components/Apps';
 
 
 
@@ -159,8 +161,7 @@ const Posts: React.FC = () => {
 
         setLastScrollTop(currentScroll);
     };
-
-
+    const { } = useNotifications()
     if (!me) {
         return <OnBoarding me={me} dismiss={function (): void {
 
@@ -229,15 +230,16 @@ const Posts: React.FC = () => {
                     <IonGrid>
                         <IonRow>
                             <IonCol sizeSm={'12'} offsetSm='0' sizeMd='10' offsetMd='1' sizeLg='8' offsetLg='2'>
-
-                                <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
+                                {filterType === 'Feed' && <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
                                     <SwiperSlide>
                                         <PostList type='top' max={10} />
                                     </SwiperSlide>
                                     <SwiperSlide>
                                         <PostList type='recent' max={10} />
                                     </SwiperSlide>
-                                </Swiper>
+                                </Swiper>}
+                                {filterType === 'Apps' && <Apps />}
+                                {filterType === 'Wallet' && <Wallet />}
                             </IonCol>
                         </IonRow>
                     </IonGrid>
@@ -259,7 +261,7 @@ const Posts: React.FC = () => {
                             <IonSegmentButton value="Feed" onClick={() => setFilterType('Feed')}>
                                 <IonLabel className='heavy' style={{ color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Feed</IonLabel>
                             </IonSegmentButton>
-                            <IonSegmentButton value="Apps" onClick={() => push('swap')}>
+                            <IonSegmentButton value="Apps" onClick={() => setFilterType('Apps')}>
                                 <IonLabel className='heavy' style={{ color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Apps</IonLabel>
                             </IonSegmentButton>
                             <IonSegmentButton value="Wallet" onClick={() => setFilterType('Wallet')}>
