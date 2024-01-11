@@ -9,7 +9,7 @@ export const SearchProvider: React.FC = () => {
 
     return <div style={{ position: 'absolute', left: 100, top: -5, zIndex: 1000000000 }}>
         <IonButton fill='clear' color='tribe' onClick={() => {
-            setShow(true);
+            setShow(!show);
         }}>
             <IonIcon icon={search} />
         </IonButton>
