@@ -10,6 +10,7 @@ import Voter from "./Voter";
 import { timestampAgo } from "./TradeItem";
 import { useWriteMessage } from "../hooks/useWriteMessage";
 import Linkify from "linkify-react";
+import { TaggableContent } from "./TaggableContent";
 type CommentListProps = {
     postId: string;
     uid: string
@@ -66,9 +67,9 @@ export const CommentList: React.FC<CommentListProps> = ({ postId, amount, uid, o
                             </div>
                             <div style={{ display: "flex", flexDirection: "column" }}>
                                 <IonText className='regular' color='dark' style={{ paddingLeft: 0, whitespace: 'pre-wrap', marginTop: 16, marginLeft: 38, marginBottom: 0, fontSize: "0.975rem", letterSpacing: '.0135em' }} >
-                                    <Linkify>
+                                    <TaggableContent>
                                         {comment.content}
-                                    </Linkify>
+                                    </TaggableContent>
                                 </IonText>
 
                             </div>
