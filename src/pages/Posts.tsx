@@ -225,18 +225,22 @@ const Posts: React.FC = () => {
                 </IonHeader>
 
                 <IonContent onIonScroll={handleScroll} scrollEvents={true} style={{ paddingTop: hideToolbar ? '0' : 'var(--ion-safe-area-top)' }}>
+                    <IonHeader><IonToolbar></IonToolbar></IonHeader>
+                    <IonGrid>
+                        <IonRow>
+                            <IonCol sizeSm={'12'} offsetSm='0' sizeMd='10' offsetMd='1' sizeLg='8' offsetLg='2'>
 
-                    <IonHeader style={{ marginBottom: '2.5vh' }}>
-                        <IonToolbar className='transparent' style={{ height: 0 }} />
-                    </IonHeader>
-                    <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
-                        <SwiperSlide>
-                            <PostList type='top' max={10} />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <PostList type='recent' max={10} />
-                        </SwiperSlide>
-                    </Swiper>
+                                <Swiper ref={swiperRef} onSlideChange={handleSlideChange}>
+                                    <SwiperSlide>
+                                        <PostList type='top' max={10} />
+                                    </SwiperSlide>
+                                    <SwiperSlide>
+                                        <PostList type='recent' max={10} />
+                                    </SwiperSlide>
+                                </Swiper>
+                            </IonCol>
+                        </IonRow>
+                    </IonGrid>
                     <IonFab slot="fixed" vertical="bottom" horizontal="end">
                         {me && <div onClick={() => {
                             open((message) => addPost(me.address, message as any), me.address, 'Write a post');
@@ -255,7 +259,7 @@ const Posts: React.FC = () => {
                             <IonSegmentButton value="Feed" onClick={() => setFilterType('Feed')}>
                                 <IonLabel className='heavy' style={{ color: filterType === 'Feed' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Feed</IonLabel>
                             </IonSegmentButton>
-                            <IonSegmentButton value="Apps" onClick={() => setFilterType('Apps')}>
+                            <IonSegmentButton value="Apps" onClick={() => push('swap')}>
                                 <IonLabel className='heavy' style={{ color: filterType === 'Apps' ? 'white' : 'var(--ion-color-medium)', fontSize: 18, paddingBottom: 0, paddingTop: 0, paddingLeft: 24, paddingRight: 24 }}>Apps</IonLabel>
                             </IonSegmentButton>
                             <IonSegmentButton value="Wallet" onClick={() => setFilterType('Wallet')}>
