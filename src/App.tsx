@@ -232,7 +232,7 @@ const DeepLinkProvider: React.FC = () => {
       localStorage.setItem('privy:token', params.token);
       localStorage.setItem('privy:refresh_token', params.refresh);
 
-      axios.post('/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
+      axios.post('https://us-central1-remilio-tribe.cloudfunctions.net/privyAuth', { token: privyToken }, { headers: { Authorization: 'Bearer ' + privyToken } }).then((res) => {
         signInWithCustomToken(auth, res.data.authToken).then((e) => {
         }).catch((e) => {
           console.log('error', e);
