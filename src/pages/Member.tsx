@@ -46,7 +46,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
     const holding = useFriendTechHolders(x => x.getHolding(member?.friendTechAddress, member?.friendTechAddress as any))
     const [segment, setSegment] = useState<'posts' | 'tribe' | 'holders' | 'chart'>(address !== '0x0000000000000000000000000000000000000000' ? 'posts' : 'tribe')
     const { balance: boosters, syncing } = useBoosters(user?.wallet?.address, address)
-    const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
+    // const { balance: ftBalance, syncing: ftSyncing } = useFriendTechBalance(member?.friendTechAddress, me?.friendTechAddress, address);
 
     useIonViewDidLeave(() => {
         document.title = 'Tribe Beta';
@@ -92,7 +92,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                         <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
-                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) || ftBalance && (ftBalance as any) > 0n))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
+                            </IonButton> : <IonButton disabled={!(((balance && balance > 0n) ))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
@@ -109,7 +109,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                     </IonCardHeader>
                 </IonCard>
 
-                {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />}
+                {/* {ftSyncing && <IonProgressBar type='indeterminate' color='primary' />} */}
                 {syncing && <IonProgressBar type='indeterminate' color='tribe' />}
 
 
@@ -175,9 +175,9 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                         </IonItem>)
 
                                         }
-                                        {uniq(holding?.users || []).map((holder) =>
+                                        {/* {uniq(holding?.users || []).map((holder) =>
                                             <FriendTechPortfolioChip held={holder.balance} key={holder.address} address={holder.address} name={holder.twitterName} pfp={holder.twitterPfpUrl} />
-                                        )}
+                                        )} */}
                                     </IonCol></IonRow></IonGrid>
                         </>}
 

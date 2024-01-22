@@ -6,7 +6,7 @@ const searchClient = algoliasearch('LR3IQNACLB', 'd486674e7123556e91d7557fa704eb
 export const SearchProvider: React.FC = () => {
     const [show, setShow] = useState<boolean>(false)
     const [hits, setHits] = useState<any[]>([]);
-
+    return null;
     return <>
         {show && <div style={{ position: 'absolute', width: '100vw', top: 60 }}>
             <IonToolbar >

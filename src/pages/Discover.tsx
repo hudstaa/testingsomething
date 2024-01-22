@@ -1,4 +1,4 @@
-import { IonAvatar, IonBackButton, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonList, IonListHeader, IonRow, IonSearchbar, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAvatar, IonBackButton, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCol, IonGrid, IonHeader, IonImg, IonItem, IonList, IonListHeader, IonRow, IonSearchbar, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import { personOutline } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Address, formatEther } from 'viem';
@@ -35,7 +35,9 @@ const Discover: React.FC = () => {
   useEffect(() => {
     setTitle('discover')
   }, [])
+  const [type,setType]=useState<string>('members')
   const [hits, setHits] = useState<Member[]>([])
+  const [coins, setCoins] = useState<{id:string,name:string,image:string}[]>([])
   const { getFriend } = useMember()
 
   useEffect(() => {
@@ -73,13 +75,46 @@ const Discover: React.FC = () => {
         <IonToolbar>
 
           <IonSearchbar class="custom" style={{ padding: 12, paddingTop: 4, paddingBottom: 0, borderRadius: 30 }} onIonInput={(event) => {
-            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' }]).then((res) => {
+            event.detail.value && event.detail.value !== null && searchClient.search([{ query: event.detail.value, indexName: 'tribe-members' },{ query: event.detail.value, indexName: 'coin index' }]).then((res) => {
               setHits((res.results[0] as any).hits || [])
+              setCoins((res.results[1] as any).hits || [])
             })
-          }} />
+          }} showClearButton='focus' />
+          <IonButtons slot='end'>
+<IonItem lines='none'>
+
+<IonSelect interface='popover' value={type} onIonChange={(e)=>{
+  setType(e.detail.value!)
+}}>
+<IonSelectOption value={'members'}>
+Members
+</IonSelectOption>
+<IonSelectOption value='coins'>
+Coins
+</IonSelectOption>
+</IonSelect>
+</IonItem>
+
+          </IonButtons>
         </IonToolbar>
         <IonList>
-          {hits.map(x => (
+          {type=='coins'&&coins.map(x => (
+                        <IonItem
+                            detail={false}
+                            lines="none"
+                            onClick={() => { setHits([]);  }}
+                            routerLink={'/coin/' + x.id}
+                            style={{ display: 'flex', alignItems: 'center' }} // Added flex styles here
+                        >
+                            <IonButtons slot='start'>
+                                <IonAvatar>
+                                    <IonImg class="disco-avatar" src={x.image} style={{ marginTop: 8, width: 35, height: 35 }} />
+                                </IonAvatar>
+                            </IonButtons>
+                            <IonText className='semi' style={{ marginLeft: 0 }}>{x.name}</IonText> {/* Added IonText for better control */}
+                        </IonItem>
+                    ))}
+          {type=='members'&&hits.map(x => (
             <IonItem
               detail={false}
               lines="none"
