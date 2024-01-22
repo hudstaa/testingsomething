@@ -8,13 +8,19 @@ import TokenGraph from "../components/TokenGraph"
 export const Coin: React.FC = () => {
 
     const { id } = useParams<{ id: string }>()
-    const [tokenData, setInfo] = useState<any>()
+    const [tokenData, setTokenData] = useState<any | null>(null);
+
+
     useEffect(() => {
-        getDoc(doc(getFirestore(getApp()), 'coin/' + id)).then((doc) => {
-            console.log()
-            setInfo(doc.data());
-        });
-    }, [id])
+      const fetchTokenData = async () => {
+        const response = await fetch(`https://api.coingecko.com/api/v3/coins/${id}?tickers=true&market_data=true&community_data=true&developer_data=true`);
+        const data = await response.json();
+        setTokenData(data);
+      };
+  
+      fetchTokenData();
+    }, [id]);
+if(!tokenData) return null
     return <IonPage>
         <IonHeader>
             <IonToolbar>
