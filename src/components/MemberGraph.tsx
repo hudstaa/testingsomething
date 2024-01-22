@@ -51,13 +51,12 @@ export const MemberGraph: React.FC<{ address: string }> = ({ address }) => {
             <AreaChart data={trades}>
                             <defs>
                                 <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#F45000" stopOpacity={0.8}/>
-                                    <stop offset="100%" stopColor="#F45000" stopOpacity={0}/> {/* Adjust this value as needed */}
+                                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.25}/>
+                                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0}/> {/* Adjust this value as needed */}
                                 </linearGradient>
                             </defs>
-                            <CartesianGrid stroke="" />
-                            <Tooltip cursor={true} labelStyle={{ paddingTop: 4 }} contentStyle={{ padding: '10px 14px', borderRadius: 10, borderColor: 'var(--ion-color-paper)' }} />
-                            <Area type="monotone" dataKey="price" strokeWidth="3.5px" stroke="#F45000" fillOpacity={1} fill="url(#colorPrice)" />
+                            <Tooltip cursor={false} labelClassName='bold'  labelStyle={{  paddingTop: 4, color: 'transparent' }} contentStyle={{ backgroundColor: 'transparent', padding: '10px 14px', borderColor: 'transparent' }} />
+                            <Area type="monotone" dataKey="price" strokeWidth="3.5px" stroke="#FFFFFF" fillOpacity={1} fill="url(#colorPrice)" />
                         </AreaChart>
             </ResponsiveContainer>}
         </IonGrid >

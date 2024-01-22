@@ -111,25 +111,32 @@ const Account: React.FC = () => {
     return (
         <>
             {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 5, top: 5 }} onClick={() => { setShow(true) }}>
-                <IonIcon size={'large'} icon={settingsOutline} />
+                <IonIcon size={'medium'} color={'dark'} icon={settingsOutline} />
             </IonButton>}
-            {pathname.includes('account') && <IonButton fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 100, top: 5 }} onClick={showNotifications}>
-                <IonIcon size={'large'} icon={alertOutline} />
+            {pathname.includes('account') && <IonButton  fill='clear' style={{ zIndex: 100000000, position: 'absolute', right: 100, top: 5 }} onClick={showNotifications}>
+                <IonIcon size={'medium'} color={'dark'} icon={alertOutline} />
                 <IonBadge>{notifications.length}</IonBadge>
             </IonButton>}
             <Member profile={true} />
-            <IonModal isOpen={show} onWillDismiss={() => { setShow(false) }}>
+            <IonModal
+                className="custom-modal2"
+                isOpen={show}
+                onDidDismiss={() => setShow(false)}
+                initialBreakpoint={1} 
+                breakpoints={[0, 1]}
+                style={{zIndex: 999}}
+            >
                 <IonHeader>
-                    <IonToolbar>
+                    <IonToolbar color={'transparent'}>
                         <IonButtons slot='end'>
                             <IonButton onClick={() => { setShow(false) }}>
-                                <IonIcon icon={closeOutline} color='danger' />
+                                <IonIcon icon={closeOutline} color='dark' />
                             </IonButton>
                         </IonButtons>
                     </IonToolbar>
                 </IonHeader>
                 <TribeContent >
-                    <IonCard color='paper'>
+                    <IonCard style={{padding: 0, margin: 0}}color='paper'>
                         <IonCardContent >
                             <IonItem lines='none' color='paper'>
                                 <IonButtons slot='start'>
@@ -215,7 +222,7 @@ const Account: React.FC = () => {
                                 Login</IonButton>}
                         </IonCardContent>
                     </IonCard>
-                    <IonButton expand='full' fill='outline' onClick={() => {
+                    <IonButton style={{position: 'absolute', bottom: 20,width: '100%'}} expand='full' fill='clear' onClick={() => {
                         signOut(auth); logout(); setCurrentUser(null as any);
                         setTimeout(() => {
                             window.location.reload();

@@ -76,27 +76,27 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 showBackButton={!profile}
             />
             < TribeContent fullscreen color={bgColor} >
-                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, borderRadius: 0 }}>
-                    <IonCardHeader className='ion-image-left' style={{ padding: 5, boderBottom: 0 }}>
-                        <IonText style={{ paddingTop: 15, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
+                <IonCard className='postcard' style={{ marginLeft: 0, marginRight: 0, marginTop: 0, marginBottom: 0, padding: 10, paddingBottom: 0, borderRadius: 0 }}>
+                    <IonCardHeader className='ion-image-left' style={{ padding: 4, boderBottom: 0 }}>
+                        <IonText style={{ paddingTop: 8, paddingBottom: 0, fontSize: '.95rem' }} color='dark' className='regular' >
                             {member?.bio}
                         </IonText>
                         <IonRouterLink href={'https://x.com/' + member?.twitterUsername} target='_new'>
-                            <IonText color='dark' className='regular' style={{ opacity: 0.75, fontSize: '.95rem' }}>
+                            <IonText color='dark' className='medium' style={{ opacity: 0.75, fontSize: '.95rem' }}>
                                 @{member?.twitterUsername}
                             </IonText>
                         </IonRouterLink>
-                        <IonText className='bold' color='dark' style={{ marginTop: 5, paddingTop: 2, paddingBottom: 3, fontSize: '1.15rem' }} >
+                        <IonText className='bold' color='dark' style={{ marginTop: '1rem', paddingTop: 2, paddingBottom: 3, fontSize: '1.25rem' }} >
                             {member?.twitterName}
                         </IonText>
-                        <div style={{ marginTop: '-37.297px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+                        <div style={{ marginTop: '-48px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
                             {address === "0x0000000000000000000000000000000000000000" ? <IonButton color='tribe' style={{ marginTop: 0, marginLeft: 0 }} routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton> : <IonButton disabled={!(((balance && balance > 0n) ))} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 0 }} routerDirection='none' color='tribe' routerLink={'/channel/' + address}>
                                 <IonIcon style={{ filter: 'invert(100%)' }} icon={'/icons/msg.svg'} />
                             </IonButton>}
                             {member && <IonButton disabled={address === '0x0000000000000000000000000000000000000000'} size='small' style={{ border: "4px solid #FF6000", borderRadius: 20, margin: '0', marginLeft: 5 }} color='tribe' onMouseDown={() => { highlight(member!.address) }}>
-                                <span className="heavy" style={{ fontSize: 14.5 }}>Buy Friend</span>
+                                <span className="heavy" style={{ fontSize: 14.5 }}>Boost</span>
                             </IonButton>}
                             {balance ? (
                                 <div className="heavy" style={{ margin: 5, fontSize: 14.5 }}>
@@ -130,9 +130,6 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                     <IonSegmentButton value={'tribe'} onClick={() => { setSegment('tribe') }} >
                                         <span className='bold' style={{ fontSize: '1rem' }}>Tribe</span>
                                     </IonSegmentButton>
-                                    {member.address !== '0x0000000000000000000000000000000000000000' && <IonSegmentButton color='tribe' value={'chart'} onClick={() => { setSegment('chart') }} >
-                                        <span className='bold' style={{ fontSize: '1rem' }}>Chart</span>
-                                    </IonSegmentButton>}
                                 </IonSegment>
                             </IonCol>
                         </IonRow>
@@ -148,7 +145,7 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                 <div>
 
                     {
-                        segment === 'posts' && <IonGrid style={{ padding: 0 }}>
+                        segment === 'posts' && <IonGrid style={{ padding: 0, paddingTop: 4}}>
                             <IonRow>
                                 <IonCol sizeLg='6' offsetLg='3' sizeMd='8' offsetMd='2' offsetXs='0' sizeXs='12' style={{ padding: 0 }}>
                                     {member !== null && member.address && <PostList type={'top'} max={10} from={member!.address} />}
@@ -180,17 +177,6 @@ const Member: React.FC<{ profile: boolean }> = ({ profile }) => {
                                         )} */}
                                     </IonCol></IonRow></IonGrid>
                         </>}
-
-                    {segment === 'chart' ? <>
-                        <IonGrid style={{ padding: 0 }}>
-                            <IonRow>
-                                <IonCol style={{ padding: 0 }} sizeLg='6' sizeXs='12' sizeMd='6' offsetLg='3' offsetMd='3' offsetSm='3'>
-                                    <IonCard className='transparent' style={{ margin: 0 }}>
-                                        {member && <MemberGraph address={member?.address} />}
-                                    </IonCard>
-                                </IonCol></IonRow></IonGrid>
-                    </> : <></>
-                    }
                 </div>
 
             </TribeContent >

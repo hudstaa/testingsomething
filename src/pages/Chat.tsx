@@ -75,14 +75,14 @@ const Chat: React.FC = () => {
     return (
         <TribePage page='chat'>
             <IonHeader>
-                <IonToolbar >
-                    <IonTitle className='bold' color={'dark'} style={{ paddingTop: 12, fontSize: 18 }}>
+                <IonToolbar color={'transparent'} >
+                    <IonTitle className='bold' color={'dark'} style={{ paddingTop: 0, fontSize: '1.25rem' }}>
                         Chats
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
             <TribeContent >
-                <IonGrid style={{ padding: 0 }}>
+                <IonGrid style={{ padding: 0, marginTop: '1rem' }}>
                     <IonRow>
                         <IonLoading isOpen={joining} />
                         <IonCol sizeMd='6' offsetMd='3' sizeXs='12' style={{ padding: 0 }}>
